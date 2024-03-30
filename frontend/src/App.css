@@ -1,3 +1,6 @@
+/* Menu style */
+
+
 .App {
   text-align: center;
 }
@@ -36,3 +39,37 @@
     transform: rotate(360deg);
   }
 }
+
+
+/* Menu style start */
+
+
+.menu div{
+  transition: all 0.3s ease-in-out;
+  min-width: fit-content;
+}
+
+
+
+.DropMenu{
+  background-color: rgb(246, 142, 5);
+  max-height: 0vh;
+  min-height: 0vh;
+  transition: all 0.3s ease-in-out;
+}
+
+body:has(.menu div:hover) .DropMenu{
+  
+  min-height: 40vh;
+  max-height: 100vh;
+}
+
+.menu div:hover{
+  background-color: rgb(246, 142, 5);
+  color: white;
+  cursor: pointer;
+}
+
+
+
+/* Menu style end */

@@ -8,9 +8,7 @@ function App() {
       className="App container"
       style={{ border: "2px solid red", fontSize: "1rem" }}
     >
-      <div className=" position-fixed w-100" style={{minHeight:'10vh', backgroundColor:'green',marginLeft:'inherit', marginRight:'inherit'}}>
-
-      </div>
+      
       
 
       

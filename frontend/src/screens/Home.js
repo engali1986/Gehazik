@@ -3,11 +3,12 @@ import React from "react";
 const Home = () => {
   return (
     <div
-      className="d-none d-md-flex container row align-items-start"
+      className="menu position-fixed d-none d-md-flex container row align-items-start"
       style={{
         minHeight: "5vh",
         backgroundColor: "lightGray",
         borderRadius: "5px",
+        fontSize:'100%'
       }}
     >
       <div
@@ -40,6 +41,12 @@ const Home = () => {
       >
         Discounts
       </div>
+
+      <div className="DropMenu d-none d-md-flex container-fluid align-items-start" style={{top:'5vh'}}>
+
+</div>
+
+      
     </div>
   );
 };
