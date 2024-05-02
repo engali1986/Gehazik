@@ -1,6 +1,7 @@
 /* Menu style */
-
-
+/* backdrop style */
+/* LogIn styles */
+/* SignUp alert styles ( if there is no content inside the alert display will be none  */
 .App {
   text-align: center;
 }
@@ -35,41 +36,176 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
 }
 
-
 /* Menu style start */
-
-
-.menu div{
-  transition: all 0.3s ease-in-out;
-  min-width: fit-content;
+.categories{
+  display: none;
 }
 
-
-
-.DropMenu{
-  background-color: rgb(246, 142, 5);
-  max-height: 0vh;
-  min-height: 0vh;
+.NavItem{
   transition: all 0.3s ease-in-out;
-}
-
-body:has(.menu div:hover) .DropMenu{
   
-  min-height: 40vh;
-  max-height: 100vh;
+}
+.NavItem div:first-child{
+  min-width:fit-content;
+
+  transition: all 0.3s ease-in-out;
+
+  
+    cursor: pointer;
+    
+  
+}
+.NavItem div:nth-last-child(1){
+  display: none;
 }
 
-.menu div:hover{
-  background-color: rgb(246, 142, 5);
-  color: white;
-  cursor: pointer;
+
+
+.NavItem div:first-child:hover{
+  
+  background-color: rgb(255, 253, 252);
+  
+  opacity: 0.8;
 }
+
+
+
+
 
 
 
 /* Menu style end */
+
+/* backdrop style start */
+
+.BackDrop{
+  position: fixed;
+  min-width:100%;
+  min-height:100%;
+  background-color: rgb(170, 170, 170);
+  opacity: 0;
+  z-index: -100;
+  transition: all 0.3s ease-in-out;
+}
+
+.BackDropActivated{
+  opacity: 0.5;
+  z-index:0;
+}
+
+/* backdrop style end */
+
+/*  LogIn styles start --------------------------------------------------------------- */
+
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.LogInButton {
+  background-color: #04AA6D;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+.LogInButton:hover {
+  opacity: 0.8;
+}
+
+.LogInButton:disabled{
+  background-color: #838383;
+  cursor: default;
+}
+
+
+.container1 {
+  padding: 16px;
+  height:auto
+}
+
+/* The "Forgot password" text */
+span.psw {
+  float:left;
+  margin-top: 20px;
+}
+
+/*  LogIn styles end --------------------------------------------------------------- */
+
+
+/* SignUp alert start -------------------------------------------------------------- */
+
+.SignUpAlert:empty{
+  display: none;
+}
+#Alert{
+  display: none;
+}
+#Alert p{
+  padding: 10px 35px;
+  font-size: 18px;
+  text-align: start;
+}
+
+/* Add a green text color and a checkmark when the requirements are right */
+.PassValid {
+  color: green;
+}
+
+.PassValid:before {
+  position: relative;
+  left: -35px;
+  content: "\2713";
+}
+
+/* Add a red text color and an "x" icon to make this icon use utf-8 hex code and put\before the hex code when the requirements are wrong */
+.PassInvalid {
+  color: red;
+}
+
+.PassInvalid:before {
+  position: relative;
+  left: -35px;
+  content: "\2715";
+}
+
+.SignUpButton {
+  background-color: #04AA6D;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+.SignUpButton:hover {
+  opacity: 0.8;
+}
+
+.SignUpButton:disabled{
+  background-color: #838383;
+  cursor: default;
+}
+.SignUpButton:disabled:hover{
+  opacity: 1;
+  cursor: default;
+}
+
+
+
+
+/* SignUp alert end -------------------------------------------------------------- */

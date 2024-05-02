@@ -1,26 +1,236 @@
 import logo from "./logo.svg";
 import Home from "./screens/Home.js";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import { Navbar } from "react-bootstrap";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+
 import "./App.css";
+import { useState, useRef, useEffect } from "react";
+import Main from "./screens/Main.js";
+import ErrorWindow from "./screens/ErrorWindow.js";
+import LogIn from "./screens/LogIn.js";
+import SignUp from "./screens/SignUp.js";
+import PasswordRecovery from "./screens/PasswordRecovery.js";
 
 function App() {
+  const BackDrop = useRef();
+  const ProfileItems = useRef();
+
+  //  first check if there is GlobalState in session and local storage
+  if (
+    localStorage.getItem("globalState") === null &&
+    sessionStorage.getItem("globalState") === null
+  ) {
+    console.log("initiate state");
+    localStorage.setItem(
+      "globalState",
+      JSON.stringify({
+        UserLogged: false,
+        Name: "",
+        email: "",
+      })
+    );
+
+    sessionStorage.setItem(
+      "globalState",
+      JSON.stringify({
+        UserLogged: false,
+        Name: "",
+        email: "",
+      })
+    );
+
+    console.log(JSON.parse(sessionStorage.getItem("globalState")));
+
+    console.log("initial sessionstorage");
+
+    console.log(localStorage.getItem("globalState"));
+  } else if (
+    sessionStorage.getItem("globalState") === null &&
+    localStorage.getItem("globalState") != null
+  ) {
+    sessionStorage.setItem(
+      "globalState",
+      JSON.stringify({
+        UserLogged: JSON.parse(localStorage.getItem("globalState")).UserLogged,
+        Name: JSON.parse(localStorage.getItem("globalState")).Name,
+        email: JSON.parse(localStorage.getItem("globalState")).email,
+      })
+    );
+
+    console.log(sessionStorage.getItem("globalState"));
+    console.log("initial sessionstorage");
+  } else if (sessionStorage.getItem("globalState") === null) {
+    sessionStorage.setItem(
+      "globalState",
+      JSON.stringify({
+        UserLogged: JSON.parse(localStorage.getItem("globalState")).UserLogged,
+        Name: JSON.parse(localStorage.getItem("globalState")).Name,
+        email: JSON.parse(localStorage.getItem("globalState")).email,
+      })
+    );
+
+    console.log("initial sessionstorage");
+  }
+  //  if no data set session and local storage above
+
+  const [GlobalState, SetGlobal] = useState(
+    JSON.parse(sessionStorage.getItem("globalState"))
+  );
+  console.log("app started");
+  console.log(GlobalState);
+  console.log(sessionStorage.getItem("globalState"));
+  console.log(localStorage.getItem("globalState"));
+  console.log(localStorage.getItem("globalState") === !null);
+
+  //  if user logged time stamp will be addded to local storage to allow for other tabs
+  // if (localStorage.getItem("globalState") === null) {
+  //   console.log("No data in local storage")
+  // } else {
+  //   console.log("Time logges start");
+  //   if (JSON.parse(localStorage.getItem("globalState")).TimeLogged) {
+  //     console.log("Time logged");
+  //     if (
+  //       new Date().getTime() -
+  //         JSON.parse(localStorage.getItem("globalState")).TimeLogged >=
+  //       20000
+  //     ) {
+  //       localStorage.removeItem("globalState");
+  //     }
+  //   } else {
+  //     console.log("No time Logged");
+  //   }
+  // }
+
+  const userChange = (name, LogInStatus, mail) => {
+    SetGlobal({
+      ...GlobalState,
+      UserLogged: LogInStatus,
+      Name: name,
+      email: mail,
+    });
+
+    localStorage.setItem(
+      "globalState",
+      JSON.stringify({
+        UserLogged: LogInStatus,
+        Name: name,
+        email: mail,
+        TimeLogged: new Date().getTime(),
+      })
+    );
+
+    sessionStorage.setItem(
+      "globalState",
+      JSON.stringify({
+        UserLogged: LogInStatus,
+        Name: name,
+        email: mail,
+      })
+    );
+  };
+
+  console.log(typeof new Date().getTime());
+
+  // if (JSON.parse(localStorage.getItem("globalState")).TimeLogged) {
+  //   if (new Date().getTime() - JSON.parse(localStorage.getItem("globalState")).TimeLogged >= 20000) {
+
+  //     localStorage.setItem("globalState",JSON.stringify({
+  //       "UserLogged":false,
+  //       "Name":"",
+  //       "email":"",
+
+  //     }))
+
+  //   } else {
+  //     console.log(new Date().getTime() - JSON.parse(localStorage.getItem("globalState")).TimeLogged)
+
+  //   }
+
+  // } else {
+  //   console.log("User Not")
+
+  // }
+  // used localStorage to keep state when page refresh
+
+  console.log(typeof GlobalState);
+  // console.log(typeof GlobalState.UserLogged)
+
   return (
-    <div
-      className="App container"
-      style={{ border: "2px solid red", fontSize: "1rem" }}
-    >
-      
-      
+    <div>
+      <div
+        ref={BackDrop}
+        onClick={() => {
+          const SubMenus = document.querySelectorAll(".NavItem");
+          for (let index = 0; index < SubMenus.length; index++) {
+            SubMenus[index].children[1].style.display = "none";
+          }
+          document.querySelectorAll(".categories")[0].style.display = "none";
+          console.log("backdrop clicked");
 
-      
-       
-      <Home />
-      
-     
-      <div style={{minHeight:'200vh',border:'2px solid green'}}>
+          console.log(document.querySelectorAll(".NavItem"));
 
-      </div>
+          BackDrop.current.classList.remove("BackDropActivated");
+        }}
+        className="BackDrop "
+      ></div>
 
-     
+      <Container
+        className="App "
+        style={{ border: "2px solid red", fontSize: "1rem", zIndex: "100" }}
+      >
+        <Row
+          style={{ zIndex: "5", backgroundRowor: "gray", position: "relative" }}
+        >
+          <div
+            className="fixed-top"
+            onClick={() => {
+              console.log("nav clicked");
+              const SubMenus = document.querySelectorAll(".NavItem");
+              for (let index = 0; index < SubMenus.length; index++) {
+                SubMenus[index].children[1].style.display = "none";
+              }
+              document.querySelectorAll(".categories")[0].style.display =
+                "none";
+              BackDrop.current.classList.remove("BackDropActivated");
+            }}
+          >
+            <Home BackDropRef={BackDrop} />
+          </div>
+        </Row>
+
+        <div className="row px-2 ps-2">
+          <div
+            className="col-12"
+            style={{
+              position: "inherit",
+              minHeight: "120vh",
+              border: "2px solid green",
+              top: "10vh",
+              marginTop: "5vh",
+            }}
+          >
+            <Routes>
+              <Route path="/" element={<Main />} />
+              <Route
+                path="/LogIn"
+                element={
+                  <LogIn globalState={GlobalState} setGlobal={userChange} />
+                }
+              />
+              <Route
+                path="/SignUp"
+                element={
+                  <SignUp globalState={GlobalState} setGlobal={userChange} />
+                }
+              />
+              <Route path="/PasswordRecovery" element={<PasswordRecovery />} />
+            </Routes>
+          </div>
+        </div>
+      </Container>
     </div>
   );
 }
