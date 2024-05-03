@@ -22,6 +22,8 @@ function App() {
   if (
     localStorage.getItem("globalState") === null &&
     sessionStorage.getItem("globalState") === null
+
+    
   ) {
     console.log("initiate state");
     localStorage.setItem(
