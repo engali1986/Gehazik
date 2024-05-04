@@ -32,7 +32,7 @@ const PasswordRecovery = () => {
       email:Email
     }
 
-    const PassRecovery=await fetch("https://discounty-server.onrender.com/PasswordRecovery",{
+    const PassRecovery=await fetch("http://localhost:5000/PasswordRecovery",{
         method:"POST",
         body:JSON.stringify(Credintials),
         headers: {

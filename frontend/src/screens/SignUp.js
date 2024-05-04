@@ -283,7 +283,7 @@ const SignUp = ({ globalState, setGlobal }) => {
           PassmatchAlert.current.innerText = "Sign Up please wait";
           PassmatchAlert.current.style.maxHeight = "500px";
 
-          const AddUser = await fetch("https://discounty-server.onrender.com/AddUser", {
+          const AddUser = await fetch("http://localhost:5000/AddUser", {
             method: "POST",
             body: JSON.stringify(Credentials),
             headers: {
@@ -371,7 +371,7 @@ const SignUp = ({ globalState, setGlobal }) => {
     console.log(Credentials);
     console.log(typeof Credentials.VarificationCode);
 
-    const UserVarified = await fetch("https://discounty-server.onrender.com/LogInUser", {
+    const UserVarified = await fetch("http://localhost:5000/LogInUser", {
       method: "POST",
       body: JSON.stringify(Credentials),
       headers: {
