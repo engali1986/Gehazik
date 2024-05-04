@@ -159,9 +159,14 @@ function App() {
 
   console.log(typeof GlobalState);
   // console.log(typeof GlobalState.UserLogged)
+  window.onresize=()=>{
+    console.log(window.innerWidth)
+  }
 
   return (
-    <div>
+    <div onClick={()=>{
+      console.log(window.innerWidth)
+    }}>
       <div
         ref={BackDrop}
         onClick={() => {
