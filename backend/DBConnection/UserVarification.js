@@ -10,7 +10,7 @@ const client = new MongoClient(uri
 const Uservarification=async(Email,Password)=>{
     console.log("Uservarification 0")
     console.log(Email)
-    const user=await client.db("Projectman").collection("Projectma").findOne({email:Email,pass:Password}).then(res=>{
+    const user=await client.db("Gehazik").collection("Users").findOne({email:Email,pass:Password}).then(res=>{
       console.log(res)
       return res
     }).catch(err=>{

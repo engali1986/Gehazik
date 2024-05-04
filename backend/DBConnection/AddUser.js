@@ -15,8 +15,8 @@ async function AddUser(Credentials) {
 
     // First we check if user already regestered by searching for user email in database
     const IsUserRegistered = await client
-      .db("Projectman")
-      .collection("Projectma")
+      .db("Gehazik")
+      .collection("Users")
       .findOne({ email: Credentials.Email })
       .then((res) => {
         console.log("AddUser file 1");
@@ -43,8 +43,8 @@ async function AddUser(Credentials) {
       }
 
       const res = await client
-        .db("Projectman")
-        .collection("Projectma")
+        .db("Gehazik")
+        .collection("Users")
         .insertOne({
           name: Credentials.Name,
           email: Credentials.Email,
@@ -68,8 +68,8 @@ async function AddUser(Credentials) {
       // next we search for user by email in database to return the user full data to client
       if (res.acknowledged === true) {
         const user = await client
-          .db("Projectman")
-          .collection("Projectma")
+          .db("Gehazik")
+          .collection("Users")
           .findOne({ email: Credentials.Email })
           .then((res) => {
             if (res === null) {

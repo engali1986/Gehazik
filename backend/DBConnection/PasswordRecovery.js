@@ -10,7 +10,7 @@ const client = new MongoClient(uri
 const PasswordRecovery=async(Email)=>{
     console.log("PassordRecovery 0")
     console.log(Email)
-    const user=await client.db("Projectman").collection("Projectma").findOne({email:Email}).then(res=>{
+    const user=await client.db("Gehazik").collection("Users").findOne({email:Email}).then(res=>{
       console.log(res)
       return res
     }).catch(err=>{

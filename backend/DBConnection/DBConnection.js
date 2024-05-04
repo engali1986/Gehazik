@@ -13,7 +13,7 @@ await client.connect().catch(err=>{
 });
 const res=await client.db("Projectman",{
     
-}).collection("Projectma").insertOne({name:"alio",pass:"123456"}).then((res)=>{
+}).collection("Users").insertOne({name:"alio",pass:"123456"}).then((res)=>{
     console.log(res)
     return res
    
@@ -38,7 +38,7 @@ await client.db("ppdb").command({ ping: 1 }).then(res=>console.log(typeof res)).
 if (res.acknowledged===true) {
     const user=await client.db("Projectman",{
     
-    }).collection("Projectma").findOne({name:4}).then(res=> {
+    }).collection("Users").findOne({name:4}).then(res=> {
         return res
     }).catch(err=>{
         return "no user found"

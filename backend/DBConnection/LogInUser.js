@@ -10,8 +10,8 @@ async function LogInUser(Credentials) {
     console.log("LogInUser file 0");
     console.log(Credentials);
     const GetUser = await client
-      .db("Projectman")
-      .collection("Projectma")
+      .db("Gehazik")
+      .collection("Users")
       .findOne({ email: Credentials.Email, pass: Credentials.Password })
       .then((res) => {
         console.log("LogInUser file 1");
@@ -44,8 +44,8 @@ async function LogInUser(Credentials) {
 
           if (Credentials.VarificationCode === GetUser.varificationcode) {
             const VarifyUser = await client
-              .db("Projectman")
-              .collection("Projectma")
+              .db("Gehazik")
+              .collection("Users")
               .updateOne(
                 { email: Credentials.Email, pass: Credentials.Password },
                 {$set:{ uservarified: true }}

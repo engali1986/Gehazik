@@ -11,8 +11,8 @@ async function Test(Credintials) {
         console.log("Test file 0");
         console.log(Credintials)
         const GetUser=await client
-        .db("Projectman")
-        .collection("Projectma").findOne({email:Credintials.Email}).then(res=>{
+        .db("Gehazik")
+        .collection("Users").findOne({email:Credintials.Email}).then(res=>{
           console.log("Test file 1");
           console.log(res)
           if (res===null) {
@@ -34,8 +34,8 @@ async function Test(Credintials) {
     
           if (Credintials.VarificationCode===GetUser.varificationcode ) {
             const updateUser=await client
-            .db("Projectman")
-            .collection("Projectma").updateOne({email:GetUser.email},{$set:{uservarified:true}}).then(res=>{
+            .db("Gehazik")
+            .collection("Users").updateOne({email:GetUser.email},{$set:{uservarified:true}}).then(res=>{
               return res
             }).catch(err=>{
               return "Update failed"
