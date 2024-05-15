@@ -22,8 +22,6 @@ function App() {
   if (
     localStorage.getItem("globalState") === null &&
     sessionStorage.getItem("globalState") === null
-
-    
   ) {
     console.log("initiate state");
     localStorage.setItem(
@@ -159,14 +157,16 @@ function App() {
 
   console.log(typeof GlobalState);
   // console.log(typeof GlobalState.UserLogged)
-  window.onresize=()=>{
-    console.log(window.innerWidth)
-  }
+  window.onresize = () => {
+    console.log(window.innerWidth);
+  };
 
   return (
-    <div onClick={()=>{
-      console.log(window.innerWidth)
-    }}>
+    <div
+      onClick={() => {
+        console.log(window.innerWidth);
+      }}
+    >
       <div
         ref={BackDrop}
         onClick={() => {
@@ -191,7 +191,6 @@ function App() {
         <Row
           style={{ zIndex: "5", backgroundRowor: "gray", position: "relative" }}
         >
-         
           <div
             className="fixed-top"
             onClick={() => {
