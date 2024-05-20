@@ -172,7 +172,7 @@ const Home = (params) => {
           </Col>
         </Row>
       </div>
-      {/*  small screen navbar */}
+      {/*  small screen navbar start */}
       <Row className=" d-md-none  d-flex" style={{ backgroundColor: "gray" }}>
         <Col
           className=" d-block"
@@ -193,9 +193,10 @@ const Home = (params) => {
           className=" d-block ms-0 ms-sm-auto"
           style={{ fontSize: "1.5rem", maxWidth: "fit-content" }}
         >
-          Login
+          <Link to="/LogIn">LogIn</Link>
         </Col>
       </Row>
+       {/*  small screen navbar end */}
     </Container>
   );
 };
