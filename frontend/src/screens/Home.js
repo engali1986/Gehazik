@@ -172,19 +172,29 @@ const Home = (params) => {
           </Col>
         </Row>
       </div>
+      {/*  small screen navbar */}
       <Row className=" d-md-none  d-flex" style={{ backgroundColor: "gray" }}>
-        <Col
+        <Col 
           className=" d-block"
           style={{ fontSize: "1.5rem", maxWidth: "fit-content" }}
         >
           home
         </Col>
-        <Col
+        
+        <Col 
           className=" d-block"
           style={{ fontSize: "1.5rem", maxWidth: "fit-content" }}
         >
           home
         </Col>
+        
+        <Col xs={12}
+          className=" d-block ms-0 ms-sm-auto"
+          style={{ fontSize: "1.5rem", maxWidth: "fit-content" }}
+        >
+          Login
+        </Col>
+
       </Row>
     </Container>
   );
