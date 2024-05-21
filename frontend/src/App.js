@@ -24,7 +24,7 @@ function App() {
     localStorage.getItem("globalState") === null &&
     sessionStorage.getItem("globalState") === null
   ) {
-    console.log("initiate state");
+    console.log("initiale state");
     localStorage.setItem(
       "globalState",
       JSON.stringify({
@@ -161,6 +161,7 @@ function App() {
   window.onresize = () => {
     console.log(window.innerWidth);
   };
+
 
   return (
     <div
