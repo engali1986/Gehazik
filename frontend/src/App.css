@@ -2,6 +2,7 @@
 /* backdrop style */
 /* LogIn styles */
 /* SignUp alert styles ( if there is no content inside the alert display will be none  */
+/* Small Menu */
 .App {
   text-align: center;
 }
@@ -209,3 +210,13 @@ span.psw {
 
 
 /* SignUp alert end -------------------------------------------------------------- */
+/*  Small Menu start */
+
+.SmallMenu{
+  transition: all 0.3s ease-in-out;
+
+}
+.SmallMenu:hover{
+  background-color: rgba(249, 250, 250, 0.581);
+  cursor: pointer;
+}
