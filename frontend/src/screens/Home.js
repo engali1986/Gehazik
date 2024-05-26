@@ -5,12 +5,8 @@ import { Link } from "react-router-dom";
 const Home = (params) => {
   return (
     <Container>
-      <Row
-        style={{
-          backgroundColor: "gray",
-          minHeight: "5vh",
-          alignItems: "center",
-        }}>
+      <Row className="NavBarBig"
+        >
         <div
           style={{
             fontSize: "1.5rem",
@@ -27,14 +23,7 @@ const Home = (params) => {
             position: "relative",
           }}>
           categories
-          <div
-            style={{
-              position: "absolute",
-              left: "-90%",
-              minWidth: "400px",
-              minHeight: "400px",
-              backgroundColor: "red",
-            }}></div>
+         
         </div>
       </Row>
     </Container>

@@ -195,14 +195,10 @@ function App() {
         >
           <div
             className="fixed-top"
-            onClick={() => {
+            onClick={(e) => {
+              e.stopPropagation();
               console.log("nav clicked");
-              const SubMenus = document.querySelectorAll(".NavItem");
-              for (let index = 0; index < SubMenus.length; index++) {
-                SubMenus[index].children[1].style.display = "none";
-              }
-              document.querySelectorAll(".categories")[0].style.display =
-                "none";
+              
               BackDrop.current.classList.remove("BackDropActivated");
             }}
           >
