@@ -164,12 +164,31 @@ function App() {
   // Main bage to be directly below navbar we use window,onresize and adjust margintop
 
   window.onresize=()=>{
-    document.getElementsByClassName("MainBage")[0].style.marginTop=document.getElementsByClassName("NavBarBig")[0].getBoundingClientRect().bottom+"px"
+    
+    if (window.innerWidth>=768) {
+      console.log("navBarBig")
+      document.getElementsByClassName("MainBage")[0].style.marginTop=document.getElementsByClassName("NavBarBig")[0].getBoundingClientRect().bottom+"px"
+      
+    } else {
+      console.log("navBarsmall")
+      document.getElementsByClassName("MainBage")[0].style.marginTop=document.getElementsByClassName("NavBarSmall")[0].getBoundingClientRect().bottom+"px"
+      
+    }
+    
+    
 
   }
   useEffect(()=>{
-    document.getElementsByClassName("MainBage")[0].style.marginTop=document.getElementsByClassName("NavBarBig")[0].getBoundingClientRect().bottom+"px"
-
+    if (window.innerWidth>=768) {
+      console.log("navBarBig")
+      document.getElementsByClassName("MainBage")[0].style.marginTop=document.getElementsByClassName("NavBarBig")[0].getBoundingClientRect().bottom+"px"
+      
+    } else {
+      console.log("navBarsmall")
+      document.getElementsByClassName("MainBage")[0].style.marginTop=document.getElementsByClassName("NavBarSmall")[0].getBoundingClientRect().bottom+"px"
+      
+    }
+    
   },[])
 
 

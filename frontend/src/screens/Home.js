@@ -5,7 +5,8 @@ import { Link } from "react-router-dom";
 const Home = (params) => {
   return (
     <Container>
-      <Row className="NavBarBig">
+      <Row className="NavBarBig d-none d-md-flex">
+       
         <div
           style={{
             fontSize: "1.5rem",
@@ -59,6 +60,17 @@ const Home = (params) => {
           Services
           <div style={{ position: "absolute", minHeight: "400px", minWidth: "400px", top: "100%", left: "0%", display: "none" }}></div>
         </div>
+      </Row>
+      <Row className=" NavBarSmall d-flex d-md-none">
+      <div
+          style={{
+            fontSize: "1.5rem",
+            textAlign: "start",
+            width: "fit-content",
+          }}>
+          home
+        </div>
+
       </Row>
       <Row>
         <div className="Categories">adsasd</div>

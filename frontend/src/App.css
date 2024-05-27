@@ -2,7 +2,7 @@
 /* backdrop style */
 /* LogIn styles */
 /* SignUp alert styles ( if there is no content inside the alert display will be none  */
-/* Small Menu */
+/* NavBarBig */
 .App {
   text-align: center;
 }
@@ -210,7 +210,7 @@ span.psw {
 
 
 /* SignUp alert end -------------------------------------------------------------- */
-/*  Small Menu start */
+/*  NavBarBig start */
 
 .SmallMenu{
   transition: all 0.3s ease-in-out;
@@ -253,3 +253,40 @@ span.psw {
   overflow-y: hidden;
   transition: all 0.3s ease-in-out;
 }
+
+/*  NabBarBig end */
+
+
+/*  NabBarSmall start */
+.NavBarSmall{
+  background-color: #838383;
+  min-height: 5vh;
+  align-items: stretch;
+ 
+  
+}
+.NavBarSmall div{
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease-in-out;
+  
+ 
+  
+}
+
+.NavBarSmall div:hover{
+  background-color: #fcb478dd;
+  cursor: pointer;
+}
+
+.Categories{
+  width: fit-content;
+  background-color: #fcb478dd;
+  height: 0vh;
+  overflow-y: hidden;
+  transition: all 0.3s ease-in-out;
+}
+
+/*  NabBarSmall end */
