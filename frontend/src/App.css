@@ -245,3 +245,11 @@ span.psw {
   background-color: #fcb478dd;
   cursor: pointer;
 }
+
+.Categories{
+  width: fit-content;
+  background-color: #fcb478dd;
+  height: 0vh;
+  overflow-y: hidden;
+  transition: all 0.3s ease-in-out;
+}
