@@ -161,6 +161,16 @@ function App() {
   window.onresize = () => {
     console.log(window.innerWidth);
   };
+  // Main bage to be directly below navbar we use window,onresize and adjust margintop
+
+  window.onresize=()=>{
+    document.getElementsByClassName("MainBage")[0].style.marginTop=document.getElementsByClassName("NavBarBig")[0].getBoundingClientRect().bottom+"px"
+
+  }
+  useEffect(()=>{
+    document.getElementsByClassName("MainBage")[0].style.marginTop=document.getElementsByClassName("NavBarBig")[0].getBoundingClientRect().bottom+"px"
+
+  },[])
 
 
   return (
@@ -207,15 +217,16 @@ function App() {
         </Row>
 
         <div className="row px-2 ps-2">
-          <div
-            className="col-12"
+          <div 
+            className="MainBage col-12"
             style={{
-              position: "inherit",
+              position: "relative",
               minHeight: "120vh",
               border: "2px solid green",
-              top: "10vh",
-              marginTop: "5vh",
+              marginTop: "0px",
             }}
+
+            
           >
             <Routes>
               <Route path="/" element={<Main />} />
