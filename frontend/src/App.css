@@ -97,7 +97,7 @@
 
 .BackDropActivated{
   opacity: 0.5;
-  z-index:0;
+  z-index:5;
 }
 
 /* backdrop style end */

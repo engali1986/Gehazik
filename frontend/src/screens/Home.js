@@ -62,7 +62,14 @@ const Home = (params) => {
             console.log(e.target);
           }}>
           Services
-          <div style={{ position: "absolute", minHeight: "400px", minWidth: "400px", top: "100%", left: "0%", display: "none" }}></div>
+          <div style={{ position: "absolute", minHeight: "400px", minWidth: "400px", top: "100%", left: "0%", display: "none" }}
+          onClick={(e)=>{
+            e.stopPropagation()
+            document.getElementsByClassName("Categories")[0].style.height = "0vh";
+            document.getElementsByClassName("Categories")[0].style.overflowY = "hidden";
+            document.getElementsByClassName("Services")[0].lastChild.style.display = "none";
+            document.getElementsByClassName("BackDrop")[0].classList.remove("BackDropActivated")
+          }}></div>
         </div>
       </Row>
       <Row className=" NavBarSmall d-flex d-md-none">
@@ -77,7 +84,9 @@ const Home = (params) => {
 
       </Row>
       <Row>
-        <div className="Categories">adsasd</div>
+        <div className="Categories" onClick={()=>{
+          console.log("menu items clicked")
+        }}>adsasd</div>
       </Row>
     </Container>
   );
