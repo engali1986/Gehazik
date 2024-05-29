@@ -200,17 +200,13 @@ function App() {
     >
       <div
         ref={BackDrop}
-        onClick={() => {
-          const SubMenus = document.querySelectorAll(".NavItem");
-          for (let index = 0; index < SubMenus.length; index++) {
-            SubMenus[index].children[1].style.display = "none";
-          }
-          document.querySelectorAll(".categories")[0].style.display = "none";
-          console.log("backdrop clicked");
-
-          console.log(document.querySelectorAll(".NavItem"));
-
-          BackDrop.current.classList.remove("BackDropActivated");
+        onClick={(e) => {
+          e.stopPropagation()
+          console.log("backdrop clicked")
+          document.getElementsByClassName("Services")[0].lastChild.style.display = "none";
+          document.getElementsByClassName("Categories")[0].style.height = "0vh";
+          document.getElementsByClassName("Categories")[0].style.overflowY = "hidden";
+          document.getElementsByClassName("BackDrop")[0].classList.remove("BackDropActivated")
         }}
         className="BackDrop "
       ></div>
@@ -227,7 +223,15 @@ function App() {
             onClick={(e) => {
               e.stopPropagation();
               console.log("nav clicked");
-              
+              if (document.getElementsByClassName("Categories")[0].style.height === "90vh" || document.getElementsByClassName("Services")[0].lastChild.style.display === "block") {
+                document.getElementsByClassName("Services")[0].lastChild.style.display = "none";
+          document.getElementsByClassName("Categories")[0].style.height = "0vh";
+          document.getElementsByClassName("Categories")[0].style.overflowY = "hidden";
+          document.getElementsByClassName("BackDrop")[0].classList.remove("BackDropActivated")
+                
+              } else {
+                
+              }
               BackDrop.current.classList.remove("BackDropActivated");
             }}
           >

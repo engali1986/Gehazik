@@ -28,9 +28,11 @@ const Home = (params) => {
             if (document.getElementsByClassName("Categories")[0].style.height === "90vh") {
               document.getElementsByClassName("Categories")[0].style.height = "0vh";
               document.getElementsByClassName("Categories")[0].style.overflowY = "hidden";
+              document.getElementsByClassName("BackDrop")[0].classList.remove("BackDropActivated")
             } else {
               document.getElementsByClassName("Categories")[0].style.height = "90vh";
               document.getElementsByClassName("Categories")[0].style.overflowY = "scroll";
+              document.getElementsByClassName("BackDrop")[0].classList.add("BackDropActivated")
             }
             console.log(e.target);
           }}>
@@ -48,11 +50,13 @@ const Home = (params) => {
             e.stopPropagation();
             document.getElementsByClassName("Categories")[0].style.height = "0vh";
             document.getElementsByClassName("Categories")[0].style.overflowY = "hidden";
+            document.getElementsByClassName("BackDrop")[0].classList.remove("BackDropActivated")
             console.log(e.target.lastChild);
             if (e.target.lastChild.style.display === "block") {
               e.target.lastChild.style.display = "none";
             } else {
               e.target.lastChild.style.display = "block";
+              document.getElementsByClassName("BackDrop")[0].classList.add("BackDropActivated")
             }
 
             console.log(e.target);
