@@ -225,9 +225,9 @@ function App() {
               console.log("nav clicked");
               if (document.getElementsByClassName("Categories")[0].style.height === "90vh" || document.getElementsByClassName("Services")[0].lastChild.style.display === "block") {
                 document.getElementsByClassName("Services")[0].lastChild.style.display = "none";
-          document.getElementsByClassName("Categories")[0].style.height = "0vh";
-          document.getElementsByClassName("Categories")[0].style.overflowY = "hidden";
-          document.getElementsByClassName("BackDrop")[0].classList.remove("BackDropActivated")
+                document.getElementsByClassName("Categories")[0].style.height = "0vh";
+                document.getElementsByClassName("Categories")[0].style.overflowY = "hidden";
+                document.getElementsByClassName("BackDrop")[0].classList.remove("BackDropActivated")
                 
               } else {
                 

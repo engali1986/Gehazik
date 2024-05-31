@@ -24,6 +24,8 @@ const Home = (params) => {
           }}
           onClick={(e) => {
             e.stopPropagation();
+            console.log("categories triggered")
+            console.log(document.getElementsByClassName("Categories")[0].style.height)
             document.getElementsByClassName("Services")[0].lastChild.style.display = "none";
             if (document.getElementsByClassName("Categories")[0].style.height === "90vh") {
               document.getElementsByClassName("Categories")[0].style.height = "0vh";
