@@ -73,6 +73,13 @@ const Home = (params) => {
             document.getElementsByClassName("BackDrop")[0].classList.remove("BackDropActivated")
           }}></div>
         </div>
+        <div style={{width:'fit-content', marginLeft:'auto'}} onClick={(e)=>{
+          e.stopPropagation()
+          document.getElementsByClassName("BackDrop")[0].click()
+          console.log("Login/Signup clicked")
+        }}>
+          Login/Signup
+        </div>
       </Row>
       <Row className=" NavBarSmall d-flex d-md-none">
       <div
@@ -82,6 +89,21 @@ const Home = (params) => {
             width: "fit-content",
           }}>
           home
+        </div>
+        <div  style={{
+            fontSize: "1.5rem",
+            textAlign: "start",
+            width: "fit-content",
+            position: "relative",
+          }} >
+        &#9776;
+        </div>
+        <div style={{width:'fit-content', marginLeft:'auto'}} onClick={(e)=>{
+          e.stopPropagation()
+          document.getElementsByClassName("BackDrop")[0].click()
+          console.log("Login/Signup clicked")
+        }}>
+          Login/Signup
         </div>
 
       </Row>
