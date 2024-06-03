@@ -247,7 +247,7 @@ span.psw {
 }
 
 .Categories{
-  width: fit-content;
+  text-align: start;
   background-color: #fcb478dd;
   height: 0vh;
   overflow-y: hidden;
@@ -282,11 +282,25 @@ span.psw {
 }
 
 .Categories{
-  width: fit-content;
-  background-color: #fcb478dd;
+  
+  background-color: #f8f6f5;
   height: 0vh;
   overflow-y: hidden;
   transition: all 0.3s ease-in-out;
+}
+
+.Categories div{
+  cursor: pointer;
+  word-wrap: break-word;
+  transition: all 0.3s ease-in-out
+}
+
+.Categories div:hover{
+  background-color: #fcb478dd;
+}
+
+.Services{
+  cursor: pointer;
 }
 
 /*  NabBarSmall end */

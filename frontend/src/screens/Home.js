@@ -1,8 +1,9 @@
-import React from "react";
+import React, {useState} from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 const Home = (params) => {
+  const [SubCategories,setSubCategories]=useState("")
   return (
     <Container>
       <Row className="NavBarBig d-none d-md-flex">
@@ -95,6 +96,23 @@ const Home = (params) => {
             textAlign: "start",
             width: "fit-content",
             position: "relative",
+
+          }} onClick={(e)=>{
+            e.stopPropagation();
+            console.log("categories small screen triggered")
+            console.log(document.getElementsByClassName("Categories")[0].style.height)
+            document.getElementsByClassName("Services")[0].lastChild.style.display = "none";
+            if (document.getElementsByClassName("Categories")[0].style.height === "90vh") {
+              document.getElementsByClassName("Categories")[0].style.height = "0vh";
+              document.getElementsByClassName("Categories")[0].style.overflowY = "hidden";
+              document.getElementsByClassName("BackDrop")[0].classList.remove("BackDropActivated")
+            } else {
+              document.getElementsByClassName("Categories")[0].style.height = "90vh";
+              document.getElementsByClassName("Categories")[0].style.overflowY = "scroll";
+              document.getElementsByClassName("BackDrop")[0].classList.add("BackDropActivated")
+            }
+            console.log(e.target);
+
           }} >
         &#9776;
         </div>
@@ -108,9 +126,54 @@ const Home = (params) => {
 
       </Row>
       <Row>
-        <div className="Categories" onClick={()=>{
+        <Col xs={6} md={4} className="Categories" onClick={()=>{
           console.log("menu items clicked")
-        }}>adsasd</div>
+        }}>
+          
+          <div onClick={(e)=>{
+            e.stopPropagation()
+            setSubCategories(e.target.innerText)
+            console.log(e.target.firstElementChild)
+            e.target.firstElementChild.style.maxHeight="200px"
+            
+            
+           
+
+          }}>
+          Electronics
+          <div style={{maxHeight:'0px', overflow:'hidden'}}>
+            electornics items
+
+          </div>
+            </div>
+            <div>
+          Kitchen
+            </div>
+
+           
+  
+
+        
+        <div
+          className="Services d-block d-md-none"
+          style={{
+            fontSize: "1rem",
+            textAlign: "start",
+            position: "relative",
+            marginTop:'80vh'
+          }}
+          onClick={(e) => {
+            e.stopPropagation();
+           
+            console.log(e.target);
+          }}>
+          Services
+         
+        </div>
+          
+     
+        </Col>
+        
       </Row>
     </Container>
   );
