@@ -283,10 +283,11 @@ span.psw {
 
 .Categories{
   
-  background-color: #f8f6f5;
+  background-color: #ffffff;
   height: 0vh;
   overflow-y: hidden;
   transition: all 0.3s ease-in-out;
+  
 }
 
 .Categories div{
@@ -301,6 +302,10 @@ span.psw {
 
 .Services{
   cursor: pointer;
+}
+
+.SubCategories{
+  background-color: #ffffff;
 }
 
 /*  NabBarSmall end */

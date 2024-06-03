@@ -32,10 +32,12 @@ const Home = (params) => {
               document.getElementsByClassName("Categories")[0].style.height = "0vh";
               document.getElementsByClassName("Categories")[0].style.overflowY = "hidden";
               document.getElementsByClassName("BackDrop")[0].classList.remove("BackDropActivated")
+              document.getElementsByClassName("SubCategories")[0].style.display="none"
             } else {
               document.getElementsByClassName("Categories")[0].style.height = "90vh";
               document.getElementsByClassName("Categories")[0].style.overflowY = "scroll";
               document.getElementsByClassName("BackDrop")[0].classList.add("BackDropActivated")
+              document.getElementsByClassName("SubCategories")[0].style.display="block"
             }
             console.log(e.target);
           }}>
@@ -53,6 +55,7 @@ const Home = (params) => {
             e.stopPropagation();
             document.getElementsByClassName("Categories")[0].style.height = "0vh";
             document.getElementsByClassName("Categories")[0].style.overflowY = "hidden";
+            document.getElementsByClassName("SubCategories")[0].style.display="none"
             document.getElementsByClassName("BackDrop")[0].classList.remove("BackDropActivated")
             console.log(e.target.lastChild);
             if (e.target.lastChild.style.display === "block") {
@@ -106,10 +109,12 @@ const Home = (params) => {
               document.getElementsByClassName("Categories")[0].style.height = "0vh";
               document.getElementsByClassName("Categories")[0].style.overflowY = "hidden";
               document.getElementsByClassName("BackDrop")[0].classList.remove("BackDropActivated")
+              document.getElementsByClassName("SubCategories")[0].style.display="none"
             } else {
               document.getElementsByClassName("Categories")[0].style.height = "90vh";
               document.getElementsByClassName("Categories")[0].style.overflowY = "scroll";
               document.getElementsByClassName("BackDrop")[0].classList.add("BackDropActivated")
+              document.getElementsByClassName("SubCategories")[0].style.display="block"
             }
             console.log(e.target);
 
@@ -133,18 +138,15 @@ const Home = (params) => {
           <div onClick={(e)=>{
             e.stopPropagation()
             setSubCategories(e.target.innerText)
-            console.log(e.target.firstElementChild)
-            e.target.firstElementChild.style.maxHeight="200px"
+            document.getElementsByClassName("SubCategories")[0].style.display="block"
+           
             
             
            
 
           }}>
           Electronics
-          <div style={{maxHeight:'0px', overflow:'hidden'}}>
-            electornics items
-
-          </div>
+          
             </div>
             <div>
           Kitchen
@@ -172,6 +174,15 @@ const Home = (params) => {
         </div>
           
      
+        </Col>
+        <Col xs={6} md={8} className="SubCategories" onClick={(e)=>{
+          e.stopPropagation()
+          
+          document.getElementsByClassName("BackDrop")[0].click()
+          setSubCategories("")
+
+        }}>
+          {SubCategories}
         </Col>
         
       </Row>

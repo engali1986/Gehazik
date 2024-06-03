@@ -207,6 +207,8 @@ function App() {
           document.getElementsByClassName("Categories")[0].style.height = "0vh";
           document.getElementsByClassName("Categories")[0].style.overflowY = "hidden";
           document.getElementsByClassName("BackDrop")[0].classList.remove("BackDropActivated")
+          document.getElementsByClassName("SubCategories")[0].style.display="none"
+          
         }}
         className="BackDrop "
       ></div>
@@ -228,6 +230,7 @@ function App() {
                 document.getElementsByClassName("Categories")[0].style.height = "0vh";
                 document.getElementsByClassName("Categories")[0].style.overflowY = "hidden";
                 document.getElementsByClassName("BackDrop")[0].classList.remove("BackDropActivated")
+                document.getElementsByClassName("SubCategories")[0].style.display="none"
                 
               } else {
                 
