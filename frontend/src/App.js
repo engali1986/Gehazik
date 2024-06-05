@@ -17,8 +17,7 @@ import PasswordRecovery from "./screens/PasswordRecovery.js";
 function App() {
   const BackDrop = useRef();
   const ProfileItems = useRef();
-  console.log(JSON.parse(localStorage.getItem("globalState")).TimeLogged);
-
+  
   //  first check if there is GlobalState in session and local storage
   if (
     localStorage.getItem("globalState") === null &&
@@ -238,7 +237,7 @@ function App() {
               BackDrop.current.classList.remove("BackDropActivated");
             }}
           >
-            <Home BackDropRef={BackDrop} />
+            <Home BackDropRef={BackDrop} GlobalState={GlobalState} />
           </div>
         </Row>
 

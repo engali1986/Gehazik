@@ -2,11 +2,47 @@ import React, {useState} from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
+
+
 const Home = (params) => {
+  const LogInItems=()=>{
+    if (params.GlobalState.UserLogged===true) {
+      return(
+        <div style={{width:'fit-content', marginLeft:'auto'}} onClick={(e)=>{
+          e.stopPropagation()
+          document.getElementsByClassName("BackDrop")[0].click()
+          console.log("Login/Signup clicked")
+        }}>
+          Hi,{params.GlobalState.Name}
+        </div>
+      )
+      
+    } else {
+      return(
+        <div style={{width:'fit-content', marginLeft:'auto'}} onClick={(e)=>{
+          e.stopPropagation()
+          
+          
+         
+          document.getElementsByClassName("BackDrop")[0].click()
+          console.log("Login/Signup clicked")
+          
+        }}>
+          LogIn/SignUp
+          <a href="/LogIn">
+          </a>
+        </div>
+      )
+      
+    }
+  }
   const [SubCategories,setSubCategories]=useState("")
   return (
-    <Container>
-      <Row className="NavBarBig d-none d-md-flex">
+    <Container onClick={()=>{
+      console.log(params)
+    }}>
+      <Row className="NavBarBig d-none d-md-flex" >
+
        
         <div
           style={{
@@ -77,13 +113,9 @@ const Home = (params) => {
             document.getElementsByClassName("BackDrop")[0].classList.remove("BackDropActivated")
           }}></div>
         </div>
-        <div style={{width:'fit-content', marginLeft:'auto'}} onClick={(e)=>{
-          e.stopPropagation()
-          document.getElementsByClassName("BackDrop")[0].click()
-          console.log("Login/Signup clicked")
-        }}>
-          Login/Signup
-        </div>
+        
+          <LogInItems/>
+        
       </Row>
       <Row className=" NavBarSmall d-flex d-md-none">
       <div
