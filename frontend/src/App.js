@@ -14,7 +14,7 @@ import ErrorWindow from "./screens/ErrorWindow.js";
 import LogIn from "./screens/LogIn.js";
 import SignUp from "./screens/SignUp.js";
 import PasswordRecovery from "./screens/PasswordRecovery.js";
-import Test from "./screens/Test.js";
+
 
 function App() {
   const BackDrop = useRef();
@@ -257,7 +257,7 @@ function App() {
           >
             <Routes>
               <Route path="/" element={<Main />} />
-              <Route path="/Test" element={<Test />} />
+              
               <Route
                 path="/LogIn"
                 element={

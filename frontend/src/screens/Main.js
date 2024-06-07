@@ -4,9 +4,13 @@ import {Container, Col, Row} from"react-bootstrap"
 
 
 import ErrorWindow from "./ErrorWindow";
+import AdsSlider from "./AdsSlider";
 
 const Main = () => {
-  return <Row>
+  return <>
+    
+      <AdsSlider/>
+    
 
     <div className="MainAds">
       Main ad
@@ -17,7 +21,7 @@ const Main = () => {
     
 
 
-  </Row>;
+  </>;
 };
 
 export default Main;
