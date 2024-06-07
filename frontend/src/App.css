@@ -8355,3 +8355,7 @@ readers do not read off random characters that represent icons */
 
 
 /* fontawsome end */
+
+.AdsImages{
+  transition: all 0.3s ease-in-out;
+}

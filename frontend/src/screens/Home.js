@@ -112,7 +112,7 @@ const Home = (params) => {
         </div>
         <div className="SearchBar d-flex" style={{ marginLeft: "auto", width: "30%", backgroundColor: "white", border: "1px solid black", borderRadius: "5px" }}>
           <input type="text" style={{ maxHeight: "4vh", border: "1px solid white" }} />
-          <i class="fa-solid fa-magnifying-glass" style={{ color: "blue" }}></i>
+          <i className="fa-solid fa-magnifying-glass" style={{ color: "blue" }}></i>
         </div>
 
         <LogInItems />
@@ -156,7 +156,7 @@ const Home = (params) => {
         </div>
         <div className="SearchBar d-flex" style={{ marginLeft: "auto", width: "30%", width: "fit-content", backgroundColor: "white", border: "1px solid black", borderRadius: "5px" }}>
           <input type="text" style={{ maxHeight: "4vh", border: "1px solid white" }} />
-          <i class="fa-solid fa-magnifying-glass" style={{ color: "blue" }}></i>
+          <i className="fa-solid fa-magnifying-glass" style={{ color: "blue" }}></i>
         </div>
        
 
@@ -168,7 +168,7 @@ const Home = (params) => {
             document.getElementsByClassName("BackDrop")[0].click();
             console.log("Login/Signup clicked");
           }}>
-            <i class="fa-regular fa-user"></i><span>Hello Ali</span> 
+            <i className="fa-regular fa-user"></i><span>Hello Ali</span> 
           
           
         </div>
