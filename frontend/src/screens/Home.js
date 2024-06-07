@@ -8,7 +8,7 @@ const Home = (params) => {
   const LogInItems=()=>{
     if (params.GlobalState.UserLogged===true) {
       return(
-        <div style={{width:'fit-content', marginLeft:'auto'}} onClick={(e)=>{
+        <div style={{width:'fit-content', marginLeft:'10%'}} onClick={(e)=>{
           e.stopPropagation()
           document.getElementsByClassName("BackDrop")[0].click()
           console.log("Login/Signup clicked")
@@ -19,17 +19,18 @@ const Home = (params) => {
       
     } else {
       return(
-        <div style={{width:'fit-content', marginLeft:'auto'}} onClick={(e)=>{
+        <div style={{width:'fit-content', marginLeft:'5%'}} onClick={(e)=>{
           e.stopPropagation()
           
           
          
           document.getElementsByClassName("BackDrop")[0].click()
+          document.getElementsByClassName("LogIn")[0].click()
           console.log("Login/Signup clicked")
           
         }}>
           LogIn/SignUp
-          <a href="/LogIn">
+          <a className="LogIn" href="/LogIn">
           </a>
         </div>
       )
@@ -112,7 +113,15 @@ const Home = (params) => {
             document.getElementsByClassName("Services")[0].lastChild.style.display = "none";
             document.getElementsByClassName("BackDrop")[0].classList.remove("BackDropActivated")
           }}></div>
+          
         </div>
+        <div className="SearchBar d-flex" style={{marginLeft:'auto',width:'30%',backgroundColor:'white', border:'1px solid black', borderRadius:'5px'}}>
+            
+            <input type="text" style={{height:'5vh'}}/>
+            <i class="fa-solid fa-magnifying-glass" style={{color:'blue'}}></i>
+            
+
+          </div>
         
           <LogInItems/>
         

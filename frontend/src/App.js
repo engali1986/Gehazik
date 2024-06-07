@@ -7,6 +7,7 @@ import { Navbar } from "react-bootstrap";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 
 import "./App.css";
+
 import { useState, useRef, useEffect } from "react";
 import Main from "./screens/Main.js";
 import ErrorWindow from "./screens/ErrorWindow.js";
