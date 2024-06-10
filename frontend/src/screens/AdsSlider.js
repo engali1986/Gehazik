@@ -1,6 +1,7 @@
-import React from "react";
+import React, {useEffect} from "react";
 
 const AdsSlider = () => {
+  console.log(document.getElementsByClassName("Ads")[0])
   let x = 0;
   const NextSlide = (e) => {
     e.stopPropagation();
@@ -28,7 +29,21 @@ const AdsSlider = () => {
       x = 0;
       document.getElementsByClassName("AdsImages")[0].style.left = "0%";
     }
+
+
   };
+
+  useEffect(()=>{
+    const elements= document.getElementsByClassName("Ads")
+    for (let index = 0; index < 2; index++) {
+     elements[index].childNodes[1].addEventListener("click",(e)=>{
+      e.stopPropagation()
+      console.log("added to favorite")
+     })
+      
+    }
+
+  },[])
   return (
     <div>
       <div
@@ -37,13 +52,17 @@ const AdsSlider = () => {
         onClick={(e) => {
           e.stopPropagation();
           console.log("Image slider clicked");
+          console.log(document.getElementsByClassName("Ads")[0].childNodes[1])
         }}>
         <div className="AdsImages" style={{ width: "400%", height: "100%", top: "0px", left: "0%", position: "absolute" }}>
           <div className="Ads">
             <img alt="Laptop" src="./Images/ad1.jpg" style={{ position: "absolute", top: "0px", left: "0px", width: "100%", height: "100%" }} />
             <i className="fa-regular fa-heart"></i>
           </div>
-          <div className="Ads" style={{ backgroundColor: "yellow" }}></div>
+          <div className="Ads">
+            <img alt="Laptop" src="./Images/ad2.jpeg" style={{ position: "absolute", top: "0px", left: "0px", width: "100%", height: "100%" }} />
+            <i className="fa-regular fa-heart"></i>
+          </div>
           <div className="Ads" style={{ backgroundColor: "red" }}></div>
           <div className="Ads" style={{ backgroundColor: "blue" }}></div>
         </div>

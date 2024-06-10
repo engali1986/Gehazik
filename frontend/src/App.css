@@ -8375,7 +8375,13 @@ readers do not read off random characters that represent icons */
   bottom: 0%;
   right: 0%;
   z-index: 1;
+  color: rgb(6, 6, 6);
+  background-color: rgb(253, 250, 250);
   font-size: x-large;
+}
+
+.Ads i:hover{
+  cursor: pointer;
 }
 
 /* AdsImages end */
