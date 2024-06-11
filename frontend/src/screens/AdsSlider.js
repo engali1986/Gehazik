@@ -15,8 +15,8 @@ const AdsSlider = () => {
       document.getElementsByClassName("AdsImages")[0].style.left = left;
       console.log(x);
     } else {
-      x = 0;
-      document.getElementsByClassName("AdsImages")[0].style.left = "0%";
+      // x = 0;
+      // document.getElementsByClassName("AdsImages")[0].style.left = "0%";
     }
   };
 
@@ -34,29 +34,29 @@ const AdsSlider = () => {
 
 
   };
+useEffect(()=>{
+  const Ads=document.querySelectorAll(".Ads")
+  Ads.forEach(Ad=>{
+    Ad.addEventListener("click",(e)=>{
+      e.stopPropagation()
+      console.log(e.target)
+    })
 
-  useEffect(() => {
-    // Define the event handler function outside of the loop
-    const handleClick = (e) => {
-      e.stopPropagation();
-      console.log(e.target);
-    };
+    return()=>{
+      Ad.removeEventListener("click",(e)=>{
 
-    // Get all elements with the classname 'Ads'
-    const elements = document.querySelectorAll(".Ads");
-    
-    // Add click event listener to each element
-    elements.forEach(element => {
-      element.addEventListener("click", handleClick);
-    });
+        e.stopPropagation()
+      console.log(e.target)
+        
+      })
 
-    // Cleanup function to remove event listeners
-    return () => {
-      elements.forEach(element => {
-        element.removeEventListener("click", handleClick);
-      });
-    };
-  }, []);
+    }
+  })
+
+  
+
+},[])
+ 
   return (
     <div>
       <div
