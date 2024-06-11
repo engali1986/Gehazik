@@ -1,6 +1,8 @@
 import React, {useEffect} from "react";
 
 const AdsSlider = () => {
+  
+ 
   console.log(document.getElementsByClassName("Ads")[0])
   let x = 0;
   const NextSlide = (e) => {
@@ -33,17 +35,28 @@ const AdsSlider = () => {
 
   };
 
-  useEffect(()=>{
-    const elements= document.getElementsByClassName("Ads")
-    for (let index = 0; index < 2; index++) {
-     elements[index].childNodes[1].addEventListener("click",(e)=>{
-      e.stopPropagation()
-      console.log("added to favorite")
-     })
-      
-    }
+  useEffect(() => {
+    // Define the event handler function outside of the loop
+    const handleClick = (e) => {
+      e.stopPropagation();
+      console.log(e.target);
+    };
 
-  },[])
+    // Get all elements with the classname 'Ads'
+    const elements = document.querySelectorAll(".Ads");
+    
+    // Add click event listener to each element
+    elements.forEach(element => {
+      element.addEventListener("click", handleClick);
+    });
+
+    // Cleanup function to remove event listeners
+    return () => {
+      elements.forEach(element => {
+        element.removeEventListener("click", handleClick);
+      });
+    };
+  }, []);
   return (
     <div>
       <div
@@ -57,14 +70,20 @@ const AdsSlider = () => {
         <div className="AdsImages" style={{ width: "400%", height: "100%", top: "0px", left: "0%", position: "absolute" }}>
           <div className="Ads">
             <img alt="Laptop" src="./Images/ad1.jpg" style={{ position: "absolute", top: "0px", left: "0px", width: "100%", height: "100%" }} />
-            <i className="fa-regular fa-heart"></i>
+            <i className="fa-regular fa-heart">1</i>
           </div>
           <div className="Ads">
             <img alt="Laptop" src="./Images/ad2.jpeg" style={{ position: "absolute", top: "0px", left: "0px", width: "100%", height: "100%" }} />
-            <i className="fa-regular fa-heart"></i>
+            <i className="fa-regular fa-heart">2</i>
           </div>
-          <div className="Ads" style={{ backgroundColor: "red" }}></div>
-          <div className="Ads" style={{ backgroundColor: "blue" }}></div>
+          <div className="Ads">
+            <img alt="Laptop" src="./Images/ad1.jpg" style={{ position: "absolute", top: "0px", left: "0px", width: "100%", height: "100%" }} />
+            <i className="fa-regular fa-heart">3</i>
+          </div>
+          <div className="Ads">
+            <img alt="Laptop" src="./Images/ad2.jpeg" style={{ position: "absolute", top: "0px", left: "0px", width: "100%", height: "100%" }} />
+            <i className="fa-regular fa-heart">4</i>
+          </div>
         </div>
         <i className="fa-solid fa-arrow-right fa-xl" style={{ position: "absolute", top: "50%", right: "0%", zIndex: "1", cursor: "pointer" }} onClick={(e) => NextSlide(e)}></i>
 
