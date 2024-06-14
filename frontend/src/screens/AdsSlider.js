@@ -1,9 +1,7 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 
 const AdsSlider = () => {
-  
- 
-  console.log(document.getElementsByClassName("Ads")[0])
+  console.log(document.getElementsByClassName("Ads")[0]);
   let x = 0;
   const NextSlide = (e) => {
     e.stopPropagation();
@@ -31,32 +29,8 @@ const AdsSlider = () => {
       x = 0;
       document.getElementsByClassName("AdsImages")[0].style.left = "0%";
     }
-
-
   };
-useEffect(()=>{
-  const Ads=document.querySelectorAll(".Ads")
-  Ads.forEach(Ad=>{
-    Ad.addEventListener("click",(e)=>{
-      e.stopPropagation()
-      console.log(e.target)
-    })
 
-    return()=>{
-      Ad.removeEventListener("click",(e)=>{
-
-        e.stopPropagation()
-      console.log(e.target)
-        
-      })
-
-    }
-  })
-
-  
-
-},[])
- 
   return (
     <div>
       <div
@@ -65,24 +39,80 @@ useEffect(()=>{
         onClick={(e) => {
           e.stopPropagation();
           console.log("Image slider clicked");
-          console.log(document.getElementsByClassName("Ads")[0].childNodes[1])
+          console.log(document.getElementsByClassName("Ads")[0].childNodes[1]);
         }}>
         <div className="AdsImages" style={{ width: "400%", height: "100%", top: "0px", left: "0%", position: "absolute" }}>
           <div className="Ads">
             <img alt="Laptop" src="./Images/ad1.jpg" style={{ position: "absolute", top: "0px", left: "0px", width: "100%", height: "100%" }} />
-            <i className="fa-regular fa-heart">1</i>
+            <i
+              className="fa-regular fa-heart"
+              onClick={(e) => {
+                e.stopPropagation();
+                console.log(e.target);
+                console.log(e.target.className);
+                if (e.target.className === "fa-regular fa-heart") {
+                  e.target.classList.remove("fa-regular");
+                  e.target.classList.add("fa-solid");
+                  e.target.style.color = "red";
+                } else {
+                }
+              }}>
+              1
+            </i>
           </div>
           <div className="Ads">
             <img alt="Laptop" src="./Images/ad2.jpeg" style={{ position: "absolute", top: "0px", left: "0px", width: "100%", height: "100%" }} />
-            <i className="fa-regular fa-heart">2</i>
+            <i
+              className="fa-regular fa-heart"
+              onClick={(e) => {
+                e.stopPropagation();
+                console.log(e.target);
+                console.log(e.target.className);
+                if (e.target.className === "fa-regular fa-heart") {
+                  e.target.classList.remove("fa-regular");
+                  e.target.classList.add("fa-solid");
+                  e.target.style.color = "red";
+                } else {
+                }
+              }}>
+              2
+            </i>
           </div>
           <div className="Ads">
             <img alt="Laptop" src="./Images/ad1.jpg" style={{ position: "absolute", top: "0px", left: "0px", width: "100%", height: "100%" }} />
-            <i className="fa-regular fa-heart">3</i>
+            <i
+              className="fa-regular fa-heart"
+              onClick={(e) => {
+                e.stopPropagation();
+                console.log(e.target);
+                console.log(e.target.className);
+                if (e.target.className === "fa-regular fa-heart") {
+                  e.target.classList.remove("fa-regular");
+                  e.target.classList.add("fa-solid");
+                  e.target.style.color = "red";
+                } else {
+                }
+              }}>
+              3
+            </i>
           </div>
           <div className="Ads">
             <img alt="Laptop" src="./Images/ad2.jpeg" style={{ position: "absolute", top: "0px", left: "0px", width: "100%", height: "100%" }} />
-            <i className="fa-regular fa-heart">4</i>
+            <i
+              className="fa-regular fa-heart"
+              onClick={(e) => {
+                e.stopPropagation();
+                console.log(e.target);
+                console.log(e.target.className);
+                if (e.target.className === "fa-regular fa-heart") {
+                  e.target.classList.remove("fa-regular");
+                  e.target.classList.add("fa-solid");
+                  e.target.style.color = "red";
+                } else {
+                }
+              }}>
+              4
+            </i>
           </div>
         </div>
         <i className="fa-solid fa-arrow-right fa-xl" style={{ position: "absolute", top: "50%", right: "0%", zIndex: "1", cursor: "pointer" }} onClick={(e) => NextSlide(e)}></i>

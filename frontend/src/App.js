@@ -16,16 +16,12 @@ import SignUp from "./screens/SignUp.js";
 import PasswordRecovery from "./screens/PasswordRecovery.js";
 import Test from "./screens/Test.js";
 
-
 function App() {
   const BackDrop = useRef();
   const ProfileItems = useRef();
-  
+
   //  first check if there is GlobalState in session and local storage
-  if (
-    localStorage.getItem("globalState") === null &&
-    sessionStorage.getItem("globalState") === null
-  ) {
+  if (localStorage.getItem("globalState") === null && sessionStorage.getItem("globalState") === null) {
     console.log("initiale state");
     localStorage.setItem(
       "globalState",
@@ -50,10 +46,7 @@ function App() {
     console.log("initial sessionstorage");
 
     console.log(localStorage.getItem("globalState"));
-  } else if (
-    sessionStorage.getItem("globalState") === null &&
-    localStorage.getItem("globalState") != null
-  ) {
+  } else if (sessionStorage.getItem("globalState") === null && localStorage.getItem("globalState") != null) {
     sessionStorage.setItem(
       "globalState",
       JSON.stringify({
@@ -79,9 +72,7 @@ function App() {
   }
   //  if no data set session and local storage above
 
-  const [GlobalState, SetGlobal] = useState(
-    JSON.parse(sessionStorage.getItem("globalState"))
-  );
+  const [GlobalState, SetGlobal] = useState(JSON.parse(sessionStorage.getItem("globalState")));
   console.log("app started");
   console.log(GlobalState);
   console.log(sessionStorage.getItem("globalState"));
@@ -165,63 +156,45 @@ function App() {
   };
   // Main bage to be directly below navbar we use window,onresize and adjust margintop
 
-  window.onresize=()=>{
-    
-    if (window.innerWidth>=768) {
-      console.log("navBarBig")
-      document.getElementsByClassName("MainBage")[0].style.marginTop=document.getElementsByClassName("NavBarBig")[0].getBoundingClientRect().bottom+"px"
-      
+  window.onresize = () => {
+    if (window.innerWidth >= 768) {
+      console.log("navBarBig");
+      document.getElementsByClassName("MainBage")[0].style.marginTop = document.getElementsByClassName("NavBarBig")[0].getBoundingClientRect().bottom + "px";
     } else {
-      console.log("navBarsmall")
-      document.getElementsByClassName("MainBage")[0].style.marginTop=document.getElementsByClassName("NavBarSmall")[0].getBoundingClientRect().bottom+"px"
-      
+      console.log("navBarsmall");
+      document.getElementsByClassName("MainBage")[0].style.marginTop = document.getElementsByClassName("NavBarSmall")[0].getBoundingClientRect().bottom + "px";
     }
-    
-    
-
-  }
-  useEffect(()=>{
-    if (window.innerWidth>=768) {
-      console.log("navBarBig")
-      document.getElementsByClassName("MainBage")[0].style.marginTop=document.getElementsByClassName("NavBarBig")[0].getBoundingClientRect().bottom+"px"
-      
+  };
+  useEffect(() => {
+    if (window.innerWidth >= 768) {
+      console.log("navBarBig");
+      document.getElementsByClassName("MainBage")[0].style.marginTop = document.getElementsByClassName("NavBarBig")[0].getBoundingClientRect().bottom + "px";
     } else {
-      console.log("navBarsmall")
-      document.getElementsByClassName("MainBage")[0].style.marginTop=document.getElementsByClassName("NavBarSmall")[0].getBoundingClientRect().bottom+"px"
-      
+      console.log("navBarsmall");
+      document.getElementsByClassName("MainBage")[0].style.marginTop = document.getElementsByClassName("NavBarSmall")[0].getBoundingClientRect().bottom + "px";
     }
-    
-  },[])
-
+  }, []);
 
   return (
     <div
       onClick={() => {
         console.log(window.innerWidth);
-      }}
-    >
+      }}>
       <div
         ref={BackDrop}
         onClick={(e) => {
-          e.stopPropagation()
-          console.log("backdrop clicked")
+          e.stopPropagation();
+          console.log("backdrop clicked");
           document.getElementsByClassName("Services")[0].lastChild.style.display = "none";
           document.getElementsByClassName("Categories")[0].style.height = "0vh";
           document.getElementsByClassName("Categories")[0].style.overflowY = "hidden";
-          document.getElementsByClassName("BackDrop")[0].classList.remove("BackDropActivated")
-          document.getElementsByClassName("SubCategories")[0].style.display="none"
-          
+          document.getElementsByClassName("BackDrop")[0].classList.remove("BackDropActivated");
+          document.getElementsByClassName("SubCategories")[0].style.display = "none";
         }}
-        className="BackDrop "
-      ></div>
+        className="BackDrop "></div>
 
-      <Container
-        className="App "
-        style={{ border: "2px solid red", fontSize: "1rem", zIndex: "100" }}
-      >
-        <Row
-          style={{ zIndex: "5", backgroundRowor: "gray", position: "relative" }}
-        >
+      <Container className="App " style={{ border: "2px solid red", fontSize: "1rem", zIndex: "100" }}>
+        <Row style={{ zIndex: "5", backgroundRowor: "gray", position: "relative" }}>
           <div
             className="fixed-top"
             onClick={(e) => {
@@ -231,51 +204,43 @@ function App() {
                 document.getElementsByClassName("Services")[0].lastChild.style.display = "none";
                 document.getElementsByClassName("Categories")[0].style.height = "0vh";
                 document.getElementsByClassName("Categories")[0].style.overflowY = "hidden";
-                document.getElementsByClassName("BackDrop")[0].classList.remove("BackDropActivated")
-                document.getElementsByClassName("SubCategories")[0].style.display="none"
-                
+                document.getElementsByClassName("BackDrop")[0].classList.remove("BackDropActivated");
+                document.getElementsByClassName("SubCategories")[0].style.display = "none";
               } else {
-                
               }
               BackDrop.current.classList.remove("BackDropActivated");
-            }}
-          >
+            }}>
             <Home BackDropRef={BackDrop} GlobalState={GlobalState} />
           </div>
         </Row>
 
         <div className="row px-2 ps-2">
-          <div 
+          <div
             className="MainBage col-12"
             style={{
               position: "relative",
               minHeight: "120vh",
               border: "2px solid green",
               marginTop: "0px",
-            }}
-
-            
-          >
+            }}>
             <Routes>
               <Route path="/" element={<Main />} />
               <Route path="/Test" element={<Test />} />
-              
-              <Route
-                path="/LogIn"
-                element={
-                  <LogIn globalState={GlobalState} setGlobal={userChange} />
-                }
-              />
-              <Route
-                path="/SignUp"
-                element={
-                  <SignUp globalState={GlobalState} setGlobal={userChange} />
-                }
-              />
+
+              <Route path="/LogIn" element={<LogIn globalState={GlobalState} setGlobal={userChange} />} />
+              <Route path="/SignUp" element={<SignUp globalState={GlobalState} setGlobal={userChange} />} />
               <Route path="/PasswordRecovery" element={<PasswordRecovery />} />
             </Routes>
           </div>
         </div>
+        <Row style={{ fontSize: "1rem", color: "white", backgroundColor: "gray" }}>
+          <Col xs={12} md={2}>
+            Contact Us
+          </Col>
+          <Col xs={12} md={2}>
+            Return Policy
+          </Col>
+        </Row>
       </Container>
     </div>
   );
