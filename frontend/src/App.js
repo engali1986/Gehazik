@@ -15,7 +15,7 @@ import LogIn from "./screens/LogIn.js";
 import SignUp from "./screens/SignUp.js";
 import PasswordRecovery from "./screens/PasswordRecovery.js";
 import Test from "./screens/Test.js";
-
+import ContactUs from "./screens/ContactUs.js";
 function App() {
   const BackDrop = useRef();
   const ProfileItems = useRef();
@@ -226,6 +226,8 @@ function App() {
             <Routes>
               <Route path="/" element={<Main />} />
               <Route path="/Test" element={<Test />} />
+              <Route path="/ContactUs" element={<ContactUs />} />
+
 
               <Route path="/LogIn" element={<LogIn globalState={GlobalState} setGlobal={userChange} />} />
               <Route path="/SignUp" element={<SignUp globalState={GlobalState} setGlobal={userChange} />} />
@@ -234,8 +236,16 @@ function App() {
           </div>
         </div>
         <Row style={{ fontSize: "1rem", color: "white", backgroundColor: "gray" }}>
-          <Col xs={12} md={2}>
+          <Col xs={12} md={2} onClick={(e)=>{
+            e.stopPropagation()
+            console.log(e.target.lastChild)
+            e.target.lastChild.click()
+          }} >
             Contact Us
+            <a href="/ContactUs" style={{display:'none'}}>
+              Contact
+
+            </a>
           </Col>
           <Col xs={12} md={2}>
             Return Policy
