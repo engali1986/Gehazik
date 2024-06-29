@@ -1,2 +1,2 @@
-## Gehazik project
-# an e-commerce website
+# Gehazik project
+## an e-commerce website
