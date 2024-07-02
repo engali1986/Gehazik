@@ -154,14 +154,14 @@ const Home = (params) => {
           }}>
           &#9776;
         </div>
-        <div className="SearchBar d-flex" style={{ marginLeft: "auto", width: "30%", width: "fit-content", backgroundColor: "white", border: "1px solid black", borderRadius: "5px" }}>
+        <Col xs={12}className="SearchBar d-flex order-4" style={{  backgroundColor: "white", border: "1px solid black", borderRadius: "5px" }}>
           <input type="text" style={{ maxHeight: "4vh", border: "1px solid white" }} />
           <i className="fa-solid fa-magnifying-glass" style={{ color: "blue" }}></i>
-        </div>
+        </Col>
        
 
 
-        <div
+        <div className=" order-3"
           style={{ width: "fit-content", marginLeft: "auto" }}
           onClick={(e) => {
             e.stopPropagation();

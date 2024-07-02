@@ -3,6 +3,8 @@
 /* LogIn styles */
 /* SignUp alert styles ( if there is no content inside the alert display will be none  */
 /* NavBarBig */
+/* AdsImages */
+/* Footer */
 .App {
   text-align: center;
 }
@@ -8385,3 +8387,18 @@ readers do not read off random characters that represent icons */
 }
 
 /* AdsImages end */
+
+
+/* Footer start */
+
+.Footer div{
+  transition: all 0.3s ease-in-out
+}
+
+.Footer div:hover{
+  cursor: pointer;
+  background-color: #fcb478dd;
+}
+
+
+/* Footer end */

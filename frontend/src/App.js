@@ -235,7 +235,7 @@ function App() {
             </Routes>
           </div>
         </div>
-        <Row style={{ fontSize: "1rem", color: "white", backgroundColor: "gray" }}>
+        <Row className="Footer" style={{ fontSize: "1rem", color: "white", backgroundColor: "gray" }}>
           <Col xs={12} md={2} onClick={(e)=>{
             e.stopPropagation()
             console.log(e.target.lastChild)
