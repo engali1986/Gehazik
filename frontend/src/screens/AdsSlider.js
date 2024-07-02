@@ -50,11 +50,14 @@ const AdsSlider = () => {
                 e.stopPropagation();
                 console.log(e.target);
                 console.log(e.target.className);
-                if (e.target.className === "fa-regular fa-heart") {
+                if (e.target.classList.contains("fa-regular")) {
                   e.target.classList.remove("fa-regular");
                   e.target.classList.add("fa-solid");
                   e.target.style.color = "red";
                 } else {
+                  e.target.classList.remove("fa-solid");
+                  e.target.classList.add("fa-regular");
+                  e.target.style.color = "black";
                 }
               }}>
               1
@@ -68,11 +71,14 @@ const AdsSlider = () => {
                 e.stopPropagation();
                 console.log(e.target);
                 console.log(e.target.className);
-                if (e.target.className === "fa-regular fa-heart") {
+                if (e.target.classList.contains("fa-regular")) {
                   e.target.classList.remove("fa-regular");
                   e.target.classList.add("fa-solid");
                   e.target.style.color = "red";
                 } else {
+                  e.target.classList.remove("fa-solid");
+                  e.target.classList.add("fa-regular");
+                  e.target.style.color = "black";
                 }
               }}>
               2
@@ -86,11 +92,14 @@ const AdsSlider = () => {
                 e.stopPropagation();
                 console.log(e.target);
                 console.log(e.target.className);
-                if (e.target.className === "fa-regular fa-heart") {
+                if (e.target.classList.contains("fa-regular")) {
                   e.target.classList.remove("fa-regular");
                   e.target.classList.add("fa-solid");
                   e.target.style.color = "red";
                 } else {
+                  e.target.classList.remove("fa-solid");
+                  e.target.classList.add("fa-regular");
+                  e.target.style.color = "black";
                 }
               }}>
               3
@@ -104,11 +113,14 @@ const AdsSlider = () => {
                 e.stopPropagation();
                 console.log(e.target);
                 console.log(e.target.className);
-                if (e.target.className === "fa-regular fa-heart") {
+                if (e.target.classList.contains("fa-regular")) {
                   e.target.classList.remove("fa-regular");
                   e.target.classList.add("fa-solid");
                   e.target.style.color = "red";
                 } else {
+                  e.target.classList.remove("fa-solid");
+                  e.target.classList.add("fa-regular");
+                  e.target.style.color = "black";
                 }
               }}>
               4
