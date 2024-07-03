@@ -38,6 +38,7 @@ const Home = (params) => {
     <Container
       onClick={() => {
         console.log(params);
+        console.log(params.GlobalState.Admin)
       }}>
       <Row className="NavBarBig d-none d-md-flex">
         <div
