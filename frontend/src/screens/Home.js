@@ -168,7 +168,7 @@ const Home = (params) => {
             document.getElementsByClassName("BackDrop")[0].click();
             console.log("Login/Signup clicked");
           }}>
-            <i className="fa-regular fa-user"></i><span>Hello Ali</span> 
+             <LogInItems />
           
           
         </div>
