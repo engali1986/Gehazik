@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { Container, Row, Col} from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-// here we use if else to check params.GlobalState.Admin if false display NavBar items means normal user else means admin donot display navbar items except home
-
 const Home = (params) => {
   const LogInItems = () => {
     if (params.GlobalState.UserLogged === true) {
@@ -35,12 +33,9 @@ const Home = (params) => {
       );
     }
   };
-
   const [SubCategories, setSubCategories] = useState("");
-//  here we check if normal user or admin
-  if (params.GlobalState.Admin===false) {
-    return (
-      <Container
+  return (
+    <Container
       onClick={() => {
         console.log(params);
         console.log(params.GlobalState.Admin)
@@ -229,46 +224,7 @@ const Home = (params) => {
         </Col>
       </Row>
     </Container>
-
-    )
-    
-  } else {
-    return(
-      <Container
-      onClick={() => {
-        console.log(params);
-        console.log(params.GlobalState.Admin)
-      }}>
-      <Row className="NavBarBig d-none d-md-flex">
-        <div
-          style={{
-            fontSize: "1.5rem",
-            textAlign: "start",
-            width: "fit-content",
-          }}>
-          home
-        </div>
-       
-      </Row>
-      {/* Small screen navbar-------------------------------------------------------------------------------------------------- */}
-      <Row className=" NavBarSmall d-flex d-md-none">
-        <div
-          style={{
-            fontSize: "1.5rem",
-            textAlign: "start",
-            width: "fit-content",
-          }}>
-          home
-        </div>
-      
-      </Row>
-     
-    </Container>
-    )
-    
-  }
-  
- 
+  );
 };
 
 export default Home;
