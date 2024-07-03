@@ -26,17 +26,14 @@ const LogIn = ({ globalState, setGlobal }) => {
     console.log(Credentials);
     console.log(typeof Credentials.VarificationCode);
 
-    const UserVarified = await fetch(
-      "http://localhost:5000/LogInUser",
-      {
-        method: "POST",
-        body: JSON.stringify(Credentials),
-        headers: {
-          "Content-Type": "application/json",
-        },
-        mode: "cors",
-      }
-    )
+    const UserVarified = await fetch("http://localhost:5000/LogInUser", {
+      method: "POST",
+      body: JSON.stringify(Credentials),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      mode: "cors",
+    })
       .then((res) => {
         return res.json();
       })
@@ -45,14 +42,11 @@ const LogIn = ({ globalState, setGlobal }) => {
       });
 
     if (UserVarified.resp.email && UserVarified.resp.uservarified === true) {
-      setGlobal(UserVarified.resp.name, true, UserVarified.resp.email);
+      setGlobal(UserVarified.resp.name, true, UserVarified.resp.email, false);
       Alert.current.classList.replace("alert-danger", "alert-success");
       Alert.current.innerText = "User Logged in successfully";
       Alert.current.style.maxHeight = "500px";
-    } else if (
-      UserVarified.resp.email &&
-      UserVarified.resp.uservarified === false
-    ) {
+    } else if (UserVarified.resp.email && UserVarified.resp.uservarified === false) {
       Alert.current.classList.replace("alert-danger", "alert-success");
       Alert.current.innerText = "Varification code sent by email";
       Alert.current.style.maxHeight = "500px";
@@ -78,17 +72,14 @@ const LogIn = ({ globalState, setGlobal }) => {
       setDisabled(true);
       LoginButtonRef.current.innerText = "Loggin please wait";
       console.log("Submitted");
-      const UserLogIn = await fetch(
-        "http://localhost:5000/LogInUser",
-        {
-          method: "POST",
-          body: JSON.stringify(Credentials),
-          headers: {
-            "Content-Type": "application/json",
-          },
-          mode: "cors",
-        }
-      )
+      const UserLogIn = await fetch("http://localhost:5000/LogInUser", {
+        method: "POST",
+        body: JSON.stringify(Credentials),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        mode: "cors",
+      })
         .then((res) => {
           return res.json();
         })
@@ -100,14 +91,11 @@ const LogIn = ({ globalState, setGlobal }) => {
         LoginButtonRef.current.innerText = "Login";
         if (typeof UserLogIn.resp === "object") {
           if (UserLogIn.resp.email && UserLogIn.resp.uservarified === true) {
-            setGlobal(UserLogIn.resp.name, true, UserLogIn.resp.email);
+            setGlobal(UserLogIn.resp.name, true, UserLogIn.resp.email, false);
             Alert.current.classList.replace("alert-danger", "alert-success");
             Alert.current.innerText = "User Logged in successfully";
             Alert.current.style.maxHeight = "500px";
-          } else if (
-            UserLogIn.resp.email &&
-            UserLogIn.resp.uservarified === false
-          ) {
+          } else if (UserLogIn.resp.email && UserLogIn.resp.uservarified === false) {
             Alert.current.classList.replace("alert-danger", "alert-success");
             Alert.current.innerText = "Varification code sent by email";
             Alert.current.style.maxHeight = "500px";
@@ -130,7 +118,7 @@ const LogIn = ({ globalState, setGlobal }) => {
           Alert.current.style.maxHeight = "500px";
           varificationCodeRef.current.style.display = "flex";
         } else if (UserLogIn.resp === "User varified") {
-          setGlobal(UserLogIn.resp.name, true, UserLogIn.resp.email);
+          setGlobal(UserLogIn.resp.name, true, UserLogIn.resp.email, false);
           Alert.current.classList.replace("alert-danger", "alert-success");
           Alert.current.innerText = "User Logged in successfully";
           Alert.current.style.maxHeight = "500px";
@@ -166,31 +154,16 @@ const LogIn = ({ globalState, setGlobal }) => {
       onClick={() => {
         console.log(globalState);
         console.log(Credentials);
-      }}
-    >
+      }}>
       <label htmlFor="Email">
         <b>Email</b>
       </label>
-      <input
-        type="text"
-        placeholder="Enter Email"
-        name="Email"
-        onChange={(e) => EmailInput(e)}
-        required
-        disabled={Disabled}
-      />
+      <input type="text" placeholder="Enter Email" name="Email" onChange={(e) => EmailInput(e)} required disabled={Disabled} />
 
       <label htmlFor="psw">
         <b>Password</b>
       </label>
-      <input
-        type="password"
-        placeholder="Enter Password"
-        name="psw"
-        onChange={(e) => PasswordInput(e)}
-        required
-        disabled={Disabled}
-      />
+      <input type="password" placeholder="Enter Password" name="psw" onChange={(e) => PasswordInput(e)} required disabled={Disabled} />
 
       <div
         ref={Alert}
@@ -204,15 +177,9 @@ const LogIn = ({ globalState, setGlobal }) => {
           maxHeight: "0px",
           transition: "all 0.3s ease-in-out",
         }}
-        role="alert"
-      ></div>
+        role="alert"></div>
 
-      <button
-        ref={LoginButtonRef}
-        className="LogInButton"
-        disabled={Disabled}
-        onClick={() => LogInSubmit()}
-      >
+      <button ref={LoginButtonRef} className="LogInButton" disabled={Disabled} onClick={() => LogInSubmit()}>
         Login
       </button>
       <Row ref={varificationCodeRef} style={{ display: "none" }}>
@@ -231,11 +198,7 @@ const LogIn = ({ globalState, setGlobal }) => {
         </Col>
 
         <Col xs={12} md={4}>
-          <button
-            className="SignUpButton"
-            style={{ height: "50px", margin: "0", width: "100%" }}
-            onClick={() => VarifyEmail()}
-          >
+          <button className="SignUpButton" style={{ height: "50px", margin: "0", width: "100%" }} onClick={() => VarifyEmail()}>
             Varify
           </button>
         </Col>
@@ -252,8 +215,7 @@ const LogIn = ({ globalState, setGlobal }) => {
             }}
             onClick={() => {
               navigate("/SignUp");
-            }}
-          >
+            }}>
             SignUp
           </span>
         </span>
@@ -270,8 +232,7 @@ const LogIn = ({ globalState, setGlobal }) => {
             }}
             onClick={() => {
               navigate("/PasswordRecovery");
-            }}
-          >
+            }}>
             Click here
           </span>
         </span>

@@ -16,6 +16,7 @@ import SignUp from "./screens/SignUp.js";
 import PasswordRecovery from "./screens/PasswordRecovery.js";
 import Test from "./screens/Test.js";
 import ContactUs from "./screens/ContactUs.js";
+import AdminLogIn from "./screens/AdminLogIn.js";
 function App() {
   const BackDrop = useRef();
   const ProfileItems = useRef();
@@ -29,6 +30,7 @@ function App() {
         UserLogged: false,
         Name: "",
         email: "",
+        Admin:false
       })
     );
 
@@ -38,6 +40,7 @@ function App() {
         UserLogged: false,
         Name: "",
         email: "",
+        Admin:false
       })
     );
 
@@ -53,6 +56,7 @@ function App() {
         UserLogged: JSON.parse(localStorage.getItem("globalState")).UserLogged,
         Name: JSON.parse(localStorage.getItem("globalState")).Name,
         email: JSON.parse(localStorage.getItem("globalState")).email,
+        Admin: JSON.parse(localStorage.getItem("globalState")).Admin
       })
     );
 
@@ -65,6 +69,7 @@ function App() {
         UserLogged: JSON.parse(localStorage.getItem("globalState")).UserLogged,
         Name: JSON.parse(localStorage.getItem("globalState")).Name,
         email: JSON.parse(localStorage.getItem("globalState")).email,
+        Admin: JSON.parse(localStorage.getItem("globalState")).Admin
       })
     );
 
@@ -98,12 +103,13 @@ function App() {
   //   }
   // }
 
-  const userChange = (name, LogInStatus, mail) => {
+  const userChange = (name, LogInStatus, mail, Admin) => {
     SetGlobal({
       ...GlobalState,
       UserLogged: LogInStatus,
       Name: name,
       email: mail,
+      Admin: Admin
     });
 
     localStorage.setItem(
@@ -112,6 +118,7 @@ function App() {
         UserLogged: LogInStatus,
         Name: name,
         email: mail,
+        Admin: Admin,
         TimeLogged: new Date().getTime(),
       })
     );
@@ -122,6 +129,7 @@ function App() {
         UserLogged: LogInStatus,
         Name: name,
         email: mail,
+        Admin: Admin
       })
     );
   };
@@ -227,6 +235,7 @@ function App() {
               <Route path="/" element={<Main />} />
               <Route path="/Test" element={<Test />} />
               <Route path="/ContactUs" element={<ContactUs />} />
+              <Route path="/AdminLogIn" element={<AdminLogIn />} />
 
 
               <Route path="/LogIn" element={<LogIn globalState={GlobalState} setGlobal={userChange} />} />
