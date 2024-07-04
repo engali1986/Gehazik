@@ -4,7 +4,7 @@ import { MongoClient } from "mongodb";
 import Uservarification from "./UserVarification.js";
 
 const uri =
-  "mongodb+srv://ali:cossacks1@cluster0.xerwiw2.mongodb.net/?maxIdleTimeMS=5000";
+  "mongodb+srv://engaligulf:Cossacks%401@cluster0.fj9bpe7.mongodb.net/?maxIdleTimeMS=5000";
 
 const client = new MongoClient(uri);
 // AddUser function is used to add user to database

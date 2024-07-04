@@ -265,17 +265,20 @@ function App() {
         <Row className="Footer" style={{ fontSize: "1rem", color: "white", backgroundColor: "gray" }}>
           <Col xs={12} md={2} onClick={(e)=>{
             e.stopPropagation()
-            console.log(e.target.lastChild)
-            e.target.lastChild.click()
           }} >
-            Contact Us
-            <a href="/ContactUs" style={{display:'none'}}>
-              Contact
+            
+            <a href="/ContactUs" style={{display:'block', textDecoration:'none', fontSize: "1rem", color: "white"}}>
+              Contact Us
 
             </a>
           </Col>
-          <Col xs={12} md={2}>
-            Return Policy
+          <Col xs={12} md={2}onClick={(e)=>{
+            e.stopPropagation()
+          }}>
+          <a href="/ReturnPolicy" style={{display:'block', textDecoration:'none', fontSize: "1rem", color: "white"}}>
+              Return Policy
+
+            </a>
           </Col>
         </Row>
       </Container>
