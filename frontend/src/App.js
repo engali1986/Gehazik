@@ -30,7 +30,10 @@ function App() {
         UserLogged: false,
         Name: "",
         email: "",
-        Admin:false
+        Admin:false,
+        Client: false,
+        Merchant: false
+
       })
     );
 
@@ -40,7 +43,10 @@ function App() {
         UserLogged: false,
         Name: "",
         email: "",
-        Admin:false
+        Admin:false,
+        Client: false,
+        Merchant: false
+
       })
     );
 
@@ -56,7 +62,10 @@ function App() {
         UserLogged: JSON.parse(localStorage.getItem("globalState")).UserLogged,
         Name: JSON.parse(localStorage.getItem("globalState")).Name,
         email: JSON.parse(localStorage.getItem("globalState")).email,
-        Admin: JSON.parse(localStorage.getItem("globalState")).Admin
+        Admin: JSON.parse(localStorage.getItem("globalState")).Admin,
+        Client: JSON.parse(localStorage.getItem("globalState")).Client,
+        Merchant: JSON.parse(localStorage.getItem("globalState")).Merchant
+
       })
     );
 
@@ -69,7 +78,10 @@ function App() {
         UserLogged: JSON.parse(localStorage.getItem("globalState")).UserLogged,
         Name: JSON.parse(localStorage.getItem("globalState")).Name,
         email: JSON.parse(localStorage.getItem("globalState")).email,
-        Admin: JSON.parse(localStorage.getItem("globalState")).Admin
+        Admin: JSON.parse(localStorage.getItem("globalState")).Admin,
+        Client: JSON.parse(localStorage.getItem("globalState")).Client,
+        Merchant: JSON.parse(localStorage.getItem("globalState")).Merchant
+
       })
     );
 
@@ -103,13 +115,15 @@ function App() {
   //   }
   // }
 
-  const userChange = (name, LogInStatus, mail, Admin) => {
+  const userChange = (name, LogInStatus, mail, Admin, Client, Merchant) => {
     SetGlobal({
       ...GlobalState,
       UserLogged: LogInStatus,
       Name: name,
       email: mail,
-      Admin: Admin
+      Admin: Admin,
+      Client: Client,
+      Merchant:Merchant
     });
 
     localStorage.setItem(
@@ -119,6 +133,8 @@ function App() {
         Name: name,
         email: mail,
         Admin: Admin,
+        Client: Client,
+        Merchant:Merchant,
         TimeLogged: new Date().getTime(),
       })
     );
@@ -129,7 +145,9 @@ function App() {
         UserLogged: LogInStatus,
         Name: name,
         email: mail,
-        Admin: Admin
+        Admin: Admin,
+        Client: Client,
+        Merchant:Merchant
       })
     );
   };

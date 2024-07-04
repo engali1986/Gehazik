@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 // here we use if else to check params.GlobalState.Admin if false display NavBar items means normal user else means admin donot display navbar items except home
 
 const Home = (params) => {
+  console.log()
   const LogInItems = () => {
     if (params.GlobalState.UserLogged === true) {
       return (
@@ -38,7 +39,48 @@ const Home = (params) => {
 
   const [SubCategories, setSubCategories] = useState("");
 //  here we check if normal user or admin
-  if (params.GlobalState.Admin===false) {
+  if (params.GlobalState.Admin===true || params.GlobalState.Merchant===true ) {
+    return(
+      <Container
+      onClick={() => {
+        console.log(params);
+      
+      }}>
+      <Row className="NavBarBig d-none d-md-flex">
+        <div
+          style={{
+            fontSize: "1.5rem",
+            textAlign: "start",
+            width: "fit-content",
+          }}>
+          home
+        </div>
+       
+      </Row>
+      {/* Small screen navbar-------------------------------------------------------------------------------------------------- */}
+      <Row className=" NavBarSmall d-flex d-md-none">
+        <div
+          style={{
+            fontSize: "1.5rem",
+            textAlign: "start",
+            width: "fit-content",
+          }}>
+          home
+        </div>
+      
+      </Row>
+     
+    </Container>
+    )
+
+
+    
+   
+
+
+   
+    
+  } else {
     return (
       <Container
       onClick={() => {
@@ -231,41 +273,6 @@ const Home = (params) => {
     </Container>
 
     )
-    
-  } else {
-    return(
-      <Container
-      onClick={() => {
-        console.log(params);
-        console.log(params.GlobalState.Admin)
-      }}>
-      <Row className="NavBarBig d-none d-md-flex">
-        <div
-          style={{
-            fontSize: "1.5rem",
-            textAlign: "start",
-            width: "fit-content",
-          }}>
-          home
-        </div>
-       
-      </Row>
-      {/* Small screen navbar-------------------------------------------------------------------------------------------------- */}
-      <Row className=" NavBarSmall d-flex d-md-none">
-        <div
-          style={{
-            fontSize: "1.5rem",
-            textAlign: "start",
-            width: "fit-content",
-          }}>
-          home
-        </div>
-      
-      </Row>
-     
-    </Container>
-    )
-    
   }
   
  

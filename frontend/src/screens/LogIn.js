@@ -42,7 +42,7 @@ const LogIn = ({ globalState, setGlobal }) => {
       });
 
     if (UserVarified.resp.email && UserVarified.resp.uservarified === true) {
-      setGlobal(UserVarified.resp.name, true, UserVarified.resp.email, false);
+      setGlobal(UserVarified.resp.name, true, UserVarified.resp.email, false, true, false);
       Alert.current.classList.replace("alert-danger", "alert-success");
       Alert.current.innerText = "User Logged in successfully";
       Alert.current.style.maxHeight = "500px";
