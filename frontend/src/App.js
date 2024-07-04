@@ -191,6 +191,10 @@ function App() {
       document.getElementsByClassName("MainBage")[0].style.marginTop = document.getElementsByClassName("NavBarSmall")[0].getBoundingClientRect().bottom + "px";
     }
   };
+
+ window.onunload=()=>{
+  localStorage.clear()
+ }
   useEffect(() => {
     if (window.innerWidth >= 768) {
       console.log("navBarBig");
