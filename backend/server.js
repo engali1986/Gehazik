@@ -61,6 +61,31 @@ app.post("/LogInUser", async (req, res) => {
   }
 });
 
+app.post("/AdminLogIn", async (req, res) => {
+  const credentials = await req.body;
+  console.log("server /AdminLogIn 0");
+  console.log(credentials);
+  const result = await AdminLogIn(credentials);
+  console.log("server /AdminLogIn 1");
+  console.log(result);
+  if (result.email) {
+    console.log("server /AdminLogIn 2");
+    res.json({ resp: result });
+  } else if (result === "User Not Found") {
+    console.log("server /AdminLogIn 3");
+    res.json({ resp: result });
+  } else if (result === "Connection error") {
+    console.log("server /AdminLogIn 4");
+    res.json({ resp: result });
+  } else if (result === "Varification Code sent by email") {
+    console.log("server /AdminLogIn 6");
+    res.json({ resp: result });
+  } else {
+    console.log("server /AdminLogIn 9");
+    res.json({ resp: "Internal error" });
+  }
+});
+
 app.post("/UpdateUser", async (req, res) => {
   const result = await Test();
   res.json(result);
