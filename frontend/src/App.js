@@ -20,6 +20,10 @@ import AdminLogIn from "./screens/AdminLogIn.js";
 function App() {
   const BackDrop = useRef();
   const ProfileItems = useRef();
+  if (sessionStorage.getItem("globalState") !== null) {
+    console.log("ther is sission")
+    
+  }
 
   //  first check if there is GlobalState in session and local storage
   if (localStorage.getItem("globalState") === null && sessionStorage.getItem("globalState") === null) {
