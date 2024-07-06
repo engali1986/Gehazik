@@ -5,6 +5,7 @@ import AddUser from "./DBConnection/AddUser.js";
 import Test from "./DBConnection/Test.js";
 import LogInUser from "./DBConnection/LogInUser.js";
 import PasswordRecovery from "./DBConnection/PasswordRecovery.js";
+import AdminLogIn  from "./DBConnection/AdminLogIn.js"
 const app = express();
 app.use(cors());
 app.use(express.json());
