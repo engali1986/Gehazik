@@ -143,8 +143,8 @@ const AdminLogIn = ({ globalState, setGlobal }) => {
   };
 
   useEffect(() => {
-    if (globalState.UserLogged === true) {
-      navigate("/");
+    if (globalState.Admin === true) {
+      navigate("/Admins/"+globalState.Name);
     }
   });
 

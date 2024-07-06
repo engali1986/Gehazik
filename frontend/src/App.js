@@ -17,6 +17,8 @@ import PasswordRecovery from "./screens/PasswordRecovery.js";
 import Test from "./screens/Test.js";
 import ContactUs from "./screens/ContactUs.js";
 import AdminLogIn from "./screens/AdminLogIn.js";
+import AdminPage from "./screens/AdminPage.js";
+import WrongPage from "./screens/WrongPage.js";
 function App() {
   const BackDrop = useRef();
   const ProfileItems = useRef();
@@ -262,11 +264,15 @@ function App() {
               <Route path="/Test" element={<Test />} />
               <Route path="/ContactUs" element={<ContactUs />} />
               <Route path="/AdminLogIn" element={<AdminLogIn globalState={GlobalState} setGlobal={userChange} />} />
+              <Route path="/Admins/:Name"  element={<AdminPage />} />
+
 
 
               <Route path="/LogIn" element={<LogIn globalState={GlobalState} setGlobal={userChange} />} />
               <Route path="/SignUp" element={<SignUp globalState={GlobalState} setGlobal={userChange} />} />
               <Route path="/PasswordRecovery" element={<PasswordRecovery />} />
+              <Route path="/*" element={<WrongPage />} />
+
             </Routes>
           </div>
         </div>
