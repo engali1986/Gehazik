@@ -143,9 +143,19 @@ const AdminLogIn = ({ globalState, setGlobal }) => {
   };
 
   useEffect(() => {
-    if (globalState.Admin === true) {
-      navigate("/Admins/"+globalState.Name);
+    if (globalState.UserLogged===true) {
+      if (globalState.Admin === true) {
+        navigate("/Admins/"+globalState.Name);
+      } else if( globalState.Client===true){
+        navigate("/")
+      } else if(globalState.Merchant===true){
+        navigate("/Merchants/"+globalState.Name)
+      }
+      
+    } else {
+      
     }
+    
   });
 
   return (
