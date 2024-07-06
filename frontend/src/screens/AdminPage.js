@@ -1,12 +1,15 @@
 import React,{useState,useEffect} from 'react'
 import {useParams} from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom";
 import {Container,Row,Col} from "react-bootstrap"
 
 //  the main Componebt is AdminPage and child Component is ControlPanel 
 //  when user clicks on any item on the AdminPage component side items >SetData function will update the Data state > then the ControlPanel will be updated using useState
+//  useeffect will be used to redirect unauthorized users away from the page 
 
-const AdminPage = () => {
+const AdminPage = ({ globalState, setGlobal }) => {
     const {Name}=useParams()
+    const navigate=useNavigate()
     const [Data,SelectData]=useState("")
 //  ControlPanel Component Start
     const ControlPanel=({Data})=>{
@@ -63,12 +66,29 @@ const SetData=(e)=>{
 
 // SetData function end
 
+useEffect(() => {
+  if (globalState.UserLogged===true) {
+    if (globalState.Admin === true) {
+     
+    } else if( globalState.Client===true){
+      navigate("/")
+    } else if(globalState.Merchant===true){
+      navigate("/Merchants/"+globalState.Name)
+    }
+    
+  } else {
+    navigate("/")
+    
+  }
+  
+});
+
 
   return (
     <>
     
-      <Row>
-        <Col xs={2}>
+      <Row style={{minHeight:"100%"}}>
+        <Col xs={2} style={{borderRight:'5px solid', borderColor:'#a4d2f2'}}>
           <div onClick={(e)=>SetData(e)}>
             Orders
           </div>

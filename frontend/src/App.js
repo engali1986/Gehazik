@@ -264,7 +264,7 @@ function App() {
               <Route path="/Test" element={<Test />} />
               <Route path="/ContactUs" element={<ContactUs />} />
               <Route path="/AdminLogIn" element={<AdminLogIn globalState={GlobalState} setGlobal={userChange} />} />
-              <Route path="/Admins/:Name"  element={<AdminPage />} />
+              <Route path="/Admins/:Name"  element={<AdminPage globalState={GlobalState} setGlobal={userChange} />} />
 
 
 

@@ -6,6 +6,7 @@ import Test from "./DBConnection/Test.js";
 import LogInUser from "./DBConnection/LogInUser.js";
 import PasswordRecovery from "./DBConnection/PasswordRecovery.js";
 import AdminLogIn  from "./DBConnection/AdminLogIn.js"
+import AddOrder from "./DBConnection/AddOrder.js";
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -107,6 +108,29 @@ app.post("/PasswordRecovery", async (req, res) => {
     res.json({ resp: "User Not Found" });
   }
 });
+
+//  Orders Route start
+
+app.post("/AddOrder",async(req,res)=>{
+  const OrderData= await req.body
+  console.log("Server AddOrder 0")
+  console.log(OrderData)
+  const OrderAdded=await AddOrder(OrderData)
+  console.log("Server AddOrder 1")
+  console.log(OrderAdded)
+  if (typeof OrderAdded==="string") {
+    console.log("Server AddOrder 2")
+
+    res.send(OrderAdded)
+    
+  } else {
+    console.log("Server AddOrder 3")
+    res.send(OrderAdded._id)
+    
+  }
+})
+
+// Orders Route end
 
 app.post("/Test", async (req, res) => {
   const Credentials = await req.body;
