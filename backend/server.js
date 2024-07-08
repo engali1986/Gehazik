@@ -7,6 +7,7 @@ import LogInUser from "./DBConnection/LogInUser.js";
 import PasswordRecovery from "./DBConnection/PasswordRecovery.js";
 import AdminLogIn  from "./DBConnection/AdminLogIn.js"
 import AddOrder from "./DBConnection/AddOrder.js";
+import GetOrders from "./DBConnection/GetOrders.js";
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -110,7 +111,7 @@ app.post("/PasswordRecovery", async (req, res) => {
 });
 
 //  Orders Route start
-
+// AddOrder route to Add orders
 app.post("/AddOrder",async(req,res)=>{
   const OrderData= await req.body
   console.log("Server AddOrder 0")
@@ -129,6 +130,15 @@ app.post("/AddOrder",async(req,res)=>{
     
   }
 })
+
+// GetOrders Route to get list of all orders in DB
+app.get("/GetOrders", async(req,res)=>{
+  console.log("server GetOrders 0")
+  const Orders= await GetOrders()
+  res.send(JSON.stringify(Orders))
+})
+
+
 
 // Orders Route end
 
