@@ -136,7 +136,8 @@ app.get("/GetOrders", async(req,res)=>{
   console.log("server GetOrders 0")
   const Orders= await GetOrders()
   console.log("server GetOrders 1 "+ typeof Orders)
-  res.send(JSON.stringify(Orders))
+  
+  res.json(Orders)
 })
 
 
