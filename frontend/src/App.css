@@ -5,6 +5,7 @@
 /* NavBarBig */
 /* AdsImages */
 /* Footer */
+/* OrdersList */
 .App {
   text-align: center;
 }
@@ -8402,3 +8403,16 @@ readers do not read off random characters that represent icons */
 
 
 /* Footer end */
+
+/* OrdersList Start */
+
+#OrdersList{
+  color: #04AA6D;
+  
+}
+
+select option:hover {
+  box-shadow: 0 0 10px 100px #000 inset;
+}
+
+/* OrdersList End */

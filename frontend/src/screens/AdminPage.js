@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react'
+import React,{useState,useEffect,useRef} from 'react'
 import {useParams} from "react-router-dom"
 import { Link, useNavigate } from "react-router-dom";
 import {Container,Row,Col} from "react-bootstrap"
@@ -9,7 +9,9 @@ import {Container,Row,Col} from "react-bootstrap"
 //  useeffect will be used to redirect unauthorized users away from the page 
 
 const AdminPage = ({ globalState, setGlobal }) => {
+  
    const [AllOrders,SetAllOrders]=useState([])
+   const [SelectedOrder,SetSelectedOrder]=useState([])
    const [AllOrdersKeys,SetAllOrdersKeys]=useState([])
     const {Name}=useParams()
     const navigate=useNavigate()
@@ -25,10 +27,41 @@ const AdminPage = ({ globalState, setGlobal }) => {
         return(
           <Row>
             <Col style={{overflow:'scroll'}} xs={12}>
-              {AllOrders.map(Order=>(
+              <select id='OrdersList' onChange={(e)=>{
+                e.stopPropagation()
+                console.log(e.target.value)
+                let OrderArr=[]
+
+                for (let index = 0; index < AllOrders.length; index++) {
+                  if (AllOrders[index]._id===e.target.value) {
+                    OrderArr.push(AllOrders[index])
+                    SetSelectedOrder(OrderArr)
+                    console.log(AllOrders[index])
+                    break;
+                    
+                  } else {
+                    
+                  }
+                  
+                  
+                }
+
+               
+              }}>
+              {AllOrders.map(option=>(
+                <option key={option._id} value={option._id}>
+                  {option._id}
+
+                </option>
+              ))}
+
+              </select>
+              <div>
+
+              {SelectedOrder.map(Order=>(
                 <div style={{display:'flex'}} key={Order._id}>
                   {AllOrdersKeys.map(Key=>(
-                    <span  key={Key}>
+                    <span style={{width:'fit-content'}} key={Key}>
                       {String(Order[Key])}
 
                     </span>
@@ -36,6 +69,22 @@ const AdminPage = ({ globalState, setGlobal }) => {
 
                 </div>
               ))}
+
+
+            
+
+              </div>
+              {/* {AllOrders.map(Order=>(
+                <div style={{display:'flex'}} key={Order._id}>
+                  {AllOrdersKeys.map(Key=>(
+                    <span style={{width:'fit-content'}} key={Key}>
+                      {String(Order[Key])}
+
+                    </span>
+                  ))}
+
+                </div>
+              ))} */}
              
             </Col>
           </Row>
@@ -85,10 +134,16 @@ const Orders=async()=>{
     const Keys=Object.keys(Orders[0])
     console.log(Keys)
     SetAllOrdersKeys(Keys)
+   
 
+   
     console.log(Orders)
     SetAllOrders(Orders)
     console.log(AllOrders)
+
+   
+
+   
 }
 
 const SetData=(e)=>{
