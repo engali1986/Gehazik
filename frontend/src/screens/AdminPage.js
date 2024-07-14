@@ -10,6 +10,7 @@ import {Container,Row,Col} from "react-bootstrap"
 
 const AdminPage = ({ globalState, setGlobal }) => {
    const [AllOrders,SetAllOrders]=useState([])
+   const [AllOrdersKeys,SetAllOrdersKeys]=useState([])
     const {Name}=useParams()
     const navigate=useNavigate()
     const [Data,SelectData]=useState("")
@@ -23,18 +24,16 @@ const AdminPage = ({ globalState, setGlobal }) => {
       if (Data==="Orders") {
         return(
           <Row>
-            <Col xs={12}>
+            <Col style={{overflow:'scroll'}} xs={12}>
               {AllOrders.map(Order=>(
-                <div key={Order._id}>
-                  <span>
-                  {Order._id}
+                <div style={{display:'flex'}} key={Order._id}>
+                  {AllOrdersKeys.map(Key=>(
+                    <span  key={Key}>
+                      {String(Order[Key])}
 
-                  </span>
-                  <span>
-                  {Order.ClientName}
+                    </span>
+                  ))}
 
-                  </span>
-                  
                 </div>
               ))}
              
@@ -82,6 +81,10 @@ const Orders=async()=>{
     }).catch(err=>{
       console.log(err)
     })
+
+    const Keys=Object.keys(Orders[0])
+    console.log(Keys)
+    SetAllOrdersKeys(Keys)
 
     console.log(Orders)
     SetAllOrders(Orders)
