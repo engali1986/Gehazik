@@ -26,7 +26,7 @@ const AdminPage = ({ globalState, setGlobal }) => {
       if (Data==="Orders") {
         return(
           <Row>
-            <Col style={{overflow:'scroll'}} xs={12}>
+            <Col  xs={12}>
               <select id='OrdersList' onChange={(e)=>{
                 e.stopPropagation()
                 console.log(e.target.value)
@@ -49,22 +49,26 @@ const AdminPage = ({ globalState, setGlobal }) => {
                
               }}>
               {AllOrders.map(option=>(
-                <option key={option._id} value={option._id}>
+                <option  key={option._id} value={option._id}>
                   {option._id}
 
                 </option>
               ))}
 
               </select>
-              <div>
+              <div style={{overflow:'scroll'}}>
+                
 
               {SelectedOrder.map(Order=>(
                 <div style={{display:'flex'}} key={Order._id}>
-                  {AllOrdersKeys.map(Key=>(
-                    <span style={{width:'fit-content'}} key={Key}>
+                  {AllOrdersKeys.map((Key,i)=>(
+                    <div style={{width:'fit-content'}} key={Key}>
+                      <div>
+                        {AllOrdersKeys[i]}
+                        </div>
                       {String(Order[Key])}
 
-                    </span>
+                    </div>
                   ))}
 
                 </div>
@@ -183,8 +187,8 @@ useEffect(() => {
   return (
     <>
     
-      <Row style={{minHeight:"100%"}}>
-        <Col xs={2} style={{borderRight:'5px solid', borderColor:'#a4d2f2'}}>
+      <Row >
+        <Col xs={12} md={2} style={{borderRight:'5px solid', borderColor:'#a4d2f2'}}>
           <div onClick={(e)=>SetData(e)}>
             Orders
           </div>
@@ -193,7 +197,7 @@ useEffect(() => {
           </div>
         
         </Col>
-        <Col xs={10}>
+        <Col xs={12} md={10}>
           <ControlPanel Data={Data}/>
         </Col>
       </Row>
