@@ -8,6 +8,7 @@ import PasswordRecovery from "./DBConnection/PasswordRecovery.js";
 import AdminLogIn  from "./DBConnection/AdminLogIn.js"
 import AddOrder from "./DBConnection/AddOrder.js";
 import GetOrders from "./DBConnection/GetOrders.js";
+import AddCategory from "./DBConnection/AddCategory.js";
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -143,7 +144,19 @@ app.get("/GetOrders", async(req,res)=>{
 
 
 // Orders Route end
+app.post("/AddCategory",async (req,res)=>{
+  const CategoryData=await req.body
+  console.log("server AddCategory 0")
+  console.log(CategoryData)
+  const AddCategoryData= await AddCategory(CategoryData)
+  console.log(AddCategoryData)
 
+  res.json("AddCategory")
+})
+// AddCategory Route start
+
+
+// AddCategory Route end
 app.post("/Test", async (req, res) => {
   const Credentials = await req.body;
   const result = await Test(Credentials);

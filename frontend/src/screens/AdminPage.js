@@ -9,8 +9,8 @@ import { Container, Row, Col } from "react-bootstrap"
 //  useeffect will be used to redirect unauthorized users away from the page 
 
 const AdminPage = ({ globalState, setGlobal }) => {
-  const Category=useRef()
-  const SubCategory=useRef()
+  const Category = useRef()
+  const SubCategory = useRef()
 
   const [AllOrders, SetAllOrders] = useState([])
   const [SelectedOrder, SetSelectedOrder] = useState([])
@@ -157,14 +157,33 @@ const AdminPage = ({ globalState, setGlobal }) => {
 
               </Row>
               <Row>
-                <button onClick={(e)=>{
+                <button onClick={async (e) => {
                   e.stopPropagation()
-                  let Obj={}
-                  console.log(Category.current.value)
-                  let SubCategories=SubCategory.current.value.split(/\n/)
-                  let SubCategories2=SubCategories.pop()
-                  Obj[Category.current.value]=SubCategories
+                  let Obj = {}
+                  let Key = Category.current.value.replace(/\s+/g, "_")
+                  console.log(Category.current.value.trim())
+                  let SubCategories = SubCategory.current.value.split(/\n/)
+                  SubCategories.pop()
+
+                  Obj[Key] = SubCategories
                   console.log(Obj)
+                  try {
+                    const AddCategory = await fetch("http://localhost:5000/AddCategory", {
+                      method: "POST",
+                      body: JSON.stringify(Obj),
+                      headers: {
+                        "Content-Type": "application/json",
+                      },
+                      mode: "cors",
+
+
+                    }).then(res=>{
+                      console.log(res.json())
+                    })
+
+                  } catch (err) {
+
+                  }
                 }}>
                   Add to DB
                 </button>
