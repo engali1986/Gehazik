@@ -14,7 +14,7 @@ const ContactUs = () => {
         <Col className=" p-1" xs={12} md={6} style={{ display: "flex", flexDirection: "column", alignContent: "space-around", justifyContent: "space-around", borderRadius: "5%" }}>
           <div style={{ border: "1px solid gray", borderRadius: "5px", boxShadow: "6px 4px 9px 0px rgba(0,0,0,0.5)" }}>
             <h1>
-              <i class="fa-solid fa-envelope"></i>
+              <i className="fa-solid fa-envelope"></i>
             </h1>
             <h2>Send E-mail</h2>
             <a href="mailto:engaligulf@gmail.com">Email us</a>
@@ -24,7 +24,7 @@ const ContactUs = () => {
         <Col className=" p-1" xs={12} md={6} style={{ display: "flex", flexDirection: "column", alignContent: "space-around", justifyContent: "space-around", borderRadius: "5%" }}>
           <div style={{ border: "1px solid gray", borderRadius: "5px", boxShadow: "6px 4px 9px 0px rgba(0,0,0,0.5)" }}>
             <h1>
-              <i class="fa-solid fa-phone"></i>
+              <i className="fa-solid fa-phone"></i>
             </h1>
             <h2>Call us</h2>
             <a href="tel:+201101806523">+201101806523</a>

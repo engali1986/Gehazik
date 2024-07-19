@@ -221,11 +221,11 @@ function App() {
         onClick={(e) => {
           e.stopPropagation();
           console.log("backdrop clicked");
-          document.getElementsByClassName("Services")[0].lastChild.style.display = "none";
+          
           document.getElementsByClassName("Categories")[0].style.height = "0vh";
           document.getElementsByClassName("Categories")[0].style.overflowY = "hidden";
           document.getElementsByClassName("BackDrop")[0].classList.remove("BackDropActivated");
-          document.getElementsByClassName("SubCategories")[0].style.display = "none";
+       
         }}
         className="BackDrop "></div>
 
@@ -237,11 +237,11 @@ function App() {
               e.stopPropagation();
               console.log("nav clicked");
               if (document.getElementsByClassName("Categories")[0].style.height === "90vh" || document.getElementsByClassName("Services")[0].lastChild.style.display === "block") {
-                document.getElementsByClassName("Services")[0].lastChild.style.display = "none";
+        
                 document.getElementsByClassName("Categories")[0].style.height = "0vh";
                 document.getElementsByClassName("Categories")[0].style.overflowY = "hidden";
                 document.getElementsByClassName("BackDrop")[0].classList.remove("BackDropActivated");
-                document.getElementsByClassName("SubCategories")[0].style.display = "none";
+               
               } else {
               }
               BackDrop.current.classList.remove("BackDropActivated");
