@@ -1,31 +1,40 @@
-import React,{useRef} from 'react'
+import React,{useRef,useState} from 'react'
+import Egypt from '../Data/Cities'
 
 const Test = () => {
-  const InputData=useRef()
-  const Data=useRef()
+  const [Cities,SetCities]=useState([])
+  const [Town,SetTown]=useState([])
+  
   return (
     <>
-    <input ref={InputData} type='text'/>
-    <button onClick={(e)=>{
-      e.stopPropagation()
-      console.log(Data.current.value.split(/\t|\n/))
-
-      
-      
-      // console.log(InputData.current.value.split(/\s/))
-      
-      
-      
-     
-
+    <button onClick={()=>{
+      console.log(Egypt)
+      console.log(Egypt.Cairo)
+      console.log(Object.keys(Egypt))
+      const Keyes=Object.keys(Egypt)
+      SetCities(Keyes)
     }}>
-      Convert to array
+      Click to get cities
     </button>
-    <textarea ref={Data} cols={20} rows={1}>
-
-    </textarea>
-
-   
+    <select style={{maxHeight:"300px", overflow:'scroll'}} onChange={(e)=>{
+      e.stopPropagation()
+      console.log(e.target.value)
+      console.log(typeof e.target.value)
+      
+    }}>
+      {Cities.map(City=>(
+        <>
+          {Object.keys(Egypt[City]).map(Townr=>(
+            <option>
+              {Townr}
+            </option>
+          ))}
+        </>
+      ))}
+    </select>
+    
+    
+    
     </>
   )
 }
