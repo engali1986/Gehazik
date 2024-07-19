@@ -12,7 +12,7 @@ const AddCategory = async (CategoryData) => {
     console.log("AddCategory 0")
     console.log(CategoryData)
     console.log(typeof CategoryData)
-    const res = await client.db("Gehazik").collection("Categories").insertOne({Categories:CategoryData}).then(res => {
+    const res = await client.db("Gehazik").collection("Categories").insertOne({name:"Categories",Categories:CategoryData}).then(res => {
         console.log("AddCategory 1")
         console.log(res)
         if (res.insertedId) {

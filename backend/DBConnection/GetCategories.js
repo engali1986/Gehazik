@@ -12,10 +12,12 @@ const GetCategories = async () => {
     console.log("GetCategories 0")
     try {
     await client.connect()
-    const res= await client.db("Gehazik").collection("Categories").findOne({Categories:Main_Menu})
+    const res= await client.db("Gehazik").collection("Categories").findOne({name:"Categories"})
     console.log("GetCategories 1")
 
     console.log(res)
+    console.log(res.Categories)
+    return res.Categories
         
     } catch (error) {
         console.log(error)

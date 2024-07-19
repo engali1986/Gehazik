@@ -1,10 +1,14 @@
 import React, { useState,useEffect } from "react";
 import { Container, Row, Col} from "react-bootstrap";
+import Feedback from "react-bootstrap/esm/Feedback";
 import { Link } from "react-router-dom";
 
 // here we use if else to check params.GlobalState.Admin if false display NavBar items means normal user else means admin donot display navbar items except home
 
 const Home = (params) => {
+  const [MenuItems,SetMenuItems]=useState([])
+
+  
   console.log()
   const LogInItems = () => {
     if (params.GlobalState.UserLogged === true) {
@@ -36,6 +40,31 @@ const Home = (params) => {
       );
     }
   };
+
+useEffect(()=>{
+  console.log("Home Component useeffect")
+  
+  const Menu= async()=>{
+    const Categories= await fetch("http://localhost:5000/Categories",{
+      method:"Get",
+      mode:"cors"
+    }).then(res=>{
+      
+      return res.json()
+    })
+
+    
+
+    
+
+    console.log(Categories)
+    SetMenuItems(Categories.MenuCategories)
+    
+  }
+  Menu()
+  
+
+},[])
 
   
 //  here we check if normal user or admin
@@ -197,15 +226,11 @@ const Home = (params) => {
           onClick={() => {
             console.log("menu items clicked");
           }}>
-          <div
-            onClick={(e) => {
-              e.stopPropagation();
-             
-             
-            }}>
-            Electronics
-          </div>
-          <div>Kitchen</div>
+          {MenuItems.map(Item=>(
+            <div key={Item}>
+              {Item}
+            </div>
+          ))}
 
      
         </Col>

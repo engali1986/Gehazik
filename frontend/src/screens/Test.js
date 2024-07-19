@@ -7,34 +7,25 @@ const Test = () => {
   
   return (
     <>
-    <button onClick={()=>{
-      console.log(Egypt)
-      console.log(Egypt.Cairo)
-      console.log(Object.keys(Egypt))
-      const Keyes=Object.keys(Egypt)
-      SetCities(Keyes)
-    }}>
-      Click to get cities
-    </button>
-    <select style={{maxHeight:"300px", overflow:'scroll'}} onChange={(e)=>{
-      e.stopPropagation()
-      console.log(e.target.value)
-      console.log(typeof e.target.value)
+    <button onClick={async()=>{
+          const Categories= await fetch("http://localhost:5000/Categories",{
+      method:"Get",
+      mode:"cors"
+    }).then(res=>{
       
+      return res.json()
+    })
+
+    console.log(Categories.MenuCategories)
+
+    
+
+    
+
+//     console.log(Categories)
     }}>
-      {Cities.map(City=>(
-        <>
-          {Object.keys(Egypt[City]).map(Townr=>(
-            <option>
-              {Townr}
-            </option>
-          ))}
-        </>
-      ))}
-    </select>
-    
-    
-    
+      awsde
+    </button>
     </>
   )
 }

@@ -151,7 +151,7 @@ app.get("/GetOrders", async(req,res)=>{
 // Categories Route start
 
 app.post("/AddCategory",async (req,res)=>{
-  const CategoryData=await req.body
+  const CategoryData=await req.body.Main_Menu
   console.log("server AddCategory 0")
   console.log(CategoryData)
   const AddCategoryData= await AddCategory(CategoryData)
@@ -163,7 +163,9 @@ app.post("/AddCategory",async (req,res)=>{
 app.get("/Categories", async(req,res)=>{
   console.log("server Categories 0")
   const Categories=await GetCategories()
+  console.log("server Categories 1")
   console.log(Categories)
+  res.json({MenuCategories:Categories})
   
 })
 
