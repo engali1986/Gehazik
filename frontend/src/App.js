@@ -236,7 +236,7 @@ function App() {
             onClick={(e) => {
               e.stopPropagation();
               console.log("nav clicked");
-              if (document.getElementsByClassName("Categories")[0].style.height === "90vh" || document.getElementsByClassName("Services")[0].lastChild.style.display === "block") {
+              if (document.getElementsByClassName("Categories")[0].style.height === "90vh" ) {
         
                 document.getElementsByClassName("Categories")[0].style.height = "0vh";
                 document.getElementsByClassName("Categories")[0].style.overflowY = "hidden";

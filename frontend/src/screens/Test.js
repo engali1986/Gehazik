@@ -1,5 +1,5 @@
 import React,{useRef,useState} from 'react'
-import Egypt from '../Data/Cities'
+import StaticData from "../Data/StaticData.js"
 
 const Test = () => {
   const [Cities,SetCities]=useState([])
@@ -7,23 +7,13 @@ const Test = () => {
   
   return (
     <>
-    <button onClick={async()=>{
-          const Categories= await fetch("http://localhost:5000/Categories",{
-      method:"Get",
-      mode:"cors"
-    }).then(res=>{
-      
-      return res.json()
-    })
+    <button onClick={()=>{
+      console.log(StaticData.Categories)
+    }
 
-    console.log(Categories.MenuCategories)
+    }
 
-    
-
-    
-
-//     console.log(Categories)
-    }}>
+   >
       awsde
     </button>
     </>

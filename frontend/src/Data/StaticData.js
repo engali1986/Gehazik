@@ -407,5 +407,22 @@ const Egypt = {
       "Taba	": "	طابا"
     },
   };
+
+const StaticData={
+  Cities:Egypt,
+  Categories: [
+    "Grocery",
+    "Home Appliances",
+    "Electronics & Smartphones ",
+    "Baby and Chield",
+    "Women Clothing",
+    "Men Clothing",
+    "Stationery and Office Supply",
+    "Restaurants",
+    "Clothing Accessories",
+    "Household Items"
+  ]
+
+}
   
-  export default Egypt
+  export default StaticData
