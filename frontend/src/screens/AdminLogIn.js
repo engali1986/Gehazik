@@ -42,7 +42,7 @@ const AdminLogIn = ({ globalState, setGlobal }) => {
       });
 
     if (UserVarified.resp.email && UserVarified.resp.uservarified === true) {
-      setGlobal(UserVarified.resp.name, true, UserVarified.resp.email, true, false, false);
+      setGlobal(UserVarified.resp.name, true, UserVarified.resp.email, true, false, false, UserVarified.resp.token);
       Alert.current.classList.replace("alert-danger", "alert-success");
       Alert.current.innerText = "User Logged in successfully";
       Alert.current.style.maxHeight = "500px";
@@ -91,7 +91,7 @@ const AdminLogIn = ({ globalState, setGlobal }) => {
         LoginButtonRef.current.innerText = "Login";
         if (typeof UserLogIn.resp === "object") {
           if (UserLogIn.resp.email && UserLogIn.resp.uservarified === true) {
-            setGlobal(UserLogIn.resp.name, true, UserLogIn.resp.email, true, false, false);
+            setGlobal(UserLogIn.resp.name, true, UserLogIn.resp.email, true, false, false,UserLogIn.resp.token);
             Alert.current.classList.replace("alert-danger", "alert-success");
             Alert.current.innerText = "User Logged in successfully";
             Alert.current.style.maxHeight = "500px";
@@ -118,7 +118,7 @@ const AdminLogIn = ({ globalState, setGlobal }) => {
           Alert.current.style.maxHeight = "500px";
           varificationCodeRef.current.style.display = "flex";
         } else if (UserLogIn.resp === "User varified") {
-          setGlobal(UserLogIn.resp.name, true, UserLogIn.resp.email, true, false, false);
+          setGlobal(UserLogIn.resp.name, true, UserLogIn.resp.email, true, false, false,UserLogIn.resp.token);
           Alert.current.classList.replace("alert-danger", "alert-success");
           Alert.current.innerText = "User Logged in successfully";
           Alert.current.style.maxHeight = "500px";

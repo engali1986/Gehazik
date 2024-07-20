@@ -38,7 +38,8 @@ function App() {
         email: "",
         Admin:false,
         Client: false,
-        Merchant: false
+        Merchant: false,
+        Token:0
 
       })
     );
@@ -51,7 +52,8 @@ function App() {
         email: "",
         Admin:false,
         Client: false,
-        Merchant: false
+        Merchant: false,
+        Token:0
 
       })
     );
@@ -121,7 +123,7 @@ function App() {
   //   }
   // }
 
-  const userChange = (name, LogInStatus, mail, Admin, Client, Merchant) => {
+  const userChange = (name, LogInStatus, mail, Admin, Client, Merchant,Token) => {
     SetGlobal({
       ...GlobalState,
       UserLogged: LogInStatus,
@@ -129,7 +131,8 @@ function App() {
       email: mail,
       Admin: Admin,
       Client: Client,
-      Merchant:Merchant
+      Merchant:Merchant,
+      Token:Token
     });
 
     localStorage.setItem(
@@ -153,7 +156,9 @@ function App() {
         email: mail,
         Admin: Admin,
         Client: Client,
-        Merchant:Merchant
+        Merchant:Merchant,
+        Token:Token
+
       })
     );
   };
@@ -236,6 +241,8 @@ function App() {
             onClick={(e) => {
               e.stopPropagation();
               console.log("nav clicked");
+              console.log(GlobalState)
+             
               if (document.getElementsByClassName("Categories")[0].style.height === "90vh" ) {
         
                 document.getElementsByClassName("Categories")[0].style.height = "0vh";

@@ -217,12 +217,16 @@ const AdminPage = ({ globalState, setGlobal }) => {
 
   const Orders = async () => {
     console.log("Orders Selected")
+    console.log(globalState)
     const Orders = await fetch("http://localhost:5000/GetOrders", {
-      method: "Get",
+      method: "POST",
+      body:JSON.stringify(globalState),
+      
       headers: {
         "Content-Type": "application/json",
       },
       mode: "cors"
+      
     }).then(res => {
       return res.json()
     }).catch(err => {

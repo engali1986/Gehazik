@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState,useEffect,useRef } from "react";
 import { Container, Row, Col} from "react-bootstrap";
 import Feedback from "react-bootstrap/esm/Feedback";
 import { Link } from "react-router-dom";
@@ -62,6 +62,14 @@ const Home = (params) => {
           }}>
           home
         </div>
+        <Col
+          
+          className="Categories d-none"
+          >
+         
+
+     
+        </Col>
        
       </Row>
       {/* Small screen navbar-------------------------------------------------------------------------------------------------- */}
@@ -206,7 +214,7 @@ const Home = (params) => {
           }}>
           {StaticData.Categories.map(Item=>(
             <div key={Item}>
-              <a href={`/Products/${Item}`} style={{textDecoration:'none', color:'black', fontSize:'1.25rem'}} >
+              <a href={`/Products/${Item.replace(/\s+/g,"-")}`} style={{textDecoration:'none', color:'black', fontSize:'1.25rem'}} >
              
               {Item}
 

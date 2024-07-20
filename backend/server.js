@@ -77,6 +77,7 @@ app.post("/AdminLogIn", async (req, res) => {
   console.log(result);
   if (result.email) {
     console.log("server /AdminLogIn 2");
+    console.log(result)
     res.json({ resp: result });
   } else if (result === "User Not Found") {
     console.log("server /AdminLogIn 3");
@@ -136,9 +137,12 @@ app.post("/AddOrder",async(req,res)=>{
 })
 
 // GetOrders Route to get list of all orders in DB
-app.get("/GetOrders", async(req,res)=>{
+app.post("/GetOrders", async(req,res)=>{
   console.log("server GetOrders 0")
-  const Orders= await GetOrders()
+  const Admin=await req.body
+  console.log("server GetOrders 1")
+  console.log(Admin)
+  const Orders= await GetOrders(Admin)
   console.log("server GetOrders 1 "+ typeof Orders)
   
   res.json(Orders)

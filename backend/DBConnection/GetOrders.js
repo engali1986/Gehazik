@@ -8,9 +8,10 @@ const uri =
 const client = new MongoClient(uri);
 // GetOrders function is used to get all orders
 
-const GetOrders=async()=>{
+const GetOrders=async(Admin)=>{
     try {
         console.log("GetOrders 0")
+        console.log(Admin)
     await client.connect().then(res=>{
         console.log("Connection res ")
         console.log(res)
