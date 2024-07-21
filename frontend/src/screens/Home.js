@@ -214,7 +214,7 @@ const Home = (params) => {
           }}>
           {StaticData.Categories.map(Item=>(
             <div key={Item}>
-              <a href={`/Products/${Item.replace(/\s+/g,"-")}`} style={{textDecoration:'none', color:'black', fontSize:'1.25rem'}} >
+              <a href={`/Products/${Item.replace(/\s+/g,"-")}/All`} style={{textDecoration:'none', color:'black', fontSize:'1.25rem'}} >
              
               {Item}
 

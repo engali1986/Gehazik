@@ -219,7 +219,7 @@ function App() {
   }, []);
 
   const CategoryRoutes= StaticData.Categories.map(Item=>(
-    <Route path={`/Products/:${Item}`}   element={<ProductsScreen/>} key={Item}/>
+    <Route path={`/Products/:${Item.replace(/\s+/g,"-")}/All`}   element={<ProductsScreen/>} key={Item}/>
   ))
 
   return (
@@ -274,7 +274,7 @@ function App() {
             }}>
             <Routes>
             {CategoryRoutes}
-            <Route path="/Products/*" element={<WrongPage />} />
+            
               <Route path="/" element={<Main />} />
               <Route path="/Test" element={<Test />} />
               <Route path="/ContactUs" element={<ContactUs />} />
