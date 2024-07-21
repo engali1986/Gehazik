@@ -12,18 +12,37 @@ const GetOrders=async(Admin)=>{
     try {
         console.log("GetOrders 0")
         console.log(Admin)
+       
     await client.connect().then(res=>{
         console.log("Connection res ")
-        console.log(res)
+        // console.log(res)
     })
+    const VarifyAdmin=await client
+    .db("Gehazik")
+    .collection("Admins")
+    .findOne({ email: Admin.email, token: Admin.Token })
+    console.log("GetOrders 0 Admin Varified")
+    console.log(VarifyAdmin)
+
+    if (VarifyAdmin.token===Admin.Token) {
     const Orders=await client.db("Gehazik").collection("Orders").find().toArray()
     console.log("GetOrders 1")
     console.log(Orders)
     
     return Orders
         
+    } else {
+        return "Connection Error"
+
+        
+    }
+
+    
+        
     } catch (error) {
         console.log(error)
+        return "Connection Error"
+
         
     }finally{
         await client.close().then(res=>{

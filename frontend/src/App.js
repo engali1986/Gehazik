@@ -19,6 +19,8 @@ import ContactUs from "./screens/ContactUs.js";
 import AdminLogIn from "./screens/AdminLogIn.js";
 import AdminPage from "./screens/AdminPage.js";
 import WrongPage from "./screens/WrongPage.js";
+import StaticData from "./Data/StaticData.js";
+import ProductsScreen from "./screens/ProductsScreen.js";
 function App() {
   const BackDrop = useRef();
   const ProfileItems = useRef();
@@ -216,6 +218,10 @@ function App() {
     }
   }, []);
 
+  const CategoryRoutes= StaticData.Categories.map(Item=>(
+    <Route path={`/Products/:${Item}`}   element={<ProductsScreen/>} key={Item}/>
+  ))
+
   return (
     <div
       onClick={() => {
@@ -267,14 +273,13 @@ function App() {
               marginTop: "0px",
             }}>
             <Routes>
+            {CategoryRoutes}
+            <Route path="/Products/*" element={<WrongPage />} />
               <Route path="/" element={<Main />} />
               <Route path="/Test" element={<Test />} />
               <Route path="/ContactUs" element={<ContactUs />} />
               <Route path="/AdminLogIn" element={<AdminLogIn globalState={GlobalState} setGlobal={userChange} />} />
               <Route path="/Admins/:Name"  element={<AdminPage globalState={GlobalState} setGlobal={userChange} />} />
-
-
-
               <Route path="/LogIn" element={<LogIn globalState={GlobalState} setGlobal={userChange} />} />
               <Route path="/SignUp" element={<SignUp globalState={GlobalState} setGlobal={userChange} />} />
               <Route path="/PasswordRecovery" element={<PasswordRecovery />} />
