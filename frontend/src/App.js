@@ -41,7 +41,9 @@ function App() {
         Admin:false,
         Client: false,
         Merchant: false,
-        Token:0
+        Token:0,
+        Governorate:"",
+        City:""
 
       })
     );
@@ -55,7 +57,9 @@ function App() {
         Admin:false,
         Client: false,
         Merchant: false,
-        Token:0
+        Token:0,
+        Governorate:"",
+        City:""
 
       })
     );
@@ -165,6 +169,10 @@ function App() {
     );
   };
 
+  const UpdateAddress=()=>{
+    console.log("Address Updated")
+  }
+
   console.log(typeof new Date().getTime());
 
   // if (JSON.parse(localStorage.getItem("globalState")).TimeLogged) {
@@ -219,7 +227,7 @@ function App() {
   }, []);
 
   const CategoryRoutes= StaticData.Categories.map(Item=>(
-    <Route path={`/Products/:${Item.replace(/\s+/g,"-")}/All`}   element={<ProductsScreen/>} key={Item}/>
+    <Route caseSensitive path={`/Products/:${Item.replace(/\s+/g,"-")}/All`}   element={<ProductsScreen/>} key={Item}/>
   ))
 
   return (
@@ -275,7 +283,7 @@ function App() {
             <Routes>
             {CategoryRoutes}
             
-              <Route path="/" element={<Main />} />
+              <Route path="/" element={<Main globalState={GlobalState} UpdateAddress={UpdateAddress} />} />
               <Route path="/Test" element={<Test />} />
               <Route path="/ContactUs" element={<ContactUs />} />
               <Route path="/AdminLogIn" element={<AdminLogIn globalState={GlobalState} setGlobal={userChange} />} />
