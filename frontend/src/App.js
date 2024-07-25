@@ -21,11 +21,13 @@ import AdminPage from "./screens/AdminPage.js";
 import WrongPage from "./screens/WrongPage.js";
 import StaticData from "./Data/StaticData.js";
 import ProductsScreen from "./screens/ProductsScreen.js";
+import AddressSelect from "./screens/AddressSelect.js";
 function App() {
   const BackDrop = useRef();
   const ProfileItems = useRef();
   if (sessionStorage.getItem("globalState") !== null) {
     console.log("ther is sission")
+    console.log(sessionStorage.getItem("globalState"))
     
   }
 
@@ -70,17 +72,10 @@ function App() {
 
     console.log(localStorage.getItem("globalState"));
   } else if (sessionStorage.getItem("globalState") === null && localStorage.getItem("globalState") != null) {
+    console.log("there is local storage, no sission storage")
     sessionStorage.setItem(
       "globalState",
-      JSON.stringify({
-        UserLogged: JSON.parse(localStorage.getItem("globalState")).UserLogged,
-        Name: JSON.parse(localStorage.getItem("globalState")).Name,
-        email: JSON.parse(localStorage.getItem("globalState")).email,
-        Admin: JSON.parse(localStorage.getItem("globalState")).Admin,
-        Client: JSON.parse(localStorage.getItem("globalState")).Client,
-        Merchant: JSON.parse(localStorage.getItem("globalState")).Merchant
-
-      })
+      localStorage.getItem("globalState")
     );
 
     console.log(sessionStorage.getItem("globalState"));
@@ -141,22 +136,11 @@ function App() {
       Token:Token
     });
 
-    localStorage.setItem(
-      "globalState",
-      JSON.stringify({
-        UserLogged: LogInStatus,
-        Name: name,
-        email: mail,
-        Admin: Admin,
-        Client: Client,
-        Merchant:Merchant,
-        TimeLogged: new Date().getTime(),
-      })
-    );
+    
 
     sessionStorage.setItem(
       "globalState",
-      JSON.stringify({
+      JSON.stringify({...JSON.parse(sessionStorage.getItem("globalState")),
         UserLogged: LogInStatus,
         Name: name,
         email: mail,
@@ -167,11 +151,34 @@ function App() {
 
       })
     );
+    localStorage.setItem(
+      "globalState",
+      sessionStorage.getItem("globalState")
+    );
   };
 
-  const UpdateAddress=()=>{
-    console.log("Address Updated")
+  const UpdateAddress=(AddressData)=>{
+    console.log("AddressData Updated")
+    console.log(AddressData)
+    SetGlobal({
+      ...GlobalState,
+     
+      Governorate:AddressData.Governorate,
+      City:AddressData.City
+    });
+
+   
+    sessionStorage.setItem("globalState",JSON.stringify({...JSON.parse(sessionStorage.getItem("globalState")),Governorate:AddressData.Governorate, City:AddressData.City}))
+    localStorage.setItem("globalState",sessionStorage.getItem("globalState"))
+
+    
+
+    
+   
   }
+  
+
+ 
 
   console.log(typeof new Date().getTime());
 
@@ -213,10 +220,24 @@ function App() {
     }
   };
 
- window.onunload=()=>{
-  localStorage.clear()
- }
+ 
   useEffect(() => {
+    if (document.querySelectorAll(".AddressSelection")[0]) {
+      console.log(GlobalState)
+      if (GlobalState.Governorate.length>0 && GlobalState.City.length>0) {
+        console.log("Location added")
+        document.querySelectorAll(".AddressSelection")[0].style.display="none"
+  
+        
+      } else {
+        console.log("Location not added")
+        // document.querySelectorAll(".AddressSelection")[0].style.display="block"
+        
+      }
+      
+    }
+
+
     if (window.innerWidth >= 768) {
       console.log("navBarBig");
       document.getElementsByClassName("MainBage")[0].style.marginTop = document.getElementsByClassName("NavBarBig")[0].getBoundingClientRect().bottom + "px";
@@ -235,6 +256,7 @@ function App() {
       onClick={() => {
         console.log(window.innerWidth);
       }}>
+        <AddressSelect globalState={GlobalState} updateAddress={UpdateAddress} />
       <div
         ref={BackDrop}
         onClick={(e) => {
