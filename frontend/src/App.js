@@ -31,6 +31,8 @@ function App() {
     
   }
 
+ 
+
   //  first check if there is GlobalState in session and local storage
   if (localStorage.getItem("globalState") === null && sessionStorage.getItem("globalState") === null) {
     console.log("initiale state");
@@ -66,6 +68,9 @@ function App() {
       })
     );
 
+    let z=1
+        localStorage.setItem("NumTabsOpened",z.toString())
+
     console.log(JSON.parse(sessionStorage.getItem("globalState")));
 
     console.log("initial sessionstorage");
@@ -73,6 +78,7 @@ function App() {
     console.log(localStorage.getItem("globalState"));
   } else if (sessionStorage.getItem("globalState") === null && localStorage.getItem("globalState") != null) {
     console.log("there is local storage, no sission storage")
+
     sessionStorage.setItem(
       "globalState",
       localStorage.getItem("globalState")
@@ -80,6 +86,27 @@ function App() {
 
     console.log(sessionStorage.getItem("globalState"));
     console.log("initial sessionstorage");
+
+    //  add increament for each tab open to local storage start
+
+ 
+    if (localStorage.getItem("NumTabsOpened")===null) {
+      let x=1
+      console.log("LocalStorage NumTabsOpened intiated")
+      localStorage.setItem("NumTabsOpened",x.toString())
+      
+    } else {
+      let x=parseInt(localStorage.getItem("NumTabsOpened"),10)
+      let y=x+1
+      localStorage.setItem("NumTabsOpened",y.toString())
+
+      
+    }
+    
+  
+
+  //  add increament for each tab open to local storage end
+
   } else if (sessionStorage.getItem("globalState") === null) {
     sessionStorage.setItem(
       "globalState",
@@ -104,6 +131,8 @@ function App() {
   console.log(sessionStorage.getItem("globalState"));
   console.log(localStorage.getItem("globalState"));
   console.log(localStorage.getItem("globalState") === !null);
+
+  
 
   //  if user logged time stamp will be addded to local storage to allow for other tabs
   // if (localStorage.getItem("globalState") === null) {
@@ -235,6 +264,18 @@ function App() {
         
       }
       
+    }
+
+    window.onbeforeunload=()=>{
+      if (parseInt(localStorage.getItem("NumTabsOpened"),10)<=1) {
+        localStorage.clear()
+        
+      } else {
+        let x=parseInt(localStorage.getItem("NumTabsOpened"),10)
+        let y=x-1
+        localStorage.setItem("NumTabsOpened",y.toString())
+        
+      }
     }
 
 
