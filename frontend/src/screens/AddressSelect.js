@@ -12,7 +12,7 @@ const AddressSelect = ({globalState,updateAddress}) => {
     
   
   return (
-    <div className="AddressSelection" style={{position:'absolute', zIndex:"20", minWidth:"100%",minHeight:"200vh", backgroundColor:'white'}} onClick={(e)=>{
+    <Container className="AddressSelection p-5" style={{position:'fixed', top:'0px', left:'0px', zIndex:"20", minWidth:"100vw",minHeight:"100vh", backgroundColor:'white'}} onClick={(e)=>{
         e.stopPropagation()
         console.log(localStorage.getItem("globalState"))
         console.log(sessionStorage.getItem("globalState"))
@@ -86,7 +86,7 @@ const AddressSelect = ({globalState,updateAddress}) => {
       </Col>
     </Row>
 
-  </div>
+  </Container>
   )
 }
 

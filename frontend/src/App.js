@@ -22,6 +22,7 @@ import WrongPage from "./screens/WrongPage.js";
 import StaticData from "./Data/StaticData.js";
 import ProductsScreen from "./screens/ProductsScreen.js";
 import AddressSelect from "./screens/AddressSelect.js";
+
 function App() {
   const BackDrop = useRef();
   const ProfileItems = useRef();
@@ -288,8 +289,8 @@ function App() {
     }
   }, []);
 
-  const CategoryRoutes= StaticData.Categories.map(Item=>(
-    <Route caseSensitive path={`/Products/:${Item.replace(/\s+/g,"-")}/All`}   element={<ProductsScreen/>} key={Item}/>
+  const CategoryRoutes= StaticData.Categories.map((Item,Index)=>(
+    <Route caseSensitive path={`/Products/:${Item.replace(/\s+/g,"-")}/All`}   element={<ProductsScreen/>} key={Item[Index]}/>
   ))
 
   return (
@@ -347,6 +348,7 @@ function App() {
             {CategoryRoutes}
             
               <Route path="/" element={<Main globalState={GlobalState} UpdateAddress={UpdateAddress} />} />
+              
               <Route path="/Test" element={<Test />} />
               <Route path="/ContactUs" element={<ContactUs />} />
               <Route path="/AdminLogIn" element={<AdminLogIn globalState={GlobalState} setGlobal={userChange} />} />

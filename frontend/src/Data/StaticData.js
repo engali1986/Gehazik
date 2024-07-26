@@ -411,13 +411,13 @@ const Egypt = {
 const StaticData={
   Cities:Egypt,
   Categories: [
-    "Grocery",
     "Home Appliances",
-    "Electronics & Smartphones ",
-    "Baby and Chield",
+    "Grocery",
+    "Electronics And Smartphones ",
+    "Baby And Chield",
     "Women Clothing",
     "Men Clothing",
-    "Stationery and Office Supply",
+    "Stationery And Office Supply",
     "Restaurants",
     "Clothing Accessories",
     "Household Items"
