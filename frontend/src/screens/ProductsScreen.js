@@ -19,7 +19,7 @@ const ProductsScreen = () => {
           aa
         </Col>
         <Col xs={8}>
-          gghj
+        
         </Col>
       </Row>
       
