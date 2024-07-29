@@ -18,6 +18,11 @@ const AddressSelect = ({globalState,updateAddress}) => {
         console.log(sessionStorage.getItem("globalState"))
         console.log(globalState)
     }}>
+      <Row>
+        <h2>
+          Please select Governorate and City to contenue
+        </h2>
+      </Row>
     <Row style={{marginTop:'25%'}}>
       <Col className=" align-content-center" xs={6} md={2}>
         Please select your Governorate

@@ -22,15 +22,15 @@ import WrongPage from "./screens/WrongPage.js";
 import StaticData from "./Data/StaticData.js";
 import ProductsScreen from "./screens/ProductsScreen.js";
 import AddressSelect from "./screens/AddressSelect.js";
+import MerchantLogIn from "./screens/MerchantLogIn.js";
+import MerchantSignUp from "./screens/MerchantSignUp.js";
 
 function App() {
   const BackDrop = useRef();
   const ProfileItems = useRef();
-  if (sessionStorage.getItem("globalState") !== null) {
-    console.log("ther is sission")
-    console.log(sessionStorage.getItem("globalState"))
-    
-  }
+
+
+  
 
  
 
@@ -69,8 +69,21 @@ function App() {
       })
     );
 
-    let z=1
-        localStorage.setItem("NumTabsOpened",z.toString())
+    if (localStorage.getItem("NumTabsOpened")===null || localStorage.getItem("NumTabsOpened")=="NaN" ) {
+      let x=1
+      console.log("LocalStorage NumTabsOpened intiated")
+      localStorage.setItem("NumTabsOpened",x.toString())
+      
+    } else {
+      let x=parseInt(localStorage.getItem("NumTabsOpened"),10)
+      let y=x+1
+      localStorage.setItem("NumTabsOpened",y.toString())
+
+      
+    }
+    localStorage.setItem("NoLocalStorage","yes")
+
+    
 
     console.log(JSON.parse(sessionStorage.getItem("globalState")));
 
@@ -85,13 +98,7 @@ function App() {
       localStorage.getItem("globalState")
     );
 
-    console.log(sessionStorage.getItem("globalState"));
-    console.log("initial sessionstorage");
-
-    //  add increament for each tab open to local storage start
-
- 
-    if (localStorage.getItem("NumTabsOpened")===null) {
+    if (localStorage.getItem("NumTabsOpened")===null || localStorage.getItem("NumTabsOpened")=="NaN" ) {
       let x=1
       console.log("LocalStorage NumTabsOpened intiated")
       localStorage.setItem("NumTabsOpened",x.toString())
@@ -103,10 +110,37 @@ function App() {
 
       
     }
+
+    
+    console.log(sessionStorage.getItem("globalState"));
+    console.log("initial sessionstorage");
+
+    //  add increament for each tab open to local storage start
+
+ 
+    
     
   
 
   //  add increament for each tab open to local storage end
+
+  } else if(sessionStorage.getItem("globalState") !== null && localStorage.getItem("globalState") === null ){
+    console.log("ther is sission")
+    console.log(sessionStorage.getItem("globalState"))
+    localStorage.setItem("globalState", sessionStorage.getItem("globalState"))
+    if (localStorage.getItem("NumTabsOpened")===null || localStorage.getItem("NumTabsOpened")=="NaN" ) {
+      let x=1
+      console.log("LocalStorage NumTabsOpened intiated")
+      localStorage.setItem("NumTabsOpened",x.toString())
+      
+    } else {
+      let x=parseInt(localStorage.getItem("NumTabsOpened"),10)
+      let y=x+1
+      localStorage.setItem("NumTabsOpened",y.toString())
+
+      
+    }
+
 
   } else if (sessionStorage.getItem("globalState") === null) {
     sessionStorage.setItem(
@@ -250,6 +284,23 @@ function App() {
     }
   };
 
+  window.onbeforeunload=()=>{
+    
+      if (parseInt(localStorage.getItem("NumTabsOpened"),10)<=1) {
+        localStorage.clear()
+        
+      } else {
+        let y=parseInt(localStorage.getItem("NumTabsOpened"),10)-1
+        localStorage.setItem("NumTabsOpened",y.toString())
+        
+      }
+      
+    
+
+
+   
+  }
+
  
   useEffect(() => {
     if (document.querySelectorAll(".AddressSelection")[0]) {
@@ -267,17 +318,7 @@ function App() {
       
     }
 
-    window.onbeforeunload=()=>{
-      if (parseInt(localStorage.getItem("NumTabsOpened"),10)<=1) {
-        localStorage.clear()
-        
-      } else {
-        let x=parseInt(localStorage.getItem("NumTabsOpened"),10)
-        let y=x-1
-        localStorage.setItem("NumTabsOpened",y.toString())
-        
-      }
-    }
+    
 
 
     if (window.innerWidth >= 768) {
@@ -348,13 +389,14 @@ function App() {
             {CategoryRoutes}
             
               <Route path="/" element={<Main globalState={GlobalState} UpdateAddress={UpdateAddress} />} />
-              
               <Route path="/Test" element={<Test />} />
               <Route path="/ContactUs" element={<ContactUs />} />
               <Route path="/AdminLogIn" element={<AdminLogIn globalState={GlobalState} setGlobal={userChange} />} />
               <Route path="/Admins/:Name"  element={<AdminPage globalState={GlobalState} setGlobal={userChange} />} />
               <Route path="/LogIn" element={<LogIn globalState={GlobalState} setGlobal={userChange} />} />
               <Route path="/SignUp" element={<SignUp globalState={GlobalState} setGlobal={userChange} />} />
+              <Route path="/MerchantLogIn" element={<MerchantLogIn globalState={GlobalState} setGlobal={userChange} />} />
+              <Route path="/MerchantSignUp" element={<MerchantSignUp globalState={GlobalState} setGlobal={userChange} />} />
               <Route path="/PasswordRecovery" element={<PasswordRecovery />} />
               <Route path="/*" element={<WrongPage />} />
 
