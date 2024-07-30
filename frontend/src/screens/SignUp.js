@@ -144,7 +144,12 @@ const SignUp = ({ globalState, setGlobal }) => {
     console.log(PasswordCheck);
     setConfirmPassword(false);
 
-    if (PasswordCheck.LowerCase === true && PasswordCheck.UpperCase === true && PasswordCheck.NumberCase === true && PasswordCheck.LengthCase === true) {
+    if (
+      PasswordCheck.LowerCase === true &&
+      PasswordCheck.UpperCase === true &&
+      PasswordCheck.NumberCase === true &&
+      PasswordCheck.LengthCase === true
+    ) {
       console.log(PasswordCheck);
       setPasswordCheckState(true);
     } else {
@@ -157,19 +162,32 @@ const SignUp = ({ globalState, setGlobal }) => {
   };
 
   const ConfirmPasswordCheck = () => {
-    if (PasswordValue.current.value.length === 0 || ConfirmPasswordValue.current.value.length === 0 || PasswordCheckState === false) {
+    if (
+      PasswordValue.current.value.length === 0 ||
+      ConfirmPasswordValue.current.value.length === 0 ||
+      PasswordCheckState === false
+    ) {
       PassmatchAlert.current.classList.replace("alert-success", "alert-danger");
       PassmatchAlert.current.innerText = "Password mismatch";
       setPasswordmatch(false);
       console.log("Password mismatch");
     } else {
-      if (PasswordValue.current.value === ConfirmPasswordValue.current.value && PasswordCheckState === true) {
-        PassmatchAlert.current.classList.replace("alert-danger", "alert-success");
+      if (
+        PasswordValue.current.value === ConfirmPasswordValue.current.value &&
+        PasswordCheckState === true
+      ) {
+        PassmatchAlert.current.classList.replace(
+          "alert-danger",
+          "alert-success",
+        );
         PassmatchAlert.current.innerText = "Password match";
         setPasswordmatch(true);
         setButton(false);
       } else {
-        PassmatchAlert.current.classList.replace("alert-success", "alert-danger");
+        PassmatchAlert.current.classList.replace(
+          "alert-success",
+          "alert-danger",
+        );
         PassmatchAlert.current.innerText = "Password mismatch";
         setPasswordmatch(false);
 
@@ -209,16 +227,26 @@ const SignUp = ({ globalState, setGlobal }) => {
         Credentials.Password.match(/[ء-ي]+/) ||
         Credentials.Name.match(/[ء-ي]+/)
       ) {
-        PassmatchAlert.current.classList.replace("alert-success", "alert-danger");
-        PassmatchAlert.current.innerText = "Name/Email/Password cannot contain spaces  or arabic alphabit";
+        PassmatchAlert.current.classList.replace(
+          "alert-success",
+          "alert-danger",
+        );
+        PassmatchAlert.current.innerText =
+          "Name/Email/Password cannot contain spaces  or arabic alphabit";
         PassmatchAlert.current.style.maxHeight = "500px";
         setButton(false);
         setConfirmPassword(false);
         setDisabled(false);
       } else {
-        if (Credentials.Email.match(emailregx) && Credentials.Password.match(passwordregex)) {
+        if (
+          Credentials.Email.match(emailregx) &&
+          Credentials.Password.match(passwordregex)
+        ) {
           console.log("Email correct");
-          PassmatchAlert.current.classList.replace("alert-danger", "alert-success");
+          PassmatchAlert.current.classList.replace(
+            "alert-danger",
+            "alert-success",
+          );
           PassmatchAlert.current.innerText = "";
           PassmatchAlert.current.style.maxHeight = "0px";
           console.log(JSON.stringify(Credentials));
@@ -248,7 +276,10 @@ const SignUp = ({ globalState, setGlobal }) => {
           console.log("Email password checked");
           ContainerRef.current.style.cursor = "wait";
 
-          PassmatchAlert.current.classList.replace("alert-danger", "alert-success");
+          PassmatchAlert.current.classList.replace(
+            "alert-danger",
+            "alert-success",
+          );
           PassmatchAlert.current.innerText = "Sign Up please wait";
           PassmatchAlert.current.style.maxHeight = "500px";
 
@@ -275,8 +306,13 @@ const SignUp = ({ globalState, setGlobal }) => {
           if (typeof AddUser.resp === "object") {
             console.log(AddUser.resp);
 
-            PassmatchAlert.current.classList.replace("alert-danger", "alert-success");
-            PassmatchAlert.current.innerText = AddUser.resp.name + " Added successfully an email has been sent to your email address with varification code Please enter varification code below";
+            PassmatchAlert.current.classList.replace(
+              "alert-danger",
+              "alert-success",
+            );
+            PassmatchAlert.current.innerText =
+              AddUser.resp.name +
+              " Added successfully an email has been sent to your email address with varification code Please enter varification code below";
             PassmatchAlert.current.style.maxHeight = "500px";
             varificationCodeRef.current.style.display = "flex";
             setButton(true);
@@ -285,7 +321,10 @@ const SignUp = ({ globalState, setGlobal }) => {
             // setGlobal(AddUser.resp.name,true,AddUser.resp.email)
             // navigate("/")
           } else {
-            PassmatchAlert.current.classList.replace("alert-success", "alert-danger");
+            PassmatchAlert.current.classList.replace(
+              "alert-success",
+              "alert-danger",
+            );
             PassmatchAlert.current.innerText = AddUser.resp;
             PassmatchAlert.current.style.maxHeight = "500px";
             setButton(false);
@@ -293,7 +332,10 @@ const SignUp = ({ globalState, setGlobal }) => {
             setDisabled(false);
           }
         } else {
-          PassmatchAlert.current.classList.replace("alert-success", "alert-danger");
+          PassmatchAlert.current.classList.replace(
+            "alert-success",
+            "alert-danger",
+          );
           PassmatchAlert.current.innerText = "Email/Password not correct";
           PassmatchAlert.current.style.maxHeight = "500px";
 
@@ -349,7 +391,10 @@ const SignUp = ({ globalState, setGlobal }) => {
       PassmatchAlert.current.classList.replace("alert-danger", "alert-success");
       PassmatchAlert.current.innerText = "User Logged in successfully";
       PassmatchAlert.current.style.maxHeight = "500px";
-    } else if (UserVarified.resp.email && UserVarified.resp.uservarified === false) {
+    } else if (
+      UserVarified.resp.email &&
+      UserVarified.resp.uservarified === false
+    ) {
       PassmatchAlert.current.classList.replace("alert-danger", "alert-success");
       PassmatchAlert.current.innerText = "Varification code sent by email";
       PassmatchAlert.current.style.maxHeight = "500px";
@@ -378,7 +423,8 @@ const SignUp = ({ globalState, setGlobal }) => {
         console.log(new Date());
 
         console.log(globalState);
-      }}>
+      }}
+    >
       <label htmlFor="name">
         <b>Name</b>
       </label>
@@ -396,7 +442,14 @@ const SignUp = ({ globalState, setGlobal }) => {
       <label htmlFor="email">
         <b>E-mail</b>
       </label>
-      <input type="text" placeholder="Enter Email" name="email" disabled={Disabled} onKeyUp={(e) => EnterEmail(e)} required />
+      <input
+        type="text"
+        placeholder="Enter Email"
+        name="email"
+        disabled={Disabled}
+        onKeyUp={(e) => EnterEmail(e)}
+        required
+      />
 
       <label htmlFor="psw">
         <b>Password</b>
@@ -417,7 +470,12 @@ const SignUp = ({ globalState, setGlobal }) => {
 
       <div className="d-flex flex-wrap">
         {/* in the following used w-100 class and wordWrap style to break work indide the div width */}
-        <div id="Alert" className=" alert alert-primary w-100" style={{ wordWrap: "break-word" }} role="alert">
+        <div
+          id="Alert"
+          className=" alert alert-primary w-100"
+          style={{ wordWrap: "break-word" }}
+          role="alert"
+        >
           <h3>Password must contain the following:</h3>
           <p id="letter" className="PassInvalid">
             A <b>lowercase</b> letter
@@ -468,7 +526,8 @@ const SignUp = ({ globalState, setGlobal }) => {
             maxHeight: "0px",
             transition: "all 0.3s ease-in-out",
           }}
-          role="alert"></div>
+          role="alert"
+        ></div>
         <Row ref={varificationCodeRef} style={{ display: "none" }}>
           <Col xs={12} md={8}>
             <input
@@ -476,20 +535,31 @@ const SignUp = ({ globalState, setGlobal }) => {
               style={{ overflow: "hidden", width: "100%", height: "50px" }}
               placeholder="Enter varification code"
               onChange={(e) => {
-                setCredentials({ ...Credentials, VarificationCode: Number(e.target.value) });
+                setCredentials({
+                  ...Credentials,
+                  VarificationCode: Number(e.target.value),
+                });
               }}
             />
           </Col>
 
           <Col xs={12} md={4}>
-            <button className="SignUpButton" style={{ height: "50px", margin: "0", width: "100%" }} onClick={() => VarifyEmail()}>
+            <button
+              className="SignUpButton"
+              style={{ height: "50px", margin: "0", width: "100%" }}
+              onClick={() => VarifyEmail()}
+            >
               Varify
             </button>
           </Col>
         </Row>
       </div>
 
-      <button className="SignUpButton" disabled={SignUpBtn} onClick={() => SignUpSubmit()}>
+      <button
+        className="SignUpButton"
+        disabled={SignUpBtn}
+        onClick={() => SignUpSubmit()}
+      >
         SignUp
       </button>
 
@@ -503,7 +573,8 @@ const SignUp = ({ globalState, setGlobal }) => {
           }}
           onClick={() => {
             navigate("/LogIn");
-          }}>
+          }}
+        >
           LogIn
         </span>
       </span>

@@ -7,7 +7,8 @@ const AdsSlider = () => {
 
   const NextSlide = (e) => {
     e.stopPropagation();
-    if (x < 3) { // Assuming there are 4 slides, index from 0 to 3
+    if (x < 3) {
+      // Assuming there are 4 slides, index from 0 to 3
       x = x + 1;
     } else {
       x = 0;
@@ -36,15 +37,39 @@ const AdsSlider = () => {
     <div>
       <div
         className="AdSlider"
-        style={{ width: "100%", height: "400px", position: "relative", overflow: "hidden" }}
+        style={{
+          width: "100%",
+          height: "400px",
+          position: "relative",
+          overflow: "hidden",
+        }}
         onClick={(e) => {
           e.stopPropagation();
           console.log("Image slider clicked");
         }}
       >
-        <div className="AdsImages" style={{ width: "400%", height: "100%", top: "0px", left: "0%", position: "absolute" }}>
+        <div
+          className="AdsImages"
+          style={{
+            width: "400%",
+            height: "100%",
+            top: "0px",
+            left: "0%",
+            position: "absolute",
+          }}
+        >
           <div className="Ads">
-            <img alt="Laptop" src="./Images/ad1.jpg" style={{ position: "absolute", top: "0px", left: "0px", width: "100%", height: "100%" }} />
+            <img
+              alt="Laptop"
+              src="./Images/ad1.jpg"
+              style={{
+                position: "absolute",
+                top: "0px",
+                left: "0px",
+                width: "100%",
+                height: "100%",
+              }}
+            />
             <i
               className="fa-regular fa-heart"
               onClick={(e) => {
@@ -65,7 +90,17 @@ const AdsSlider = () => {
             </i>
           </div>
           <div className="Ads">
-            <img alt="Laptop" src="./Images/ad2.jpeg" style={{ position: "absolute", top: "0px", left: "0px", width: "100%", height: "100%" }} />
+            <img
+              alt="Laptop"
+              src="./Images/ad2.jpeg"
+              style={{
+                position: "absolute",
+                top: "0px",
+                left: "0px",
+                width: "100%",
+                height: "100%",
+              }}
+            />
             <i
               className="fa-regular fa-heart"
               onClick={(e) => {
@@ -86,7 +121,17 @@ const AdsSlider = () => {
             </i>
           </div>
           <div className="Ads">
-            <img alt="Laptop" src="./Images/ad1.jpg" style={{ position: "absolute", top: "0px", left: "0px", width: "100%", height: "100%" }} />
+            <img
+              alt="Laptop"
+              src="./Images/ad1.jpg"
+              style={{
+                position: "absolute",
+                top: "0px",
+                left: "0px",
+                width: "100%",
+                height: "100%",
+              }}
+            />
             <i
               className="fa-regular fa-heart"
               onClick={(e) => {
@@ -107,7 +152,17 @@ const AdsSlider = () => {
             </i>
           </div>
           <div className="Ads">
-            <img alt="Laptop" src="./Images/ad2.jpeg" style={{ position: "absolute", top: "0px", left: "0px", width: "100%", height: "100%" }} />
+            <img
+              alt="Laptop"
+              src="./Images/ad2.jpeg"
+              style={{
+                position: "absolute",
+                top: "0px",
+                left: "0px",
+                width: "100%",
+                height: "100%",
+              }}
+            />
             <i
               className="fa-regular fa-heart"
               onClick={(e) => {
@@ -131,14 +186,26 @@ const AdsSlider = () => {
         <i
           ref={NextArrow}
           className="fa-solid fa-arrow-right fa-xl"
-          style={{ position: "absolute", top: "50%", right: "0%", zIndex: "1", cursor: "pointer" }}
+          style={{
+            position: "absolute",
+            top: "50%",
+            right: "0%",
+            zIndex: "1",
+            cursor: "pointer",
+          }}
           onClick={(e) => NextSlide(e)}
         ></i>
 
         <i
           ref={PrevArrow}
           className="fa-solid fa-arrow-left fa-xl"
-          style={{ position: "absolute", top: "50%", left: "0%", zIndex: "1", cursor: "pointer" }}
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: "0%",
+            zIndex: "1",
+            cursor: "pointer",
+          }}
           onClick={(e) => PrevSlide(e)}
         ></i>
       </div>

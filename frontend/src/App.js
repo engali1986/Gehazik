@@ -30,13 +30,11 @@ function App() {
   const BackDrop = useRef();
   const ProfileItems = useRef();
 
-
-  
-
- 
-
   //  first check if there is GlobalState in session and local storage
-  if (localStorage.getItem("globalState") === null && sessionStorage.getItem("globalState") === null) {
+  if (
+    localStorage.getItem("globalState") === null &&
+    sessionStorage.getItem("globalState") === null
+  ) {
     console.log("initiale state");
     localStorage.setItem(
       "globalState",
@@ -44,14 +42,13 @@ function App() {
         UserLogged: false,
         Name: "",
         email: "",
-        Admin:false,
+        Admin: false,
         Client: false,
         Merchant: false,
-        Token:0,
-        Governorate:"",
-        City:""
-
-      })
+        Token: 0,
+        Governorate: "",
+        City: "",
+      }),
     );
 
     sessionStorage.setItem(
@@ -60,89 +57,80 @@ function App() {
         UserLogged: false,
         Name: "",
         email: "",
-        Admin:false,
+        Admin: false,
         Client: false,
         Merchant: false,
-        Token:0,
-        Governorate:"",
-        City:""
-
-      })
+        Token: 0,
+        Governorate: "",
+        City: "",
+      }),
     );
 
-    if (localStorage.getItem("NumTabsOpened")===null || localStorage.getItem("NumTabsOpened")=="NaN" ) {
-      let x=1
-      console.log("LocalStorage NumTabsOpened intiated")
-      localStorage.setItem("NumTabsOpened",x.toString())
-      
+    if (
+      localStorage.getItem("NumTabsOpened") === null ||
+      localStorage.getItem("NumTabsOpened") == "NaN"
+    ) {
+      let x = 1;
+      console.log("LocalStorage NumTabsOpened intiated");
+      localStorage.setItem("NumTabsOpened", x.toString());
     } else {
-      let x=parseInt(localStorage.getItem("NumTabsOpened"),10)
-      let y=x+1
-      localStorage.setItem("NumTabsOpened",y.toString())
-
-      
+      let x = parseInt(localStorage.getItem("NumTabsOpened"), 10);
+      let y = x + 1;
+      localStorage.setItem("NumTabsOpened", y.toString());
     }
-    localStorage.setItem("NoLocalStorage","yes")
-
-    
+    localStorage.setItem("NoLocalStorage", "yes");
 
     console.log(JSON.parse(sessionStorage.getItem("globalState")));
 
     console.log("initial sessionstorage");
 
     console.log(localStorage.getItem("globalState"));
-  } else if (sessionStorage.getItem("globalState") === null && localStorage.getItem("globalState") != null) {
-    console.log("there is local storage, no sission storage")
+  } else if (
+    sessionStorage.getItem("globalState") === null &&
+    localStorage.getItem("globalState") != null
+  ) {
+    console.log("there is local storage, no sission storage");
 
-    sessionStorage.setItem(
-      "globalState",
-      localStorage.getItem("globalState")
-    );
+    sessionStorage.setItem("globalState", localStorage.getItem("globalState"));
 
-    if (localStorage.getItem("NumTabsOpened")===null || localStorage.getItem("NumTabsOpened")=="NaN" ) {
-      let x=1
-      console.log("LocalStorage NumTabsOpened intiated")
-      localStorage.setItem("NumTabsOpened",x.toString())
-      
+    if (
+      localStorage.getItem("NumTabsOpened") === null ||
+      localStorage.getItem("NumTabsOpened") == "NaN"
+    ) {
+      let x = 1;
+      console.log("LocalStorage NumTabsOpened intiated");
+      localStorage.setItem("NumTabsOpened", x.toString());
     } else {
-      let x=parseInt(localStorage.getItem("NumTabsOpened"),10)
-      let y=x+1
-      localStorage.setItem("NumTabsOpened",y.toString())
-
-      
+      let x = parseInt(localStorage.getItem("NumTabsOpened"), 10);
+      let y = x + 1;
+      localStorage.setItem("NumTabsOpened", y.toString());
     }
 
-    
     console.log(sessionStorage.getItem("globalState"));
     console.log("initial sessionstorage");
 
     //  add increament for each tab open to local storage start
 
- 
-    
-    
-  
-
-  //  add increament for each tab open to local storage end
-
-  } else if(sessionStorage.getItem("globalState") !== null && localStorage.getItem("globalState") === null ){
-    console.log("ther is sission")
-    console.log(sessionStorage.getItem("globalState"))
-    localStorage.setItem("globalState", sessionStorage.getItem("globalState"))
-    if (localStorage.getItem("NumTabsOpened")===null || localStorage.getItem("NumTabsOpened")=="NaN" ) {
-      let x=1
-      console.log("LocalStorage NumTabsOpened intiated")
-      localStorage.setItem("NumTabsOpened",x.toString())
-      
+    //  add increament for each tab open to local storage end
+  } else if (
+    sessionStorage.getItem("globalState") !== null &&
+    localStorage.getItem("globalState") === null
+  ) {
+    console.log("ther is sission");
+    console.log(sessionStorage.getItem("globalState"));
+    localStorage.setItem("globalState", sessionStorage.getItem("globalState"));
+    if (
+      localStorage.getItem("NumTabsOpened") === null ||
+      localStorage.getItem("NumTabsOpened") == "NaN"
+    ) {
+      let x = 1;
+      console.log("LocalStorage NumTabsOpened intiated");
+      localStorage.setItem("NumTabsOpened", x.toString());
     } else {
-      let x=parseInt(localStorage.getItem("NumTabsOpened"),10)
-      let y=x+1
-      localStorage.setItem("NumTabsOpened",y.toString())
-
-      
+      let x = parseInt(localStorage.getItem("NumTabsOpened"), 10);
+      let y = x + 1;
+      localStorage.setItem("NumTabsOpened", y.toString());
     }
-
-
   } else if (sessionStorage.getItem("globalState") === null) {
     sessionStorage.setItem(
       "globalState",
@@ -152,23 +140,22 @@ function App() {
         email: JSON.parse(localStorage.getItem("globalState")).email,
         Admin: JSON.parse(localStorage.getItem("globalState")).Admin,
         Client: JSON.parse(localStorage.getItem("globalState")).Client,
-        Merchant: JSON.parse(localStorage.getItem("globalState")).Merchant
-
-      })
+        Merchant: JSON.parse(localStorage.getItem("globalState")).Merchant,
+      }),
     );
 
     console.log("initial sessionstorage");
   }
   //  if no data set session and local storage above
 
-  const [GlobalState, SetGlobal] = useState(JSON.parse(sessionStorage.getItem("globalState")));
+  const [GlobalState, SetGlobal] = useState(
+    JSON.parse(sessionStorage.getItem("globalState")),
+  );
   console.log("app started");
   console.log(GlobalState);
   console.log(sessionStorage.getItem("globalState"));
   console.log(localStorage.getItem("globalState"));
   console.log(localStorage.getItem("globalState") === !null);
-
-  
 
   //  if user logged time stamp will be addded to local storage to allow for other tabs
   // if (localStorage.getItem("globalState") === null) {
@@ -189,7 +176,15 @@ function App() {
   //   }
   // }
 
-  const userChange = (name, LogInStatus, mail, Admin, Client, Merchant,Token) => {
+  const userChange = (
+    name,
+    LogInStatus,
+    mail,
+    Admin,
+    Client,
+    Merchant,
+    Token,
+  ) => {
     SetGlobal({
       ...GlobalState,
       UserLogged: LogInStatus,
@@ -197,53 +192,46 @@ function App() {
       email: mail,
       Admin: Admin,
       Client: Client,
-      Merchant:Merchant,
-      Token:Token
+      Merchant: Merchant,
+      Token: Token,
     });
-
-    
 
     sessionStorage.setItem(
       "globalState",
-      JSON.stringify({...JSON.parse(sessionStorage.getItem("globalState")),
+      JSON.stringify({
+        ...JSON.parse(sessionStorage.getItem("globalState")),
         UserLogged: LogInStatus,
         Name: name,
         email: mail,
         Admin: Admin,
         Client: Client,
-        Merchant:Merchant,
-        Token:Token
-
-      })
+        Merchant: Merchant,
+        Token: Token,
+      }),
     );
-    localStorage.setItem(
-      "globalState",
-      sessionStorage.getItem("globalState")
-    );
+    localStorage.setItem("globalState", sessionStorage.getItem("globalState"));
   };
 
-  const UpdateAddress=(AddressData)=>{
-    console.log("AddressData Updated")
-    console.log(AddressData)
+  const UpdateAddress = (AddressData) => {
+    console.log("AddressData Updated");
+    console.log(AddressData);
     SetGlobal({
       ...GlobalState,
-     
-      Governorate:AddressData.Governorate,
-      City:AddressData.City
+
+      Governorate: AddressData.Governorate,
+      City: AddressData.City,
     });
 
-   
-    sessionStorage.setItem("globalState",JSON.stringify({...JSON.parse(sessionStorage.getItem("globalState")),Governorate:AddressData.Governorate, City:AddressData.City}))
-    localStorage.setItem("globalState",sessionStorage.getItem("globalState"))
-
-    
-
-    
-   
-  }
-  
-
- 
+    sessionStorage.setItem(
+      "globalState",
+      JSON.stringify({
+        ...JSON.parse(sessionStorage.getItem("globalState")),
+        Governorate: AddressData.Governorate,
+        City: AddressData.City,
+      }),
+    );
+    localStorage.setItem("globalState", sessionStorage.getItem("globalState"));
+  };
 
   console.log(typeof new Date().getTime());
 
@@ -278,101 +266,117 @@ function App() {
   window.onresize = () => {
     if (window.innerWidth >= 768) {
       console.log("navBarBig");
-      document.getElementsByClassName("MainBage")[0].style.marginTop = document.getElementsByClassName("NavBarBig")[0].getBoundingClientRect().bottom + "px";
+      document.getElementsByClassName("MainBage")[0].style.marginTop =
+        document.getElementsByClassName("NavBarBig")[0].getBoundingClientRect()
+          .bottom + "px";
     } else {
       console.log("navBarsmall");
-      document.getElementsByClassName("MainBage")[0].style.marginTop = document.getElementsByClassName("NavBarSmall")[0].getBoundingClientRect().bottom + "px";
+      document.getElementsByClassName("MainBage")[0].style.marginTop =
+        document
+          .getElementsByClassName("NavBarSmall")[0]
+          .getBoundingClientRect().bottom + "px";
     }
   };
 
-  window.onbeforeunload=()=>{
-    
-      if (parseInt(localStorage.getItem("NumTabsOpened"),10)<=1) {
-        localStorage.clear()
-        
-      } else {
-        let y=parseInt(localStorage.getItem("NumTabsOpened"),10)-1
-        localStorage.setItem("NumTabsOpened",y.toString())
-        
-      }
-      
-    
+  window.onbeforeunload = () => {
+    if (parseInt(localStorage.getItem("NumTabsOpened"), 10) <= 1) {
+      localStorage.clear();
+    } else {
+      let y = parseInt(localStorage.getItem("NumTabsOpened"), 10) - 1;
+      localStorage.setItem("NumTabsOpened", y.toString());
+    }
+  };
 
-
-   
-  }
-
- 
   useEffect(() => {
     if (document.querySelectorAll(".AddressSelection")[0]) {
-      console.log(GlobalState)
-      if (GlobalState.Governorate.length>0 && GlobalState.City.length>0) {
-        console.log("Location added")
-        document.querySelectorAll(".AddressSelection")[0].style.display="none"
-  
-        
+      console.log(GlobalState);
+      if (GlobalState.Governorate.length > 0 && GlobalState.City.length > 0) {
+        console.log("Location added");
+        document.querySelectorAll(".AddressSelection")[0].style.display =
+          "none";
       } else {
-        console.log("Location not added")
+        console.log("Location not added");
         // document.querySelectorAll(".AddressSelection")[0].style.display="block"
-        
       }
-      
     }
-
-    
-
 
     if (window.innerWidth >= 768) {
       console.log("navBarBig");
-      document.getElementsByClassName("MainBage")[0].style.marginTop = document.getElementsByClassName("NavBarBig")[0].getBoundingClientRect().bottom + "px";
+      document.getElementsByClassName("MainBage")[0].style.marginTop =
+        document.getElementsByClassName("NavBarBig")[0].getBoundingClientRect()
+          .bottom + "px";
     } else {
       console.log("navBarsmall");
-      document.getElementsByClassName("MainBage")[0].style.marginTop = document.getElementsByClassName("NavBarSmall")[0].getBoundingClientRect().bottom + "px";
+      document.getElementsByClassName("MainBage")[0].style.marginTop =
+        document
+          .getElementsByClassName("NavBarSmall")[0]
+          .getBoundingClientRect().bottom + "px";
     }
   }, []);
 
-  const CategoryRoutes= StaticData.Categories.map((Item,Index)=>(
-    <Route caseSensitive path={`/Products/:${Item.replace(/\s+/g,"-")}/All`}   element={<ProductsScreen/>} key={Item[Index]}/>
-  ))
+  const CategoryRoutes = StaticData.Categories.map((Item, Index) => (
+    <Route
+      caseSensitive
+      path={`/Products/:${Item.replace(/\s+/g, "-")}/All`}
+      element={<ProductsScreen />}
+      key={Item[Index]}
+    />
+  ));
 
   return (
     <div
       onClick={() => {
         console.log(window.innerWidth);
-      }}>
-        <AddressSelect globalState={GlobalState} updateAddress={UpdateAddress} />
+      }}
+    >
+      <AddressSelect globalState={GlobalState} updateAddress={UpdateAddress} />
       <div
         ref={BackDrop}
         onClick={(e) => {
           e.stopPropagation();
           console.log("backdrop clicked");
-          
-          document.getElementsByClassName("Categories")[0].style.height = "0vh";
-          document.getElementsByClassName("Categories")[0].style.overflowY = "hidden";
-          document.getElementsByClassName("BackDrop")[0].classList.remove("BackDropActivated");
-       
-        }}
-        className="BackDrop "></div>
 
-      <Container className="App " style={{ border: "2px solid red", fontSize: "1rem", zIndex: "100" }}>
-        <Row style={{ zIndex: "5", backgroundRowor: "gray", position: "relative" }}>
+          document.getElementsByClassName("Categories")[0].style.height = "0vh";
+          document.getElementsByClassName("Categories")[0].style.overflowY =
+            "hidden";
+          document
+            .getElementsByClassName("BackDrop")[0]
+            .classList.remove("BackDropActivated");
+        }}
+        className="BackDrop "
+      ></div>
+
+      <Container
+        className="App "
+        style={{ border: "2px solid red", fontSize: "1rem", zIndex: "100" }}
+      >
+        <Row
+          style={{ zIndex: "5", backgroundRowor: "gray", position: "relative" }}
+        >
           <div
             className="fixed-top"
             onClick={(e) => {
               e.stopPropagation();
               console.log("nav clicked");
-              console.log(GlobalState)
-             
-              if (document.getElementsByClassName("Categories")[0].style.height === "90vh" ) {
-        
-                document.getElementsByClassName("Categories")[0].style.height = "0vh";
-                document.getElementsByClassName("Categories")[0].style.overflowY = "hidden";
-                document.getElementsByClassName("BackDrop")[0].classList.remove("BackDropActivated");
-               
+              console.log(GlobalState);
+
+              if (
+                document.getElementsByClassName("Categories")[0].style
+                  .height === "90vh"
+              ) {
+                document.getElementsByClassName("Categories")[0].style.height =
+                  "0vh";
+                document.getElementsByClassName(
+                  "Categories",
+                )[0].style.overflowY = "hidden";
+                document
+                  .getElementsByClassName("BackDrop")[0]
+                  .classList.remove("BackDropActivated");
               } else {
               }
               BackDrop.current.classList.remove("BackDropActivated");
-            }}>
+            }}
+          >
             <Home BackDropRef={BackDrop} GlobalState={GlobalState} />
           </div>
         </Row>
@@ -385,42 +389,121 @@ function App() {
               minHeight: "120vh",
               border: "2px solid green",
               marginTop: "0px",
-            }}>
+            }}
+          >
             <Routes>
-            {CategoryRoutes}
-            
-              <Route path="/" element={<Main globalState={GlobalState} UpdateAddress={UpdateAddress} />} />
+              {CategoryRoutes}
+
+              <Route
+                path="/"
+                element={
+                  <Main
+                    globalState={GlobalState}
+                    UpdateAddress={UpdateAddress}
+                  />
+                }
+              />
               <Route path="/Test" element={<Test />} />
               <Route path="/ContactUs" element={<ContactUs />} />
-              <Route path="/AdminLogIn" element={<AdminLogIn globalState={GlobalState} setGlobal={userChange} />} />
-              <Route path="/Admins/:Name"  element={<AdminPage globalState={GlobalState} setGlobal={userChange} />} />
-              <Route path="/LogIn" element={<LogIn globalState={GlobalState} setGlobal={userChange} />} />
-              <Route path="/SignUp" element={<SignUp globalState={GlobalState} setGlobal={userChange} />} />
-              <Route path="/MerchantLogIn" element={<MerchantLogIn globalState={GlobalState} setGlobal={userChange} />} />
-              <Route path="/MerchantSignUp" element={<MerchantSignUp globalState={GlobalState} setGlobal={userChange} />} />
-              <Route path="/Merchants/:Name"  element={<MerchantPage globalState={GlobalState} setGlobal={userChange} />} />
+              <Route
+                path="/AdminLogIn"
+                element={
+                  <AdminLogIn
+                    globalState={GlobalState}
+                    setGlobal={userChange}
+                  />
+                }
+              />
+              <Route
+                path="/Admins/:Name"
+                element={
+                  <AdminPage globalState={GlobalState} setGlobal={userChange} />
+                }
+              />
+              <Route
+                path="/LogIn"
+                element={
+                  <LogIn globalState={GlobalState} setGlobal={userChange} />
+                }
+              />
+              <Route
+                path="/SignUp"
+                element={
+                  <SignUp globalState={GlobalState} setGlobal={userChange} />
+                }
+              />
+              <Route
+                path="/MerchantLogIn"
+                element={
+                  <MerchantLogIn
+                    globalState={GlobalState}
+                    setGlobal={userChange}
+                  />
+                }
+              />
+              <Route
+                path="/MerchantSignUp"
+                element={
+                  <MerchantSignUp
+                    globalState={GlobalState}
+                    setGlobal={userChange}
+                  />
+                }
+              />
+              <Route
+                path="/Merchants/:Name"
+                element={
+                  <MerchantPage
+                    globalState={GlobalState}
+                    setGlobal={userChange}
+                  />
+                }
+              />
               <Route path="/PasswordRecovery" element={<PasswordRecovery />} />
               <Route path="/*" element={<WrongPage />} />
-
             </Routes>
           </div>
         </div>
-        <Row className="Footer" style={{ fontSize: "1rem", color: "white", backgroundColor: "gray" }}>
-          <Col xs={12} md={2} onClick={(e)=>{
-            e.stopPropagation()
-          }} >
-            
-            <a href="/ContactUs" style={{display:'block', textDecoration:'none', fontSize: "1rem", color: "white"}}>
+        <Row
+          className="Footer"
+          style={{ fontSize: "1rem", color: "white", backgroundColor: "gray" }}
+        >
+          <Col
+            xs={12}
+            md={2}
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+          >
+            <a
+              href="/ContactUs"
+              style={{
+                display: "block",
+                textDecoration: "none",
+                fontSize: "1rem",
+                color: "white",
+              }}
+            >
               Contact Us
-
             </a>
           </Col>
-          <Col xs={12} md={2}onClick={(e)=>{
-            e.stopPropagation()
-          }}>
-          <a href="/ReturnPolicy" style={{display:'block', textDecoration:'none', fontSize: "1rem", color: "white"}}>
+          <Col
+            xs={12}
+            md={2}
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+          >
+            <a
+              href="/ReturnPolicy"
+              style={{
+                display: "block",
+                textDecoration: "none",
+                fontSize: "1rem",
+                color: "white",
+              }}
+            >
               Return Policy
-
             </a>
           </Col>
         </Row>

@@ -144,7 +144,12 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
     console.log(PasswordCheck);
     setConfirmPassword(false);
 
-    if (PasswordCheck.LowerCase === true && PasswordCheck.UpperCase === true && PasswordCheck.NumberCase === true && PasswordCheck.LengthCase === true) {
+    if (
+      PasswordCheck.LowerCase === true &&
+      PasswordCheck.UpperCase === true &&
+      PasswordCheck.NumberCase === true &&
+      PasswordCheck.LengthCase === true
+    ) {
       console.log(PasswordCheck);
       setPasswordCheckState(true);
     } else {
@@ -157,19 +162,32 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
   };
 
   const ConfirmPasswordCheck = () => {
-    if (PasswordValue.current.value.length === 0 || ConfirmPasswordValue.current.value.length === 0 || PasswordCheckState === false) {
+    if (
+      PasswordValue.current.value.length === 0 ||
+      ConfirmPasswordValue.current.value.length === 0 ||
+      PasswordCheckState === false
+    ) {
       PassmatchAlert.current.classList.replace("alert-success", "alert-danger");
       PassmatchAlert.current.innerText = "Password mismatch";
       setPasswordmatch(false);
       console.log("Password mismatch");
     } else {
-      if (PasswordValue.current.value === ConfirmPasswordValue.current.value && PasswordCheckState === true) {
-        PassmatchAlert.current.classList.replace("alert-danger", "alert-success");
+      if (
+        PasswordValue.current.value === ConfirmPasswordValue.current.value &&
+        PasswordCheckState === true
+      ) {
+        PassmatchAlert.current.classList.replace(
+          "alert-danger",
+          "alert-success",
+        );
         PassmatchAlert.current.innerText = "Password match";
         setPasswordmatch(true);
         setButton(false);
       } else {
-        PassmatchAlert.current.classList.replace("alert-success", "alert-danger");
+        PassmatchAlert.current.classList.replace(
+          "alert-success",
+          "alert-danger",
+        );
         PassmatchAlert.current.innerText = "Password mismatch";
         setPasswordmatch(false);
 
@@ -209,16 +227,26 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
         Credentials.Password.match(/[ء-ي]+/) ||
         Credentials.Name.match(/[ء-ي]+/)
       ) {
-        PassmatchAlert.current.classList.replace("alert-success", "alert-danger");
-        PassmatchAlert.current.innerText = "Name/Email/Password cannot contain spaces  or arabic alphabit";
+        PassmatchAlert.current.classList.replace(
+          "alert-success",
+          "alert-danger",
+        );
+        PassmatchAlert.current.innerText =
+          "Name/Email/Password cannot contain spaces  or arabic alphabit";
         PassmatchAlert.current.style.maxHeight = "500px";
         setButton(false);
         setConfirmPassword(false);
         setDisabled(false);
       } else {
-        if (Credentials.Email.match(emailregx) && Credentials.Password.match(passwordregex)) {
+        if (
+          Credentials.Email.match(emailregx) &&
+          Credentials.Password.match(passwordregex)
+        ) {
           console.log("Email correct");
-          PassmatchAlert.current.classList.replace("alert-danger", "alert-success");
+          PassmatchAlert.current.classList.replace(
+            "alert-danger",
+            "alert-success",
+          );
           PassmatchAlert.current.innerText = "";
           PassmatchAlert.current.style.maxHeight = "0px";
           console.log(JSON.stringify(Credentials));
@@ -248,7 +276,10 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
           console.log("Email password checked");
           ContainerRef.current.style.cursor = "wait";
 
-          PassmatchAlert.current.classList.replace("alert-danger", "alert-success");
+          PassmatchAlert.current.classList.replace(
+            "alert-danger",
+            "alert-success",
+          );
           PassmatchAlert.current.innerText = "Sign Up please wait";
           PassmatchAlert.current.style.maxHeight = "500px";
 
@@ -275,8 +306,13 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
           if (typeof AddMerchant.resp === "object") {
             console.log(AddMerchant.resp);
 
-            PassmatchAlert.current.classList.replace("alert-danger", "alert-success");
-            PassmatchAlert.current.innerText = AddMerchant.resp.name + " Added successfully an email has been sent to your email address with varification code Please enter varification code below";
+            PassmatchAlert.current.classList.replace(
+              "alert-danger",
+              "alert-success",
+            );
+            PassmatchAlert.current.innerText =
+              AddMerchant.resp.name +
+              " Added successfully an email has been sent to your email address with varification code Please enter varification code below";
             PassmatchAlert.current.style.maxHeight = "500px";
             varificationCodeRef.current.style.display = "flex";
             setButton(true);
@@ -285,7 +321,10 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
             // setGlobal(AddMerchant.resp.name,true,AddMerchant.resp.email)
             // navigate("/")
           } else {
-            PassmatchAlert.current.classList.replace("alert-success", "alert-danger");
+            PassmatchAlert.current.classList.replace(
+              "alert-success",
+              "alert-danger",
+            );
             PassmatchAlert.current.innerText = AddMerchant.resp;
             PassmatchAlert.current.style.maxHeight = "500px";
             setButton(false);
@@ -293,7 +332,10 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
             setDisabled(false);
           }
         } else {
-          PassmatchAlert.current.classList.replace("alert-success", "alert-danger");
+          PassmatchAlert.current.classList.replace(
+            "alert-success",
+            "alert-danger",
+          );
           PassmatchAlert.current.innerText = "Email/Password not correct";
           PassmatchAlert.current.style.maxHeight = "500px";
 
@@ -344,12 +386,18 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
         return "user Not Added";
       });
 
-    if (UserVarified.resp.email && UserVarified.resp.Merchantvarified === true) {
+    if (
+      UserVarified.resp.email &&
+      UserVarified.resp.Merchantvarified === true
+    ) {
       setGlobal(UserVarified.resp.name, true, UserVarified.resp.email, false);
       PassmatchAlert.current.classList.replace("alert-danger", "alert-success");
       PassmatchAlert.current.innerText = "User Logged in successfully";
       PassmatchAlert.current.style.maxHeight = "500px";
-    } else if (UserVarified.resp.email && UserVarified.resp.Merchantvarified === false) {
+    } else if (
+      UserVarified.resp.email &&
+      UserVarified.resp.Merchantvarified === false
+    ) {
       PassmatchAlert.current.classList.replace("alert-danger", "alert-success");
       PassmatchAlert.current.innerText = "Varification code sent by email";
       PassmatchAlert.current.style.maxHeight = "500px";
@@ -368,151 +416,175 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
   // -----------------------------------
   return (
     <div
-    ref={ContainerRef}
-    className="container1"
-    onClick={() => {
-      console.log(PasswordCheck);
-      console.log(PasswordCheckState);
-      console.log(Credentials);
-      console.log(new Date());
+      ref={ContainerRef}
+      className="container1"
+      onClick={() => {
+        console.log(PasswordCheck);
+        console.log(PasswordCheckState);
+        console.log(Credentials);
+        console.log(new Date());
 
-      console.log(globalState);
-    }}>
-      <Row>
-        <h3>
-          Merchant Signup
-        </h3>
-      </Row>
-    <label htmlFor="name">
-      <b>Name</b>
-    </label>
-    <input
-      type="text"
-      placeholder="Enter name"
-      name="name"
-      disabled={Disabled}
-      onKeyUp={(e) => {
-        setCredentials({ ...Credentials, Name: e.target.value });
+        console.log(globalState);
       }}
-      required
-    />
-
-    <label htmlFor="email">
-      <b>E-mail</b>
-    </label>
-    <input type="text" placeholder="Enter Email" name="email" disabled={Disabled} onKeyUp={(e) => EnterEmail(e)} required />
-
-    <label htmlFor="psw">
-      <b>Password</b>
-    </label>
-    <input
-      ref={PasswordValue}
-      id="psw"
-      type="password"
-      pattern="[0-9]{3}"
-      placeholder="Enter Password"
-      name="psw"
-      disabled={Disabled}
-      onFocus={() => focus()}
-      onBlur={() => blur()}
-      onKeyUp={(e) => KeyUp(e)}
-      required
-    />
-
-    <div className="d-flex flex-wrap">
-      {/* in the following used w-100 class and wordWrap style to break work indide the div width */}
-      <div id="Alert" className=" alert alert-primary w-100" style={{ wordWrap: "break-word" }} role="alert">
-        <h3>Password must contain the following:</h3>
-        <p id="letter" className="PassInvalid">
-          A <b>lowercase</b> letter
-        </p>
-        <p id="capital" className="PassInvalid">
-          A <b>capital (uppercase)</b> letter
-        </p>
-        <p id="number" className="PassInvalid">
-          A <b>number</b>
-        </p>
-        <p id="length" className="PassInvalid">
-          Minimum <b>8 characters</b>
-        </p>
-      </div>
-    </div>
-
-    <label htmlFor="confirmpsw">
-      <b>Confirm Password</b>
-    </label>
-    <div className="d-block" style={{ boxSizing: "border-box" }}>
+    >
+      <Row>
+        <h3>Merchant Signup</h3>
+      </Row>
+      <label htmlFor="name">
+        <b>Name</b>
+      </label>
       <input
-        ref={ConfirmPasswordValue}
-        type="password"
-        placeholder="Confirm Password"
-        name="confirmpsw"
-        onFocus={() => {
-          ConfirmPasswordCheck();
-
-          PassmatchAlert.current.style.maxHeight = "500px";
+        type="text"
+        placeholder="Enter name"
+        name="name"
+        disabled={Disabled}
+        onKeyUp={(e) => {
+          setCredentials({ ...Credentials, Name: e.target.value });
         }}
-        onBlur={() => {
-          PassmatchAlert.current.style.maxHeight = "0px";
-        }}
-        onKeyUp={() => ConfirmPasswordCheck()}
         required
-        disabled={ConfirmPassword}
       />
 
-      <div
-        ref={PassmatchAlert}
-        className=" alert alert-danger text-start"
-        style={{
-          boxSizing: "border-box",
-          marginBottom: "0",
-          overflow: "hidden",
-          padding: "0px",
-          border: "0px",
-          maxHeight: "0px",
-          transition: "all 0.3s ease-in-out",
-        }}
-        role="alert"></div>
-      <Row ref={varificationCodeRef} style={{ display: "none" }}>
-        <Col xs={12} md={8}>
-          <input
-            type="number"
-            style={{ overflow: "hidden", width: "100%", height: "50px" }}
-            placeholder="Enter varification code"
-            onChange={(e) => {
-              setCredentials({ ...Credentials, VarificationCode: Number(e.target.value) });
-            }}
-          />
-        </Col>
+      <label htmlFor="email">
+        <b>E-mail</b>
+      </label>
+      <input
+        type="text"
+        placeholder="Enter Email"
+        name="email"
+        disabled={Disabled}
+        onKeyUp={(e) => EnterEmail(e)}
+        required
+      />
 
-        <Col xs={12} md={4}>
-          <button className="SignUpButton" style={{ height: "50px", margin: "0", width: "100%" }} onClick={() => VarifyEmail()}>
-            Varify
-          </button>
-        </Col>
-      </Row>
-    </div>
+      <label htmlFor="psw">
+        <b>Password</b>
+      </label>
+      <input
+        ref={PasswordValue}
+        id="psw"
+        type="password"
+        pattern="[0-9]{3}"
+        placeholder="Enter Password"
+        name="psw"
+        disabled={Disabled}
+        onFocus={() => focus()}
+        onBlur={() => blur()}
+        onKeyUp={(e) => KeyUp(e)}
+        required
+      />
 
-    <button className="SignUpButton" disabled={SignUpBtn} onClick={() => SignUpSubmit()}>
-      SignUp
-    </button>
+      <div className="d-flex flex-wrap">
+        {/* in the following used w-100 class and wordWrap style to break work indide the div width */}
+        <div
+          id="Alert"
+          className=" alert alert-primary w-100"
+          style={{ wordWrap: "break-word" }}
+          role="alert"
+        >
+          <h3>Password must contain the following:</h3>
+          <p id="letter" className="PassInvalid">
+            A <b>lowercase</b> letter
+          </p>
+          <p id="capital" className="PassInvalid">
+            A <b>capital (uppercase)</b> letter
+          </p>
+          <p id="number" className="PassInvalid">
+            A <b>number</b>
+          </p>
+          <p id="length" className="PassInvalid">
+            Minimum <b>8 characters</b>
+          </p>
+        </div>
+      </div>
 
-    <span className="psw">
-      have account{" "}
-      <span
-        style={{
-          color: "blue",
-          textDecoration: "underline",
-          cursor: "pointer",
-        }}
-        onClick={() => {
-          navigate("/MerchantLogIn");
-        }}>
-        LogIn
+      <label htmlFor="confirmpsw">
+        <b>Confirm Password</b>
+      </label>
+      <div className="d-block" style={{ boxSizing: "border-box" }}>
+        <input
+          ref={ConfirmPasswordValue}
+          type="password"
+          placeholder="Confirm Password"
+          name="confirmpsw"
+          onFocus={() => {
+            ConfirmPasswordCheck();
+
+            PassmatchAlert.current.style.maxHeight = "500px";
+          }}
+          onBlur={() => {
+            PassmatchAlert.current.style.maxHeight = "0px";
+          }}
+          onKeyUp={() => ConfirmPasswordCheck()}
+          required
+          disabled={ConfirmPassword}
+        />
+
+        <div
+          ref={PassmatchAlert}
+          className=" alert alert-danger text-start"
+          style={{
+            boxSizing: "border-box",
+            marginBottom: "0",
+            overflow: "hidden",
+            padding: "0px",
+            border: "0px",
+            maxHeight: "0px",
+            transition: "all 0.3s ease-in-out",
+          }}
+          role="alert"
+        ></div>
+        <Row ref={varificationCodeRef} style={{ display: "none" }}>
+          <Col xs={12} md={8}>
+            <input
+              type="number"
+              style={{ overflow: "hidden", width: "100%", height: "50px" }}
+              placeholder="Enter varification code"
+              onChange={(e) => {
+                setCredentials({
+                  ...Credentials,
+                  VarificationCode: Number(e.target.value),
+                });
+              }}
+            />
+          </Col>
+
+          <Col xs={12} md={4}>
+            <button
+              className="SignUpButton"
+              style={{ height: "50px", margin: "0", width: "100%" }}
+              onClick={() => VarifyEmail()}
+            >
+              Varify
+            </button>
+          </Col>
+        </Row>
+      </div>
+
+      <button
+        className="SignUpButton"
+        disabled={SignUpBtn}
+        onClick={() => SignUpSubmit()}
+      >
+        SignUp
+      </button>
+
+      <span className="psw">
+        have account{" "}
+        <span
+          style={{
+            color: "blue",
+            textDecoration: "underline",
+            cursor: "pointer",
+          }}
+          onClick={() => {
+            navigate("/MerchantLogIn");
+          }}
+        >
+          LogIn
+        </span>
       </span>
-    </span>
-  </div>
-  )
-}
+    </div>
+  );
+};
 
-export default MerchantSignUp
+export default MerchantSignUp;
