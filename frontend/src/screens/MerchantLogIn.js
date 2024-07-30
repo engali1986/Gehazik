@@ -45,7 +45,7 @@ const MerchantLogIn = ({ globalState, setGlobal }) => {
       console.log(Merchantvarified)
 
     if (Merchantvarified.resp.email && Merchantvarified.resp.Merchantvarified === true) {
-      setGlobal(Merchantvarified.resp.name, true, Merchantvarified.resp.email, false, true, false);
+      setGlobal(Merchantvarified.resp.name, true, Merchantvarified.resp.email, false, false, true);
       Alert.current.classList.replace("alert-danger", "alert-success");
       Alert.current.innerText = "User Logged in successfully";
       Alert.current.style.maxHeight = "500px";
@@ -100,7 +100,7 @@ const MerchantLogIn = ({ globalState, setGlobal }) => {
           console.log(UserLogIn.resp)
           if (UserLogIn.resp.email && UserLogIn.resp.Merchantvarified === true) {
             console.log(UserLogIn)
-            setGlobal(UserLogIn.resp.name, true, UserLogIn.resp.email, false, true, false);
+            setGlobal(UserLogIn.resp.name, true, UserLogIn.resp.email, false, false, true);
             Alert.current.classList.replace("alert-danger", "alert-success");
             Alert.current.innerText = "User Logged in successfully";
             Alert.current.style.maxHeight = "500px";
@@ -129,7 +129,7 @@ const MerchantLogIn = ({ globalState, setGlobal }) => {
           Alert.current.style.maxHeight = "500px";
           varificationCodeRef.current.style.display = "flex";
         } else if (UserLogIn.resp === "User varified") {
-          setGlobal(UserLogIn.resp.name, true, UserLogIn.resp.email, false, true, false);
+          setGlobal(UserLogIn.resp.name, true, UserLogIn.resp.email, false, false, true);
           Alert.current.classList.replace("alert-danger", "alert-success");
           Alert.current.innerText = "User Logged in successfully";
           Alert.current.style.maxHeight = "500px";
@@ -155,8 +155,17 @@ const MerchantLogIn = ({ globalState, setGlobal }) => {
   };
 
   useEffect(() => {
-    if (globalState.UserLogged === true) {
-      navigate("/");
+    if (globalState.UserLogged===true) {
+      if (globalState.Admin === true) {
+        navigate("/Admins/"+globalState.Name);
+      } else if( globalState.Client===true){
+        navigate("/")
+      } else if(globalState.Merchant===true){
+        navigate("/Merchants/"+globalState.Name)
+      }
+      
+    } else {
+      
     }
   });
 

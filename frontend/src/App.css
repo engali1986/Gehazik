@@ -8403,8 +8403,33 @@ readers do not read off random characters that represent icons */
 
 /* Footer end */
 
-/* loading start */
+/* MerchantProfile start */
+
+#MerchantProfile div{
+  transition: all 0.3s ease-in-out;
+}
+
+#MerchantProfile div:hover{
+  cursor: pointer;
+  background-color:#fcb478dd;
+}
 
 
 
-/* loading end */
+/* MerchantProfile end */
+
+
+/* MerchantOrders start */
+
+#MerchantOrders div{
+  transition: all 0.3s ease-in-out;
+}
+
+#MerchantOrders div:hover{
+  cursor: pointer;
+  background-color:#fcb478dd;
+}
+
+
+
+/* MerchantOrders end */

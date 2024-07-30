@@ -24,6 +24,7 @@ import ProductsScreen from "./screens/ProductsScreen.js";
 import AddressSelect from "./screens/AddressSelect.js";
 import MerchantLogIn from "./screens/MerchantLogIn.js";
 import MerchantSignUp from "./screens/MerchantSignUp.js";
+import MerchantPage from "./screens/MerchantPage.js";
 
 function App() {
   const BackDrop = useRef();
@@ -397,6 +398,7 @@ function App() {
               <Route path="/SignUp" element={<SignUp globalState={GlobalState} setGlobal={userChange} />} />
               <Route path="/MerchantLogIn" element={<MerchantLogIn globalState={GlobalState} setGlobal={userChange} />} />
               <Route path="/MerchantSignUp" element={<MerchantSignUp globalState={GlobalState} setGlobal={userChange} />} />
+              <Route path="/Merchants/:Name"  element={<MerchantPage globalState={GlobalState} setGlobal={userChange} />} />
               <Route path="/PasswordRecovery" element={<PasswordRecovery />} />
               <Route path="/*" element={<WrongPage />} />
 
