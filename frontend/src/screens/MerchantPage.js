@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
+import StaticData from "../Data/StaticData.js";
 
 const MerchantPage = ({ globalState, setGlobal }) => {
   const [Data, SetData] = useState(""); // this state will be used to store the selected menu items to display data
@@ -100,7 +101,26 @@ const MerchantPage = ({ globalState, setGlobal }) => {
       return (
         <Container>
           <Row>
-            <h3>{Data}</h3>
+            <h3
+              onClick={(e) => {
+                e.stopPropagation();
+                console.log(StaticData.ProductCategories);
+              }}
+            >
+              {Data}
+            </h3>
+          </Row>
+          <Row>
+            <Col xs={12}>
+              <select>
+                <option>Please select Category</option>
+                {StaticData.ProductCategories.map((Item, Index) => (
+                  <option key={Object.keys(Item)[Index]}>
+                    {Object.keys(Item)[Index].replace(/_/g, " ")}
+                  </option>
+                ))}
+              </select>
+            </Col>
           </Row>
         </Container>
       );
