@@ -11128,7 +11128,7 @@ readers do not read off random characters that represent icons */
 /* Footer end */
 /* MerchantMenu start */
 .MerchantMenu {
-  font-size: 1.7rem;
+  font-size: 1.5vw;
   overflow: hidden;
   max-height: 0px;
   transition: all 0.3s ease-in-out;
@@ -11143,6 +11143,8 @@ readers do not read off random characters that represent icons */
 /* MerchantProfile start */
 
 #MerchantProfile div {
+  font-size: 1.2vw;
+  border-bottom: 1px solid gray;
   transition: all 0.3s ease-in-out;
 }
 
@@ -11156,6 +11158,8 @@ readers do not read off random characters that represent icons */
 /* MerchantOrders start */
 
 #MerchantOrders div {
+  font-size: 1.2vw;
+  border-bottom: 1px solid gray;
   transition: all 0.3s ease-in-out;
 }
 
@@ -11169,6 +11173,8 @@ readers do not read off random characters that represent icons */
 /* MerchantProducts start */
 
 #MerchantProducts div {
+  font-size: 1.2vw;
+  border-bottom: 1px solid gray;
   transition: all 0.3s ease-in-out;
 }
 
@@ -11182,6 +11188,8 @@ readers do not read off random characters that represent icons */
 /* MerchantPayments start */
 
 #MerchantPayments div {
+  font-size: 1.2vw;
+  border-bottom: 1px solid gray;
   transition: all 0.3s ease-in-out;
 }
 
