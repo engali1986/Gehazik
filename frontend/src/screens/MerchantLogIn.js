@@ -35,7 +35,7 @@ const MerchantLogIn = ({ globalState, setGlobal }) => {
           "Content-Type": "application/json",
         },
         mode: "cors",
-      },
+      }
     )
       .then((res) => {
         return res.json();
@@ -57,7 +57,7 @@ const MerchantLogIn = ({ globalState, setGlobal }) => {
         Merchantvarified.resp.email,
         false,
         false,
-        true,
+        true
       );
       Alert.current.classList.replace("alert-danger", "alert-success");
       Alert.current.innerText = "User Logged in successfully";
@@ -126,6 +126,7 @@ const MerchantLogIn = ({ globalState, setGlobal }) => {
               false,
               false,
               true,
+              UserLogIn.resp.token
             );
             Alert.current.classList.replace("alert-danger", "alert-success");
             Alert.current.innerText = "User Logged in successfully";
@@ -164,7 +165,7 @@ const MerchantLogIn = ({ globalState, setGlobal }) => {
             UserLogIn.resp.email,
             false,
             false,
-            true,
+            true
           );
           Alert.current.classList.replace("alert-danger", "alert-success");
           Alert.current.innerText = "User Logged in successfully";

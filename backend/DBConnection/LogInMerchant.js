@@ -8,7 +8,13 @@ const client = new MongoClient(uri);
 async function LogInMerchant(Credentials) {
   try {
     console.log("LogInMerchant file 0");
+    await client.connect().then((res) => {
+      console.log("Connection res ");
+      console.log(res);
+    });
+    let NewToken = Math.floor(Math.random() * 10000) + 1;
     console.log(Credentials);
+    console.log(NewToken);
     const GetMerchant = await client
       .db("Gehazik")
       .collection("Merchants")
@@ -18,29 +24,29 @@ async function LogInMerchant(Credentials) {
         console.log(res);
         if (res === null) {
           console.log("LogInMerchant file 2");
-          console.log(res)
+          console.log(res);
           return "Merchant Not Found";
         } else {
           console.log("LogInMerchant file 3");
-          console.log(res)
+          console.log(res);
           return res;
         }
       })
       .catch((err) => {
         console.log("LogInMerchant file 4");
-        console.log(err)
+        console.log(err);
         return "Connection error";
       });
 
     if (GetMerchant.email) {
       console.log("LogInMerchant file 5");
       console.log(GetMerchant);
+      //  next we will check if Merchant varified through email or not
 
       if (GetMerchant.Merchantvarified === false) {
         console.log("LogInMerchant file 6");
         if (Credentials.VarificationCode) {
           console.log("LogInMerchant file 7");
-
 
           if (Credentials.VarificationCode === GetMerchant.varificationcode) {
             const VarifyMerchant = await client
@@ -48,8 +54,8 @@ async function LogInMerchant(Credentials) {
               .collection("Merchants")
               .updateOne(
                 { email: Credentials.Email, pass: Credentials.Password },
-                { $set: { Merchantvarified: true } }
-
+                { $set: { Merchantvarified: true } },
+                { $set: { token: NewToken } }
               )
               .then((res) => {
                 console.log("LogInMerchant file 7.5");
@@ -57,22 +63,19 @@ async function LogInMerchant(Credentials) {
                 return res;
               })
               .catch((err) => {
-                console.log(err)
+                console.log(err);
                 return "Connection error";
               });
 
             if (typeof VarifyMerchant === "object") {
               console.log("LogInMerchant file 8");
-              GetMerchant.Merchantvarified = true
-
-
-
-
+              GetMerchant.Merchantvarified = true;
+              GetMerchant.token = NewToken;
 
               return GetMerchant;
             } else {
               console.log("LogInMerchant file 9");
-              console.log(VarifyMerchant)
+              console.log(VarifyMerchant);
               return "Connection error";
             }
           } else {
@@ -91,7 +94,10 @@ async function LogInMerchant(Credentials) {
                 console.log(err);
                 return "Connection error";
               });
-            if (MerchantVarification !== "Connection error" && typeof MerchantVarification === "object") {
+            if (
+              MerchantVarification !== "Connection error" &&
+              typeof MerchantVarification === "object"
+            ) {
               console.log("LogInMerchant file 12");
               return "Varification Code sent by email";
             } else {
@@ -116,9 +122,12 @@ async function LogInMerchant(Credentials) {
               console.log(err);
               return "Connection error";
             });
-          if (MerchantVarification !== "Connection error" && typeof MerchantVarification === "object") {
+          if (
+            MerchantVarification !== "Connection error" &&
+            typeof MerchantVarification === "object"
+          ) {
             console.log("LogInMerchant file 14-12");
-            console.log(MerchantVarification)
+            console.log(MerchantVarification);
             return "Varification Code sent by email";
           } else {
             console.log("LogInMerchant file 14-13");
@@ -127,7 +136,28 @@ async function LogInMerchant(Credentials) {
         }
       } else {
         console.log("LogInMerchant file 15");
-        return GetMerchant;
+        const UpdateMerchantToken = await client
+          .db("Gehazik")
+          .collection("Merchants")
+          .updateOne(
+            { email: Credentials.Email, pass: Credentials.Password },
+            { $set: { token: NewToken } }
+          )
+          .then((res) => {
+            console.log("LogInMerchant file 15 UpdateMerchantToken");
+            return res;
+          })
+          .catch((err) => {
+            console.log("LogInMerchant file 15 UpdateMerchantToken error");
+            console.log(err);
+            return "Connection error";
+          });
+        if (typeof UpdateMerchantToken === "object") {
+          GetMerchant.token = NewToken;
+          return GetMerchant;
+        } else {
+          return "Connection error";
+        }
       }
     } else {
       console.log("LogInMerchant file 16");
@@ -135,11 +165,10 @@ async function LogInMerchant(Credentials) {
     }
   } finally {
     // Ensures that the client will close when you finish/error
-    // await client.close(true).then(res=>{
-    //     console.log("LogInMerchant file 5")
-    //     console.log(res)
-
-    // });
+    await client.close(true).then((res) => {
+      console.log("LogInMerchant file 5");
+      console.log(res);
+    });
     setTimeout(() => {
       console.log("done");
     }, 10000);

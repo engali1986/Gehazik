@@ -10,6 +10,10 @@ const client = new MongoClient(uri);
 // AddMerchant function is used to add Merchant to database
 async function AddMerchant(Credentials) {
   try {
+    await client.connect().then((res) => {
+      console.log("Connection res ");
+      console.log(res);
+    });
     console.log("AddMerchant file 0");
     console.log(Credentials);
 
@@ -29,7 +33,7 @@ async function AddMerchant(Credentials) {
       })
       .catch((err) => {
         console.log("AddMerchant file 1.1");
-        console.log(err)
+        console.log(err);
 
         return "Connection error";
       });
@@ -40,6 +44,7 @@ async function AddMerchant(Credentials) {
     // if Merchant not regestered we add Merchant to database and create varificationcode
     if (IsMerchantRegistered === "Merchant Not Found") {
       let x = Math.floor(Math.random() * 9999);
+      let NewToken = Math.floor(Math.random() * 10000) + 1;
 
       if (x < 1000) {
         x = x + 1000;
@@ -55,6 +60,7 @@ async function AddMerchant(Credentials) {
           Merchantvarified: false,
           varificationcode: x,
           Date: new Date(),
+          token: NewToken,
         })
         .then((res) => {
           console.log("AddMerchant file 2");
@@ -85,8 +91,14 @@ async function AddMerchant(Credentials) {
             return "Connection error";
           });
 
-        if (Merchant !== "Merchant Not Found" || Merchant !== "Connection error") {
-          const varification = await Merchantvarification(Merchant.email,Merchant.pass)
+        if (
+          Merchant !== "Merchant Not Found" ||
+          Merchant !== "Connection error"
+        ) {
+          const varification = await Merchantvarification(
+            Merchant.email,
+            Merchant.pass
+          )
             .then((res) => {
               console.log("AddMerchant file 4");
               console.log(res);
@@ -113,10 +125,9 @@ async function AddMerchant(Credentials) {
     // Send a ping to confirm a successful connection
   } finally {
     // Ensures that the client will close when you finish/error
-    await client.close(true).then(res=>{
-        console.log("AddMerchant file 5")
-        console.log(res)
-
+    await client.close(true).then((res) => {
+      console.log("AddMerchant file 5");
+      console.log(res);
     });
     setTimeout(() => {
       console.log("done");

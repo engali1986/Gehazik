@@ -38,10 +38,16 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
   let length = useRef(document.getElementById("length"));
 
   useEffect(() => {
-    if (globalState.Name.length > 0) {
-      navigate("/");
+    if (globalState.UserLogged === true) {
+      if (globalState.Admin === true) {
+        navigate("/Admins/" + globalState.Name);
+      } else if (globalState.Client === true) {
+        navigate("/");
+      } else if (globalState.Merchant === true) {
+        navigate("/Merchants/" + globalState.Name);
+      }
+    } else {
     }
-
     const el1 = document.getElementById("letter");
     const el2 = document.getElementById("capital");
     const el3 = document.getElementById("number");
@@ -178,7 +184,7 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
       ) {
         PassmatchAlert.current.classList.replace(
           "alert-danger",
-          "alert-success",
+          "alert-success"
         );
         PassmatchAlert.current.innerText = "Password match";
         setPasswordmatch(true);
@@ -186,7 +192,7 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
       } else {
         PassmatchAlert.current.classList.replace(
           "alert-success",
-          "alert-danger",
+          "alert-danger"
         );
         PassmatchAlert.current.innerText = "Password mismatch";
         setPasswordmatch(false);
@@ -229,7 +235,7 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
       ) {
         PassmatchAlert.current.classList.replace(
           "alert-success",
-          "alert-danger",
+          "alert-danger"
         );
         PassmatchAlert.current.innerText =
           "Name/Email/Password cannot contain spaces  or arabic alphabit";
@@ -245,7 +251,7 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
           console.log("Email correct");
           PassmatchAlert.current.classList.replace(
             "alert-danger",
-            "alert-success",
+            "alert-success"
           );
           PassmatchAlert.current.innerText = "";
           PassmatchAlert.current.style.maxHeight = "0px";
@@ -278,7 +284,7 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
 
           PassmatchAlert.current.classList.replace(
             "alert-danger",
-            "alert-success",
+            "alert-success"
           );
           PassmatchAlert.current.innerText = "Sign Up please wait";
           PassmatchAlert.current.style.maxHeight = "500px";
@@ -308,7 +314,7 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
 
             PassmatchAlert.current.classList.replace(
               "alert-danger",
-              "alert-success",
+              "alert-success"
             );
             PassmatchAlert.current.innerText =
               AddMerchant.resp.name +
@@ -323,7 +329,7 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
           } else {
             PassmatchAlert.current.classList.replace(
               "alert-success",
-              "alert-danger",
+              "alert-danger"
             );
             PassmatchAlert.current.innerText = AddMerchant.resp;
             PassmatchAlert.current.style.maxHeight = "500px";
@@ -334,7 +340,7 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
         } else {
           PassmatchAlert.current.classList.replace(
             "alert-success",
-            "alert-danger",
+            "alert-danger"
           );
           PassmatchAlert.current.innerText = "Email/Password not correct";
           PassmatchAlert.current.style.maxHeight = "500px";
@@ -390,7 +396,15 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
       UserVarified.resp.email &&
       UserVarified.resp.Merchantvarified === true
     ) {
-      setGlobal(UserVarified.resp.name, true, UserVarified.resp.email, false);
+      setGlobal(
+        UserVarified.resp.name,
+        true,
+        UserVarified.resp.email,
+        false,
+        false,
+        true,
+        UserVarified.resp.token
+      );
       PassmatchAlert.current.classList.replace("alert-danger", "alert-success");
       PassmatchAlert.current.innerText = "User Logged in successfully";
       PassmatchAlert.current.style.maxHeight = "500px";
