@@ -5,9 +5,96 @@ import StaticData from "../Data/StaticData.js";
 
 const MerchantPage = ({ globalState, setGlobal }) => {
   const [Data, SetData] = useState(""); // this state will be used to store the selected menu items to display data
+  const [AddProductData, SetAddProductData] = useState({
+    ProductCategory: "",
+    ProductSubCategory: "",
+    ProductFeature: "",
+    ProductQty: 0,
+    ProductQtyUnit: "",
+  });
   const navigate = useNavigate();
   const params = useParams();
   const DtataDisplay = () => {
+    const Subcategories = () => {
+      for (
+        let index = 0;
+        index < StaticData.ProductCategories.length;
+        index++
+      ) {
+        if (
+          Object.keys(StaticData.ProductCategories[index])[0].replace(
+            /_/g,
+            " "
+          ) === AddProductData.ProductCategory
+        ) {
+          console.log("ProductCategory found");
+          console.log(Object.keys(StaticData.ProductCategories[index])[0]);
+          let Arr = StaticData.ProductCategories[index];
+          console.log(Arr);
+          console.log(Arr[Object.keys(StaticData.ProductCategories[index])[0]]);
+          let Arr2 = Arr[Object.keys(StaticData.ProductCategories[index])[0]];
+          console.log(Arr2.length);
+          const Arr3 = [];
+          for (let index = 0; index < Arr2.length; index++) {
+            console.log(Object.keys(Arr2[index])[0]);
+            Arr3.push(Object.keys(Arr2[index])[0]);
+          }
+
+          return Arr3.map((item) => (
+            <option key={item.replace(/_/g, " ")}>
+              {item.replace(/_/g, " ")}
+            </option>
+          ));
+        } else {
+        }
+      }
+    };
+    const Features = () => {
+      console.log(AddProductData);
+      for (
+        let index = 0;
+        index < StaticData.ProductCategories.length;
+        index++
+      ) {
+        if (
+          Object.keys(StaticData.ProductCategories[index])[0].replace(
+            /_/g,
+            " "
+          ) === AddProductData.ProductCategory
+        ) {
+          console.log(Object.keys(StaticData.ProductCategories[index])[0]);
+          console.log(
+            StaticData.ProductCategories[index][
+              Object.keys(StaticData.ProductCategories[index])[0]
+            ]
+          );
+          let arr =
+            StaticData.ProductCategories[index][
+              Object.keys(StaticData.ProductCategories[index])[0]
+            ];
+          console.log(arr);
+          console.log(arr.length);
+          for (let index = 0; index < arr.length; index++) {
+            console.log(arr[index][Object.keys(arr[index])[0]]);
+            console.log(Object.keys(arr[index])[0]);
+            if (
+              Object.keys(arr[index])[0].replace(/_/g, " ") ===
+              AddProductData.ProductSubCategory
+            ) {
+              console.log(arr[index][Object.keys(arr[index])[0]]);
+              let FeaturesArr = arr[index][Object.keys(arr[index])[0]];
+              console.log(FeaturesArr);
+              console.log(FeaturesArr.length);
+              return FeaturesArr.map((item) => (
+                <option key={item}>{item}</option>
+              ));
+            } else {
+            }
+          }
+        } else {
+        }
+      }
+    };
     if (Data === "Change Password") {
       return (
         <Container>
@@ -104,7 +191,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
             <h3
               onClick={(e) => {
                 e.stopPropagation();
-                console.log(StaticData.ProductCategories);
+                console.log(StaticData.ProductCategories.length);
               }}
             >
               {Data}
@@ -112,14 +199,45 @@ const MerchantPage = ({ globalState, setGlobal }) => {
           </Row>
           <Row>
             <Col xs={12}>
-              <select>
+              <select
+                onChange={(e) => {
+                  console.log(e.target.value);
+                  SetAddProductData({
+                    ...AddProductData,
+                    ProductCategory: e.target.value,
+                    ProductFeature: "",
+                    ProductQty: 0,
+                    ProductQtyUnit: "",
+                    ProductSubCategory: "",
+                  });
+                }}
+              >
                 <option>Please select Category</option>
                 {StaticData.ProductCategories.map((Item, Index) => (
-                  <option key={Object.keys(Item)[Index]}>
-                    {Object.keys(Item)[Index].replace(/_/g, " ")}
+                  <option key={Object.keys(Item)[0].replace(/_/g, " ")}>
+                    {Object.keys(Item)[0].replace(/_/g, " ")}
                   </option>
                 ))}
               </select>
+              <select
+                onChange={(e) => {
+                  console.log(e.target.value);
+                  SetAddProductData({
+                    ...AddProductData,
+                    ProductSubCategory: e.target.value,
+                  });
+                }}
+              >
+                <option>Please select Subcategory</option>
+                {Subcategories()}
+              </select>
+              <select>
+                <option>Please select features</option>
+                {Features()}
+              </select>
+
+              <div>{AddProductData.ProductCategory}</div>
+              <div>{AddProductData.ProductSubCategory}</div>
             </Col>
           </Row>
         </Container>

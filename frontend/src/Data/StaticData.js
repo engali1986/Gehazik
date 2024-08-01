@@ -430,6 +430,12 @@ const StaticData = {
         { Gascooker: ["4 Burners", "5 Burners and above"] },
       ],
     },
+    {
+      Grocery: [
+        { Dairy_Products: ["Cheese", "Milk", "Yogurt"] },
+        { Eggs: ["White Egg", "Brown Egg"] },
+      ],
+    },
   ],
 };
 
