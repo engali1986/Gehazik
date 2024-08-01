@@ -5,16 +5,30 @@ import StaticData from "../Data/StaticData.js";
 
 const MerchantPage = ({ globalState, setGlobal }) => {
   const [Data, SetData] = useState(""); // this state will be used to store the selected menu items to display data
-  const [AddProductData, SetAddProductData] = useState({
-    ProductCategory: "",
-    ProductSubCategory: "",
-    ProductFeature: "",
-    ProductQty: 0,
-    ProductQtyUnit: "",
-  });
+
   const navigate = useNavigate();
+
   const params = useParams();
   const DtataDisplay = () => {
+    const [AddProductData, SetAddProductData] = useState({
+      ProductCategory: "",
+      ProductSubCategory: "",
+      ProductFeature: "",
+      ProductQty: 0,
+      ProductQtyUnit: "",
+      ProductUnitPrice: 0,
+      ProductTitle: "",
+      ProductAdditionalFeatures: [],
+      Token: globalState.Token,
+      Name: globalState.Name,
+      Email: globalState.email,
+    });
+    const [Disabled, SetDisabled] = useState(false);
+    const ProductTitle = useRef();
+
+    const Alert = useRef();
+    const LoginButtonRef = useRef();
+
     const Subcategories = () => {
       for (
         let index = 0;
@@ -93,6 +107,61 @@ const MerchantPage = ({ globalState, setGlobal }) => {
           }
         } else {
         }
+      }
+    };
+    //  AddProduct function will be initiated when user clicks on Add Product button to add products to data base
+    const AddProduct = async (e) => {
+      e.stopPropagation();
+
+      console.log("Adding new product");
+      console.log(AddProductData);
+
+      SetDisabled(true);
+
+      // Next we will check for any missing data
+      let Keyes = Object.keys(AddProductData);
+      console.log(Keyes);
+      let ProductDataChecked = false;
+      for (let index = 0; index < Keyes.length; index++) {
+        if (
+          AddProductData[Keyes[index]] === "" ||
+          AddProductData[Keyes[index]] === 0
+        ) {
+          console.log("Product not added " + Keyes[index]);
+          Alert.current.classList.replace("alert-success", "alert-danger");
+          Alert.current.innerText = "Please add " + Keyes[index];
+          Alert.current.style.maxHeight = "500px";
+          SetDisabled(false);
+          ProductDataChecked = false;
+
+          break;
+        } else {
+          ProductDataChecked = true;
+        }
+      }
+
+      if (ProductDataChecked === true) {
+        console.log("Submitting data");
+        const ProductAdded = await fetch(
+          "http://localhost:5000/Merchants/AddProduct",
+          {
+            method: "POST",
+            body: JSON.stringify(AddProductData),
+            headers: {
+              "Content-Type": "application/json",
+            },
+            mode: "cors",
+          }
+        )
+          .then((res) => {
+            console.log(res);
+            SetDisabled(false);
+            return res;
+          })
+          .catch((err) => {
+            console.log(err);
+            SetDisabled(false);
+          });
       }
     };
     if (Data === "Change Password") {
@@ -186,30 +255,49 @@ const MerchantPage = ({ globalState, setGlobal }) => {
       );
     } else if (Data === "Add Products") {
       return (
-        <Container>
+        <Container style={{ backgroundColor: "gray" }}>
           <Row>
             <h3
               onClick={(e) => {
                 e.stopPropagation();
                 console.log(StaticData.ProductCategories.length);
+                console.log(AddProductData);
               }}
             >
               {Data}
             </h3>
           </Row>
-          <Row>
+          <Row className=" pb-2 align-items-center text-start">
             <Col xs={12}>
               <select
+                style={{ width: "100%" }}
                 onChange={(e) => {
+                  Alert.current.classList.replace(
+                    "alert-success",
+                    "alert-danger"
+                  );
+                  Alert.current.innerText = "";
+                  Alert.current.style.maxHeight = "0px";
+                  if (e.target.value === "Please select Category") {
+                    SetAddProductData({
+                      ...AddProductData,
+                      ProductCategory: "",
+                      ProductFeature: "",
+                      ProductQty: 0,
+                      ProductQtyUnit: "",
+                      ProductSubCategory: "",
+                    });
+                  } else {
+                    SetAddProductData({
+                      ...AddProductData,
+                      ProductCategory: e.target.value,
+                      ProductFeature: "",
+                      ProductQty: 0,
+                      ProductQtyUnit: "",
+                      ProductSubCategory: "",
+                    });
+                  }
                   console.log(e.target.value);
-                  SetAddProductData({
-                    ...AddProductData,
-                    ProductCategory: e.target.value,
-                    ProductFeature: "",
-                    ProductQty: 0,
-                    ProductQtyUnit: "",
-                    ProductSubCategory: "",
-                  });
                 }}
               >
                 <option>Please select Category</option>
@@ -219,25 +307,218 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                   </option>
                 ))}
               </select>
+            </Col>
+          </Row>
+          <Row className=" pb-2 align-items-center text-start">
+            <Col xs={12}>
               <select
+                style={{ width: "100%" }}
                 onChange={(e) => {
+                  Alert.current.classList.replace(
+                    "alert-success",
+                    "alert-danger"
+                  );
+                  Alert.current.innerText = "";
+                  Alert.current.style.maxHeight = "0px";
+                  if (e.target.value === "Please select Subcategory") {
+                    SetAddProductData({
+                      ...AddProductData,
+                      ProductSubCategory: "",
+                    });
+                  } else {
+                    SetAddProductData({
+                      ...AddProductData,
+                      ProductSubCategory: e.target.value,
+                    });
+                  }
                   console.log(e.target.value);
-                  SetAddProductData({
-                    ...AddProductData,
-                    ProductSubCategory: e.target.value,
-                  });
                 }}
               >
                 <option>Please select Subcategory</option>
                 {Subcategories()}
               </select>
-              <select>
-                <option>Please select features</option>
+            </Col>
+          </Row>
+          <Row className=" pb-2 align-items-center text-start">
+            <Col xs={12}>
+              <select
+                style={{ width: "100%" }}
+                onChange={(e) => {
+                  Alert.current.classList.replace(
+                    "alert-success",
+                    "alert-danger"
+                  );
+                  Alert.current.innerText = "";
+                  Alert.current.style.maxHeight = "0px";
+                  if (e.target.value === "Please select Features") {
+                    SetAddProductData({
+                      ...AddProductData,
+                      ProductFeature: "",
+                    });
+                  } else {
+                    SetAddProductData({
+                      ...AddProductData,
+                      ProductFeature: e.target.value,
+                    });
+                  }
+                  console.log(e.target.value);
+                }}
+              >
+                <option>Please select Features</option>
                 {Features()}
               </select>
-
-              <div>{AddProductData.ProductCategory}</div>
-              <div>{AddProductData.ProductSubCategory}</div>
+            </Col>
+          </Row>
+          <Row className=" pb-2 align-items-center text-start">
+            <Col xs={4} md={8}>
+              <div style={{ color: "white" }}>Please add quantity</div>
+            </Col>
+            <Col xs={4} md={2}>
+              <input
+                onChange={(e) => {
+                  Alert.current.classList.replace(
+                    "alert-success",
+                    "alert-danger"
+                  );
+                  Alert.current.innerText = "";
+                  Alert.current.style.maxHeight = "0px";
+                  SetAddProductData({
+                    ...AddProductData,
+                    ProductQty: parseInt(e.target.value, 10),
+                  });
+                }}
+                style={{ width: "100%" }}
+                type="number"
+              />
+            </Col>
+            <Col xs={4} md={2}>
+              <select
+                onChange={(e) => {
+                  Alert.current.classList.replace(
+                    "alert-success",
+                    "alert-danger"
+                  );
+                  Alert.current.innerText = "";
+                  Alert.current.style.maxHeight = "0px";
+                  SetAddProductData({
+                    ...AddProductData,
+                    ProductQtyUnit: e.target.value,
+                  });
+                }}
+                style={{ width: "100%" }}
+              >
+                <option>Unit</option>
+                {StaticData.Units.map((Unit) => (
+                  <option key={Unit}>{Unit}</option>
+                ))}
+              </select>
+            </Col>
+          </Row>
+          <Row className=" pb-2 align-items-center text-start">
+            <Col xs={4} md={8}>
+              <div style={{ color: "white" }}>Please add Unit Price</div>
+            </Col>
+            <Col xs={4} md={2}>
+              <input
+                onChange={(e) => {
+                  Alert.current.classList.replace(
+                    "alert-success",
+                    "alert-danger"
+                  );
+                  Alert.current.innerText = "";
+                  Alert.current.style.maxHeight = "0px";
+                  SetAddProductData({
+                    ...AddProductData,
+                    ProductUnitPrice: parseInt(e.target.value, 10),
+                  });
+                }}
+                style={{ width: "100%" }}
+                type="number"
+              />
+            </Col>
+            <Col xs={4} md={2}>
+              <div style={{ color: "white" }}>EGP</div>
+            </Col>
+          </Row>
+          <Row className=" pb-2 align-items-center text-start">
+            <Col style={{ color: "white" }} xs={6}>
+              {" "}
+              Add product title
+            </Col>
+            <Col xs={6}>
+              <input
+                onChange={(e) => {
+                  Alert.current.classList.replace(
+                    "alert-success",
+                    "alert-danger"
+                  );
+                  Alert.current.innerText = "";
+                  Alert.current.style.maxHeight = "0px";
+                  SetAddProductData({
+                    ...AddProductData,
+                    ProductTitle: e.target.value,
+                  });
+                }}
+                type="text"
+                style={{ width: "100%" }}
+              />
+            </Col>
+          </Row>
+          <Row
+            style={{ color: "white" }}
+            className=" pb-2 align-items-center text-start"
+          >
+            <Col xs={6}> Add product dditional features separated by comma</Col>
+            <Col xs={6}>
+              <input
+                onChange={(e) => {
+                  Alert.current.classList.replace(
+                    "alert-success",
+                    "alert-danger"
+                  );
+                  Alert.current.innerText = "";
+                  Alert.current.style.maxHeight = "0px";
+                  console.log(e.target.value.split(","));
+                  let Arr = e.target.value.split(",");
+                  SetAddProductData({
+                    ...AddProductData,
+                    ProductAdditionalFeatures: Arr,
+                  });
+                }}
+                type="text"
+                style={{ width: "100%" }}
+              />
+            </Col>
+          </Row>
+          <Row className=" pb-2 align-items-center text-start">
+            <Col xs={12}>
+              <div
+                ref={Alert}
+                className=" alert alert-danger text-start"
+                style={{
+                  boxSizing: "border-box",
+                  marginBottom: "0",
+                  width: "100%",
+                  overflow: "hidden",
+                  padding: "0px",
+                  border: "0px",
+                  maxHeight: "0px",
+                  transition: "all 0.3s ease-in-out",
+                }}
+                role="alert"
+              ></div>
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={12}>
+              <button
+                ref={LoginButtonRef}
+                className="LogInButton"
+                disabled={Disabled}
+                onClick={(e) => AddProduct(e)}
+              >
+                Add Product
+              </button>
             </Col>
           </Row>
         </Container>

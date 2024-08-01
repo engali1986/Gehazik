@@ -5,11 +5,14 @@ import AddUser from "./DBConnection/AddUser.js";
 import Test from "./DBConnection/Test.js";
 import LogInUser from "./DBConnection/LogInUser.js";
 import PasswordRecovery from "./DBConnection/PasswordRecovery.js";
-import AdminLogIn  from "./DBConnection/AdminLogIn.js"
+import AdminLogIn from "./DBConnection/AdminLogIn.js";
 import AddOrder from "./DBConnection/AddOrder.js";
 import GetOrders from "./DBConnection/GetOrders.js";
 import AddMerchant from "./DBConnection/AddMerchant.js";
 import LogInMerchant from "./DBConnection/LogInMerchant.js";
+import VarifyMerchant from "./DBConnection/VarifyMercahant.js";
+import AddProduct from "./DBConnection/Products/AddProduct.js";
+
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -18,7 +21,7 @@ app.get("/", (req, res) => {
 
   res.send("Server is running");
 
-  console.log("server.js " );
+  console.log("server.js ");
 });
 
 // UserRoutes start
@@ -42,8 +45,6 @@ app.post("/AddUser", async (req, res) => {
 
   console.log("finished");
 });
-
-
 
 app.post("/LogInUser", async (req, res) => {
   const credentials = await req.body;
@@ -70,8 +71,6 @@ app.post("/LogInUser", async (req, res) => {
   }
 });
 
-
-
 app.post("/UpdateUser", async (req, res) => {
   const result = await Test();
   res.json(result);
@@ -95,7 +94,6 @@ app.post("/PasswordRecovery", async (req, res) => {
 
 // user routes end
 
-
 // Admin routes start
 
 app.post("/AdminLogIn", async (req, res) => {
@@ -107,7 +105,7 @@ app.post("/AdminLogIn", async (req, res) => {
   console.log(result);
   if (result.email) {
     console.log("server /AdminLogIn 2");
-    console.log(result)
+    console.log(result);
     res.json({ resp: result });
   } else if (result === "User Not Found") {
     console.log("server /AdminLogIn 3");
@@ -124,10 +122,7 @@ app.post("/AdminLogIn", async (req, res) => {
   }
 });
 
-
-
 // Admin routes end
-
 
 // Merchant routes start
 
@@ -177,51 +172,68 @@ app.post("/LogInMerchant", async (req, res) => {
   }
 });
 
-
-
-
-
 // Merchant routes end
 
+// Product routes start
 
+// AddProduct route
+app.post("/Merchants/AddProduct", async (req, res) => {
+  console.log("server/AddProduct 0");
+  console.log(req.body);
+  const AddProductData = await req.body;
+  console.log("server/AddProduct 1 req.body is");
+  console.log(AddProductData);
+
+  const MerchantVarification = await VarifyMerchant(AddProductData);
+  console.log("server/AddProduct 2 MerchantVarification result");
+  console.log(MerchantVarification);
+  if (MerchantVarification._id) {
+    console.log("server/AddProduct  MerchantVarification done");
+    AddProductData.MerchantID = MerchantVarification._id;
+    console.log(AddProductData);
+    const ProductAdded = await AddProduct(AddProductData);
+    res.json({ resp: ProductAdded });
+
+    // res.send(AddProductData.MerchantID);
+  } else {
+    res.json({ resp: MerchantVarification });
+  }
+});
+
+// Product routes end
 
 //  Orders Route start
 // AddOrder route to Add orders
-app.post("/AddOrder",async(req,res)=>{
-  const OrderData= await req.body
-  console.log("Server AddOrder 0")
-  console.log(OrderData)
-  const OrderAdded=await AddOrder(OrderData)
-  console.log("Server AddOrder 1")
-  console.log(OrderAdded)
-  if (typeof OrderAdded==="string") {
-    console.log("Server AddOrder 2")
+app.post("/AddOrder", async (req, res) => {
+  const OrderData = await req.body;
+  console.log("Server AddOrder 0");
+  console.log(OrderData);
+  const OrderAdded = await AddOrder(OrderData);
+  console.log("Server AddOrder 1");
+  console.log(OrderAdded);
+  if (typeof OrderAdded === "string") {
+    console.log("Server AddOrder 2");
 
-    res.send(OrderAdded)
-    
+    res.send(OrderAdded);
   } else {
-    console.log("Server AddOrder 3")
-    res.send(OrderAdded._id)
-    
+    console.log("Server AddOrder 3");
+    res.send(OrderAdded._id);
   }
-})
+});
 
 // GetOrders Route to get list of all orders in DB
-app.post("/GetOrders", async(req,res)=>{
-  console.log("server GetOrders 0")
-  const Admin=await req.body
-  console.log("server GetOrders 1")
-  console.log(Admin)
-  const Orders= await GetOrders(Admin)
-  console.log("server GetOrders 1 "+ typeof Orders)
-  
-  res.json(Orders)
-})
+app.post("/GetOrders", async (req, res) => {
+  console.log("server GetOrders 0");
+  const Admin = await req.body;
+  console.log("server GetOrders 1");
+  console.log(Admin);
+  const Orders = await GetOrders(Admin);
+  console.log("server GetOrders 1 " + typeof Orders);
 
-
+  res.json(Orders);
+});
 
 // Orders Route end
-
 
 app.post("/Test", async (req, res) => {
   const Credentials = await req.body;

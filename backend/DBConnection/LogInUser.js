@@ -8,6 +8,10 @@ const client = new MongoClient(uri);
 async function LogInUser(Credentials) {
   try {
     console.log("LogInUser file 0");
+    await client.connect().then((res) => {
+      console.log("Connection res ");
+      console.log(res);
+    });
     console.log(Credentials);
     const GetUser = await client
       .db("Gehazik")
@@ -18,17 +22,17 @@ async function LogInUser(Credentials) {
         console.log(res);
         if (res === null) {
           console.log("LogInUser file 2");
-          console.log(res)
+          console.log(res);
           return "User Not Found";
         } else {
           console.log("LogInUser file 3");
-          console.log(res)
+          console.log(res);
           return res;
         }
       })
       .catch((err) => {
         console.log("LogInUser file 4");
-        console.log(err)
+        console.log(err);
         return "Connection error";
       });
 
@@ -41,7 +45,6 @@ async function LogInUser(Credentials) {
         if (Credentials.VarificationCode) {
           console.log("LogInUser file 7");
 
-
           if (Credentials.VarificationCode === GetUser.varificationcode) {
             const VarifyUser = await client
               .db("Gehazik")
@@ -49,7 +52,6 @@ async function LogInUser(Credentials) {
               .updateOne(
                 { email: Credentials.Email, pass: Credentials.Password },
                 { $set: { uservarified: true } }
-
               )
               .then((res) => {
                 console.log("LogInUser file 7.5");
@@ -57,22 +59,18 @@ async function LogInUser(Credentials) {
                 return res;
               })
               .catch((err) => {
-                console.log(err)
+                console.log(err);
                 return "Connection error";
               });
 
             if (typeof VarifyUser === "object") {
               console.log("LogInUser file 8");
-              GetUser.uservarified = true
-
-
-
-
+              GetUser.uservarified = true;
 
               return GetUser;
             } else {
               console.log("LogInUser file 9");
-              console.log(VarifyUser)
+              console.log(VarifyUser);
               return "Connection error";
             }
           } else {
@@ -91,7 +89,10 @@ async function LogInUser(Credentials) {
                 console.log(err);
                 return "Connection error";
               });
-            if (UserVarification !== "Connection error" && typeof UserVarification === "object") {
+            if (
+              UserVarification !== "Connection error" &&
+              typeof UserVarification === "object"
+            ) {
               console.log("LogInUser file 12");
               return "Varification Code sent by email";
             } else {
@@ -116,9 +117,12 @@ async function LogInUser(Credentials) {
               console.log(err);
               return "Connection error";
             });
-          if (UserVarification !== "Connection error" && typeof UserVarification === "object") {
+          if (
+            UserVarification !== "Connection error" &&
+            typeof UserVarification === "object"
+          ) {
             console.log("LogInUser file 14-12");
-            console.log(UserVarification)
+            console.log(UserVarification);
             return "Varification Code sent by email";
           } else {
             console.log("LogInUser file 14-13");
@@ -135,11 +139,10 @@ async function LogInUser(Credentials) {
     }
   } finally {
     // Ensures that the client will close when you finish/error
-    // await client.close(true).then(res=>{
-    //     console.log("LogInUser file 5")
-    //     console.log(res)
-
-    // });
+    await client.close(true).then((res) => {
+      console.log("LogInUser file 5");
+      console.log(res);
+    });
     setTimeout(() => {
       console.log("done");
     }, 10000);

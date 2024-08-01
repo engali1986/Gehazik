@@ -437,6 +437,7 @@ const StaticData = {
       ],
     },
   ],
+  Units: ["Kilograms", "Piece"],
 };
 
 export default StaticData;
