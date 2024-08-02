@@ -156,12 +156,18 @@ const MerchantPage = ({ globalState, setGlobal }) => {
           .then((res) => {
             console.log(res);
             SetDisabled(false);
-            return res;
+            return res.json();
           })
           .catch((err) => {
             console.log(err);
             SetDisabled(false);
           });
+
+        console.log(ProductAdded);
+        Alert.current.classList.replace("alert-danger", "alert-success");
+        Alert.current.innerText = ProductAdded.resp;
+        Alert.current.style.maxHeight = "500px";
+        SetDisabled(false);
       }
     };
     if (Data === "Change Password") {
