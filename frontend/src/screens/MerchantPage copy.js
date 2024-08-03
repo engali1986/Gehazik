@@ -10,7 +10,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
 
   const params = useParams();
   const DtataDisplay = () => {
-    const [ProductImageFile, SetProductImageFile] = useState(null);
+    const [ProductImageFile, SetProductImageFile] = useState();
     const [AddProductData, SetAddProductData] = useState({
       ProductCategory: "",
       ProductSubCategory: "",
@@ -140,44 +140,33 @@ const MerchantPage = ({ globalState, setGlobal }) => {
           ProductDataChecked = true;
         }
       }
-      if (ProductImageFile !== null) {
-        if (ProductDataChecked === true) {
-          const formData = new FormData();
-          formData.append("Data", JSON.stringify(AddProductData));
-          formData.append("File", ProductImageFile);
 
-          console.log("Submitting data");
-          const ProductAdded = await fetch(
-            "http://localhost:5000/Merchants/AddProduct",
-            {
-              method: "POST",
-              body: formData,
-              // headers: {
-              //   "Content-Type": "multipart/form-data",
-              // },
-              mode: "cors",
-            }
-          )
-            .then((res) => {
-              console.log(res);
-              SetDisabled(false);
-              return res.json();
-            })
-            .catch((err) => {
-              console.log(err);
-              SetDisabled(false);
-            });
+      if (ProductDataChecked === true) {
+        console.log("Submitting data");
+        const ProductAdded = await fetch(
+          "http://localhost:5000/Merchants/AddProduct",
+          {
+            method: "POST",
+            body: JSON.stringify(AddProductData),
+            headers: {
+              "Content-Type": "application/json",
+            },
+            mode: "cors",
+          }
+        )
+          .then((res) => {
+            console.log(res);
+            SetDisabled(false);
+            return res.json();
+          })
+          .catch((err) => {
+            console.log(err);
+            SetDisabled(false);
+          });
 
-          console.log(ProductAdded);
-          Alert.current.classList.replace("alert-danger", "alert-success");
-          Alert.current.innerText = ProductAdded.resp;
-          Alert.current.style.maxHeight = "500px";
-          SetDisabled(false);
-        } else {
-        }
-      } else {
-        Alert.current.classList.replace("alert-success", "alert-danger");
-        Alert.current.innerText = "Please add product image";
+        console.log(ProductAdded);
+        Alert.current.classList.replace("alert-danger", "alert-success");
+        Alert.current.innerText = ProductAdded.resp;
         Alert.current.style.maxHeight = "500px";
         SetDisabled(false);
       }
@@ -280,7 +269,6 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                 e.stopPropagation();
                 console.log(StaticData.ProductCategories.length);
                 console.log(AddProductData);
-                console.log(ProductImageFile);
               }}
             >
               {Data}
@@ -535,7 +523,6 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                       "Please upload file less than 512 KB";
                     Alert.current.style.maxHeight = "500px";
                   } else {
-                    SetProductImageFile(e.target.files[0]);
                   }
                 }}
                 type="file"

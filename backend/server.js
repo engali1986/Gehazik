@@ -12,8 +12,10 @@ import AddMerchant from "./DBConnection/AddMerchant.js";
 import LogInMerchant from "./DBConnection/LogInMerchant.js";
 import VarifyMerchant from "./DBConnection/VarifyMercahant.js";
 import AddProduct from "./DBConnection/Products/AddProduct.js";
+import multer from "multer";
 
 const app = express();
+const upload = multer({ dest: "uploads/" });
 app.use(cors());
 app.use(express.json());
 app.get("/", (req, res) => {
@@ -177,27 +179,51 @@ app.post("/LogInMerchant", async (req, res) => {
 // Product routes start
 
 // AddProduct route
-app.post("/Merchants/AddProduct", async (req, res) => {
+// app.post("/Merchants/AddProduct", async (req, res) => {
+//   console.log("server/AddProduct 0");
+//   console.log(req.body);
+//   const AddProductData = await req.body;
+//   console.log("server/AddProduct 1 req.body is");
+//   console.log(AddProductData);
+
+//   const MerchantVarification = await VarifyMerchant(AddProductData);
+//   console.log("server/AddProduct 2 MerchantVarification result");
+//   console.log(MerchantVarification);
+//   if (MerchantVarification._id) {
+//     console.log("server/AddProduct  MerchantVarification done");
+//     AddProductData.MerchantID = MerchantVarification._id;
+//     console.log(AddProductData);
+//     const ProductAdded = await AddProduct(AddProductData);
+//     res.json({ resp: ProductAdded });
+
+//     // res.send(AddProductData.MerchantID);
+//   } else {
+//     res.json({ resp: MerchantVarification });
+//   }
+// });
+
+app.post("/Merchants/AddProduct", upload.single("File"), async (req, res) => {
   console.log("server/AddProduct 0");
-  console.log(req.body);
-  const AddProductData = await req.body;
-  console.log("server/AddProduct 1 req.body is");
-  console.log(AddProductData);
 
-  const MerchantVarification = await VarifyMerchant(AddProductData);
-  console.log("server/AddProduct 2 MerchantVarification result");
-  console.log(MerchantVarification);
-  if (MerchantVarification._id) {
-    console.log("server/AddProduct  MerchantVarification done");
-    AddProductData.MerchantID = MerchantVarification._id;
-    console.log(AddProductData);
-    const ProductAdded = await AddProduct(AddProductData);
-    res.json({ resp: ProductAdded });
+  console.log(JSON.parse(req.body.Data));
+  // const AddProductData = await req.body;
+  // console.log("server/AddProduct 1 req.body is");
+  // console.log(AddProductData);
 
-    // res.send(AddProductData.MerchantID);
-  } else {
-    res.json({ resp: MerchantVarification });
-  }
+  // const MerchantVarification = await VarifyMerchant(AddProductData);
+  // console.log("server/AddProduct 2 MerchantVarification result");
+  // console.log(MerchantVarification);
+  // if (MerchantVarification._id) {
+  //   console.log("server/AddProduct  MerchantVarification done");
+  //   AddProductData.MerchantID = MerchantVarification._id;
+  //   console.log(AddProductData);
+  //   const ProductAdded = await AddProduct(AddProductData);
+  //   res.json({ resp: ProductAdded });
+
+  //   // res.send(AddProductData.MerchantID);
+  // } else {
+  //   res.json({ resp: MerchantVarification });
+  // }
 });
 
 // Product routes end
