@@ -15,7 +15,9 @@ import AddProduct from "./DBConnection/Products/AddProduct.js";
 import multer from "multer";
 
 const app = express();
-const upload = multer({ dest: "uploads/" });
+const upload = multer({
+  dest: "uploads/",
+});
 app.use(cors());
 app.use(express.json());
 app.get("/", (req, res) => {

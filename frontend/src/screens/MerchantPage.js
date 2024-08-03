@@ -140,7 +140,10 @@ const MerchantPage = ({ globalState, setGlobal }) => {
           ProductDataChecked = true;
         }
       }
-      if (ProductImageFile !== null) {
+      if (
+        ProductImageFile !== null &&
+        typeof ProductImageFile !== "undefined"
+      ) {
         if (ProductDataChecked === true) {
           const formData = new FormData();
           formData.append("Data", JSON.stringify(AddProductData));
@@ -525,8 +528,9 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                   Alert.current.innerText = "";
                   Alert.current.style.maxHeight = "0px";
                   console.log(e.target.files[0]);
-                  console.log(e.target.files[0].size);
-                  if (e.target.files[0].size > 540000) {
+
+                  if (e.target.files[0] && e.target.files[0].size > 540000) {
+                    SetProductImageFile(null);
                     Alert.current.classList.replace(
                       "alert-success",
                       "alert-danger"
@@ -534,8 +538,21 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                     Alert.current.innerText =
                       "Please upload file less than 512 KB";
                     Alert.current.style.maxHeight = "500px";
-                  } else {
+                  } else if (
+                    e.target.files[0] &&
+                    e.target.files[0].size <= 540000 &&
+                    typeof e.target.files[0] !== "undefined"
+                  ) {
                     SetProductImageFile(e.target.files[0]);
+                  } else {
+                    SetProductImageFile(null);
+                    Alert.current.classList.replace(
+                      "alert-success",
+                      "alert-danger"
+                    );
+                    Alert.current.innerText =
+                      "Please upload file less than 512 KB";
+                    Alert.current.style.maxHeight = "500px";
                   }
                 }}
                 type="file"
