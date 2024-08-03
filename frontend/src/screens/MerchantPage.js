@@ -514,13 +514,13 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                   Alert.current.style.maxHeight = "0px";
                   console.log(e.target.files[0]);
                   console.log(e.target.files[0].size);
-                  if (e.target.files[0].size > 1048000) {
+                  if (e.target.files[0].size > 540000) {
                     Alert.current.classList.replace(
                       "alert-success",
                       "alert-danger"
                     );
                     Alert.current.innerText =
-                      "Please upload file less than 1 MB";
+                      "Please upload file less than 512 KB";
                     Alert.current.style.maxHeight = "500px";
                   } else {
                   }
