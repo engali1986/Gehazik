@@ -10,6 +10,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
 
   const params = useParams();
   const DtataDisplay = () => {
+    const [ProductImageFile, SetProductImageFile] = useState();
     const [AddProductData, SetAddProductData] = useState({
       ProductCategory: "",
       ProductSubCategory: "",
@@ -492,6 +493,39 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                   });
                 }}
                 type="text"
+                style={{ width: "100%" }}
+              />
+            </Col>
+          </Row>
+          <Row
+            style={{ color: "white" }}
+            className=" pb-2 align-items-center text-start"
+          >
+            <Col xs={6}> Pleas add product main photo</Col>
+            <Col xs={6}>
+              <input
+                onChange={(e) => {
+                  e.stopPropagation();
+                  Alert.current.classList.replace(
+                    "alert-success",
+                    "alert-danger"
+                  );
+                  Alert.current.innerText = "";
+                  Alert.current.style.maxHeight = "0px";
+                  console.log(e.target.files[0]);
+                  console.log(e.target.files[0].size);
+                  if (e.target.files[0].size > 1048000) {
+                    Alert.current.classList.replace(
+                      "alert-success",
+                      "alert-danger"
+                    );
+                    Alert.current.innerText =
+                      "Please upload file less than 1 MB";
+                    Alert.current.style.maxHeight = "500px";
+                  } else {
+                  }
+                }}
+                type="file"
                 style={{ width: "100%" }}
               />
             </Col>
