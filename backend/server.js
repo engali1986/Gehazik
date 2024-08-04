@@ -204,10 +204,11 @@ app.post("/LogInMerchant", async (req, res) => {
 //   }
 // });
 
-app.post("/Merchants/AddProduct", upload.single("File"), async (req, res) => {
+app.post("/Merchants/AddProduct", upload.array("File"), async (req, res) => {
   console.log("server/AddProduct 0");
 
   console.log(JSON.parse(req.body.Data));
+  console.log(req.body.File);
   // const AddProductData = await req.body;
   // console.log("server/AddProduct 1 req.body is");
   // console.log(AddProductData);

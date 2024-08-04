@@ -1,6 +1,6 @@
 // first we import MongoClient to connect to database
 // then we import Merchantvarification function which will send email to Merchant after regester with varificationcode to confirm Merchant email
-import { MongoClient } from "mongodb";
+import { GridFSBucket, MongoClient } from "mongodb";
 import Merchantvarification from "./MerchantVarification.js";
 
 const uri =

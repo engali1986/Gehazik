@@ -10,7 +10,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
 
   const params = useParams();
   const DtataDisplay = () => {
-    const [ProductImageFile, SetProductImageFile] = useState(null);
+    const [ProductImageFiles, SetProductImageFiles] = useState([]);
     const [AddProductData, SetAddProductData] = useState({
       ProductCategory: "",
       ProductSubCategory: "",
@@ -23,7 +23,9 @@ const MerchantPage = ({ globalState, setGlobal }) => {
       Token: globalState.Token,
       Name: globalState.Name,
       Email: globalState.email,
+      ProductImagesName: [],
     });
+
     const [Disabled, SetDisabled] = useState(false);
     const ProductTitle = useRef();
 
@@ -140,14 +142,11 @@ const MerchantPage = ({ globalState, setGlobal }) => {
           ProductDataChecked = true;
         }
       }
-      if (
-        ProductImageFile !== null &&
-        typeof ProductImageFile !== "undefined"
-      ) {
+      if (ProductImageFiles.length > 0) {
         if (ProductDataChecked === true) {
           const formData = new FormData();
           formData.append("Data", JSON.stringify(AddProductData));
-          formData.append("File", ProductImageFile);
+          formData.append("File", ProductImageFiles);
 
           console.log("Submitting data");
           const ProductAdded = await fetch(
@@ -283,7 +282,16 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                 e.stopPropagation();
                 console.log(StaticData.ProductCategories.length);
                 console.log(AddProductData);
-                console.log(ProductImageFile);
+                console.log(ProductImageFiles);
+                let ard = ["aa", "bb", "cc"];
+                for (const item of ard) {
+                  console.log(item);
+                }
+
+                let brd = { a: "aa", b: "bb" };
+                for (const key in brd) {
+                  console.log(brd[key]);
+                }
               }}
             >
               {Data}
@@ -512,11 +520,12 @@ const MerchantPage = ({ globalState, setGlobal }) => {
               />
             </Col>
           </Row>
+
           <Row
             style={{ color: "white" }}
             className=" pb-2 align-items-center text-start"
           >
-            <Col xs={6}> Pleas add product main photo</Col>
+            <Col xs={6}> Pleas add product photos</Col>
             <Col xs={6}>
               <input
                 onChange={(e) => {
@@ -527,35 +536,65 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                   );
                   Alert.current.innerText = "";
                   Alert.current.style.maxHeight = "0px";
-                  console.log(e.target.files[0]);
+                  console.log(e.target.files);
+                  if (e.target.files.length <= 3) {
+                    let arr = e.target.files.length - 1;
+                    for (let index = arr; index >= 0; index--) {
+                      if (
+                        e.target.files[index] &&
+                        e.target.files[index].size > 540000
+                      ) {
+                        console.log("Large images");
+                        SetProductImageFiles([]);
+                        Alert.current.classList.replace(
+                          "alert-success",
+                          "alert-danger"
+                        );
+                        Alert.current.innerText =
+                          "Please upload file less than 512 KB";
+                        Alert.current.style.maxHeight = "500px";
+                      } else if (
+                        e.target.files[index] &&
+                        e.target.files[index].size <= 540000
+                      ) {
+                        console.log("Images added");
 
-                  if (e.target.files[0] && e.target.files[0].size > 540000) {
-                    SetProductImageFile(null);
-                    Alert.current.classList.replace(
-                      "alert-success",
-                      "alert-danger"
-                    );
-                    Alert.current.innerText =
-                      "Please upload file less than 512 KB";
-                    Alert.current.style.maxHeight = "500px";
-                  } else if (
-                    e.target.files[0] &&
-                    e.target.files[0].size <= 540000 &&
-                    typeof e.target.files[0] !== "undefined"
-                  ) {
-                    SetProductImageFile(e.target.files[0]);
+                        SetProductImageFiles((ImageFiles) => [
+                          ...ImageFiles,
+                          e.target.files[index],
+                        ]);
+                        SetAddProductData((PervData) => ({
+                          ...PervData,
+                          ProductImagesName: [
+                            ...PervData.ProductImagesName,
+                            e.target.files[index].name,
+                          ],
+                        }));
+                      } else {
+                        console.log("Images not added");
+                        SetProductImageFiles([]);
+                        Alert.current.classList.replace(
+                          "alert-success",
+                          "alert-danger"
+                        );
+                        Alert.current.innerText =
+                          "Please upload file less than 512 KB";
+                        Alert.current.style.maxHeight = "500px";
+                      }
+                    }
                   } else {
-                    SetProductImageFile(null);
+                    console.log("Images selected >4");
+                    SetProductImageFiles([]);
                     Alert.current.classList.replace(
                       "alert-success",
                       "alert-danger"
                     );
-                    Alert.current.innerText =
-                      "Please upload file less than 512 KB";
+                    Alert.current.innerText = "Please upload maximum 4 images";
                     Alert.current.style.maxHeight = "500px";
                   }
                 }}
                 type="file"
+                multiple
                 style={{ width: "100%" }}
               />
             </Col>
