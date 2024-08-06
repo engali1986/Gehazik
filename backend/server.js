@@ -13,11 +13,23 @@ import LogInMerchant from "./DBConnection/LogInMerchant.js";
 import VarifyMerchant from "./DBConnection/VarifyMercahant.js";
 import AddProduct from "./DBConnection/Products/AddProduct.js";
 import multer from "multer";
+<<<<<<< HEAD
+<<<<<<< HEAD
+import { createRequire } from "module";
+import { google } from "googleapis";
+import path from "path";
+import fs from "fs";
+import { Stream } from "stream";
+import { fileURLToPath } from "url";
+const require = createRequire(import.meta.url);
+const ServiceAccountKey = require("./API keys/ServiceAccountKey.json");
+=======
+>>>>>>> parent of 00a0776 (AddProduct)
+=======
+>>>>>>> parent of 00a0776 (AddProduct)
 
 const app = express();
-const upload = multer({
-  dest: "uploads/",
-});
+
 app.use(cors());
 app.use(express.json());
 app.get("/", (req, res) => {
@@ -204,11 +216,75 @@ app.post("/LogInMerchant", async (req, res) => {
 //   }
 // });
 
+<<<<<<< HEAD
+const upload = multer({ storage: multer.memoryStorage() });
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const SCOPES = ["https://www.googleapis.com/auth/drive.file"];
+const KEYFILEPATH = path.join(__dirname, "/API keys/ServiceAccountKey.json");
+console.log(KEYFILEPATH);
+
+const auth = new google.auth.GoogleAuth({
+  keyFile: KEYFILEPATH,
+  scopes: SCOPES,
+});
+
+const drive = google.drive({ version: "v3", auth });
+const uploadFileToDrive = async (fileObject) => {
+  const { originalname, buffer, mimetype } = fileObject;
+  console.log(" fileobj");
+  console.log(fileObject);
+  console.log(originalname);
+  console.log(buffer);
+
+  const bufferStream = new Stream.PassThrough();
+  bufferStream.end(buffer);
+
+  const media = {
+    mimeType: mimetype,
+    body: bufferStream,
+  };
+
+  const response = await drive.files.create({
+    requestBody: {
+      name: originalname,
+      parents: ["1r7mz2Cde6DgSDOLqlEhORIR0Pkoh7qcd"], // replace with your Google Drive folder ID
+    },
+    media,
+    fields: "id, webViewLink",
+  });
+
+  return response.data;
+};
+
+app.post("/Merchants/AddProduct", upload.array("files"), async (req, res) => {
+  try {
+    const files = req.files;
+
+    console.log(files);
+
+    const fileLinks = await Promise.all(
+      files.map(async (file) => {
+        const fileData = await uploadFileToDrive(file);
+        return { name: file.originalname, link: fileData.webViewLink };
+      })
+    );
+    console.log(fileLinks);
+
+    res.status(200).json({ fileLinks });
+  } catch (error) {
+    console.error("Error uploading files:", error);
+    res.status(500).send("Internal Server Error");
+  }
+=======
 app.post("/Merchants/AddProduct", upload.array("File"), async (req, res) => {
   console.log("server/AddProduct 0");
+<<<<<<< HEAD
+>>>>>>> parent of 00a0776 (AddProduct)
+=======
+>>>>>>> parent of 00a0776 (AddProduct)
 
-  console.log(JSON.parse(req.body.Data));
-  console.log(req.body.File);
   // const AddProductData = await req.body;
   // console.log("server/AddProduct 1 req.body is");
   // console.log(AddProductData);
@@ -264,10 +340,25 @@ app.post("/GetOrders", async (req, res) => {
 
 // Orders Route end
 
-app.post("/Test", async (req, res) => {
-  const Credentials = await req.body;
-  const result = await Test(Credentials);
-  res.json({ resp: result });
+app.post("/test", upload.array("files"), async (req, res) => {
+  try {
+    const files = req.files;
+
+    console.log(files);
+
+    const fileLinks = await Promise.all(
+      files.map(async (file) => {
+        const fileData = await uploadFileToDrive(file);
+        return { name: file.originalname, link: fileData.webViewLink };
+      })
+    );
+    console.log(fileLinks);
+
+    res.status(200).json({ fileLinks });
+  } catch (error) {
+    console.error("Error uploading files:", error);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 app.listen("5000", () => {

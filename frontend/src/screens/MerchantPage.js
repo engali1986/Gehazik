@@ -146,7 +146,10 @@ const MerchantPage = ({ globalState, setGlobal }) => {
         if (ProductDataChecked === true) {
           const formData = new FormData();
           formData.append("Data", JSON.stringify(AddProductData));
-          formData.append("File", ProductImageFiles);
+          ProductImageFiles.forEach((file) => {
+            formData.append("files", file);
+          });
+          console.log(formData);
 
           console.log("Submitting data");
           const ProductAdded = await fetch(
@@ -558,11 +561,9 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                         e.target.files[index].size <= 540000
                       ) {
                         console.log("Images added");
+                        const files = Array.from(e.target.files);
 
-                        SetProductImageFiles((ImageFiles) => [
-                          ...ImageFiles,
-                          e.target.files[index],
-                        ]);
+                        SetProductImageFiles(files);
                         SetAddProductData((PervData) => ({
                           ...PervData,
                           ProductImagesName: [
@@ -688,7 +689,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
       <Row>
         {/* the following Col will be the side menu for the merchant page */}
         <Col
-          xs={2}
+          xs={4}
           style={{
             fontSize: "1.5vw",
             overflowWrap: "break-word",
@@ -1069,7 +1070,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
           </Row>
         </Col>
         {/* the following Col will display the data after merchant select option from side menu */}
-        <Col xs={10}>
+        <Col xs={8}>
           <DtataDisplay />
         </Col>
       </Row>
