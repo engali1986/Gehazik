@@ -13,8 +13,7 @@ import LogInMerchant from "./DBConnection/LogInMerchant.js";
 import VarifyMerchant from "./DBConnection/VarifyMercahant.js";
 import AddProduct from "./DBConnection/Products/AddProduct.js";
 import multer from "multer";
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 import { createRequire } from "module";
 import { google } from "googleapis";
 import path from "path";
@@ -23,10 +22,6 @@ import { Stream } from "stream";
 import { fileURLToPath } from "url";
 const require = createRequire(import.meta.url);
 const ServiceAccountKey = require("./API keys/ServiceAccountKey.json");
-=======
->>>>>>> parent of 00a0776 (AddProduct)
-=======
->>>>>>> parent of 00a0776 (AddProduct)
 
 const app = express();
 
@@ -216,7 +211,6 @@ app.post("/LogInMerchant", async (req, res) => {
 //   }
 // });
 
-<<<<<<< HEAD
 const upload = multer({ storage: multer.memoryStorage() });
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -263,27 +257,27 @@ app.post("/Merchants/AddProduct", upload.array("files"), async (req, res) => {
     const files = req.files;
 
     console.log(files);
+    if (files.length > 0) {
+      const fileLinks = await Promise.all(
+        files.map(async (file) => {
+          const fileData = await uploadFileToDrive(file);
+          return {
+            name: file.originalname,
+            link: fileData.webViewLink,
+            ID: fileData.id,
+          };
+        })
+      );
+      console.log(fileLinks);
 
-    const fileLinks = await Promise.all(
-      files.map(async (file) => {
-        const fileData = await uploadFileToDrive(file);
-        return { name: file.originalname, link: fileData.webViewLink };
-      })
-    );
-    console.log(fileLinks);
-
-    res.status(200).json({ fileLinks });
+      res.status(200).json({ resp: fileLinks[0].ID });
+    } else {
+      res.status(200).json({ resp: "No files added" });
+    }
   } catch (error) {
     console.error("Error uploading files:", error);
     res.status(500).send("Internal Server Error");
   }
-=======
-app.post("/Merchants/AddProduct", upload.array("File"), async (req, res) => {
-  console.log("server/AddProduct 0");
-<<<<<<< HEAD
->>>>>>> parent of 00a0776 (AddProduct)
-=======
->>>>>>> parent of 00a0776 (AddProduct)
 
   // const AddProductData = await req.body;
   // console.log("server/AddProduct 1 req.body is");

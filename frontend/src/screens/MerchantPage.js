@@ -142,8 +142,8 @@ const MerchantPage = ({ globalState, setGlobal }) => {
           ProductDataChecked = true;
         }
       }
-      if (ProductImageFiles.length > 0) {
-        if (ProductDataChecked === true) {
+      if (ProductDataChecked === true) {
+        if (ProductImageFiles.length > 0) {
           const formData = new FormData();
           formData.append("Data", JSON.stringify(AddProductData));
           ProductImageFiles.forEach((file) => {
@@ -179,12 +179,12 @@ const MerchantPage = ({ globalState, setGlobal }) => {
           Alert.current.style.maxHeight = "500px";
           SetDisabled(false);
         } else {
+          Alert.current.classList.replace("alert-success", "alert-danger");
+          Alert.current.innerText = "Please add product image";
+          Alert.current.style.maxHeight = "500px";
+          SetDisabled(false);
         }
       } else {
-        Alert.current.classList.replace("alert-success", "alert-danger");
-        Alert.current.innerText = "Please add product image";
-        Alert.current.style.maxHeight = "500px";
-        SetDisabled(false);
       }
     };
     if (Data === "Change Password") {
@@ -617,6 +617,14 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                 }}
                 role="alert"
               ></div>
+            </Col>
+          </Row>
+          <Row className=" pb-2 align-items-center text-start">
+            <Col xs={12}>
+              <img
+                src="https://drive.google.com/thumbnail?id=1XuZ-IlWykx7ZVUE3FUGTL8vVeu8IrBoU"
+                style={{ maxWidthWidth: "20px", height: "100px" }}
+              />
             </Col>
           </Row>
           <Row>
