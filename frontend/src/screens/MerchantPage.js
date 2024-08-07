@@ -23,7 +23,6 @@ const MerchantPage = ({ globalState, setGlobal }) => {
       Token: globalState.Token,
       Name: globalState.Name,
       Email: globalState.email,
-      ProductImagesName: [],
     });
 
     const [Disabled, SetDisabled] = useState(false);
@@ -147,7 +146,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
           const formData = new FormData();
           formData.append("Data", JSON.stringify(AddProductData));
           ProductImageFiles.forEach((file) => {
-            formData.append("files", file);
+            formData.append("Files", file);
           });
           console.log(formData);
 
@@ -564,13 +563,6 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                         const files = Array.from(e.target.files);
 
                         SetProductImageFiles(files);
-                        SetAddProductData((PervData) => ({
-                          ...PervData,
-                          ProductImagesName: [
-                            ...PervData.ProductImagesName,
-                            e.target.files[index].name,
-                          ],
-                        }));
                       } else {
                         console.log("Images not added");
                         SetProductImageFiles([]);

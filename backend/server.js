@@ -212,49 +212,74 @@ app.post("/LogInMerchant", async (req, res) => {
 // });
 
 const upload = multer({ storage: multer.memoryStorage() });
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
-const SCOPES = ["https://www.googleapis.com/auth/drive.file"];
-const KEYFILEPATH = path.join(__dirname, "/API keys/ServiceAccountKey.json");
-console.log(KEYFILEPATH);
-
-const auth = new google.auth.GoogleAuth({
-  keyFile: KEYFILEPATH,
-  scopes: SCOPES,
-});
-
-const drive = google.drive({ version: "v3", auth });
-const uploadFileToDrive = async (fileObject) => {
-  const { originalname, buffer, mimetype } = fileObject;
-  console.log(" fileobj");
-  console.log(fileObject);
-  console.log(originalname);
-  console.log(buffer);
-
-  const bufferStream = new Stream.PassThrough();
-  bufferStream.end(buffer);
-
-  const media = {
-    mimeType: mimetype,
-    body: bufferStream,
-  };
-
-  const response = await drive.files.create({
-    requestBody: {
-      name: originalname,
-      parents: ["1r7mz2Cde6DgSDOLqlEhORIR0Pkoh7qcd"], // replace with your Google Drive folder ID
-    },
-    media,
-    fields: "id, webViewLink",
-  });
-
-  return response.data;
-};
-
-app.post("/Merchants/AddProduct", upload.array("files"), async (req, res) => {
+app.post("/Merchants/AddProduct", upload.array("Files"), async (req, res) => {
   try {
+    // first we will varify merchant by Tokebn number in req.body.Data
+    const AddProductData = await JSON.parse(req.body.Data);
+    console.log("server/AddProduct 1 req.body is");
+    console.log(AddProductData);
+
+    const MerchantVarification = await VarifyMerchant(AddProductData);
+    console.log("server/AddProduct 2 MerchantVarification result");
+    console.log(MerchantVarification);
+    // if (MerchantVarification._id) {
+    //   console.log("server/AddProduct  MerchantVarification done");
+    //   AddProductData.MerchantID = MerchantVarification._id;
+    //   console.log(AddProductData);
+    //   const ProductAdded = await AddProduct(AddProductData);
+    //   res.json({ resp: ProductAdded });
+
+    //   // res.send(AddProductData.MerchantID);
+    // } else {
+    //   res.json({ resp: MerchantVarification });
+    // }
+
+    // next we will upload product images to google reive and send back Image ID
+    console.log(req.files);
     const files = req.files;
+    const __filename = fileURLToPath(import.meta.url);
+    const __dirname = path.dirname(__filename);
+
+    const SCOPES = ["https://www.googleapis.com/auth/drive.file"];
+    const KEYFILEPATH = path.join(
+      __dirname,
+      "/API keys/ServiceAccountKey.json"
+    );
+    console.log(KEYFILEPATH);
+
+    const auth = new google.auth.GoogleAuth({
+      keyFile: KEYFILEPATH,
+      scopes: SCOPES,
+    });
+
+    const drive = google.drive({ version: "v3", auth });
+    const uploadFileToDrive = async (fileObject) => {
+      const { originalname, buffer, mimetype } = fileObject;
+      console.log(" fileobj");
+      console.log(fileObject);
+      console.log(originalname);
+      console.log(buffer);
+
+      const bufferStream = new Stream.PassThrough();
+      bufferStream.end(buffer);
+
+      const media = {
+        mimeType: mimetype,
+        body: bufferStream,
+      };
+
+      const response = await drive.files.create({
+        requestBody: {
+          name: originalname,
+          parents: ["1r7mz2Cde6DgSDOLqlEhORIR0Pkoh7qcd"], // replace with your Google Drive folder ID
+        },
+        media,
+        fields: "id, webViewLink",
+      });
+
+      return response.data;
+    };
 
     console.log(files);
     if (files.length > 0) {
@@ -268,7 +293,8 @@ app.post("/Merchants/AddProduct", upload.array("files"), async (req, res) => {
           };
         })
       );
-      console.log(fileLinks);
+      console.log(fileLinks); // returns an array of file data
+      console.log(fileLinks.length);
 
       res.status(200).json({ resp: fileLinks[0].ID });
     } else {
@@ -278,25 +304,6 @@ app.post("/Merchants/AddProduct", upload.array("files"), async (req, res) => {
     console.error("Error uploading files:", error);
     res.status(500).send("Internal Server Error");
   }
-
-  // const AddProductData = await req.body;
-  // console.log("server/AddProduct 1 req.body is");
-  // console.log(AddProductData);
-
-  // const MerchantVarification = await VarifyMerchant(AddProductData);
-  // console.log("server/AddProduct 2 MerchantVarification result");
-  // console.log(MerchantVarification);
-  // if (MerchantVarification._id) {
-  //   console.log("server/AddProduct  MerchantVarification done");
-  //   AddProductData.MerchantID = MerchantVarification._id;
-  //   console.log(AddProductData);
-  //   const ProductAdded = await AddProduct(AddProductData);
-  //   res.json({ resp: ProductAdded });
-
-  //   // res.send(AddProductData.MerchantID);
-  // } else {
-  //   res.json({ resp: MerchantVarification });
-  // }
 });
 
 // Product routes end
