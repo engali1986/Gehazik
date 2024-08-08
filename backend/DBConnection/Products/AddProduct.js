@@ -31,6 +31,8 @@ const AddProduct = async (AddProductData) => {
         MerchantName: AddProductData.Name,
         MerchantEmail: AddProductData.Email,
         MerchantID: AddProductData.MerchantID,
+        InStockQty: AddProductData.ProductQty,
+        OrderedQty: 0,
       })
       .then((res) => {
         console.log("AddProduct file 1");
@@ -45,7 +47,7 @@ const AddProduct = async (AddProductData) => {
 
     if (NewProduct.acknowledged === true) {
       console.log("AddProduct file 2.5 Product added");
-      return "Product Added Successfully";
+      return NewProduct;
     } else {
       console.log("AddProduct file 2.75 Product Not Added");
       return "Product Not added";
