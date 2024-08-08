@@ -31,6 +31,80 @@ const MerchantPage = ({ globalState, setGlobal }) => {
     const Alert = useRef();
     const LoginButtonRef = useRef();
 
+    //  AddProduct function will be initiated when user clicks on Add Product button to add products to data base
+    const AddProduct = async (e) => {
+      e.stopPropagation();
+
+      console.log("Adding new product");
+      console.log(AddProductData);
+
+      SetDisabled(true);
+
+      // Next we will check for any missing data
+      let Keyes = Object.keys(AddProductData);
+      console.log(Keyes);
+      let ProductDataChecked = false;
+      for (let index = 0; index < Keyes.length; index++) {
+        if (
+          AddProductData[Keyes[index]] === "" ||
+          AddProductData[Keyes[index]] === 0
+        ) {
+          console.log("Product not added " + Keyes[index]);
+          Alert.current.classList.replace("alert-success", "alert-danger");
+          Alert.current.innerText = "Please add " + Keyes[index];
+          Alert.current.style.maxHeight = "500px";
+          SetDisabled(false);
+          ProductDataChecked = false;
+
+          break;
+        } else {
+          ProductDataChecked = true;
+        }
+      }
+      if (ProductDataChecked === true) {
+        if (ProductImageFiles.length > 0) {
+          const formData = new FormData();
+          formData.append("Data", JSON.stringify(AddProductData));
+          ProductImageFiles.forEach((file) => {
+            formData.append("Files", file);
+          });
+          console.log(formData);
+
+          console.log("Submitting data");
+          const ProductAdded = await fetch(
+            "http://localhost:5000/Merchants/AddProduct",
+            {
+              method: "POST",
+              body: formData,
+
+              mode: "cors",
+            }
+          )
+            .then((res) => {
+              console.log(res);
+              SetDisabled(false);
+              return res.json();
+            })
+            .catch((err) => {
+              console.log(err);
+              SetDisabled(false);
+            });
+
+          console.log(ProductAdded);
+          Alert.current.classList.replace("alert-danger", "alert-success");
+          Alert.current.innerText = ProductAdded.resp;
+          Alert.current.style.maxHeight = "500px";
+          SetDisabled(false);
+        } else {
+          Alert.current.classList.replace("alert-success", "alert-danger");
+          Alert.current.innerText = "Please add product image";
+          Alert.current.style.maxHeight = "500px";
+          SetDisabled(false);
+        }
+      } else {
+      }
+    };
+
     const Subcategories = () => {
       for (
         let index = 0;
@@ -109,81 +183,6 @@ const MerchantPage = ({ globalState, setGlobal }) => {
           }
         } else {
         }
-      }
-    };
-    //  AddProduct function will be initiated when user clicks on Add Product button to add products to data base
-    const AddProduct = async (e) => {
-      e.stopPropagation();
-
-      console.log("Adding new product");
-      console.log(AddProductData);
-
-      SetDisabled(true);
-
-      // Next we will check for any missing data
-      let Keyes = Object.keys(AddProductData);
-      console.log(Keyes);
-      let ProductDataChecked = false;
-      for (let index = 0; index < Keyes.length; index++) {
-        if (
-          AddProductData[Keyes[index]] === "" ||
-          AddProductData[Keyes[index]] === 0
-        ) {
-          console.log("Product not added " + Keyes[index]);
-          Alert.current.classList.replace("alert-success", "alert-danger");
-          Alert.current.innerText = "Please add " + Keyes[index];
-          Alert.current.style.maxHeight = "500px";
-          SetDisabled(false);
-          ProductDataChecked = false;
-
-          break;
-        } else {
-          ProductDataChecked = true;
-        }
-      }
-      if (ProductDataChecked === true) {
-        if (ProductImageFiles.length > 0) {
-          const formData = new FormData();
-          formData.append("Data", JSON.stringify(AddProductData));
-          ProductImageFiles.forEach((file) => {
-            formData.append("Files", file);
-          });
-          console.log(formData);
-
-          console.log("Submitting data");
-          const ProductAdded = await fetch(
-            "http://localhost:5000/Merchants/AddProduct",
-            {
-              method: "POST",
-              body: formData,
-              // headers: {
-              //   "Content-Type": "multipart/form-data",
-              // },
-              mode: "cors",
-            }
-          )
-            .then((res) => {
-              console.log(res);
-              SetDisabled(false);
-              return res.json();
-            })
-            .catch((err) => {
-              console.log(err);
-              SetDisabled(false);
-            });
-
-          console.log(ProductAdded);
-          Alert.current.classList.replace("alert-danger", "alert-success");
-          Alert.current.innerText = ProductAdded.resp;
-          Alert.current.style.maxHeight = "500px";
-          SetDisabled(false);
-        } else {
-          Alert.current.classList.replace("alert-success", "alert-danger");
-          Alert.current.innerText = "Please add product image";
-          Alert.current.style.maxHeight = "500px";
-          SetDisabled(false);
-        }
-      } else {
       }
     };
     if (Data === "Change Password") {
@@ -272,6 +271,17 @@ const MerchantPage = ({ globalState, setGlobal }) => {
         <Container>
           <Row>
             <h3>All Products</h3>
+          </Row>
+          <Row>
+            <Col xs={12}>
+              <div
+                style={{
+                  maxWidth: "100%",
+                  overflow: "scroll",
+                  border: "1px solid black",
+                }}
+              ></div>
+            </Col>
           </Row>
         </Container>
       );
