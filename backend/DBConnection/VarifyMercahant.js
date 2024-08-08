@@ -4,7 +4,7 @@ const uri =
   "mongodb+srv://engaligulf:Cossacks%401@cluster0.fj9bpe7.mongodb.net/?maxIdleTimeMS=5000";
 
 const client = new MongoClient(uri);
-const VarifyMerchant = async (AddProductData) => {
+const VarifyMerchant = async (Credentials) => {
   console.log("varifyMerchant file 0");
   try {
     await client.connect().then((res) => {
@@ -16,9 +16,9 @@ const VarifyMerchant = async (AddProductData) => {
       .db("Gehazik")
       .collection("Merchants")
       .findOne({
-        email: AddProductData.Email,
-        name: AddProductData.Name,
-        token: AddProductData.Token,
+        email: Credentials.Email,
+        name: Credentials.Name,
+        token: Credentials.Token,
       })
       .then((res) => {
         return res;

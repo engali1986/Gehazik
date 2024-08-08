@@ -21,6 +21,7 @@ import fs from "fs";
 import { Stream } from "stream";
 import { fileURLToPath } from "url";
 import UpdateProduct from "./DBConnection/Products/UpdateProduct.js";
+import MerchantProductsList from "./DBConnection/Products/MerchantProductsList.js";
 const require = createRequire(import.meta.url);
 const ServiceAccountKey = require("./API keys/ServiceAccountKey.json");
 
@@ -320,6 +321,29 @@ app.post("/Merchants/AddProduct", upload.array("Files"), async (req, res) => {
   } catch (error) {
     console.error("server/AddProduct 9 error", error);
     res.status(500).json({ resp: "Internal Server Error" });
+  }
+});
+
+// ProductsList route for merchant
+app.post("/Merchants/ProductsList", async (req, res) => {
+  console.log("server/ProductsList 0 ");
+  const MerchantCredentials = await req.body;
+  console.log(MerchantCredentials);
+  const CheckMerchant = await VarifyMerchant(MerchantCredentials);
+  console.log("server/ProductsList 1 Merchant Varification result ");
+  console.log(CheckMerchant);
+  if (CheckMerchant._id) {
+    console.log("server/ProductsList 2 Merchant Varification done ");
+    const MerchantProducts = await MerchantProductsList(CheckMerchant._id);
+    console.log("server/ProductsList 3 Merchant Products result ");
+    console.log(MerchantProducts);
+    if (Array.isArray(MerchantProducts)) {
+      res.json({ resp: MerchantProducts });
+    } else {
+      res.json({ resp: "Connection Error" });
+    }
+  } else {
+    res.json({ resp: "Merchant Not found" });
   }
 });
 

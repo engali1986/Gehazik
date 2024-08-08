@@ -5,6 +5,7 @@ import StaticData from "../Data/StaticData.js";
 
 const MerchantPage = ({ globalState, setGlobal }) => {
   const [Data, SetData] = useState(""); // this state will be used to store the selected menu items to display data
+  const [ProductsList, SetProductsList] = useState([]);
 
   const navigate = useNavigate();
 
@@ -270,7 +271,15 @@ const MerchantPage = ({ globalState, setGlobal }) => {
       return (
         <Container>
           <Row>
-            <h3>All Products</h3>
+            <h3
+              onClick={(e) => {
+                e.stopPropagation();
+                console.log(ProductsList);
+                console.log(ProductsList.length);
+              }}
+            >
+              All Products
+            </h3>
           </Row>
           <Row>
             <Col xs={12}>
@@ -280,7 +289,30 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                   overflow: "scroll",
                   border: "1px solid black",
                 }}
-              ></div>
+              >
+                <table border="1">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Product Title</th>
+                      <th>Unit Price</th>
+                      <th>In Stock Quantity</th>
+                      <th>Ordered Quantity</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {ProductsList.map((product) => (
+                      <tr key={product._id}>
+                        <td>{product._id}</td>
+                        <td>{product.ProductTitle}</td>
+                        <td>{product.ProductUnitPrice}</td>
+                        <td>{product.InStockQty}</td>
+                        <td>{product.OrderedQty}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </Col>
           </Row>
         </Container>
@@ -929,7 +961,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                 className="MerchantMenu d-flex flex-column"
               >
                 <div
-                  onClick={(e) => {
+                  onClick={async (e) => {
                     e.stopPropagation();
                     console.log(e.target.innerText);
                     let Menues = document.querySelectorAll(".MerchantMenu");
@@ -944,6 +976,39 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                       }
                     }
                     SetData(e.target.innerText);
+                    console.log(globalState);
+                    const ProductsListCredentials = {
+                      Name: globalState.Name,
+                      Email: globalState.email,
+                      Token: globalState.Token,
+                    };
+
+                    console.log(ProductsListCredentials);
+                    console.log("ProductsList submitted");
+
+                    const GetProductsList = await fetch(
+                      "http://localhost:5000/Merchants/ProductsList",
+                      {
+                        method: "post",
+                        body: JSON.stringify(ProductsListCredentials),
+                        headers: {
+                          "Content-Type": "application/json",
+                        },
+                        mode: "cors",
+                      }
+                    )
+                      .then((res) => {
+                        console.log(res);
+                        return res.json();
+                      })
+                      .catch((err) => {
+                        console.log(err);
+                      });
+                    console.log(GetProductsList.resp);
+                    if (Array.isArray(GetProductsList.resp)) {
+                      SetProductsList(GetProductsList.resp);
+                    } else {
+                    }
                   }}
                 >
                   All Products
