@@ -20,6 +20,7 @@ import path from "path";
 import fs from "fs";
 import { Stream } from "stream";
 import { fileURLToPath } from "url";
+import UpdateProduct from "./DBConnection/Products/UpdateProduct.js";
 const require = createRequire(import.meta.url);
 const ServiceAccountKey = require("./API keys/ServiceAccountKey.json");
 
@@ -188,28 +189,6 @@ app.post("/LogInMerchant", async (req, res) => {
 // Product routes start
 
 // AddProduct route
-// app.post("/Merchants/AddProduct", async (req, res) => {
-//   console.log("server/AddProduct 0");
-//   console.log(req.body);
-//   const AddProductData = await req.body;
-//   console.log("server/AddProduct 1 req.body is");
-//   console.log(AddProductData);
-
-//   const MerchantVarification = await VarifyMerchant(AddProductData);
-//   console.log("server/AddProduct 2 MerchantVarification result");
-//   console.log(MerchantVarification);
-//   if (MerchantVarification._id) {
-//     console.log("server/AddProduct  MerchantVarification done");
-//     AddProductData.MerchantID = MerchantVarification._id;
-//     console.log(AddProductData);
-//     const ProductAdded = await AddProduct(AddProductData);
-//     res.json({ resp: ProductAdded });
-
-//     // res.send(AddProductData.MerchantID);
-//   } else {
-//     res.json({ resp: MerchantVarification });
-//   }
-// });
 
 const upload = multer({ storage: multer.memoryStorage() });
 
@@ -224,16 +203,19 @@ app.post("/Merchants/AddProduct", upload.array("Files"), async (req, res) => {
     console.log("server/AddProduct 2 MerchantVarification result");
     console.log(MerchantVarification);
     if (MerchantVarification._id) {
-      console.log("server/AddProduct  MerchantVarification done");
+      console.log("server/AddProduct 3 MerchantVarification done");
       // Next we will add product and get product Id to use it as the folder name for product Images
       AddProductData.MerchantID = MerchantVarification._id;
       console.log(AddProductData);
       const ProductAdded = await AddProduct(AddProductData);
-      console.log("server/AddProduct  ProductAdded result");
+      console.log("server/AddProduct 4 ProductAdded result");
       console.log(ProductAdded);
       if (ProductAdded.insertedId) {
-        console.log("server/AddProduct  ProductAdded Added next we add images");
+        console.log(
+          "server/AddProduct 5 ProductAdded Added next we add images"
+        );
         // next we will upload product images to google reive and send back Image ID
+        const AddProductID = ProductAdded.insertedId;
 
         console.log(req.files);
         const files = req.files;
@@ -254,7 +236,7 @@ app.post("/Merchants/AddProduct", upload.array("Files"), async (req, res) => {
 
         const drive = google.drive({ version: "v3", auth });
 
-        const FolderID = ProductAdded.insertedId;
+        const FolderID = AddProductID;
         console.log(FolderID);
         console.log(typeof FolderID);
         const ImagesFolder = await drive.files.create({
@@ -265,7 +247,7 @@ app.post("/Merchants/AddProduct", upload.array("Files"), async (req, res) => {
           },
           fields: "id",
         });
-        console.log("server/AddProduct  Google drive folder created ID is");
+        console.log("server/AddProduct 6 Google drive folder created ID is");
         console.log(ImagesFolder.data.id);
         const uploadFileToDrive = async (fileObject) => {
           const { originalname, buffer, mimetype } = fileObject;
@@ -299,30 +281,44 @@ app.post("/Merchants/AddProduct", upload.array("Files"), async (req, res) => {
           const fileLinks = await Promise.all(
             files.map(async (file) => {
               const fileData = await uploadFileToDrive(file);
-              return {
-                name: file.originalname,
-                link: fileData.webViewLink,
-                ID: fileData.id,
-              };
+              return fileData.id;
             })
           );
           console.log(fileLinks); // returns an array of file data
           console.log(fileLinks.length);
+          // Next we will add the filelinks to database at the same product
 
-          res.status(200).json({ resp: fileLinks[0].ID });
+          const UpdateProductData = {
+            FieldToUpdate: "Product Images IDs",
+            ProductID: AddProductID,
+            ImagesID: fileLinks,
+          };
+          console.log(UpdateProductData);
+          const AddImagesIDs = await UpdateProduct(UpdateProductData);
+          console.log(AddImagesIDs);
+          if (AddImagesIDs === "Product Images IDs Added") {
+            res.status(200).json({ resp: "Product Added successfully" });
+          } else {
+            res.status(200).json({ resp: "Product Not Added" });
+          }
         } else {
-          res.status(200).json({ resp: "No files added" });
+          console.log("server/AddProduct 7 error");
+
+          res.status(200).json({ resp: "Images not added" });
         }
       } else {
+        console.log("server/AddProduct 8 error");
+
         res.json({ resp: ProductAdded });
       }
 
       // res.send(AddProductData.MerchantID);
     } else {
+      console.log("server/AddProduct 8.5 error");
       res.json({ resp: MerchantVarification });
     }
   } catch (error) {
-    console.error("Error uploading files:", error);
+    console.error("server/AddProduct 9 error", error);
     res.status(500).json({ resp: "Internal Server Error" });
   }
 });

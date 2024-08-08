@@ -57,6 +57,10 @@ const AddProduct = async (AddProductData) => {
     console.log(error);
     return "Connection Error";
   } finally {
+    await client.close(true).then((res) => {
+      console.log("AddProduct file 5");
+      console.log(res);
+    });
   }
 };
 
