@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 
 const Test = () => {
   const [products, setProducts] = useState([]);
+  const [editProductId, setEditProductId] = useState(null);
 
   useEffect(() => {
     // Simulate fetching data from an API
@@ -36,12 +37,28 @@ const Test = () => {
     fetchData();
   }, []);
 
-  const Clicko = (e) => {
-    e.stopPropagation();
-    console.log("clicked");
-    setTimeout(() => {
-      Clicko(e);
-    }, 5000);
+  const handleEditClick = (productId) => {
+    setEditProductId(productId);
+  };
+
+  const handleUpdateClick = (productId) => {
+    console.log("Update");
+
+    // const updatedProducts = products.map((product) => {
+    //   if (product._id === productId) {
+    //     const parent = document.querySelector(`tr[data-id='${productId}']`);
+    //     const inputs = parent.querySelectorAll("input[type='number']");
+    //     const updatedProduct = {
+    //       ...product,
+    //       ProductUnitPrice: parseFloat(inputs[0].value),
+    //       InStockQty: parseFloat(inputs[1].value),
+    //     };
+    //     return updatedProduct;
+    //   }
+    //   return product;
+    // });
+    // setProducts(updatedProducts);
+    // setEditProductId(null);
   };
 
   return (
@@ -54,69 +71,50 @@ const Test = () => {
             <th>Unit Price</th>
             <th>In Stock Quantity</th>
             <th>Ordered Quantity</th>
+            <th>Edit</th>
+            <th>Update</th>
           </tr>
         </thead>
         <tbody>
           {products.map((product, index) => (
             <tr
               key={product._id}
+              data-id={product._id}
               style={{
                 backgroundColor: index % 2 === 0 ? "#f2f2f2" : "#ffffff",
                 border: "1px solid black",
               }}
             >
-              <td
-                onClick={(e) => {
-                  e.stopPropagation();
-                  console.log(e.target.innerText);
-                }}
-              >
-                {product._id}
-              </td>
+              <td>{product._id}</td>
               <td>{product.ProductTitle}</td>
               <td>
                 <input
                   type="number"
                   defaultValue={product.ProductUnitPrice}
-                  disabled
+                  disabled={editProductId !== product._id}
                 />
               </td>
               <td>
                 <input
                   type="number"
                   defaultValue={product.InStockQty}
-                  disabled
+                  disabled={editProductId !== product._id}
                 />
               </td>
               <td>{product.OrderedQty}</td>
-
-              <td
-                onClick={(e) => {
-                  e.stopPropagation();
-                  const parent = e.target.parentElement;
-                  const children = parent.children;
-
-                  for (let i = 0; i < children.length; i++) {
-                    console.log(`Element ${i}:`, children[i]);
-                    if (children[i].children.length > 0) {
-                      console.log(
-                        "Contains child elements:",
-                        children[i].children
-                      );
-                      children[i].children[0].disabled = false;
-                    } else {
-                      console.log("No child elements");
-                    }
-                  }
-                }}
-              >
-                Edit
+              <td onClick={() => handleEditClick(product._id)}>Edit</td>
+              <td>
+                <button
+                  disabled={editProductId !== product._id}
+                  onClick={() => handleUpdateClick(product._id)}
+                >
+                  Update
+                </button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-      <button onClick={(e) => Clicko(e)}>hghjgh</button>
     </>
   );
 };

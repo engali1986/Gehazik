@@ -11,6 +11,11 @@ const MerchantPage = ({ globalState, setGlobal }) => {
 
   const params = useParams();
   const DtataDisplay = () => {
+    const [ShowAlert, SetShowAlert] = useState({
+      Success: false,
+      Show: false,
+      Massage: "",
+    });
     const [ProductImageFiles, SetProductImageFiles] = useState([]);
     const [AddProductData, SetAddProductData] = useState({
       ProductCategory: "",
@@ -24,6 +29,12 @@ const MerchantPage = ({ globalState, setGlobal }) => {
       Token: globalState.Token,
       Name: globalState.Name,
       Email: globalState.email,
+    });
+    const [editProductId, setEditProductId] = useState(null);
+    const [UpdateProduct, SetUpdateProduct] = useState({
+      UpdateProductID: "",
+      UpdateProductUnitPrice: 0,
+      UpdateProductInStockQty: 0,
     });
 
     const [Disabled, SetDisabled] = useState(false);
@@ -298,20 +309,116 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                       <th>Unit Price</th>
                       <th>In Stock Quantity</th>
                       <th>Ordered Quantity</th>
+                      <th>Edit</th>
+                      <th>Update</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {ProductsList.map((product) => (
-                      <tr key={product._id}>
+                    {ProductsList.map((product, index) => (
+                      <tr
+                        key={product._id}
+                        data-id={product._id}
+                        style={{
+                          backgroundColor:
+                            index % 2 === 0 ? "#f2f2f2" : "#ffffff",
+                          border: "1px solid black",
+                        }}
+                      >
                         <td>{product._id}</td>
                         <td>{product.ProductTitle}</td>
-                        <td>{product.ProductUnitPrice}</td>
-                        <td>{product.InStockQty}</td>
+                        <td>
+                          <input
+                            type="number"
+                            defaultValue={product.ProductUnitPrice}
+                            disabled={editProductId !== product._id}
+                          />
+                        </td>
+                        <td>
+                          <input
+                            type="number"
+                            defaultValue={product.InStockQty}
+                            disabled={editProductId !== product._id}
+                          />
+                        </td>
                         <td>{product.OrderedQty}</td>
+                        <td
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setEditProductId(product._id);
+                          }}
+                        >
+                          Edit
+                        </td>
+                        <td>
+                          <button
+                            disabled={editProductId !== product._id}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              console.log("Updated");
+                              SetShowAlert({
+                                ...ShowAlert,
+                                Show: false,
+                                Success: false,
+                              });
+                              console.log(
+                                e.target.parentElement.parentElement.children[0]
+                                  .innerText
+                              );
+                              console.log(
+                                e.target.parentElement.parentElement.children[3]
+                                  .children[0].value
+                              );
+                              console.log(
+                                e.target.parentElement.parentElement.children[2]
+                                  .children[0].value
+                              );
+
+                              SetUpdateProduct({
+                                ...UpdateProduct,
+                                UpdateProductID:
+                                  e.target.parentElement.parentElement
+                                    .children[0].innerText,
+                                UpdateProductInStockQty:
+                                  e.target.parentElement.parentElement
+                                    .children[3].children[0].value,
+                                UpdateProductUnitPrice:
+                                  e.target.parentElement.parentElement
+                                    .children[2].children[0].value,
+                              });
+                            }}
+                          >
+                            Update
+                          </button>
+                        </td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
+              </div>
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={12}>
+              <div
+                ref={Alert}
+                className={
+                  ShowAlert.Success === false
+                    ? " alert alert-danger text-start"
+                    : " alert alert-success text-start"
+                }
+                style={{
+                  boxSizing: "border-box",
+                  marginBottom: "0",
+                  width: "100%",
+                  overflow: "hidden",
+                  padding: "0px",
+                  border: "0px",
+                  maxHeight: ShowAlert.Show === true ? "500px" : "0px",
+                  transition: "all 0.3s ease-in-out",
+                }}
+                role="alert"
+              >
+                {ShowAlert.Massage}
               </div>
             </Col>
           </Row>
