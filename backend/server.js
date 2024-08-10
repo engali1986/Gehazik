@@ -362,12 +362,20 @@ app.post("/Merchants/UpdateProduct", async (req, res) => {
     console.log(UpdateProductMerchantCheck);
     if (UpdateProductMerchantCheck._id) {
       console.log("Server/UpdateProduct 2 Merchant varified");
+      // Next we will Update the products UpdatedData oject will include FieldToUpdate which will be used later inside UpdateProduct function
       const UpdatedData = {
         FieldToUpdate: "Products List Update",
         UpdateData: UpdatedProduct.UpdateData,
       };
       console.log(UpdatedData);
       const UpdatedProductList = await UpdateProduct(UpdatedData);
+      console.log("Server/UpdateProduct 3 UpdatedProductList result");
+      console.log(UpdatedProductList);
+      if (UpdatedProductList === "Products Updated Successfully") {
+        res.json({ resp: UpdatedProductList });
+      } else {
+        res.json({ resp: "Products Not updated" });
+      }
     } else {
       res.json({ resp: "Merchant not found" });
     }

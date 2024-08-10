@@ -1,4 +1,4 @@
-import { MongoClient } from "mongodb";
+import { MongoClient, ObjectId } from "mongodb";
 //  this will UpdateProduct to the DB
 const uri =
   "mongodb+srv://engaligulf:Cossacks%401@cluster0.fj9bpe7.mongodb.net/?maxIdleTimeMS=5000";
@@ -46,46 +46,92 @@ const UpdateProduct = async (UpdateProductData) => {
         return "Product Images IDs Not Added";
       }
     } else if (UpdateProductData.FieldToUpdate === "Products List Update") {
-      ("UpdateProduct file 6 Update list of products");
-      const ModefiedCounts = [];
-      UpdateProductData.UpdateData.forEach(async (element) => {
+      console.log("UpdateProduct file 6 Update list of products");
+      let ModefiedCounts = 0;
+      let ObjectID = new ObjectId();
+
+      console.log(UpdateProductData.UpdateData);
+      console.log(UpdateProductData.UpdateData.length);
+      console.log(UpdateProductData.UpdateData[0]);
+
+      for (
+        let index = 0;
+        index < UpdateProductData.UpdateData.length;
+        index++
+      ) {
+        console.log(
+          "UpdateProduct file 6.5 Update list of products Product to update"
+        );
+        console.log(UpdateProductData.UpdateData[index]);
         const UpdateElement = await client
           .db("Gehazik")
           .collection("Products")
           .updateOne(
-            { _id: element.UpdateProductID },
+            {
+              _id: new ObjectId(
+                UpdateProductData.UpdateData[index].UpdateProductID
+              ),
+            },
             {
               $set: {
-                InStockQty: element.UpdateProductInStockQty,
-                ProductUnitPrice: element.UpdateProductUnitPrice,
+                InStockQty:
+                  UpdateProductData.UpdateData[index].UpdateProductInStockQty,
+                ProductUnitPrice:
+                  UpdateProductData.UpdateData[index].UpdateProductUnitPrice,
               },
             }
           )
           .then((res) => {
-            "UpdateProduct file 7 Update products result";
+            console.log("UpdateProduct file 7 Update products result");
             console.log(res);
-            if (res.modifiedCount > 0) {
-              ModefiedCounts.push(res.modifiedCount);
-              return res.modifiedCount;
-            } else {
-            }
+            console.log(typeof res.modifiedCount);
+            return res.modifiedCount;
           })
           .catch((err) => {
-            "UpdateProduct file 8 Update products error";
+            console.log("UpdateProduct file 8 Update products error");
             console.log(err);
+            return "Products Not Modefied";
           });
-      });
+        console.log("UpdateProduct file 9 Update products Add modefiedcounts");
+        console.log(UpdateElement);
+        if (typeof UpdateElement === "number") {
+          if (UpdateElement > 0) {
+            ModefiedCounts = ModefiedCounts + UpdateElement;
+          } else {
+            console.log(
+              "UpdateProduct file 9.5 Update products ModefiedCounts not added"
+            );
+            return "Products Not updated";
+          }
+        } else {
+          console.log(
+            "UpdateProduct file 9.55 Update products ModefiedCounts not added"
+          );
+          return "Products Not updated";
+        }
+      }
 
+      console.log(
+        "UpdateProduct file 10 Update products compare ModefiedCounts with UpdateProductData.UpdateData.length "
+      );
+      console.log(UpdateProductData.UpdateData.length);
       console.log(ModefiedCounts);
+      if (ModefiedCounts === UpdateProductData.UpdateData.length) {
+        console.log("UpdateProduct file 11 Update products Update Success ");
+        return "Products Updated Successfully";
+      } else {
+        console.log("UpdateProduct file 12 Update products Update Success ");
+        return "Products Not updated";
+      }
     } else {
     }
   } catch (error) {
-    console.log("UpdateProduct file 6 error");
+    console.log("UpdateProduct file 13 error");
     console.log(error);
     return "Connection Error";
   } finally {
     await client.close(true).then((res) => {
-      console.log("UpdateProdct file 7");
+      console.log("UpdateProdct file 14");
       console.log(res);
     });
   }

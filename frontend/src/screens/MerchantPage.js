@@ -471,7 +471,43 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                       },
                       mode: "cors",
                     }
-                  );
+                  )
+                    .then((res) => {
+                      return res.json();
+                    })
+                    .catch((err) => {
+                      return { resp: "Internal Error" };
+                    });
+                  console.log(UpdateProduct);
+
+                  if (UpdateProduct.resp === "Products Updated Successfully") {
+                    e.target.innertext = "Confirm Update";
+                    e.target.disabled = false;
+
+                    SetShowAlert({
+                      ...ShowAlert,
+                      Massage: UpdateProduct.resp,
+                      Success: true,
+                      Show: true,
+                    });
+                  } else {
+                    e.target.disabled = false;
+                    e.target.innertext = "Confirm Update";
+                    SetShowAlert({
+                      ...ShowAlert,
+                      Massage: UpdateProduct.resp,
+                      Success: false,
+                      Show: true,
+                    });
+                  }
+                  setTimeout(() => {
+                    SetShowAlert({
+                      ...ShowAlert,
+
+                      Success: false,
+                      Show: false,
+                    });
+                  }, 3000);
                 }}
                 disabled={UpdateProductsList.length === 0 ? true : false}
                 style={{
