@@ -37,6 +37,8 @@ const MerchantPage = ({ globalState, setGlobal }) => {
       UpdateProductInStockQty: 0,
     });
 
+    const [UpdateProductsList, SetUpdateProductsList] = useState([]);
+
     const [Disabled, SetDisabled] = useState(false);
     const ProductTitle = useRef();
 
@@ -369,22 +371,54 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                                   .children[0].value
                               );
                               console.log(
-                                e.target.parentElement.parentElement.children[2]
-                                  .children[0].value
-                              );
-
-                              SetUpdateProduct({
-                                ...UpdateProduct,
-                                UpdateProductID:
-                                  e.target.parentElement.parentElement
-                                    .children[0].innerText,
-                                UpdateProductInStockQty:
-                                  e.target.parentElement.parentElement
-                                    .children[3].children[0].value,
-                                UpdateProductUnitPrice:
+                                parseInt(
                                   e.target.parentElement.parentElement
                                     .children[2].children[0].value,
-                              });
+                                  10
+                                ) >= 0
+                              );
+                              if (
+                                parseInt(
+                                  e.target.parentElement.parentElement
+                                    .children[2].children[0].value,
+                                  10
+                                ) >= 0 &&
+                                parseInt(
+                                  e.target.parentElement.parentElement
+                                    .children[3].children[0].value,
+                                  10
+                                ) >= 0
+                              ) {
+                                console.log("Values updated");
+                                SetUpdateProduct({
+                                  ...UpdateProduct,
+                                  UpdateProductID:
+                                    e.target.parentElement.parentElement
+                                      .children[0].innerText,
+                                  UpdateProductInStockQty: parseInt(
+                                    e.target.parentElement.parentElement
+                                      .children[3].children[0].value,
+                                    10
+                                  ),
+                                  UpdateProductUnitPrice: parseInt(
+                                    e.target.parentElement.parentElement
+                                      .children[2].children[0].value,
+                                    10
+                                  ),
+                                });
+                                SetUpdateProductsList((Perv) => [
+                                  ...Perv,
+                                  UpdateProduct,
+                                ]);
+                              } else {
+                                console.log("Values Not updated");
+                              }
+                            }}
+                            style={{
+                              backgroundColor:
+                                editProductId !== product._id
+                                  ? "#cacbc9"
+                                  : "#94f48c",
                             }}
                           >
                             Update
@@ -399,27 +433,66 @@ const MerchantPage = ({ globalState, setGlobal }) => {
           </Row>
           <Row>
             <Col xs={12}>
-              <div
-                ref={Alert}
-                className={
-                  ShowAlert.Success === false
-                    ? " alert alert-danger text-start"
-                    : " alert alert-success text-start"
-                }
-                style={{
-                  boxSizing: "border-box",
-                  marginBottom: "0",
-                  width: "100%",
-                  overflow: "hidden",
-                  padding: "0px",
-                  border: "0px",
-                  maxHeight: ShowAlert.Show === true ? "500px" : "0px",
-                  transition: "all 0.3s ease-in-out",
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+
+                  console.log(UpdateProductsList);
                 }}
-                role="alert"
+                disabled={UpdateProductsList.length === 0 ? true : false}
+                style={{
+                  width: "100%",
+                  backgroundColor:
+                    UpdateProductsList.length === 0 ? "#cacbc9" : "#94f48c",
+                }}
               >
-                {ShowAlert.Massage}
-              </div>
+                Confirm Update
+              </button>
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={12}>
+              {ProductsList.length === 0 ? (
+                <div
+                  ref={Alert}
+                  className=" alert alert-success text-start"
+                  style={{
+                    boxSizing: "border-box",
+                    marginBottom: "0",
+                    width: "100%",
+                    overflow: "hidden",
+                    padding: "0px",
+                    border: "0px",
+                    maxHeight: "500px",
+                    transition: "all 0.3s ease-in-out",
+                  }}
+                  role="alert"
+                >
+                  Please wait recieving data
+                </div>
+              ) : (
+                <div
+                  ref={Alert}
+                  className={
+                    ShowAlert.Success === false
+                      ? " alert alert-danger text-start"
+                      : " alert alert-success text-start"
+                  }
+                  style={{
+                    boxSizing: "border-box",
+                    marginBottom: "0",
+                    width: "100%",
+                    overflow: "hidden",
+                    padding: "0px",
+                    border: "0px",
+                    maxHeight: ShowAlert.Show === true ? "500px" : "0px",
+                    transition: "all 0.3s ease-in-out",
+                  }}
+                  role="alert"
+                >
+                  {ShowAlert.Massage}
+                </div>
+              )}
             </Col>
           </Row>
         </Container>
