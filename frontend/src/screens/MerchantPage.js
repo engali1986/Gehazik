@@ -199,6 +199,10 @@ const MerchantPage = ({ globalState, setGlobal }) => {
         }
       }
     };
+
+    useEffect(() => {
+      console.log(UpdateProductsList);
+    }, [UpdateProductsList]);
     if (Data === "Change Password") {
       return (
         <Container>
@@ -390,8 +394,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                                 ) >= 0
                               ) {
                                 console.log("Values updated");
-                                SetUpdateProduct({
-                                  ...UpdateProduct,
+                                const UpdatedProductObj = {
                                   UpdateProductID:
                                     e.target.parentElement.parentElement
                                       .children[0].innerText,
@@ -405,13 +408,21 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                                       .children[2].children[0].value,
                                     10
                                   ),
-                                });
+                                };
+                                SetUpdateProduct(UpdatedProductObj);
                                 SetUpdateProductsList((Perv) => [
                                   ...Perv,
-                                  UpdateProduct,
+                                  UpdatedProductObj,
                                 ]);
                               } else {
                                 console.log("Values Not updated");
+                                SetShowAlert({
+                                  ...ShowAlert,
+                                  Show: true,
+                                  Massage:
+                                    "Please add integer positive numbers",
+                                  Success: false,
+                                });
                               }
                             }}
                             style={{
@@ -434,10 +445,33 @@ const MerchantPage = ({ globalState, setGlobal }) => {
           <Row>
             <Col xs={12}>
               <button
-                onClick={(e) => {
+                onClick={async (e) => {
                   e.stopPropagation();
 
                   console.log(UpdateProductsList);
+                  e.target.disabled = true;
+                  e.target.innerText = "Please wait";
+                  const MerchantCredentials = {
+                    Name: globalState.Name,
+                    Email: globalState.email,
+                    Token: globalState.Token,
+                  };
+                  const UploadProductListData = {
+                    Credentials: MerchantCredentials,
+                    UpdateData: UpdateProductsList,
+                  };
+                  console.log(UploadProductListData);
+                  const UpdateProduct = await fetch(
+                    "http://localhost:5000/Merchants/UpdateProduct",
+                    {
+                      method: "post",
+                      body: JSON.stringify(UploadProductListData),
+                      headers: {
+                        "Content-Type": "application/json",
+                      },
+                      mode: "cors",
+                    }
+                  );
                 }}
                 disabled={UpdateProductsList.length === 0 ? true : false}
                 style={{

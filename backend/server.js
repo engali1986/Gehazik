@@ -22,6 +22,7 @@ import { Stream } from "stream";
 import { fileURLToPath } from "url";
 import UpdateProduct from "./DBConnection/Products/UpdateProduct.js";
 import MerchantProductsList from "./DBConnection/Products/MerchantProductsList.js";
+
 const require = createRequire(import.meta.url);
 const ServiceAccountKey = require("./API keys/ServiceAccountKey.json");
 
@@ -344,6 +345,36 @@ app.post("/Merchants/ProductsList", async (req, res) => {
     }
   } else {
     res.json({ resp: "Merchant Not found" });
+  }
+});
+// UpdateProduct route for merchant
+app.post("/Merchants/UpdateProduct", async (req, res) => {
+  try {
+    console.log("Server/UpdateProduct 0");
+    const UpdatedProduct = await req.body;
+    console.log(UpdatedProduct);
+    console.log(Array.isArray(UpdatedProduct));
+    //  first we will varify merchant credentials
+    const UpdateProductMerchantCheck = await VarifyMerchant(
+      UpdatedProduct.Credentials
+    );
+    console.log("Server/UpdateProduct 1 Varify merchant result");
+    console.log(UpdateProductMerchantCheck);
+    if (UpdateProductMerchantCheck._id) {
+      console.log("Server/UpdateProduct 2 Merchant varified");
+      const UpdatedData = {
+        FieldToUpdate: "Products List Update",
+        UpdateData: UpdatedProduct.UpdateData,
+      };
+      console.log(UpdatedData);
+      const UpdatedProductList = await UpdateProduct(UpdatedData);
+    } else {
+      res.json({ resp: "Merchant not found" });
+    }
+  } catch (error) {
+    console.log(error);
+
+    res.json({ resp: "Internal error" });
   }
 });
 

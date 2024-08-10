@@ -45,6 +45,38 @@ const UpdateProduct = async (UpdateProductData) => {
         ("UpdateProduct file 5 Add product Images ID to procdut Not done");
         return "Product Images IDs Not Added";
       }
+    } else if (UpdateProductData.FieldToUpdate === "Products List Update") {
+      ("UpdateProduct file 6 Update list of products");
+      const ModefiedCounts = [];
+      UpdateProductData.UpdateData.forEach(async (element) => {
+        const UpdateElement = await client
+          .db("Gehazik")
+          .collection("Products")
+          .updateOne(
+            { _id: element.UpdateProductID },
+            {
+              $set: {
+                InStockQty: element.UpdateProductInStockQty,
+                ProductUnitPrice: element.UpdateProductUnitPrice,
+              },
+            }
+          )
+          .then((res) => {
+            "UpdateProduct file 7 Update products result";
+            console.log(res);
+            if (res.modifiedCount > 0) {
+              ModefiedCounts.push(res.modifiedCount);
+              return res.modifiedCount;
+            } else {
+            }
+          })
+          .catch((err) => {
+            "UpdateProduct file 8 Update products error";
+            console.log(err);
+          });
+      });
+
+      console.log(ModefiedCounts);
     } else {
     }
   } catch (error) {
