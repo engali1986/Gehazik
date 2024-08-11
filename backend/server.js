@@ -22,6 +22,7 @@ import { Stream } from "stream";
 import { fileURLToPath } from "url";
 import UpdateProduct from "./DBConnection/Products/UpdateProduct.js";
 import MerchantProductsList from "./DBConnection/Products/MerchantProductsList.js";
+import UsersProductsList from "./DBConnection/Products/UsersProductsList.js";
 
 const require = createRequire(import.meta.url);
 const ServiceAccountKey = require("./API keys/ServiceAccountKey.json");
@@ -384,6 +385,15 @@ app.post("/Merchants/UpdateProduct", async (req, res) => {
 
     res.json({ resp: "Internal error" });
   }
+});
+// productslist for users
+app.post("/Users/ProductsList", async (req, res) => {
+  console.log("server/Productslist users 0");
+  const Category = await req.body;
+  console.log("server/Productslist users 1 req,body is:");
+  console.log(Category);
+  const GetProductsList = UsersProductsList(Category.Data);
+  console.log(GetProductsList);
 });
 
 // Product routes end
