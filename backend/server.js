@@ -13,6 +13,7 @@ import LogInMerchant from "./DBConnection/LogInMerchant.js";
 import VarifyMerchant from "./DBConnection/VarifyMercahant.js";
 import AddProduct from "./DBConnection/Products/AddProduct.js";
 import multer from "multer";
+import { MongoClient } from "mongodb";
 
 import { createRequire } from "module";
 import { google } from "googleapis";
@@ -392,7 +393,8 @@ app.post("/Users/ProductsList", async (req, res) => {
   const Category = await req.body;
   console.log("server/Productslist users 1 req,body is:");
   console.log(Category);
-  const GetProductsList = UsersProductsList(Category.Data);
+  const GetProductsList = await UsersProductsList(Category.Data);
+  console.log("server/Productslist users 2 GetProductsList result:");
   console.log(GetProductsList);
 });
 
@@ -452,6 +454,30 @@ app.post("/test", upload.array("files"), async (req, res) => {
   }
 });
 
-app.listen("5000", () => {
+const server = app.listen("5000", () => {
   console.log("server started");
 });
+
+// close DB connection on shutdown
+const uri =
+  "mongodb+srv://engaligulf:Cossacks%401@cluster0.fj9bpe7.mongodb.net/?maxIdleTimeMS=5000";
+const client = new MongoClient(uri);
+
+const gracefulShutdown = () => {
+  console.log("Shutting down gracefully...");
+  server.close(async () => {
+    console.log("HTTP server closed.");
+    try {
+      await client.close();
+      console.log("MongoDB connection closed.");
+      process.exit(0);
+    } catch (error) {
+      console.error("Error closing MongoDB connection", error);
+      process.exit(1);
+    }
+  });
+};
+
+// Listen for termination signals (e.g., Ctrl+C, kill)
+process.on("SIGINT", gracefulShutdown);
+process.on("SIGTERM", gracefulShutdown);

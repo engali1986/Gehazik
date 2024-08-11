@@ -7,10 +7,8 @@ const client = new MongoClient(uri);
 const UsersProductsList = async (Category) => {
   try {
     console.log("UsersProductsList file 0");
-    await client.connect().then((res) => {
-      console.log("Connection res ");
-      //   console.log(res);
-    });
+    await client.connect();
+    console.log("Connection established ");
     console.log(Category);
     const UsersProductsList = await client
       .db("Gehazik")
@@ -26,16 +24,13 @@ const UsersProductsList = async (Category) => {
     console.log("UsersProductsList file 1");
     console.log(UsersProductsList);
     console.log(Array.isArray(UsersProductsList));
-    await client.close(true).then((res) => {
-      console.log("UsersProductsList file 3");
-      console.log(res);
-    });
     return UsersProductsList;
   } catch (error) {
     console.log("UsersProductsList file 2 error");
     console.log(error);
     return "Connection error";
   } finally {
+    // await client.close();
   }
 };
 
