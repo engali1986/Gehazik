@@ -366,6 +366,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                                 Show: false,
                                 Success: false,
                               });
+                              setEditProductId(null);
                               console.log(
                                 e.target.parentElement.parentElement.children[0]
                                   .innerText
@@ -394,26 +395,89 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                                 ) >= 0
                               ) {
                                 console.log("Values updated");
-                                const UpdatedProductObj = {
-                                  UpdateProductID:
-                                    e.target.parentElement.parentElement
-                                      .children[0].innerText,
-                                  UpdateProductInStockQty: parseInt(
-                                    e.target.parentElement.parentElement
-                                      .children[3].children[0].value,
-                                    10
-                                  ),
-                                  UpdateProductUnitPrice: parseInt(
-                                    e.target.parentElement.parentElement
-                                      .children[2].children[0].value,
-                                    10
-                                  ),
-                                };
-                                SetUpdateProduct(UpdatedProductObj);
-                                SetUpdateProductsList((Perv) => [
-                                  ...Perv,
-                                  UpdatedProductObj,
-                                ]);
+                                if (UpdateProductsList.length === 0) {
+                                  const UpdatedProductObj = {
+                                    UpdateProductID:
+                                      e.target.parentElement.parentElement
+                                        .children[0].innerText,
+                                    UpdateProductInStockQty: parseInt(
+                                      e.target.parentElement.parentElement
+                                        .children[3].children[0].value,
+                                      10
+                                    ),
+                                    UpdateProductUnitPrice: parseInt(
+                                      e.target.parentElement.parentElement
+                                        .children[2].children[0].value,
+                                      10
+                                    ),
+                                  };
+                                  SetUpdateProduct(UpdatedProductObj);
+                                  SetUpdateProductsList((Perv) => [
+                                    ...Perv,
+                                    UpdatedProductObj,
+                                  ]);
+                                } else {
+                                  let Duplicate = false;
+                                  for (
+                                    let index = 0;
+                                    index < UpdateProductsList.length;
+                                    index++
+                                  ) {
+                                    if (
+                                      UpdateProductsList[index]
+                                        .UpdateProductID ===
+                                      e.target.parentElement.parentElement
+                                        .children[0].innerText
+                                    ) {
+                                      console.log("Duplicate found");
+                                      console.log(UpdateProductsList);
+                                      UpdateProductsList[
+                                        index
+                                      ].UpdateProductID =
+                                        e.target.parentElement.parentElement.children[0].innerText;
+                                      UpdateProductsList[
+                                        index
+                                      ].UpdateProductInStockQty = parseInt(
+                                        e.target.parentElement.parentElement
+                                          .children[3].children[0].value,
+                                        10
+                                      );
+                                      UpdateProductsList[
+                                        index
+                                      ].UpdateProductUnitPrice = parseInt(
+                                        e.target.parentElement.parentElement
+                                          .children[2].children[0].value,
+                                        10
+                                      );
+                                      Duplicate = true;
+
+                                      break;
+                                    } else {
+                                    }
+                                  }
+                                  if (Duplicate == false) {
+                                    const UpdatedProductObj = {
+                                      UpdateProductID:
+                                        e.target.parentElement.parentElement
+                                          .children[0].innerText,
+                                      UpdateProductInStockQty: parseInt(
+                                        e.target.parentElement.parentElement
+                                          .children[3].children[0].value,
+                                        10
+                                      ),
+                                      UpdateProductUnitPrice: parseInt(
+                                        e.target.parentElement.parentElement
+                                          .children[2].children[0].value,
+                                        10
+                                      ),
+                                    };
+                                    SetUpdateProduct(UpdatedProductObj);
+                                    SetUpdateProductsList((Perv) => [
+                                      ...Perv,
+                                      UpdatedProductObj,
+                                    ]);
+                                  }
+                                }
                               } else {
                                 console.log("Values Not updated");
                                 SetShowAlert({
@@ -481,7 +545,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                   console.log(UpdateProduct);
 
                   if (UpdateProduct.resp === "Products Updated Successfully") {
-                    e.target.innertext = "Confirm Update";
+                    e.target.innerText = "Confirm Update";
                     e.target.disabled = false;
 
                     SetShowAlert({
@@ -492,7 +556,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                     });
                   } else {
                     e.target.disabled = false;
-                    e.target.innertext = "Confirm Update";
+                    e.target.innerText = "Confirm Update";
                     SetShowAlert({
                       ...ShowAlert,
                       Massage: UpdateProduct.resp,

@@ -78,6 +78,7 @@ const UpdateProduct = async (UpdateProductData) => {
                   UpdateProductData.UpdateData[index].UpdateProductInStockQty,
                 ProductUnitPrice:
                   UpdateProductData.UpdateData[index].UpdateProductUnitPrice,
+                LatestUpdate: new Date(),
               },
             }
           )
