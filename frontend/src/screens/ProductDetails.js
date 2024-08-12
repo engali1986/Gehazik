@@ -10,7 +10,7 @@ const ProductDetails = () => {
   useEffect(() => {
     SetLoader(true);
     const ProductDetails = async (ProductID) => {
-      const GetProductetails = fetch(
+      const GetProductetails = await fetch(
         "http://localhost:5000/Users/GetProductDetails",
         {
           method: "post",
@@ -29,7 +29,11 @@ const ProductDetails = () => {
           return { resp: "Connection error" };
         });
       console.log(GetProductetails);
-      SetLoader(false);
+      if (typeof GetProductetails.resp === "object") {
+        SetLoader(false);
+      } else {
+        Navigate("/ProductNotFound");
+      }
     };
 
     ProductDetails(params.id);
