@@ -17,8 +17,11 @@ const UsersProductsList = async (Category) => {
       .project({
         ProductTitle: 1,
         InStockQty: 1,
-        OrderedQty: 1,
         ProductUnitPrice: 1,
+        ProductImagesIDs: 1,
+        ProductAdditionalFeatures: 1,
+        ProductQtyUnit: 1,
+        MerchantName: 1,
       })
       .toArray();
     console.log("UsersProductsList file 1");

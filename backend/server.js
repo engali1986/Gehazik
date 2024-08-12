@@ -24,6 +24,7 @@ import { fileURLToPath } from "url";
 import UpdateProduct from "./DBConnection/Products/UpdateProduct.js";
 import MerchantProductsList from "./DBConnection/Products/MerchantProductsList.js";
 import UsersProductsList from "./DBConnection/Products/UsersProductsList.js";
+import UsersProductDetails from "./DBConnection/Products/UsersProductDetails.js";
 
 const require = createRequire(import.meta.url);
 const ServiceAccountKey = require("./API keys/ServiceAccountKey.json");
@@ -396,6 +397,33 @@ app.post("/Users/ProductsList", async (req, res) => {
   const GetProductsList = await UsersProductsList(Category.Data);
   console.log("server/Productslist users 2 GetProductsList result:");
   console.log(GetProductsList);
+  if (Array.isArray(GetProductsList)) {
+    console.log("server/Productslist users 3 send GetProductsList");
+    res.json({ resp: GetProductsList });
+  } else {
+    console.log("server/Productslist users 3 error");
+    res.json({ resp: "Connection error" });
+  }
+});
+
+// ProductDetails for users
+app.post("/Users/GetProductDetails", async (req, res) => {
+  try {
+    console.log("Server/ProductDetails 0 for users");
+    const GetProductID = await req.body.Data;
+    console.log(GetProductID);
+    const GetProductDetails = await UsersProductDetails(GetProductID);
+    console.log("Server/ProductDetails 1 GetProductDetails is:");
+    console.log(GetProductDetails);
+    if (typeof GetProductDetails === "object" && GetProductDetails._id) {
+      res.json({ resp: GetProductDetails });
+    } else {
+      res.json({ resp: "Product Not Found" });
+    }
+  } catch (error) {
+    console.log(error);
+    res.json({ resp: "Connection error server" });
+  }
 });
 
 // Product routes end

@@ -5,6 +5,7 @@ import { Container, Row, Col } from "react-bootstrap";
 const ProductsScreen = () => {
   const [Loader, SetLoader] = useState(false);
   const params = useParams();
+  const [AllProduct, SetAllProducts] = useState([]);
 
   useEffect(() => {
     SetLoader(true);
@@ -25,9 +26,27 @@ const ProductsScreen = () => {
             },
             mode: "cors",
           }
-        );
+        )
+          .then((res) => {
+            return res.json();
+          })
+          .catch((err) => {
+            console.log(err);
+            return { resp: "Connection Error" };
+          });
+        console.log("ProductsList resp is:", ProductsList);
+        if (Array.isArray(ProductsList.resp)) {
+          SetAllProducts(ProductsList.resp);
+          console.log(ProductsList);
+          SetLoader(false);
+        } else {
+          console.log(ProductsList);
+          SetLoader(false);
+        }
+      } catch (error) {
+        console.log(error);
         SetLoader(false);
-      } catch (error) {}
+      }
     };
     GetAllProducts();
   }, []);
@@ -51,7 +70,19 @@ const ProductsScreen = () => {
           left: "0px",
           zIndex: "100",
         }}
-      ></Row>
+      >
+        <div
+          style={{
+            color: "black",
+            opacity: "1",
+            fontSize: "3rem",
+            marginTop: "25%",
+            backgroundColor: "white",
+          }}
+        >
+          Please wait
+        </div>
+      </Row>
       <Row style={{ borderBottom: "1px solid gray", textAlign: "start" }}>
         <h3>{Object.values(params)[0].replace(/-/g, " ")}</h3>
       </Row>
@@ -61,7 +92,52 @@ const ProductsScreen = () => {
       >
         <Col xs={4}>Sub categories</Col>
         <Col xs={8}>
-          <Row></Row>
+          <Row>
+            {AllProduct.map((Product) => (
+              <Col
+                xs={6}
+                md={4}
+                className=" pb-4 pe-1"
+                style={{
+                  wordBreak: "break-all",
+                  backgroundColor: "#eae6db",
+                  border: "2px solid white",
+                }}
+                key={Product._id}
+              >
+                <Row>
+                  <Col xs={12}>
+                    <img
+                      style={{ width: "100%", aspectRatio: "1/1" }}
+                      src={`https://drive.google.com/thumbnail?id=${Product.ProductImagesIDs[0]}`}
+                      alt={Product.ProductImagesIDs[0]}
+                    />
+                  </Col>
+                </Row>
+                <Row className=" pb-1" key={Product.ProductTitle}>
+                  <Col xs={12}>
+                    <h5>
+                      <a href={`/productdetails/${Product._id}`}>
+                        {Product.ProductTitle}
+                      </a>
+                    </h5>
+                  </Col>
+                </Row>
+                <Row key={Product.ProductUnitPrice}>
+                  <Col xs={12}>
+                    <div className=" d-flex justify-content-between">
+                      <span className=" d-inline-block">
+                        {Product.ProductUnitPrice} EGP
+                      </span>
+                      <span className=" d-inline-block">
+                        <i className="fa-solid fa-cart-shopping"></i>
+                      </span>
+                    </div>
+                  </Col>
+                </Row>
+              </Col>
+            ))}
+          </Row>
         </Col>
       </Row>
     </Container>

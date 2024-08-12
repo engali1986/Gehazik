@@ -25,6 +25,7 @@ import AddressSelect from "./screens/AddressSelect.js";
 import MerchantLogIn from "./screens/MerchantLogIn.js";
 import MerchantSignUp from "./screens/MerchantSignUp.js";
 import MerchantPage from "./screens/MerchantPage.js";
+import ProductDetails from "./screens/ProductDetails.js";
 
 function App() {
   const BackDrop = useRef();
@@ -48,7 +49,7 @@ function App() {
         Token: 0,
         Governorate: "",
         City: "",
-      }),
+      })
     );
 
     sessionStorage.setItem(
@@ -63,7 +64,7 @@ function App() {
         Token: 0,
         Governorate: "",
         City: "",
-      }),
+      })
     );
 
     if (
@@ -141,7 +142,7 @@ function App() {
         Admin: JSON.parse(localStorage.getItem("globalState")).Admin,
         Client: JSON.parse(localStorage.getItem("globalState")).Client,
         Merchant: JSON.parse(localStorage.getItem("globalState")).Merchant,
-      }),
+      })
     );
 
     console.log("initial sessionstorage");
@@ -149,7 +150,7 @@ function App() {
   //  if no data set session and local storage above
 
   const [GlobalState, SetGlobal] = useState(
-    JSON.parse(sessionStorage.getItem("globalState")),
+    JSON.parse(sessionStorage.getItem("globalState"))
   );
   console.log("app started");
   console.log(GlobalState);
@@ -183,7 +184,7 @@ function App() {
     Admin,
     Client,
     Merchant,
-    Token,
+    Token
   ) => {
     SetGlobal({
       ...GlobalState,
@@ -207,7 +208,7 @@ function App() {
         Client: Client,
         Merchant: Merchant,
         Token: Token,
-      }),
+      })
     );
     localStorage.setItem("globalState", sessionStorage.getItem("globalState"));
   };
@@ -228,7 +229,7 @@ function App() {
         ...JSON.parse(sessionStorage.getItem("globalState")),
         Governorate: AddressData.Governorate,
         City: AddressData.City,
-      }),
+      })
     );
     localStorage.setItem("globalState", sessionStorage.getItem("globalState"));
   };
@@ -367,7 +368,7 @@ function App() {
                 document.getElementsByClassName("Categories")[0].style.height =
                   "0vh";
                 document.getElementsByClassName(
-                  "Categories",
+                  "Categories"
                 )[0].style.overflowY = "hidden";
                 document
                   .getElementsByClassName("BackDrop")[0]
@@ -426,6 +427,8 @@ function App() {
                   <LogIn globalState={GlobalState} setGlobal={userChange} />
                 }
               />
+              <Route path="/ProductDetails/:id" element={<ProductDetails />} />
+
               <Route
                 path="/SignUp"
                 element={
