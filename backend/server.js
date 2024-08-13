@@ -482,6 +482,13 @@ app.post("/test", upload.array("files"), async (req, res) => {
   }
 });
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+console.log(__dirname);
+console.log(path.join(__dirname, "uploads"));
+
+app.use(express.static(path.join(__dirname, "uploads")));
+
 const server = app.listen("5000", () => {
   console.log("server started");
 });
