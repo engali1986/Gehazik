@@ -112,6 +112,7 @@ const ProductsScreen = () => {
                       style={{ width: "100%", aspectRatio: "1/1" }}
                       src={`https://drive.google.com/thumbnail?id=${Product.ProductImagesIDs[0]}`}
                       alt={Product.ProductImagesIDs[0]}
+                      decoding="async"
                     />
                   </Col>
                 </Row>
