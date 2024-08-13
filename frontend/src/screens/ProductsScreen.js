@@ -110,6 +110,7 @@ const ProductsScreen = () => {
                     <div>Loading</div>
                     <img
                       style={{ width: "100%", aspectRatio: "1/1" }}
+                      loading="lazy"
                       src={`https://drive.google.com/thumbnail?id=${Product.ProductImagesIDs[0]}`}
                       alt={Product.ProductImagesIDs[0]}
                       decoding="async"
