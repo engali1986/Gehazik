@@ -3,14 +3,17 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 
 const ProductDetails = () => {
+  const [Product, setProduct] = useState({ ProductImages: [] });
   const [Loader, SetLoader] = useState(false);
   const params = useParams();
   const Navigate = useNavigate();
   console.log(params.id);
+  let prod;
+
   useEffect(() => {
     SetLoader(true);
-    const ProductDetails = async (ProductID) => {
-      const GetProductetails = await fetch(
+    const GetProductDetails = async (ProductID) => {
+      const Productdetails = await fetch(
         "http://localhost:5000/Users/GetProductDetails",
         {
           method: "post",
@@ -28,15 +31,27 @@ const ProductDetails = () => {
           console.log(err);
           return { resp: "Connection error" };
         });
-      console.log(GetProductetails);
-      if (typeof GetProductetails.resp === "object") {
+      console.log(Productdetails);
+      console.log(Productdetails.resp);
+      console.log(Productdetails.resp.resp);
+      if (typeof Productdetails.resp === "object") {
+        console.log(Productdetails.resp);
         SetLoader(false);
+        prod = await Productdetails.resp;
+        console.log(prod);
+        setProduct((Perv) => ({
+          ...Perv,
+          ProductImages: prod.ProductImagesIDs,
+        }));
+        console.log(Product);
       } else {
         Navigate("/ProductNotFound");
       }
     };
 
-    ProductDetails(params.id);
+    GetProductDetails(params.id);
+
+    console.log(Product);
   }, []);
   return (
     <Container>
@@ -65,7 +80,74 @@ const ProductDetails = () => {
           Please wait
         </div>
       </Row>
-      <div>ProductDetails</div>;
+      <Row>
+        <Col
+          xs={12}
+          md={6}
+          className=" d-flex"
+          style={{ height: "min-content" }}
+        >
+          <div
+            className=" d-flex flex-column"
+            style={{ maxWidth: "20%", maxHeight: "100%" }}
+          >
+            {Product.ProductImages.map((item, index) => (
+              <img
+                key={item}
+                onLoadedData={(e) => {
+                  console.log(e.target.src);
+                }}
+                onLoad={(e) => {
+                  console.log(e.target.complete);
+                  console.log(e.target.naturalHeight);
+
+                  if (e.target.complete && e.target.naturalHeight !== 0) {
+                    console.log("Image loded");
+                    console.log(e.target.naturalHeight);
+                    console.log(e.target.style.width);
+                    console.log(typeof e.target.style.width);
+                  } else {
+                    console.log("Image not loaded");
+                    e.target.src = `https://drive.google.com/thumbnail?id=${item}`;
+                  }
+                }}
+                style={{
+                  width: "100%",
+                  aspectRatio: "1/1",
+                  border: index === 0 ? "2px solid red" : "2px solid white",
+                  cursor: "pointer",
+                }}
+                src={`https://drive.google.com/thumbnail?id=${item}`}
+                alt={Product.item}
+                decoding="async"
+              />
+            ))}
+          </div>
+          <div style={{ maxWidth: "80%", maxHeight: "100%" }}>
+            <img
+              onLoadedData={(e) => {
+                console.log(e.target.src);
+              }}
+              onLoad={(e) => {
+                console.log(e.target.complete);
+                console.log(e.target.naturalHeight);
+
+                if (e.target.complete && e.target.naturalHeight !== 0) {
+                  console.log("Image loded");
+                } else {
+                  console.log("Image not loaded");
+                  e.target.src = `https://drive.google.com/thumbnail?id=${Product.ProductImages[0]}`;
+                }
+              }}
+              style={{ width: "100%", aspectRatio: "1/1" }}
+              src={`https://drive.google.com/thumbnail?id=${Product.ProductImages[0]}`}
+              alt={Product.ProductImages[0]}
+              decoding="async"
+            />
+          </div>
+        </Col>
+        <Col xs={12} md={6}></Col>
+      </Row>
     </Container>
   );
 };

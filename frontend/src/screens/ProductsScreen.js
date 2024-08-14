@@ -109,6 +109,24 @@ const ProductsScreen = () => {
                   <Col xs={12}>
                     <div>Loading</div>
                     <img
+                      onLoadedData={(e) => {
+                        console.log(e.target.src);
+                      }}
+                      onLoad={(e) => {
+                        e.target.parentElement.children[0].style.innerText =
+                          "red";
+                        console.log(e.target.complete);
+                        console.log(e.target.naturalHeight);
+                        console.log(e.target.parentElement.children[0]);
+                        if (e.target.complete && e.target.naturalHeight !== 0) {
+                          console.log("Image loaded");
+                        } else {
+                          console.log("Image not loaded");
+                          e.target.parentElement.children[0].style.color =
+                            "red";
+                          e.target.src = `https://drive.google.com/thumbnail?id=${Product.ProductImagesIDs[0]}`;
+                        }
+                      }}
                       style={{ width: "100%", aspectRatio: "1/1" }}
                       loading="lazy"
                       src={`https://drive.google.com/thumbnail?id=${Product.ProductImagesIDs[0]}`}

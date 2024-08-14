@@ -15,7 +15,17 @@ const UsersProductDetails = async (ProductID) => {
       .collection("Products")
       .findOne(
         { _id: new ObjectId(ProductID) },
-        { projection: { ProductTitle: 1 } }
+        {
+          projection: {
+            ProductTitle: 1,
+            ProductQtyUnit: 1,
+            ProductUnitPrice: 1,
+            ProductAdditionalFeatures: 1,
+            MerchantName: 1,
+            InStockQty: 1,
+            ProductImagesIDs: 1,
+          },
+        }
       )
       .then((res) => {
         console.log("UserGetProductDetails file 1");
