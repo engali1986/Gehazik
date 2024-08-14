@@ -101,7 +101,7 @@ const ProductDetails = () => {
                   console.log(e.target.complete);
                   console.log(e.target.naturalHeight);
 
-                  if (e.target.complete && e.target.naturalHeight !== 0) {
+                  if (e.target.complete && e.target.naturalHeight > 20) {
                     console.log("Image loded");
                     console.log(e.target.naturalHeight);
                     console.log(e.target.style.width);
@@ -111,10 +111,32 @@ const ProductDetails = () => {
                     e.target.src = `https://drive.google.com/thumbnail?id=${item}`;
                   }
                 }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  console.log("small image clicked");
+                  const Images = document.querySelectorAll(
+                    ".ProductDetailsImage"
+                  );
+                  console.log(Images);
+                  if (e.target.classList.contains("ProductImageActive")) {
+                    console.log("Image selected");
+                  } else {
+                    for (let index = 0; index < Images.length; index++) {
+                      Images[index].classList.remove("ProductImageActive");
+                    }
+                    e.target.classList.add("ProductImageActive");
+                    document.getElementById("MainImage").src = e.target.src;
+                  }
+                }}
+                className={
+                  index === 0
+                    ? "ProductDetailsImage ProductImageActive"
+                    : "ProductDetailsImage"
+                }
                 style={{
                   width: "100%",
                   aspectRatio: "1/1",
-                  border: index === 0 ? "2px solid red" : "2px solid white",
+
                   cursor: "pointer",
                 }}
                 src={`https://drive.google.com/thumbnail?id=${item}`}
@@ -132,13 +154,14 @@ const ProductDetails = () => {
                 console.log(e.target.complete);
                 console.log(e.target.naturalHeight);
 
-                if (e.target.complete && e.target.naturalHeight !== 0) {
+                if (e.target.complete && e.target.naturalHeight > 20) {
                   console.log("Image loded");
                 } else {
                   console.log("Image not loaded");
                   e.target.src = `https://drive.google.com/thumbnail?id=${Product.ProductImages[0]}`;
                 }
               }}
+              id="MainImage"
               style={{ width: "100%", aspectRatio: "1/1" }}
               src={`https://drive.google.com/thumbnail?id=${Product.ProductImages[0]}`}
               alt={Product.ProductImages[0]}

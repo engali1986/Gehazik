@@ -118,7 +118,7 @@ const ProductsScreen = () => {
                         console.log(e.target.complete);
                         console.log(e.target.naturalHeight);
                         console.log(e.target.parentElement.children[0]);
-                        if (e.target.complete && e.target.naturalHeight !== 0) {
+                        if (e.target.complete && e.target.naturalHeight > 20) {
                           console.log("Image loaded");
                         } else {
                           console.log("Image not loaded");
