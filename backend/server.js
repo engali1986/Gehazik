@@ -27,9 +27,6 @@ import MerchantProductsList from "./DBConnection/Products/MerchantProductsList.j
 import UsersProductsList from "./DBConnection/Products/UsersProductsList.js";
 import UsersProductDetails from "./DBConnection/Products/UsersProductDetails.js";
 
-const require = createRequire(import.meta.url);
-const ServiceAccountKey = require("./API keys/ServiceAccountKey.json");
-
 const app = express();
 env.config();
 console.log(process.env.ALI);
