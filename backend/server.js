@@ -231,10 +231,7 @@ app.post("/Merchants/AddProduct", upload.array("Files"), async (req, res) => {
         const __dirname = path.dirname(__filename);
 
         const SCOPES = ["https://www.googleapis.com/auth/drive.file"];
-        const KEYFILEPATH = path.join(
-          __dirname,
-          "/secrets/ServiceAccountKey.json"
-        );
+        const KEYFILEPATH = path.join(__dirname, "/ServiceAccountKey.json");
         console.log(KEYFILEPATH);
 
         const auth = new google.auth.GoogleAuth({

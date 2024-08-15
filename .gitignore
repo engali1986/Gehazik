@@ -1,6 +1,7 @@
 node_modules
 /backend/API keys/ServiceAccountKey.json
 /backend/secrets/ServiceAccountKey.json
+/backend/ServiceAccountKey.json
 .env
 
 
