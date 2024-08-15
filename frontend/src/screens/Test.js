@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 const Test = () => {
   return (
     <>
-      <img src="http://localhost:5000/aa.jpeg" />
+      <img src="https://gehazik-server.onrender.com/aa.jpeg" />
       <button
         onClick={(e) => {
           e.stopPropagation();

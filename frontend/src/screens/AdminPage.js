@@ -139,7 +139,7 @@ const AdminPage = ({ globalState, setGlobal }) => {
                     console.log(Obj);
                     try {
                       const AddCategory = await fetch(
-                        "http://localhost:5000/AddCategory",
+                        "https://gehazik-server.onrender.com/AddCategory",
                         {
                           method: "POST",
                           body: JSON.stringify(Obj),
@@ -147,7 +147,7 @@ const AdminPage = ({ globalState, setGlobal }) => {
                             "Content-Type": "application/json",
                           },
                           mode: "cors",
-                        },
+                        }
                       ).then((res) => {
                         console.log(res.json());
                       });
@@ -178,15 +178,18 @@ const AdminPage = ({ globalState, setGlobal }) => {
   const Orders = async () => {
     console.log("Orders Selected");
     console.log(globalState);
-    const Orders = await fetch("http://localhost:5000/GetOrders", {
-      method: "POST",
-      body: JSON.stringify(globalState),
+    const Orders = await fetch(
+      "https://gehazik-server.onrender.com/GetOrders",
+      {
+        method: "POST",
+        body: JSON.stringify(globalState),
 
-      headers: {
-        "Content-Type": "application/json",
-      },
-      mode: "cors",
-    })
+        headers: {
+          "Content-Type": "application/json",
+        },
+        mode: "cors",
+      }
+    )
       .then((res) => {
         return res.json();
       })

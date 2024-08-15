@@ -26,14 +26,17 @@ const AdminLogIn = ({ globalState, setGlobal }) => {
     console.log(Credentials);
     console.log(typeof Credentials.VarificationCode);
 
-    const UserVarified = await fetch("http://localhost:5000/AdminLogIn", {
-      method: "POST",
-      body: JSON.stringify(Credentials),
-      headers: {
-        "Content-Type": "application/json",
-      },
-      mode: "cors",
-    })
+    const UserVarified = await fetch(
+      "https://gehazik-server.onrender.com/AdminLogIn",
+      {
+        method: "POST",
+        body: JSON.stringify(Credentials),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        mode: "cors",
+      }
+    )
       .then((res) => {
         return res.json();
       })
@@ -49,7 +52,7 @@ const AdminLogIn = ({ globalState, setGlobal }) => {
         true,
         false,
         false,
-        UserVarified.resp.token,
+        UserVarified.resp.token
       );
       Alert.current.classList.replace("alert-danger", "alert-success");
       Alert.current.innerText = "User Logged in successfully";
@@ -83,14 +86,17 @@ const AdminLogIn = ({ globalState, setGlobal }) => {
       setDisabled(true);
       LoginButtonRef.current.innerText = "Loggin please wait";
       console.log("Submitted");
-      const UserLogIn = await fetch("http://localhost:5000/AdminLogIn", {
-        method: "POST",
-        body: JSON.stringify(Credentials),
-        headers: {
-          "Content-Type": "application/json",
-        },
-        mode: "cors",
-      })
+      const UserLogIn = await fetch(
+        "https://gehazik-server.onrender.com/AdminLogIn",
+        {
+          method: "POST",
+          body: JSON.stringify(Credentials),
+          headers: {
+            "Content-Type": "application/json",
+          },
+          mode: "cors",
+        }
+      )
         .then((res) => {
           return res.json();
         })
@@ -109,7 +115,7 @@ const AdminLogIn = ({ globalState, setGlobal }) => {
               true,
               false,
               false,
-              UserLogIn.resp.token,
+              UserLogIn.resp.token
             );
             Alert.current.classList.replace("alert-danger", "alert-success");
             Alert.current.innerText = "User Logged in successfully";
@@ -147,7 +153,7 @@ const AdminLogIn = ({ globalState, setGlobal }) => {
             true,
             false,
             false,
-            UserLogIn.resp.token,
+            UserLogIn.resp.token
           );
           Alert.current.classList.replace("alert-danger", "alert-success");
           Alert.current.innerText = "User Logged in successfully";

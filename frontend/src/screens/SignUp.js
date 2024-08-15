@@ -178,7 +178,7 @@ const SignUp = ({ globalState, setGlobal }) => {
       ) {
         PassmatchAlert.current.classList.replace(
           "alert-danger",
-          "alert-success",
+          "alert-success"
         );
         PassmatchAlert.current.innerText = "Password match";
         setPasswordmatch(true);
@@ -186,7 +186,7 @@ const SignUp = ({ globalState, setGlobal }) => {
       } else {
         PassmatchAlert.current.classList.replace(
           "alert-success",
-          "alert-danger",
+          "alert-danger"
         );
         PassmatchAlert.current.innerText = "Password mismatch";
         setPasswordmatch(false);
@@ -229,7 +229,7 @@ const SignUp = ({ globalState, setGlobal }) => {
       ) {
         PassmatchAlert.current.classList.replace(
           "alert-success",
-          "alert-danger",
+          "alert-danger"
         );
         PassmatchAlert.current.innerText =
           "Name/Email/Password cannot contain spaces  or arabic alphabit";
@@ -245,7 +245,7 @@ const SignUp = ({ globalState, setGlobal }) => {
           console.log("Email correct");
           PassmatchAlert.current.classList.replace(
             "alert-danger",
-            "alert-success",
+            "alert-success"
           );
           PassmatchAlert.current.innerText = "";
           PassmatchAlert.current.style.maxHeight = "0px";
@@ -278,19 +278,22 @@ const SignUp = ({ globalState, setGlobal }) => {
 
           PassmatchAlert.current.classList.replace(
             "alert-danger",
-            "alert-success",
+            "alert-success"
           );
           PassmatchAlert.current.innerText = "Sign Up please wait";
           PassmatchAlert.current.style.maxHeight = "500px";
 
-          const AddUser = await fetch("http://localhost:5000/AddUser", {
-            method: "POST",
-            body: JSON.stringify(Credentials),
-            headers: {
-              "Content-Type": "application/json",
-            },
-            mode: "cors",
-          })
+          const AddUser = await fetch(
+            "https://gehazik-server.onrender.com/AddUser",
+            {
+              method: "POST",
+              body: JSON.stringify(Credentials),
+              headers: {
+                "Content-Type": "application/json",
+              },
+              mode: "cors",
+            }
+          )
             .then((res) => {
               return res.json();
             })
@@ -308,7 +311,7 @@ const SignUp = ({ globalState, setGlobal }) => {
 
             PassmatchAlert.current.classList.replace(
               "alert-danger",
-              "alert-success",
+              "alert-success"
             );
             PassmatchAlert.current.innerText =
               AddUser.resp.name +
@@ -323,7 +326,7 @@ const SignUp = ({ globalState, setGlobal }) => {
           } else {
             PassmatchAlert.current.classList.replace(
               "alert-success",
-              "alert-danger",
+              "alert-danger"
             );
             PassmatchAlert.current.innerText = AddUser.resp;
             PassmatchAlert.current.style.maxHeight = "500px";
@@ -334,7 +337,7 @@ const SignUp = ({ globalState, setGlobal }) => {
         } else {
           PassmatchAlert.current.classList.replace(
             "alert-success",
-            "alert-danger",
+            "alert-danger"
           );
           PassmatchAlert.current.innerText = "Email/Password not correct";
           PassmatchAlert.current.style.maxHeight = "500px";
@@ -371,14 +374,17 @@ const SignUp = ({ globalState, setGlobal }) => {
     console.log(Credentials);
     console.log(typeof Credentials.VarificationCode);
 
-    const UserVarified = await fetch("http://localhost:5000/LogInUser", {
-      method: "POST",
-      body: JSON.stringify(Credentials),
-      headers: {
-        "Content-Type": "application/json",
-      },
-      mode: "cors",
-    })
+    const UserVarified = await fetch(
+      "https://gehazik-server.onrender.com/LogInUser",
+      {
+        method: "POST",
+        body: JSON.stringify(Credentials),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        mode: "cors",
+      }
+    )
       .then((res) => {
         return res.json();
       })

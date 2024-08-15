@@ -31,7 +31,7 @@ const PasswordRecovery = () => {
       };
 
       const PassRecovery = await fetch(
-        "http://localhost:5000/PasswordRecovery",
+        "https://gehazik-server.onrender.com/PasswordRecovery",
         {
           method: "POST",
           body: JSON.stringify(Credintials),
@@ -39,7 +39,7 @@ const PasswordRecovery = () => {
             "Content-Type": "application/json",
           },
           mode: "cors",
-        },
+        }
       )
         .then((res) => {
           console.log(res);

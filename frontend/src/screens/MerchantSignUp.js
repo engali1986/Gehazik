@@ -289,14 +289,17 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
           PassmatchAlert.current.innerText = "Sign Up please wait";
           PassmatchAlert.current.style.maxHeight = "500px";
 
-          const AddMerchant = await fetch("http://localhost:5000/AddMerchant", {
-            method: "POST",
-            body: JSON.stringify(Credentials),
-            headers: {
-              "Content-Type": "application/json",
-            },
-            mode: "cors",
-          })
+          const AddMerchant = await fetch(
+            "https://gehazik-server.onrender.com/AddMerchant",
+            {
+              method: "POST",
+              body: JSON.stringify(Credentials),
+              headers: {
+                "Content-Type": "application/json",
+              },
+              mode: "cors",
+            }
+          )
             .then((res) => {
               return res.json();
             })
@@ -377,14 +380,17 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
     console.log(Credentials);
     console.log(typeof Credentials.VarificationCode);
 
-    const UserVarified = await fetch("http://localhost:5000/LogInMerchant", {
-      method: "POST",
-      body: JSON.stringify(Credentials),
-      headers: {
-        "Content-Type": "application/json",
-      },
-      mode: "cors",
-    })
+    const UserVarified = await fetch(
+      "https://gehazik-server.onrender.com/LogInMerchant",
+      {
+        method: "POST",
+        body: JSON.stringify(Credentials),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        mode: "cors",
+      }
+    )
       .then((res) => {
         return res.json();
       })

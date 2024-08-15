@@ -15,7 +15,7 @@ const ProductDetails = () => {
     SetLoader(true);
     const GetProductDetails = async (ProductID) => {
       const Productdetails = await fetch(
-        "http://localhost:5000/Users/GetProductDetails",
+        "https://gehazik-server.onrender.com/Users/GetProductDetails",
         {
           method: "post",
           body: JSON.stringify({ Data: ProductID }),

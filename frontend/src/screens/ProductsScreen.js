@@ -17,7 +17,7 @@ const ProductsScreen = () => {
         console.log("Category is : ", Category);
         console.log("All Products");
         const ProductsList = await fetch(
-          "http://localhost:5000/Users/ProductsList",
+          "https://gehazik-server.onrender.com/Users/ProductsList",
           {
             method: "post",
             body: JSON.stringify({ Data: Category }),
