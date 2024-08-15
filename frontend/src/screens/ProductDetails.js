@@ -3,9 +3,10 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 
 const ProductDetails = () => {
-  const [Product, setProduct] = useState({ ProductImages: [] });
-  const [Loader, SetLoader] = useState(false);
-  const params = useParams();
+  const [Product, setProduct] = useState({ ProductImages: [] }); // this will sore product details
+  const [Loader, SetLoader] = useState(false); // this will handle loader visbility during fetch product details
+  const [Count, SetCount] = useState(1); // this will store ordered qty
+  const params = useParams(); // this will provide productID to fetch from server in useefffect
   const Navigate = useNavigate();
   console.log(params.id);
   let prod;
@@ -42,6 +43,9 @@ const ProductDetails = () => {
         setProduct((Perv) => ({
           ...Perv,
           ProductImages: prod.ProductImagesIDs,
+          ProductTitle: prod.ProductTitle,
+          ProductUnitPrice: prod.ProductUnitPrice,
+          InStockQty: prod.InStockQty,
         }));
         console.log(Product);
       } else {
@@ -179,7 +183,125 @@ const ProductDetails = () => {
             />
           </div>
         </Col>
-        <Col xs={12} md={6}></Col>
+        <Col
+          className=" d-flex flex-column justify-content-between"
+          xs={12}
+          md={6}
+        >
+          <Row>
+            <h3
+              className=" p-1"
+              style={{ textAlign: "start", borderBottom: "2px solid gray" }}
+            >
+              {Product.ProductTitle}
+            </h3>
+          </Row>
+          <Row
+            className=" my-3 justify-content-between"
+            style={{
+              textAlign: "start",
+              borderBottom: "2px solid gray",
+            }}
+          >
+            <h5
+              style={{
+                color: "red",
+                width: "fit-content",
+              }}
+            >
+              {Product.ProductUnitPrice} EGP
+            </h5>
+            <h5
+              style={{
+                width: "fit-content",
+                color: Product.InStockQty >= 5 ? "black" : "red",
+              }}
+            >
+              {Product.InStockQty === 0
+                ? "Out of Stock!"
+                : Product.InStockQty > 0 && Product.InStockQty < 5
+                  ? " Only " + Product.InStockQty + " available in stock"
+                  : Product.InStockQty + " In stock"}
+            </h5>
+          </Row>
+          <Row
+            className=" my-3"
+            style={{ textAlign: "start", borderBottom: "2px solid gray" }}
+          >
+            <h5>
+              <strong> Delivery: </strong> within 2 days
+            </h5>
+          </Row>
+          <Row>
+            <div
+              className=" d-flex align-items-center"
+              style={{ width: "40%", height: "100%" }}
+            >
+              <span
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (Count > 1) {
+                    SetCount(Count - 1);
+                  }
+                }}
+                style={{
+                  display: "inline-block",
+                  width: "20%",
+                  cursor: "pointer",
+                }}
+              >
+                <i
+                  className="fa-solid fa-square-minus fa-xl"
+                  style={{ color: "#04aa6d" }}
+                ></i>
+              </span>
+              <span
+                style={{
+                  display: "inline-block",
+                  width: "60%",
+                  backgroundColor: "#E8E8E7",
+                }}
+              >
+                {Count.toString()}
+              </span>
+              <span
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (Count >= 1) {
+                    SetCount(Count + 1);
+                  }
+                }}
+                style={{
+                  display: "inline-block",
+                  width: "20%",
+                  cursor: "pointer",
+                }}
+              >
+                <i
+                  className="fa-solid fa-square-plus fa-xl"
+                  style={{ color: "#04aa6d" }}
+                ></i>
+              </span>
+            </div>
+            <div style={{ width: "60%", height: "100%" }}>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  console.log(Count);
+                }}
+                style={{
+                  width: "100%",
+                  backgroundColor: "#04aa6d",
+                  color: "white",
+                  border: "1px solid white",
+                  borderRadius: "5%",
+                }}
+              >
+                Add to cart
+              </button>
+            </div>
+          </Row>
+        </Col>
       </Row>
     </Container>
   );
