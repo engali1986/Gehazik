@@ -14,6 +14,7 @@ import VarifyMerchant from "./DBConnection/VarifyMercahant.js";
 import AddProduct from "./DBConnection/Products/AddProduct.js";
 import multer from "multer";
 import { MongoClient } from "mongodb";
+import env from "dotenv";
 
 import { createRequire } from "module";
 import { google } from "googleapis";
@@ -30,6 +31,8 @@ const require = createRequire(import.meta.url);
 const ServiceAccountKey = require("./API keys/ServiceAccountKey.json");
 
 const app = express();
+env.config();
+console.log(process.env.ALI);
 
 app.use(cors());
 app.use(express.json());
