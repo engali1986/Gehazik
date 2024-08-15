@@ -49,6 +49,7 @@ function App() {
         Token: 0,
         Governorate: "",
         City: "",
+        TimeLogged: new Date().getTime(),
       })
     );
 
@@ -64,6 +65,7 @@ function App() {
         Token: 0,
         Governorate: "",
         City: "",
+        TimeLogged: new Date().getTime(),
       })
     );
 
@@ -90,25 +92,72 @@ function App() {
     sessionStorage.getItem("globalState") === null &&
     localStorage.getItem("globalState") != null
   ) {
+    // ToDo
     console.log("there is local storage, no sission storage");
-
-    sessionStorage.setItem("globalState", localStorage.getItem("globalState"));
+    console.log(JSON.parse(localStorage.getItem("globalState")).TimeLogged);
 
     if (
-      localStorage.getItem("NumTabsOpened") === null ||
-      localStorage.getItem("NumTabsOpened") == "NaN"
+      new Date().getTime() -
+        JSON.parse(localStorage.getItem("globalState")).TimeLogged <=
+      300000
     ) {
-      let x = 1;
-      console.log("LocalStorage NumTabsOpened intiated");
-      localStorage.setItem("NumTabsOpened", x.toString());
-    } else {
-      let x = parseInt(localStorage.getItem("NumTabsOpened"), 10);
-      let y = x + 1;
-      localStorage.setItem("NumTabsOpened", y.toString());
-    }
+      sessionStorage.setItem(
+        "globalState",
+        localStorage.getItem("globalState")
+      );
 
-    console.log(sessionStorage.getItem("globalState"));
-    console.log("initial sessionstorage");
+      if (
+        localStorage.getItem("NumTabsOpened") === null ||
+        localStorage.getItem("NumTabsOpened") == "NaN"
+      ) {
+        let x = 1;
+        console.log("LocalStorage NumTabsOpened intiated");
+        localStorage.setItem("NumTabsOpened", x.toString());
+      } else {
+        let x = parseInt(localStorage.getItem("NumTabsOpened"), 10);
+        let y = x + 1;
+        localStorage.setItem("NumTabsOpened", y.toString());
+      }
+
+      console.log(sessionStorage.getItem("globalState"));
+      console.log("initial sessionstorage");
+    } else {
+      console.log("reset credentials");
+      localStorage.setItem(
+        "globalState",
+        JSON.stringify({
+          UserLogged: false,
+          Name: "",
+          email: "",
+          Admin: false,
+          Client: false,
+          Merchant: false,
+          Token: 0,
+          Governorate: "",
+          City: "",
+          TimeLogged: new Date().getTime(),
+        })
+      );
+
+      sessionStorage.setItem(
+        "globalState",
+        JSON.stringify({
+          UserLogged: false,
+          Name: "",
+          email: "",
+          Admin: false,
+          Client: false,
+          Merchant: false,
+          Token: 0,
+          Governorate: "",
+          City: "",
+          TimeLogged: new Date().getTime(),
+        })
+      );
+      let j = 1;
+
+      localStorage.setItem("NumTabsOpened", j.toString());
+    }
 
     //  add increament for each tab open to local storage start
 
