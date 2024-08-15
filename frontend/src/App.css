@@ -11202,12 +11202,12 @@ readers do not read off random characters that represent icons */
 
 /* ProductDetailsImage start */
 .ProductDetailsImage {
-  border: 2px solid white;
+  border: 5px solid white;
   border-radius: 2%;
   transition: all 0.3s ease-in-out;
 }
 .ProductImageActive {
-  border: 2px solid rgb(249, 168, 97);
+  border: 5px solid rgb(249, 168, 97);
 }
 
 /* ProductDetailsImage end */

@@ -895,7 +895,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                   Alert.current.innerText = "";
                   Alert.current.style.maxHeight = "0px";
                   console.log(e.target.files);
-                  if (e.target.files.length <= 3) {
+                  if (e.target.files.length <= 4) {
                     let arr = e.target.files.length - 1;
                     for (let index = arr; index >= 0; index--) {
                       if (
@@ -967,14 +967,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
               ></div>
             </Col>
           </Row>
-          <Row className=" pb-2 align-items-center text-start">
-            <Col xs={12}>
-              <img
-                src="https://drive.google.com/thumbnail?id=1XuZ-IlWykx7ZVUE3FUGTL8vVeu8IrBoU"
-                style={{ maxWidthWidth: "20px", height: "100px" }}
-              />
-            </Col>
-          </Row>
+
           <Row>
             <Col xs={12}>
               <button

@@ -89,63 +89,73 @@ const ProductDetails = () => {
         >
           <div
             className=" d-flex flex-column"
-            style={{ maxWidth: "20%", maxHeight: "100%" }}
+            style={{ maxWidth: "20%", maxHeight: "100%", overflow: "hidden" }}
           >
-            {Product.ProductImages.map((item, index) => (
-              <img
-                key={item}
-                onLoadedData={(e) => {
-                  console.log(e.target.src);
-                }}
-                onLoad={(e) => {
-                  console.log(e.target.complete);
-                  console.log(e.target.naturalHeight);
-
-                  if (e.target.complete && e.target.naturalHeight > 20) {
-                    console.log("Image loded");
+            <div style={{ maxWidth: "100%", position: "relative" }}>
+              {Product.ProductImages.map((item, index) => (
+                <img
+                  key={item}
+                  onLoadedData={(e) => {
+                    console.log(e.target.src);
+                  }}
+                  onLoad={(e) => {
+                    console.log(e.target.complete);
                     console.log(e.target.naturalHeight);
-                    console.log(e.target.style.width);
-                    console.log(typeof e.target.style.width);
-                  } else {
-                    console.log("Image not loaded");
-                    e.target.src = `https://drive.google.com/thumbnail?id=${item}`;
-                  }
-                }}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  console.log("small image clicked");
-                  const Images = document.querySelectorAll(
-                    ".ProductDetailsImage"
-                  );
-                  console.log(Images);
-                  if (e.target.classList.contains("ProductImageActive")) {
-                    console.log("Image selected");
-                  } else {
-                    for (let index = 0; index < Images.length; index++) {
-                      Images[index].classList.remove("ProductImageActive");
-                    }
-                    e.target.classList.add("ProductImageActive");
-                    document.getElementById("MainImage").src = e.target.src;
-                  }
-                }}
-                className={
-                  index === 0
-                    ? "ProductDetailsImage ProductImageActive"
-                    : "ProductDetailsImage"
-                }
-                style={{
-                  width: "100%",
-                  aspectRatio: "1/1",
 
-                  cursor: "pointer",
-                }}
-                src={`https://drive.google.com/thumbnail?id=${item}`}
-                alt={Product.item}
-                decoding="async"
-              />
-            ))}
+                    if (e.target.complete && e.target.naturalHeight > 20) {
+                      console.log("Image loded");
+                      console.log(e.target.naturalHeight);
+                      console.log(e.target.style.width);
+                      console.log(typeof e.target.style.width);
+                    } else {
+                      console.log("Image not loaded");
+                      e.target.src = `https://drive.google.com/thumbnail?id=${item}`;
+                    }
+                  }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    console.log("small image clicked");
+                    const Images = document.querySelectorAll(
+                      ".ProductDetailsImage"
+                    );
+                    console.log(Images);
+                    if (e.target.classList.contains("ProductImageActive")) {
+                      console.log("Image selected");
+                    } else {
+                      for (let index = 0; index < Images.length; index++) {
+                        Images[index].classList.remove("ProductImageActive");
+                      }
+                      e.target.classList.add("ProductImageActive");
+                      document.getElementById("MainImage").src = e.target.src;
+                    }
+                  }}
+                  className={
+                    index === 0
+                      ? "ProductDetailsImage ProductImageActive"
+                      : "ProductDetailsImage"
+                  }
+                  style={{
+                    width: "100%",
+                    maxWidth: "100%",
+                    aspectRatio: "1/1",
+
+                    cursor: "pointer",
+                  }}
+                  src={`https://drive.google.com/thumbnail?id=${item}`}
+                  alt={Product.item}
+                  decoding="async"
+                />
+              ))}
+            </div>
           </div>
-          <div style={{ maxWidth: "80%", maxHeight: "100%" }}>
+          <div
+            style={{
+              width: "80%",
+              maxWidth: "80%",
+              aspectRatio: "1/1",
+              maxHeight: "100%",
+            }}
+          >
             <img
               onLoadedData={(e) => {
                 console.log(e.target.src);
