@@ -69,18 +69,18 @@ function App() {
       })
     );
 
-    if (
-      localStorage.getItem("NumTabsOpened") === null ||
-      localStorage.getItem("NumTabsOpened") == "NaN"
-    ) {
-      let x = 1;
-      console.log("LocalStorage NumTabsOpened intiated");
-      localStorage.setItem("NumTabsOpened", x.toString());
-    } else {
-      let x = parseInt(localStorage.getItem("NumTabsOpened"), 10);
-      let y = x + 1;
-      localStorage.setItem("NumTabsOpened", y.toString());
-    }
+    // if (
+    //   localStorage.getItem("NumTabsOpened") === null ||
+    //   localStorage.getItem("NumTabsOpened") == "NaN"
+    // ) {
+    //   let x = 1;
+    //   console.log("LocalStorage NumTabsOpened intiated");
+    //   localStorage.setItem("NumTabsOpened", x.toString());
+    // } else {
+    //   let x = parseInt(localStorage.getItem("NumTabsOpened"), 10);
+    //   let y = x + 1;
+    //   localStorage.setItem("NumTabsOpened", y.toString());
+    // }
     localStorage.setItem("NoLocalStorage", "yes");
 
     console.log(JSON.parse(sessionStorage.getItem("globalState")));
@@ -92,32 +92,31 @@ function App() {
     sessionStorage.getItem("globalState") === null &&
     localStorage.getItem("globalState") != null
   ) {
-    // ToDo
     console.log("there is local storage, no sission storage");
     console.log(JSON.parse(localStorage.getItem("globalState")).TimeLogged);
 
     if (
       new Date().getTime() -
         JSON.parse(localStorage.getItem("globalState")).TimeLogged <=
-      300000
+      1800000
     ) {
       sessionStorage.setItem(
         "globalState",
         localStorage.getItem("globalState")
       );
 
-      if (
-        localStorage.getItem("NumTabsOpened") === null ||
-        localStorage.getItem("NumTabsOpened") == "NaN"
-      ) {
-        let x = 1;
-        console.log("LocalStorage NumTabsOpened intiated");
-        localStorage.setItem("NumTabsOpened", x.toString());
-      } else {
-        let x = parseInt(localStorage.getItem("NumTabsOpened"), 10);
-        let y = x + 1;
-        localStorage.setItem("NumTabsOpened", y.toString());
-      }
+      // if (
+      //   localStorage.getItem("NumTabsOpened") === null ||
+      //   localStorage.getItem("NumTabsOpened") == "NaN"
+      // ) {
+      //   let x = 1;
+      //   console.log("LocalStorage NumTabsOpened intiated");
+      //   localStorage.setItem("NumTabsOpened", x.toString());
+      // } else {
+      //   let x = parseInt(localStorage.getItem("NumTabsOpened"), 10);
+      //   let y = x + 1;
+      //   localStorage.setItem("NumTabsOpened", y.toString());
+      // }
 
       console.log(sessionStorage.getItem("globalState"));
       console.log("initial sessionstorage");
@@ -154,9 +153,9 @@ function App() {
           TimeLogged: new Date().getTime(),
         })
       );
-      let j = 1;
+      // let j = 1;
 
-      localStorage.setItem("NumTabsOpened", j.toString());
+      // localStorage.setItem("NumTabsOpened", j.toString());
     }
 
     //  add increament for each tab open to local storage start
@@ -169,18 +168,18 @@ function App() {
     console.log("ther is sission");
     console.log(sessionStorage.getItem("globalState"));
     localStorage.setItem("globalState", sessionStorage.getItem("globalState"));
-    if (
-      localStorage.getItem("NumTabsOpened") === null ||
-      localStorage.getItem("NumTabsOpened") == "NaN"
-    ) {
-      let x = 1;
-      console.log("LocalStorage NumTabsOpened intiated");
-      localStorage.setItem("NumTabsOpened", x.toString());
-    } else {
-      let x = parseInt(localStorage.getItem("NumTabsOpened"), 10);
-      let y = x + 1;
-      localStorage.setItem("NumTabsOpened", y.toString());
-    }
+    // if (
+    //   localStorage.getItem("NumTabsOpened") === null ||
+    //   localStorage.getItem("NumTabsOpened") == "NaN"
+    // ) {
+    //   let x = 1;
+    //   console.log("LocalStorage NumTabsOpened intiated");
+    //   localStorage.setItem("NumTabsOpened", x.toString());
+    // } else {
+    //   let x = parseInt(localStorage.getItem("NumTabsOpened"), 10);
+    //   let y = x + 1;
+    //   localStorage.setItem("NumTabsOpened", y.toString());
+    // }
   } else if (sessionStorage.getItem("globalState") === null) {
     sessionStorage.setItem(
       "globalState",
@@ -328,14 +327,14 @@ function App() {
     }
   };
 
-  window.onbeforeunload = () => {
-    if (parseInt(localStorage.getItem("NumTabsOpened"), 10) <= 1) {
-      localStorage.clear();
-    } else {
-      let y = parseInt(localStorage.getItem("NumTabsOpened"), 10) - 1;
-      localStorage.setItem("NumTabsOpened", y.toString());
-    }
-  };
+  // window.onbeforeunload = () => {
+  //   if (parseInt(localStorage.getItem("NumTabsOpened"), 10) <= 1) {
+  //     localStorage.clear();
+  //   } else {
+  //     let y = parseInt(localStorage.getItem("NumTabsOpened"), 10) - 1;
+  //     localStorage.setItem("NumTabsOpened", y.toString());
+  //   }
+  // };
 
   useEffect(() => {
     if (document.querySelectorAll(".AddressSelection")[0]) {
