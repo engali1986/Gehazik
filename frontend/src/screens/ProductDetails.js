@@ -46,6 +46,7 @@ const ProductDetails = () => {
           ProductTitle: prod.ProductTitle,
           ProductUnitPrice: prod.ProductUnitPrice,
           InStockQty: prod.InStockQty,
+          ProductAdditionalFeatures: prod.ProductAdditionalFeatures,
         }));
         console.log(Product);
       } else {
@@ -302,6 +303,19 @@ const ProductDetails = () => {
             </div>
           </Row>
         </Col>
+      </Row>
+      <Row className=" my-1">
+        <h4 style={{ textAlign: "start" }}>Description:</h4>
+      </Row>
+      <Row style={{ textAlign: "start" }}>
+        {/* {Product.ProductAdditionalFeatures.map((product, index) => (
+          <ul key={index}>{product}</ul>
+        ))} */}
+        {Array.isArray(Product.ProductAdditionalFeatures)
+          ? Product.ProductAdditionalFeatures.map((product, index) => (
+              <ul key={index}>{product}</ul>
+            ))
+          : "No Description"}
       </Row>
     </Container>
   );
