@@ -24,6 +24,9 @@ const UsersProductDetails = async (ProductID) => {
             MerchantName: 1,
             InStockQty: 1,
             ProductImagesIDs: 1,
+            ProductFeatures: 1,
+            ProductCategory: 1,
+            ProductSubCategory: 1,
           },
         }
       )

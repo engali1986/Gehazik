@@ -507,7 +507,10 @@ function App() {
                 path="/ProductDetails/:id"
                 element={<ProductDetails AddOrders={AddOrders} />}
               />
-              <Route path="/Cart" element={<CartPage />} />
+              <Route
+                path="/Cart"
+                element={<CartPage GlobalState={GlobalState} />}
+              />
 
               <Route
                 path="/SignUp"

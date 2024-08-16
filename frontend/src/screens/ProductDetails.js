@@ -290,7 +290,9 @@ const ProductDetails = ({ AddOrders }) => {
                   e.stopPropagation();
                   console.log(Count);
                   console.log(AddOrders);
-                  AddOrders(Product);
+                  let AddedProduct = { ...Product, Qty: Count, ID: params.id };
+                  console.log(AddedProduct);
+                  AddOrders(AddedProduct);
                 }}
                 style={{
                   width: "100%",
