@@ -26,6 +26,7 @@ import MerchantLogIn from "./screens/MerchantLogIn.js";
 import MerchantSignUp from "./screens/MerchantSignUp.js";
 import MerchantPage from "./screens/MerchantPage.js";
 import ProductDetails from "./screens/ProductDetails.js";
+import CartPage from "./screens/CartPage.js";
 
 function App() {
   const BackDrop = useRef();
@@ -286,6 +287,29 @@ function App() {
     localStorage.setItem("globalState", sessionStorage.getItem("globalState"));
   };
 
+  const AddOrders = (Order) => {
+    console.log("Order added to cart");
+    SetGlobal((PervState) => ({
+      ...PervState,
+      CartItems: [...PervState.CartItems, Order],
+    }));
+
+    let arr = GlobalState.CartItems;
+    console.log(arr);
+
+    sessionStorage.setItem(
+      "globalState",
+      JSON.stringify({
+        ...JSON.parse(sessionStorage.getItem("globalState")),
+        CartItems: [
+          ...JSON.parse(sessionStorage.getItem("globalState")).CartItems,
+          Order,
+        ],
+      })
+    );
+    localStorage.setItem("globalState", sessionStorage.getItem("globalState"));
+  };
+
   console.log(typeof new Date().getTime());
 
   // if (JSON.parse(localStorage.getItem("globalState")).TimeLogged) {
@@ -479,7 +503,11 @@ function App() {
                   <LogIn globalState={GlobalState} setGlobal={userChange} />
                 }
               />
-              <Route path="/ProductDetails/:id" element={<ProductDetails />} />
+              <Route
+                path="/ProductDetails/:id"
+                element={<ProductDetails AddOrders={AddOrders} />}
+              />
+              <Route path="/Cart" element={<CartPage />} />
 
               <Route
                 path="/SignUp"

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 
-const ProductDetails = () => {
+const ProductDetails = ({ AddOrders }) => {
   const [Product, setProduct] = useState({ ProductImages: [] }); // this will sore product details
   const [Loader, SetLoader] = useState(false); // this will handle loader visbility during fetch product details
   const [Count, SetCount] = useState(1); // this will store ordered qty
@@ -289,6 +289,8 @@ const ProductDetails = () => {
                 onClick={(e) => {
                   e.stopPropagation();
                   console.log(Count);
+                  console.log(AddOrders);
+                  AddOrders(Product);
                 }}
                 style={{
                   width: "100%",

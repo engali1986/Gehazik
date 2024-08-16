@@ -35,22 +35,33 @@ const Home = (params) => {
             <div
               style={{
                 position: "absolute",
-
+                display:
+                  Array.isArray(params.GlobalState.CartItems) &&
+                  params.GlobalState.CartItems.length > 0
+                    ? "block"
+                    : "none",
                 top: "-10px",
-                right: "0px",
+                right: "-5px",
+                paddingTop: "2.5px",
                 backgroundColor: "red",
                 color: "white",
-                width: "10px",
-                height: "10px",
+                width: "20px",
+                height: "20px",
                 borderRadius: "10px",
-
+                fontSize: "10px",
                 zIndex: "10",
               }}
-            ></div>
-            <i
-              style={{ zIndex: "1" }}
-              className="fa-solid fa-cart-shopping fa-xl"
-            ></i>
+            >
+              {Array.isArray(params.GlobalState.CartItems)
+                ? params.GlobalState.CartItems.length
+                : ""}
+            </div>
+            <a href="/cart">
+              <i
+                style={{ zIndex: "1", textDecoration: "none", color: "black" }}
+                className="fa-solid fa-cart-shopping fa-xl"
+              ></i>
+            </a>
           </div>
 
           <div
