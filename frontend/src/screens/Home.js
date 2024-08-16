@@ -24,18 +24,48 @@ const Home = (params) => {
       );
     } else {
       return (
-        <div
-          style={{ width: "fit-content", marginLeft: "5%" }}
-          onClick={(e) => {
-            e.stopPropagation();
+        <div className=" d-flex flex-row" style={{ width: "fit-content" }}>
+          <div
+            style={{
+              position: "relative",
+              width: "fit-content",
+              marginLeft: "5%",
+            }}
+          >
+            <div
+              style={{
+                position: "absolute",
 
-            document.getElementsByClassName("BackDrop")[0].click();
-            document.getElementsByClassName("LogIn")[0].click();
-            console.log("Login/Signup clicked");
-          }}
-        >
-          LogIn/SignUp
-          <a className="LogIn" href="/LogIn"></a>
+                top: "-10px",
+                right: "0px",
+                backgroundColor: "red",
+                color: "white",
+                width: "10px",
+                height: "10px",
+                borderRadius: "10px",
+
+                zIndex: "10",
+              }}
+            ></div>
+            <i
+              style={{ zIndex: "1" }}
+              className="fa-solid fa-cart-shopping fa-xl"
+            ></i>
+          </div>
+
+          <div
+            style={{ width: "fit-content", marginLeft: "5%" }}
+            onClick={(e) => {
+              e.stopPropagation();
+
+              document.getElementsByClassName("BackDrop")[0].click();
+              document.getElementsByClassName("LogIn")[0].click();
+              console.log("Login/Signup clicked");
+            }}
+          >
+            LogIn/SignUp
+            <a className="LogIn" href="/LogIn"></a>
+          </div>
         </div>
       );
     }
@@ -107,7 +137,7 @@ const Home = (params) => {
               e.stopPropagation();
               console.log("categories triggered");
               console.log(
-                document.getElementsByClassName("Categories")[0].style.height,
+                document.getElementsByClassName("Categories")[0].style.height
               );
 
               if (
@@ -117,7 +147,7 @@ const Home = (params) => {
                 document.getElementsByClassName("Categories")[0].style.height =
                   "0vh";
                 document.getElementsByClassName(
-                  "Categories",
+                  "Categories"
                 )[0].style.overflowY = "hidden";
                 document
                   .getElementsByClassName("BackDrop")[0]
@@ -126,7 +156,7 @@ const Home = (params) => {
                 document.getElementsByClassName("Categories")[0].style.height =
                   "90vh";
                 document.getElementsByClassName(
-                  "Categories",
+                  "Categories"
                 )[0].style.overflowY = "scroll";
                 document
                   .getElementsByClassName("BackDrop")[0]
@@ -182,7 +212,7 @@ const Home = (params) => {
               e.stopPropagation();
               console.log("categories small screen triggered");
               console.log(
-                document.getElementsByClassName("Categories")[0].style.height,
+                document.getElementsByClassName("Categories")[0].style.height
               );
 
               if (
@@ -192,7 +222,7 @@ const Home = (params) => {
                 document.getElementsByClassName("Categories")[0].style.height =
                   "0vh";
                 document.getElementsByClassName(
-                  "Categories",
+                  "Categories"
                 )[0].style.overflowY = "hidden";
                 document
                   .getElementsByClassName("BackDrop")[0]
@@ -201,7 +231,7 @@ const Home = (params) => {
                 document.getElementsByClassName("Categories")[0].style.height =
                   "90vh";
                 document.getElementsByClassName(
-                  "Categories",
+                  "Categories"
                 )[0].style.overflowY = "scroll";
                 document
                   .getElementsByClassName("BackDrop")[0]

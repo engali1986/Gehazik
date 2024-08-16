@@ -50,6 +50,7 @@ function App() {
         Governorate: "",
         City: "",
         TimeLogged: new Date().getTime(),
+        CartItems: [],
       })
     );
 
@@ -66,6 +67,7 @@ function App() {
         Governorate: "",
         City: "",
         TimeLogged: new Date().getTime(),
+        CartItems: [],
       })
     );
 
@@ -135,6 +137,7 @@ function App() {
           Governorate: "",
           City: "",
           TimeLogged: new Date().getTime(),
+          CartItems: [],
         })
       );
 
@@ -151,6 +154,7 @@ function App() {
           Governorate: "",
           City: "",
           TimeLogged: new Date().getTime(),
+          CartItems: [],
         })
       );
       // let j = 1;
