@@ -1038,9 +1038,8 @@ const MerchantPage = ({ globalState, setGlobal }) => {
       <Row>
         {/* the following Col will be the side menu for the merchant page */}
         <Col
-          xs={4}
+          xs={2}
           style={{
-            fontSize: "1.5vw",
             overflowWrap: "break-word",
             textAlign: "start",
           }}
@@ -1092,6 +1091,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
               <div
                 id="MerchantProfile"
                 className="MerchantMenu d-flex flex-column"
+                style={{ width: "100%" }}
               >
                 <div
                   onClick={(e) => {
@@ -1452,7 +1452,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
           </Row>
         </Col>
         {/* the following Col will display the data after merchant select option from side menu */}
-        <Col xs={8}>
+        <Col xs={10}>
           <DtataDisplay />
         </Col>
       </Row>

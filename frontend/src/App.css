@@ -11128,7 +11128,6 @@ readers do not read off random characters that represent icons */
 /* Footer end */
 /* MerchantMenu start */
 .MerchantMenu {
-  font-size: 1.5vw;
   overflow: hidden;
   max-height: 0px;
   transition: all 0.3s ease-in-out;
