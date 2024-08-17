@@ -1,7 +1,32 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 
-const CartPage = ({ GlobalState }) => {
+const CartPage = ({ GlobalState, UpdateCart }) => {
+  const TotalPrice = ({ ID }) => {
+    let totalprice = 0;
+    console.log(ID);
+    if (Array.isArray(GlobalState.CartItems)) {
+      GlobalState.CartItems.forEach((element) => {
+        console.log(element);
+        if (element.ID === ID) {
+          console.log(typeof element.ProductUnitPrice);
+          console.log(typeof element.Qty);
+          let price = element.ProductUnitPrice;
+          let qty = element.Qty;
+          totalprice = price * qty;
+          console.log(totalprice);
+        }
+      });
+      return <div>{totalprice} EGP</div>;
+    } else {
+      return <div> No result</div>;
+    }
+  };
+
+  useEffect(() => {
+    console.log(GlobalState);
+  }, []);
+
   return (
     <Container
       onClick={(e) => {
@@ -48,8 +73,13 @@ const CartPage = ({ GlobalState }) => {
                   )}
                 </h4>
                 <div className=" d-flex flex-wrap">
-                  <div className=" flex-grow-1 text-start px-3">
+                  <div className=" flex-grow-1 text-start">
                     <i
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        const UpdatRequired = { Field: "Remove", ID: item.ID };
+                        UpdateCart(UpdatRequired);
+                      }}
                       className="fa-solid fa-square-minus fa-xl"
                       style={{
                         color: "#04aa6d",
@@ -67,6 +97,11 @@ const CartPage = ({ GlobalState }) => {
                       {item.Qty ? item.Qty : ""}
                     </span>
                     <i
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        const UpdatRequired = { Field: "Add", ID: item.ID };
+                        UpdateCart(UpdatRequired);
+                      }}
                       className="fa-solid fa-square-plus fa-xl"
                       style={{
                         color: "#04aa6d",
@@ -80,14 +115,16 @@ const CartPage = ({ GlobalState }) => {
                         display: "inline-block",
                         cursor: "pointer",
                       }}
-                      class="fa-solid fa-trash-can fa-xl"
+                      className="fa-solid fa-trash-can fa-xl"
                     ></i>
                   </div>
 
                   <div className="text-start" style={{ color: "red" }}>
-                    {item.ProductUnitPrice
+                    {/* {item.ProductUnitPrice
                       ? item.ProductUnitPrice + " EGP"
-                      : ""}
+                      : ""} */}
+
+                    {<TotalPrice ID={item.ID} />}
                   </div>
                 </div>
               </Col>

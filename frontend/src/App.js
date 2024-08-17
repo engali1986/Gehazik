@@ -287,7 +287,7 @@ function App() {
     localStorage.setItem("globalState", sessionStorage.getItem("globalState"));
   };
 
-  const AddOrders = (Order) => {
+  const AddToCart = (Order) => {
     console.log("Order added to cart");
     SetGlobal((PervState) => ({
       ...PervState,
@@ -308,6 +308,79 @@ function App() {
       })
     );
     localStorage.setItem("globalState", sessionStorage.getItem("globalState"));
+  };
+
+  const UpdateCart = (UpdateData) => {
+    console.log(UpdateData);
+    if (UpdateData.Field === "Add") {
+      if (Array.isArray(GlobalState.CartItems)) {
+        let y;
+        GlobalState.CartItems.forEach((item) => {
+          if (item.ID === UpdateData.ID) {
+            console.log(item.Qty);
+            console.log(typeof item.Qty);
+            let j = item.Qty + 1;
+            console.log(j);
+            item.Qty = j;
+            y = GlobalState.CartItems;
+            console.log(y);
+
+            console.log(GlobalState);
+          } else {
+          }
+        });
+        SetGlobal((PervState) => ({
+          ...PervState,
+          CartItems: y,
+        }));
+        sessionStorage.setItem(
+          "globalState",
+          JSON.stringify({
+            ...JSON.parse(sessionStorage.getItem("globalState")),
+            CartItems: y,
+          })
+        );
+        localStorage.setItem(
+          "globalState",
+          sessionStorage.getItem("globalState")
+        );
+      }
+    } else if (UpdateData.Field === "Remove") {
+      if (Array.isArray(GlobalState.CartItems)) {
+        let y = GlobalState.CartItems;
+        GlobalState.CartItems.forEach((item) => {
+          if (item.ID === UpdateData.ID && item.Qty > 1) {
+            console.log(item.Qty);
+            console.log(typeof item.Qty);
+            let j = item.Qty - 1;
+            console.log(j);
+            item.Qty = j;
+            y = GlobalState.CartItems;
+            console.log(y);
+
+            console.log(GlobalState);
+          } else {
+          }
+        });
+        SetGlobal((PervState) => ({
+          ...PervState,
+          CartItems: y,
+        }));
+        sessionStorage.setItem(
+          "globalState",
+          JSON.stringify({
+            ...JSON.parse(sessionStorage.getItem("globalState")),
+            CartItems: y,
+          })
+        );
+        localStorage.setItem(
+          "globalState",
+          sessionStorage.getItem("globalState")
+        );
+      }
+    } else if (UpdateData.Field === "delete") {
+    } else {
+    }
   };
 
   console.log(typeof new Date().getTime());
@@ -505,11 +578,13 @@ function App() {
               />
               <Route
                 path="/ProductDetails/:id"
-                element={<ProductDetails AddOrders={AddOrders} />}
+                element={<ProductDetails AddOrders={AddToCart} />}
               />
               <Route
                 path="/Cart"
-                element={<CartPage GlobalState={GlobalState} />}
+                element={
+                  <CartPage GlobalState={GlobalState} UpdateCart={UpdateCart} />
+                }
               />
 
               <Route
