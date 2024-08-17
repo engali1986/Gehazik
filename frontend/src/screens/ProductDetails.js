@@ -293,6 +293,8 @@ const ProductDetails = ({ AddOrders }) => {
                   let AddedProduct = { ...Product, Qty: Count, ID: params.id };
                   console.log(AddedProduct);
                   AddOrders(AddedProduct);
+                  e.target.innerText = "Added...";
+                  e.target.disabled = true;
                 }}
                 style={{
                   width: "100%",

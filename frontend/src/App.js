@@ -289,25 +289,91 @@ function App() {
 
   const AddToCart = (Order) => {
     console.log("Order added to cart");
-    SetGlobal((PervState) => ({
-      ...PervState,
-      CartItems: [...PervState.CartItems, Order],
-    }));
+    let OrderAdded = false;
+    console.log(OrderAdded);
+    console.log();
+    if (
+      Array.isArray(GlobalState.CartItems) &&
+      GlobalState.CartItems.length > 0
+    ) {
+      for (let index = 0; index < GlobalState.CartItems.length; index++) {
+        if (GlobalState.CartItems[index].ID === Order.ID) {
+          console.log("Existing order Update");
+          let y = GlobalState.CartItems[index].Qty;
+          let j = y + Order.Qty;
+          GlobalState.CartItems[index].Qty = j;
+          OrderAdded = true;
+          break;
+        } else {
+          console.log("No existing Order");
+          OrderAdded = false;
+          console.log(OrderAdded);
+        }
+      }
+      if (OrderAdded === false) {
+        console.log("New Order added");
+        SetGlobal((PervState) => ({
+          ...PervState,
+          CartItems: [...PervState.CartItems, Order],
+        }));
 
-    let arr = GlobalState.CartItems;
-    console.log(arr);
+        let arr = GlobalState.CartItems;
+        console.log(arr);
 
-    sessionStorage.setItem(
-      "globalState",
-      JSON.stringify({
-        ...JSON.parse(sessionStorage.getItem("globalState")),
-        CartItems: [
-          ...JSON.parse(sessionStorage.getItem("globalState")).CartItems,
-          Order,
-        ],
-      })
-    );
-    localStorage.setItem("globalState", sessionStorage.getItem("globalState"));
+        sessionStorage.setItem(
+          "globalState",
+          JSON.stringify({
+            ...JSON.parse(sessionStorage.getItem("globalState")),
+            CartItems: [
+              ...JSON.parse(sessionStorage.getItem("globalState")).CartItems,
+              Order,
+            ],
+          })
+        );
+        localStorage.setItem(
+          "globalState",
+          sessionStorage.getItem("globalState")
+        );
+        OrderAdded = true;
+      } else if (OrderAdded == true) {
+        sessionStorage.setItem(
+          "globalState",
+          JSON.stringify({
+            ...JSON.parse(sessionStorage.getItem("globalState")),
+            CartItems: GlobalState.CartItems,
+          })
+        );
+        localStorage.setItem(
+          "globalState",
+          sessionStorage.getItem("globalState")
+        );
+      }
+    } else {
+      console.log("First Order Added");
+
+      SetGlobal((PervState) => ({
+        ...PervState,
+        CartItems: [...PervState.CartItems, Order],
+      }));
+
+      let arr = GlobalState.CartItems;
+      console.log(arr);
+
+      sessionStorage.setItem(
+        "globalState",
+        JSON.stringify({
+          ...JSON.parse(sessionStorage.getItem("globalState")),
+          CartItems: [
+            ...JSON.parse(sessionStorage.getItem("globalState")).CartItems,
+            Order,
+          ],
+        })
+      );
+      localStorage.setItem(
+        "globalState",
+        sessionStorage.getItem("globalState")
+      );
+    }
   };
 
   const UpdateCart = (UpdateData) => {
@@ -378,7 +444,31 @@ function App() {
           sessionStorage.getItem("globalState")
         );
       }
-    } else if (UpdateData.Field === "delete") {
+    } else if (UpdateData.Field === "Delete") {
+      console.log("Delete cart Item");
+      if (Array.isArray(GlobalState.CartItems)) {
+        let y = GlobalState.CartItems.filter((item) => {
+          if (item.ID !== UpdateData.ID) {
+            return item;
+          }
+        });
+
+        SetGlobal((PervState) => ({
+          ...PervState,
+          CartItems: y,
+        }));
+        sessionStorage.setItem(
+          "globalState",
+          JSON.stringify({
+            ...JSON.parse(sessionStorage.getItem("globalState")),
+            CartItems: y,
+          })
+        );
+        localStorage.setItem(
+          "globalState",
+          sessionStorage.getItem("globalState")
+        );
+      }
     } else {
     }
   };
