@@ -122,7 +122,7 @@ const CartPage = ({ GlobalState, UpdateCart }) => {
                       display: "inline-block",
                       cursor: "pointer",
                     }}
-                    className=" ms-4 fa-solid fa-trash-can fa-xl"
+                    className=" ms-2 fa-solid fa-trash-can fa-xl"
                   ></i>
                 </div>
 

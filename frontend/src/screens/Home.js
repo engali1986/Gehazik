@@ -27,7 +27,7 @@ const Home = (params) => {
                   params.GlobalState.CartItems.length > 0
                     ? "block"
                     : "none",
-                top: "-10px",
+                top: "-5px",
                 right: "-5px",
                 paddingTop: "2.5px",
                 backgroundColor: "red",
@@ -35,7 +35,7 @@ const Home = (params) => {
                 width: "20px",
                 height: "20px",
                 borderRadius: "10px",
-                fontSize: "10px",
+                fontSize: "0.5rem",
                 zIndex: "10",
               }}
             >
@@ -81,7 +81,7 @@ const Home = (params) => {
                   params.GlobalState.CartItems.length > 0
                     ? "block"
                     : "none",
-                top: "-10px",
+                top: "-5px",
                 right: "-5px",
                 paddingTop: "2.5px",
                 backgroundColor: "red",
@@ -89,7 +89,7 @@ const Home = (params) => {
                 width: "20px",
                 height: "20px",
                 borderRadius: "10px",
-                fontSize: "10px",
+                fontSize: "0.5rem",
                 zIndex: "10",
               }}
             >
