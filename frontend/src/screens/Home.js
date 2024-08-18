@@ -52,7 +52,7 @@ const Home = (params) => {
           </div>
       
         <div
-          style={{ width: "fit-content", marginLeft: "10%" }}
+          style={{ width: "fit-content" }}
           onClick={(e) => {
             e.stopPropagation();
             document.getElementsByClassName("BackDrop")[0].click();
