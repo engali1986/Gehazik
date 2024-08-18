@@ -11,6 +11,46 @@ const Home = (params) => {
   const LogInItems = () => {
     if (params.GlobalState.UserLogged === true) {
       return (
+        <>
+          <div
+            style={{
+              position: "relative",
+              width: "fit-content",
+              marginLeft: "5%",
+            }}
+          >
+            <div
+              style={{
+                position: "absolute",
+                display:
+                  Array.isArray(params.GlobalState.CartItems) &&
+                  params.GlobalState.CartItems.length > 0
+                    ? "block"
+                    : "none",
+                top: "-10px",
+                right: "-5px",
+                paddingTop: "2.5px",
+                backgroundColor: "red",
+                color: "white",
+                width: "20px",
+                height: "20px",
+                borderRadius: "10px",
+                fontSize: "10px",
+                zIndex: "10",
+              }}
+            >
+              {Array.isArray(params.GlobalState.CartItems)
+                ? params.GlobalState.CartItems.length
+                : ""}
+            </div>
+            <a href="/cart">
+              <i
+                style={{ zIndex: "1", textDecoration: "none", color: "black" }}
+                className="fa-solid fa-cart-shopping fa-xl"
+              ></i>
+            </a>
+          </div>
+      
         <div
           style={{ width: "fit-content", marginLeft: "10%" }}
           onClick={(e) => {
@@ -21,6 +61,7 @@ const Home = (params) => {
         >
           Hi,{params.GlobalState.Name}
         </div>
+        </>
       );
     } else {
       return (
