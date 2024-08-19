@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 
 const CartPage = ({ GlobalState, UpdateCart }) => {
+  // the following function will be used to update total price for each item
   const TotalPrice = ({ ID }) => {
     let totalprice = 0;
     console.log(ID);
@@ -34,9 +35,12 @@ const CartPage = ({ GlobalState, UpdateCart }) => {
         console.log(GlobalState);
       }}
     >
+      {/* head of page */}
       <Row style={{ textAlign: "start" }}>
         <h3>Cart</h3>
       </Row>
+      {/* Page content and array map */}
+      <Row>
       {Array.isArray(GlobalState.CartItems) &&
       GlobalState.CartItems.length > 0 ? (
         GlobalState.CartItems.map((item) => (
@@ -157,6 +161,27 @@ const CartPage = ({ GlobalState, UpdateCart }) => {
           </div>
         </Row>
       )}
+
+      </Row>
+      {/* Total price and checkout button */}
+      <Row className= {Array.isArray(GlobalState.CartItems)&&GlobalState.CartItems.length>0?" d-flex text-start": " d-none"}>
+        <div className=" d-flex flex-row my-2" style={{borderBottom:'2px solid gray'}}>
+          <div>
+            <h4>
+              Sub Total:
+            </h4>
+          </div>
+          <div className=" flex-grow-1 text-center">
+            <h5>
+              678687
+            </h5>
+          </div>
+
+
+        </div>
+
+      </Row>
+     
     </Container>
   );
 };

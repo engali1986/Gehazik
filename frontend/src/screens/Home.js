@@ -73,6 +73,8 @@ const Home = (params) => {
               marginLeft: "5%",
             }}
           >
+            
+            <a href="/cart" style={{position:'relative'}}>
             <div
               style={{
                 position: "absolute",
@@ -97,7 +99,6 @@ const Home = (params) => {
                 ? params.GlobalState.CartItems.length
                 : ""}
             </div>
-            <a href="/cart">
               <i
                 style={{ zIndex: "1", textDecoration: "none", color: "black" }}
                 className="fa-solid fa-cart-shopping fa-xl"
