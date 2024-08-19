@@ -436,6 +436,14 @@ const StaticData = {
         { Eggs: ["White Egg", "Brown Egg"] },
       ],
     },
+    {
+      Electronics_And_Smartphones: [
+        { Android: ["Samsung", "Xiaomi", "Realme"] },
+        { Apple: ["Iphone", "Ipad"] },
+        { Taplets: ["Samsung", "Lenovo", "Huawei"] },
+        { Accessories: ["Samart Watches", "Headphones", "other"] },
+      ],
+    },
   ],
   Units: ["Kilograms", "Piece"],
 };
