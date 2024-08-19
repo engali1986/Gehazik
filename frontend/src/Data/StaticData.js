@@ -413,7 +413,7 @@ const StaticData = {
   Categories: [
     "Home Appliances",
     "Grocery",
-    "Electronics And Smartphones ",
+    "Electronics And Smartphones",
     "Baby And Chield",
     "Women Clothing",
     "Men Clothing",
