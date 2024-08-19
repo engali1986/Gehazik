@@ -3,6 +3,7 @@ import { Container, Row, Col } from "react-bootstrap";
 
 const CartPage = ({ GlobalState, UpdateCart }) => {
   const [SubTotal,SetSubTotal]=useState([]) // this state will be used to calculate subtotal
+  const [SubTotalValue,SetSubTotalValue]=useState(0)
   
   // the following function will be used to update total price for each item
   const TotalPrice = ({ ID }) => {
@@ -31,7 +32,6 @@ const CartPage = ({ GlobalState, UpdateCart }) => {
     let y=0
     let j=0
     console.log(j)
-    if (SubTotal.length!==GlobalState.CartItems.length) {
       if (Array.isArray(GlobalState.CartItems) && GlobalState.CartItems.length>0 ) {
         console.log(GlobalState.CartItems.length)
         SetSubTotal(GlobalState.CartItems)
@@ -40,6 +40,7 @@ const CartPage = ({ GlobalState, UpdateCart }) => {
           y=y+x
          
           j=y
+          SetSubTotalValue(j)
           console.log(SubTotal)
         }
   
@@ -53,35 +54,23 @@ const CartPage = ({ GlobalState, UpdateCart }) => {
   
         
       }
-      
-    } else if( SubTotal.every((item,index)=>{
-      return item===GlobalState.CartItems[index]
-    })===true) {
-      console.log("Identical")
-      if (Array.isArray(GlobalState.CartItems) && GlobalState.CartItems.length>0 ) {
-        console.log(GlobalState.CartItems.length)
-        SetSubTotal(GlobalState.CartItems)
-        for (let index = 0; index < GlobalState.CartItems.length; index++) {
-          x=GlobalState.CartItems[index].Qty*GlobalState.CartItems[index].ProductUnitPrice
-         y=y+x
-          j=y
-          console.log(SubTotal)
-        }
-  
-        return <h5>{j.toString()} EGP</h5>
-        
-      } else {
-        console.log(SubTotal)
-        console.log(GlobalState.CartItems)
-        console.log("Not equal")
-        return <h5>{j.toString()} EGP</h5>
-  
-        
-      }
-      
-      
-    } 
+
    
+   
+  }
+  // the following function for calculate delivery charges
+  const DeliveryCharges=()=>{
+    console.log(SubTotalValue)
+    console.log(typeof SubTotalValue)
+    if (SubTotalValue>500) {
+      let x=Math.round(SubTotalValue*0.2)
+      return <h5> {x} EGP</h5>
+      
+      
+    } else {
+      return <h5>100 EGP</h5>
+      
+    }
   }
 
   useEffect(() => {
@@ -108,7 +97,7 @@ const CartPage = ({ GlobalState, UpdateCart }) => {
           <Row
             key={item.ID}
             className=" my-1"
-            style={{ border: "2px solid gray" }}
+            style={{ border: "2px solid gray", borderRadius:'10px' }}
           >
             <Col xs={2}>
               <img
@@ -226,20 +215,44 @@ const CartPage = ({ GlobalState, UpdateCart }) => {
     
       {/* Total price and checkout button */}
       <Row className= {Array.isArray(GlobalState.CartItems)&&GlobalState.CartItems.length>0?" d-flex text-start": " d-none"}>
-        <div className=" d-flex flex-row my-2" style={{borderBottom:'2px solid gray'}}>
-          <div>
+        <div className=" d-flex flex-column my-2" style={{borderBottom:'2px solid gray'}}>
+          {/* Sub total */}
+          <div className=" d-flex flex-row">
+          <div style={{minWidth:'40%'}}>
             <h4>
               Sub Total:
             </h4>
           </div>
-          <div className=" flex-grow-1 text-center">
+          <div className=" flex-grow-1 text-end">
             {<SubTotalPrice/>}
+          </div>
+
+          </div>
+          {/* Delivery charges */}
+          <div className=" d-flex flex-row">
+          
+          <div style={{minWidth:'40%'}}>
+            <h4>
+              Delivery charges:
+            </h4>
+          </div>
+          <div className=" flex-grow-1 text-end">
+            {<DeliveryCharges/>}
+            
+          </div>
+          </div>
+          {/* Checkout button */}
+          <div>
+            <button className="SignUpButton">
+              Checkout
+            </button>
           </div>
 
 
         </div>
 
       </Row>
+     
      
     </Container>
   );
