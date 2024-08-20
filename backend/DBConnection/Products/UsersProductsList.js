@@ -22,7 +22,7 @@ const UsersProductsList = async (Category) => {
         ProductAdditionalFeatures: 1,
         ProductQtyUnit: 1,
         MerchantName: 1,
-        ProducTCategory:1,
+        ProductCategory:1,
         ProductSubCategory:1,
         ProductFeature:1
       })

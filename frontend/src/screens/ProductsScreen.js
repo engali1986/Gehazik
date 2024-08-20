@@ -8,6 +8,9 @@ const ProductsScreen = () => {
   const params = useParams();
   const [AllProduct, SetAllProducts] = useState([]);// All products will be stored in this state
   const [SubCategories,SetSubCategories]=useState([]) // all sub categories object will be saved  here
+  const [SelectedFilter,SetSelectedFilter]=useState("")
+  const [FeatureFilterArr,SetFeatureFilterArr]=useState([]) // this array will be used for feature filter
+  const [SetSubCategoriesFilterArr,SetSetSubCategoriesFilterArr]=useState([]) // this array for sub categories filter
   // the following funcion will get sub categories to list them on side Column
   const SubCategoriesList=()=>{
     console.log(StaticData.ProductCategories[0][Object.values(params)[0].replace(/-+/g,"_")])
@@ -28,14 +31,75 @@ const ProductsScreen = () => {
 
     if (SubCategories.length>0) {
       return<>
-      {SubCategories.map(item=>(
-        <Row>
-          <div className="SubCategories fs-6 text-decoration-underline" onClick={(e)=>{
+      {SubCategories.map((item,index)=>(
+        <Row key={index}>
+          <div id={index}  className={`SubCategories fs-6 text-decoration-underline ${SelectedFilter===Object.keys(item)[0].replace(/_+/g," ")?"Selected":""}`} onClick={(e)=>{
             e.stopPropagation()
+           
+            console.log(e.target.id)
+            let select=e.target.innerText
+            SetSelectedFilter(select)
+            console.log(SelectedFilter)
+            console.log(Object.keys(item)[0].replace(/_+/g," "))
+            console.log(SelectedFilter===Object.keys(item)[0].replace(/_+/g," "))
+            
+            let arr=[]
+            
+            
             console.log(AllProduct)
-          }}> {Object.keys(item)[0].replace(/_+/g," ")}</div>
+            for (let index = 0; index < AllProduct.length; index++) {
+              if (AllProduct[index].ProductSubCategory===e.target.innerText) {
+                arr.push(AllProduct[index])
+              } else {
+                
+              }
+              
+            }
+            console.log(arr)
+            SetFeatureFilterArr([])
+            SetSetSubCategoriesFilterArr(arr)
+            
+            
+          }} > 
+          
+          {Object.keys(item)[0].replace(/_+/g," ")}
+          </div>
           {Object.values(item)[0].map(elem=>(
-            <div className="Features ps-3">
+            <div key={elem} className={`Features ps-3 ${SelectedFilter===elem?"Selected":""}`} onClick={(e)=>{
+              e.stopPropagation()
+              let select=e.target.innerText
+            SetSelectedFilter(select)
+
+             
+              const Features=document.querySelectorAll(".Feature")
+              let arr=[]
+              
+              console.log(FeatureFilterArr)
+              
+              
+              for (let index = 0; index < Features.length; index++) {
+                Features[index].style.backgroundColor="#ffffffff"
+                
+              }
+              e.target.classList.add("Selected")
+             
+               console.log(e.target)
+              
+              console.log(AllProduct)
+              for (let index = 0; index < AllProduct.length; index++) {
+                if (AllProduct[index].ProductFeature===e.target.innerText) {
+                  arr.push(AllProduct[index])
+                } else {
+                  
+                }
+                
+              }
+              console.log(arr)
+             
+              SetFeatureFilterArr(arr)
+              
+              
+            }}>
               {elem}
             </div>
           ))}
@@ -52,78 +116,291 @@ const ProductsScreen = () => {
   }
   // the following function will provide page Content 
   const PageContent=()=>{
-    return   <Row>
-    {AllProduct.map((Product) => (
-      <Col
-        xs={6}
-        md={4}
-        className=" pb-4 pe-1"
-        style={{
-          wordBreak: "break-all",
-          backgroundColor: "#eae6db",
-          border: "2px solid white",
-        }}
-        key={Product._id}
-      >
-        <Row>
-          <Col xs={12}>
-            <div>Loading</div>
-            <img
-              onLoadedData={(e) => {
-                console.log(e.target.src);
-              }}
-              onLoad={(e) => {
-                e.target.parentElement.children[0].style.innerText =
-                  "red";
-                console.log(e.target.complete);
-                console.log(e.target.naturalHeight);
-                console.log(e.target.parentElement.children[0]);
-                if (e.target.complete && e.target.naturalHeight > 20) {
-                  console.log("Image loaded");
-                } else {
-                  console.log("Image not loaded");
-                  e.target.parentElement.children[0].style.color =
+    if (SetSubCategoriesFilterArr.length===0 && FeatureFilterArr.length===0) {
+      return   <Row>
+      {AllProduct.map((Product) => (
+        <Col
+          xs={6}
+          md={4}
+          className=" pb-4 pe-1"
+          style={{
+            wordBreak: "break-all",
+            backgroundColor: "#eae6db",
+            border: "2px solid white",
+          }}
+          key={Product._id}
+        >
+          <Row>
+            <Col xs={12}>
+              <div>Loading</div>
+              <img
+                onLoadedData={(e) => {
+                  console.log(e.target.src);
+                }}
+                onLoad={(e) => {
+                  e.target.parentElement.children[0].style.innerText =
                     "red";
-                  e.target.src = `https://drive.google.com/thumbnail?id=${Product.ProductImagesIDs[0]}`;
-                }
-              }}
-              style={{ width: "100%", aspectRatio: "1/1" }}
-              loading="lazy"
-              src={`https://drive.google.com/thumbnail?id=${Product.ProductImagesIDs[0]}`}
-              alt={Product.ProductImagesIDs[0]}
-              decoding="async"
-            />
-          </Col>
-        </Row>
-        <Row className=" pb-1" key={Product.ProductTitle}>
-          <Col xs={12}>
-            <h5>
-              <a href={`/productdetails/${Product._id}`}>
-                {Product.ProductTitle}
-              </a>
-            </h5>
-          </Col>
-        </Row>
-        <Row key={Product.ProductUnitPrice}>
-          <Col xs={12}>
-            <div className=" d-flex justify-content-between">
-              <span className=" d-inline-block">
-                {Product.ProductUnitPrice} EGP
-              </span>
-              <span className=" d-inline-block">
-                <i className="fa-solid fa-cart-shopping"></i>
-              </span>
-            </div>
-          </Col>
-        </Row>
-      </Col>
-    ))}
-  </Row>
+                  console.log(e.target.complete);
+                  console.log(e.target.naturalHeight);
+                  console.log(e.target.parentElement.children[0]);
+                  if (e.target.complete && e.target.naturalHeight > 20) {
+                    console.log("Image loaded");
+                  } else {
+                    console.log("Image not loaded");
+                    e.target.parentElement.children[0].style.color =
+                      "red";
+                    e.target.src = `https://drive.google.com/thumbnail?id=${Product.ProductImagesIDs[0]}`;
+                  }
+                }}
+                style={{ width: "100%", aspectRatio: "1/1" }}
+                loading="lazy"
+                src={`https://drive.google.com/thumbnail?id=${Product.ProductImagesIDs[0]}`}
+                alt={Product.ProductImagesIDs[0]}
+                decoding="async"
+              />
+            </Col>
+          </Row>
+          <Row className=" pb-1" key={Product.ProductTitle}>
+            <Col xs={12}>
+              <h5>
+                <a href={`/productdetails/${Product._id}`}>
+                  {Product.ProductTitle}
+                </a>
+              </h5>
+            </Col>
+          </Row>
+          <Row key={Product.ProductUnitPrice}>
+            <Col xs={12}>
+              <div className=" d-flex justify-content-between">
+                <span className=" d-inline-block">
+                  {Product.ProductUnitPrice} EGP
+                </span>
+                <span className=" d-inline-block">
+                  <i className="fa-solid fa-cart-shopping"></i>
+                </span>
+              </div>
+            </Col>
+          </Row>
+        </Col>
+      ))}
+    </Row>
+      
+    } else if(SetSubCategoriesFilterArr.length>0) {
+      return   <Row>
+      {SetSubCategoriesFilterArr.map((Product) => (
+        <Col
+          xs={6}
+          md={4}
+          className=" pb-4 pe-1"
+          style={{
+            wordBreak: "break-all",
+            backgroundColor: "#eae6db",
+            border: "2px solid white",
+          }}
+          key={Product._id}
+        >
+          <Row>
+            <Col xs={12}>
+              <div>Loading</div>
+              <img
+                onLoadedData={(e) => {
+                  console.log(e.target.src);
+                }}
+                onLoad={(e) => {
+                  e.target.parentElement.children[0].style.innerText =
+                    "red";
+                  console.log(e.target.complete);
+                  console.log(e.target.naturalHeight);
+                  console.log(e.target.parentElement.children[0]);
+                  if (e.target.complete && e.target.naturalHeight > 20) {
+                    console.log("Image loaded");
+                  } else {
+                    console.log("Image not loaded");
+                    e.target.parentElement.children[0].style.color =
+                      "red";
+                    e.target.src = `https://drive.google.com/thumbnail?id=${Product.ProductImagesIDs[0]}`;
+                  }
+                }}
+                style={{ width: "100%", aspectRatio: "1/1" }}
+                loading="lazy"
+                src={`https://drive.google.com/thumbnail?id=${Product.ProductImagesIDs[0]}`}
+                alt={Product.ProductImagesIDs[0]}
+                decoding="async"
+              />
+            </Col>
+          </Row>
+          <Row className=" pb-1" key={Product.ProductTitle}>
+            <Col xs={12}>
+              <h5>
+                <a href={`/productdetails/${Product._id}`}>
+                  {Product.ProductTitle}
+                </a>
+              </h5>
+            </Col>
+          </Row>
+          <Row key={Product.ProductUnitPrice}>
+            <Col xs={12}>
+              <div className=" d-flex justify-content-between">
+                <span className=" d-inline-block">
+                  {Product.ProductUnitPrice} EGP
+                </span>
+                <span className=" d-inline-block">
+                  <i className="fa-solid fa-cart-shopping"></i>
+                </span>
+              </div>
+            </Col>
+          </Row>
+        </Col>
+      ))}
+    </Row>
+
+      
+    } else if(FeatureFilterArr.length>0){
+      return   <Row>
+      {FeatureFilterArr.map((Product) => (
+        <Col
+          xs={6}
+          md={4}
+          className=" pb-4 pe-1"
+          style={{
+            wordBreak: "break-all",
+            backgroundColor: "#eae6db",
+            border: "2px solid white",
+          }}
+          key={Product._id}
+        >
+          <Row>
+            <Col xs={12}>
+              <div>Loading</div>
+              <img
+                onLoadedData={(e) => {
+                  console.log(e.target.src);
+                }}
+                onLoad={(e) => {
+                  e.target.parentElement.children[0].style.innerText =
+                    "red";
+                  console.log(e.target.complete);
+                  console.log(e.target.naturalHeight);
+                  console.log(e.target.parentElement.children[0]);
+                  if (e.target.complete && e.target.naturalHeight > 20) {
+                    console.log("Image loaded");
+                  } else {
+                    console.log("Image not loaded");
+                    e.target.parentElement.children[0].style.color =
+                      "red";
+                    e.target.src = `https://drive.google.com/thumbnail?id=${Product.ProductImagesIDs[0]}`;
+                  }
+                }}
+                style={{ width: "100%", aspectRatio: "1/1" }}
+                loading="lazy"
+                src={`https://drive.google.com/thumbnail?id=${Product.ProductImagesIDs[0]}`}
+                alt={Product.ProductImagesIDs[0]}
+                decoding="async"
+              />
+            </Col>
+          </Row>
+          <Row className=" pb-1" key={Product.ProductTitle}>
+            <Col xs={12}>
+              <h5>
+                <a href={`/productdetails/${Product._id}`}>
+                  {Product.ProductTitle}
+                </a>
+              </h5>
+            </Col>
+          </Row>
+          <Row key={Product.ProductUnitPrice}>
+            <Col xs={12}>
+              <div className=" d-flex justify-content-between">
+                <span className=" d-inline-block">
+                  {Product.ProductUnitPrice} EGP
+                </span>
+                <span className=" d-inline-block">
+                  <i className="fa-solid fa-cart-shopping"></i>
+                </span>
+              </div>
+            </Col>
+          </Row>
+        </Col>
+      ))}
+    </Row>
+
+    } else{
+      return   <Row>
+      {AllProduct.map((Product) => (
+        <Col
+          xs={6}
+          md={4}
+          className=" pb-4 pe-1"
+          style={{
+            wordBreak: "break-all",
+            backgroundColor: "#eae6db",
+            border: "2px solid white",
+          }}
+          key={Product._id}
+        >
+          <Row>
+            <Col xs={12}>
+              <div>Loading</div>
+              <img
+                onLoadedData={(e) => {
+                  console.log(e.target.src);
+                }}
+                onLoad={(e) => {
+                  e.target.parentElement.children[0].style.innerText =
+                    "red";
+                  console.log(e.target.complete);
+                  console.log(e.target.naturalHeight);
+                  console.log(e.target.parentElement.children[0]);
+                  if (e.target.complete && e.target.naturalHeight > 20) {
+                    console.log("Image loaded");
+                  } else {
+                    console.log("Image not loaded");
+                    e.target.parentElement.children[0].style.color =
+                      "red";
+                    e.target.src = `https://drive.google.com/thumbnail?id=${Product.ProductImagesIDs[0]}`;
+                  }
+                }}
+                style={{ width: "100%", aspectRatio: "1/1" }}
+                loading="lazy"
+                src={`https://drive.google.com/thumbnail?id=${Product.ProductImagesIDs[0]}`}
+                alt={Product.ProductImagesIDs[0]}
+                decoding="async"
+              />
+            </Col>
+          </Row>
+          <Row className=" pb-1" key={Product.ProductTitle}>
+            <Col xs={12}>
+              <h5>
+                <a href={`/productdetails/${Product._id}`}>
+                  {Product.ProductTitle}
+                </a>
+              </h5>
+            </Col>
+          </Row>
+          <Row key={Product.ProductUnitPrice}>
+            <Col xs={12}>
+              <div className=" d-flex justify-content-between">
+                <span className=" d-inline-block">
+                  {Product.ProductUnitPrice} EGP
+                </span>
+                <span className=" d-inline-block">
+                  <i className="fa-solid fa-cart-shopping"></i>
+                </span>
+              </div>
+            </Col>
+          </Row>
+        </Col>
+      ))}
+    </Row>
+
+    }
+   
     
 
   }
 // UseEffect will be used to get the product list from backend
   useEffect(() => {
+    console.log(SelectedFilter)
     SetLoader(true);
     console.log("Loader is: ", Loader);
     console.log("params is: ", Object.values(params)[0].replace(/-/g, " "));
