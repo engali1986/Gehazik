@@ -13,9 +13,10 @@ const ProductsScreen = () => {
   const [SetSubCategoriesFilterArr,SetSetSubCategoriesFilterArr]=useState([]) // this array for sub categories filter
   // the following funcion will get sub categories to list them on side Column
   const SubCategoriesList=()=>{
-    console.log(StaticData.ProductCategories[0][Object.values(params)[0].replace(/-+/g,"_")])
+    
     for (let index = 0; index < StaticData.ProductCategories.length; index++) {
       if (StaticData.ProductCategories[index][Object.values(params)[0].replace(/-+/g,"_")]) {
+        console.log(Object.values(params)[0].replace(/-+/g,"_"))
         console.log("Sub categories found")
         let arr=StaticData.ProductCategories[index][Object.values(params)[0].replace(/-+/g,"_")]
         console.log(arr)
@@ -23,6 +24,7 @@ const ProductsScreen = () => {
         break;
         
       } else {
+        console.log(Object.values(params)[0].replace(/-+/g,"_"))
         console.log("SubCategorie not found")
         
       }
@@ -89,14 +91,17 @@ const ProductsScreen = () => {
               for (let index = 0; index < AllProduct.length; index++) {
                 if (AllProduct[index].ProductFeature===e.target.innerText) {
                   arr.push(AllProduct[index])
+
                 } else {
                   
                 }
                 
               }
               console.log(arr)
+              SetSetSubCategoriesFilterArr([])
              
               SetFeatureFilterArr(arr)
+              console.log(FeatureFilterArr.length)
               
               
             }}>
@@ -116,76 +121,14 @@ const ProductsScreen = () => {
   }
   // the following function will provide page Content 
   const PageContent=()=>{
-    if (SetSubCategoriesFilterArr.length===0 && FeatureFilterArr.length===0) {
+    if (SetSubCategoriesFilterArr.length===0 && FeatureFilterArr.length===0 && SelectedFilter.length>0) {
+      console.log("No Products Found")
       return   <Row>
-      {AllProduct.map((Product) => (
-        <Col
-          xs={6}
-          md={4}
-          className=" pb-4 pe-1"
-          style={{
-            wordBreak: "break-all",
-            backgroundColor: "#eae6db",
-            border: "2px solid white",
-          }}
-          key={Product._id}
-        >
-          <Row>
-            <Col xs={12}>
-              <div>Loading</div>
-              <img
-                onLoadedData={(e) => {
-                  console.log(e.target.src);
-                }}
-                onLoad={(e) => {
-                  e.target.parentElement.children[0].style.innerText =
-                    "red";
-                  console.log(e.target.complete);
-                  console.log(e.target.naturalHeight);
-                  console.log(e.target.parentElement.children[0]);
-                  if (e.target.complete && e.target.naturalHeight > 20) {
-                    console.log("Image loaded");
-                  } else {
-                    console.log("Image not loaded");
-                    e.target.parentElement.children[0].style.color =
-                      "red";
-                    e.target.src = `https://drive.google.com/thumbnail?id=${Product.ProductImagesIDs[0]}`;
-                  }
-                }}
-                style={{ width: "100%", aspectRatio: "1/1" }}
-                loading="lazy"
-                src={`https://drive.google.com/thumbnail?id=${Product.ProductImagesIDs[0]}`}
-                alt={Product.ProductImagesIDs[0]}
-                decoding="async"
-              />
-            </Col>
-          </Row>
-          <Row className=" pb-1" key={Product.ProductTitle}>
-            <Col xs={12}>
-              <h5>
-                <a href={`/productdetails/${Product._id}`}>
-                  {Product.ProductTitle}
-                </a>
-              </h5>
-            </Col>
-          </Row>
-          <Row key={Product.ProductUnitPrice}>
-            <Col xs={12}>
-              <div className=" d-flex justify-content-between">
-                <span className=" d-inline-block">
-                  {Product.ProductUnitPrice} EGP
-                </span>
-                <span className=" d-inline-block">
-                  <i className="fa-solid fa-cart-shopping"></i>
-                </span>
-              </div>
-            </Col>
-          </Row>
-        </Col>
-      ))}
+    No Products Found
     </Row>
       
     } else if(SetSubCategoriesFilterArr.length>0) {
+      console.log("All products in subcategory")
       return   <Row>
       {SetSubCategoriesFilterArr.map((Product) => (
         <Col
@@ -256,6 +199,7 @@ const ProductsScreen = () => {
 
       
     } else if(FeatureFilterArr.length>0){
+      console.log("All products in features")
       return   <Row>
       {FeatureFilterArr.map((Product) => (
         <Col
@@ -325,7 +269,9 @@ const ProductsScreen = () => {
     </Row>
 
     } else{
+      console.log("All Products")
       return   <Row>
+
       {AllProduct.map((Product) => (
         <Col
           xs={6}
