@@ -1,14 +1,51 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
+import StaticData from "../Data/StaticData";
 
 const ProductsScreen = () => {
   const [Loader, SetLoader] = useState(false);
   const params = useParams();
   const [AllProduct, SetAllProducts] = useState([]);// All products will be stored in this state
+  const [SubCategories,SetSubCategories]=useState([]) // all sub categories object will be saved  here
   // the following funcion will get sub categories to list them on side Column
   const SubCategoriesList=()=>{
-    return "Sub Categories"
+    console.log(StaticData.ProductCategories[0][Object.values(params)[0].replace(/-+/g,"_")])
+    for (let index = 0; index < StaticData.ProductCategories.length; index++) {
+      if (StaticData.ProductCategories[index][Object.values(params)[0].replace(/-+/g,"_")]) {
+        console.log("Sub categories found")
+        let arr=StaticData.ProductCategories[index][Object.values(params)[0].replace(/-+/g,"_")]
+        console.log(arr)
+        SetSubCategories(arr)
+        break;
+        
+      } else {
+        console.log("SubCategorie not found")
+        
+      }
+      
+    }
+
+    if (SubCategories.length>0) {
+      return<>
+      {SubCategories.map(item=>(
+        <Row>
+          {Object.keys(item)[0].replace(/_+/g," ")}
+          {Object.values(item)[0].map(elem=>(
+            <div>
+              {elem}
+            </div>
+          ))}
+        </Row>
+      ))}
+      </>
+      
+    }else{
+      return "Sub Categories"
+
+    }
+    
+    
   }
   // the following function will provide page Content 
   const PageContent=()=>{
