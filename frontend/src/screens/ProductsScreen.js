@@ -30,9 +30,12 @@ const ProductsScreen = () => {
       return<>
       {SubCategories.map(item=>(
         <Row>
-          {Object.keys(item)[0].replace(/_+/g," ")}
+          <div className="SubCategories fs-6 text-decoration-underline" onClick={(e)=>{
+            e.stopPropagation()
+            console.log(AllProduct)
+          }}> {Object.keys(item)[0].replace(/_+/g," ")}</div>
           {Object.values(item)[0].map(elem=>(
-            <div>
+            <div className="Features ps-3">
               {elem}
             </div>
           ))}

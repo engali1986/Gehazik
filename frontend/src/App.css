@@ -11210,3 +11210,23 @@ readers do not read off random characters that represent icons */
 }
 
 /* ProductDetailsImage end */
+/* SubCaTEGORIES and Features Start */
+.SubCategories{
+  cursor: pointer;
+  padding-left: 0%;
+  transition: all 0.3s ease-in-out;
+}
+.SubCategories:hover{
+  background-color: #fcb478dd;
+}
+
+.Features{
+  cursor: pointer;
+  padding-left: 0%;
+  transition: all 0.3s ease-in-out;
+}
+.Features:hover{
+  background-color: #fcb478dd;
+}
+
+/* Subcategories and Features End */
