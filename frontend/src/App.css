@@ -11240,3 +11240,23 @@ readers do not read off random characters that represent icons */
 }
 
 /* Subcategories and Features End */
+.AA{
+  display: none;
+}
+@media print{
+  .AA{
+    color: red;
+    display: block;
+    position: fixed;
+    background-color: white;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    min-height: 100%;
+    z-index: 1000;
+    border: 2px solid red;
+  }
+  .bb{
+    display: none;
+  }
+}
