@@ -71,6 +71,19 @@ function App() {
         CartItems: [],
       })
     );
+
+    // if (
+    //   localStorage.getItem("NumTabsOpened") === null ||
+    //   localStorage.getItem("NumTabsOpened") == "NaN"
+    // ) {
+    //   let x = 1;
+    //   console.log("LocalStorage NumTabsOpened intiated");
+    //   localStorage.setItem("NumTabsOpened", x.toString());
+    // } else {
+    //   let x = parseInt(localStorage.getItem("NumTabsOpened"), 10);
+    //   let y = x + 1;
+    //   localStorage.setItem("NumTabsOpened", y.toString());
+    // }
     localStorage.setItem("NoLocalStorage", "yes");
 
     console.log(JSON.parse(sessionStorage.getItem("globalState")));
@@ -149,6 +162,10 @@ function App() {
 
       // localStorage.setItem("NumTabsOpened", j.toString());
     }
+
+    //  add increament for each tab open to local storage start
+
+    //  add increament for each tab open to local storage end
   } else if (
     sessionStorage.getItem("globalState") !== null &&
     localStorage.getItem("globalState") === null
@@ -156,7 +173,18 @@ function App() {
     console.log("ther is sission");
     console.log(sessionStorage.getItem("globalState"));
     localStorage.setItem("globalState", sessionStorage.getItem("globalState"));
-    
+    // if (
+    //   localStorage.getItem("NumTabsOpened") === null ||
+    //   localStorage.getItem("NumTabsOpened") == "NaN"
+    // ) {
+    //   let x = 1;
+    //   console.log("LocalStorage NumTabsOpened intiated");
+    //   localStorage.setItem("NumTabsOpened", x.toString());
+    // } else {
+    //   let x = parseInt(localStorage.getItem("NumTabsOpened"), 10);
+    //   let y = x + 1;
+    //   localStorage.setItem("NumTabsOpened", y.toString());
+    // }
   } else if (sessionStorage.getItem("globalState") === null) {
     sessionStorage.setItem(
       "globalState",
@@ -183,8 +211,25 @@ function App() {
   console.log(localStorage.getItem("globalState"));
   console.log(localStorage.getItem("globalState") === !null);
 
- 
-//  following function will store user/Admin/Merchant data when login
+  //  if user logged time stamp will be addded to local storage to allow for other tabs
+  // if (localStorage.getItem("globalState") === null) {
+  //   console.log("No data in local storage")
+  // } else {
+  //   console.log("Time logges start");
+  //   if (JSON.parse(localStorage.getItem("globalState")).TimeLogged) {
+  //     console.log("Time logged");
+  //     if (
+  //       new Date().getTime() -
+  //         JSON.parse(localStorage.getItem("globalState")).TimeLogged >=
+  //       20000
+  //     ) {
+  //       localStorage.removeItem("globalState");
+  //     }
+  //   } else {
+  //     console.log("No time Logged");
+  //   }
+  // }
+
   const userChange = (
     name,
     LogInStatus,
@@ -220,7 +265,7 @@ function App() {
     );
     localStorage.setItem("globalState", sessionStorage.getItem("globalState"));
   };
-// Following function will store User Address to use it later to find merchants
+
   const UpdateAddress = (AddressData) => {
     console.log("AddressData Updated");
     console.log(AddressData);
@@ -241,7 +286,7 @@ function App() {
     );
     localStorage.setItem("globalState", sessionStorage.getItem("globalState"));
   };
-// Following functions will add items to cart and save it in session storage
+
   const AddToCart = (Order) => {
     console.log("Order added to cart");
     let OrderAdded = false;
@@ -330,7 +375,7 @@ function App() {
       );
     }
   };
-// Following functions will Update items to cart and save it in session storage
+
   const UpdateCart = (UpdateData) => {
     console.log(UpdateData);
     if (UpdateData.Field === "Add") {
@@ -430,13 +475,34 @@ function App() {
 
   console.log(typeof new Date().getTime());
 
+  // if (JSON.parse(localStorage.getItem("globalState")).TimeLogged) {
+  //   if (new Date().getTime() - JSON.parse(localStorage.getItem("globalState")).TimeLogged >= 20000) {
+
+  //     localStorage.setItem("globalState",JSON.stringify({
+  //       "UserLogged":false,
+  //       "Name":"",
+  //       "email":"",
+
+  //     }))
+
+  //   } else {
+  //     console.log(new Date().getTime() - JSON.parse(localStorage.getItem("globalState")).TimeLogged)
+
+  //   }
+
+  // } else {
+  //   console.log("User Not")
+
+  // }
+  // used localStorage to keep state when page refresh
+
   console.log(typeof GlobalState);
- 
+  // console.log(typeof GlobalState.UserLogged)
   window.onresize = () => {
     console.log(window.innerWidth);
   };
- 
-// Following function will change navbar and main page sizes when resize window
+  // Main bage to be directly below navbar we use window,onresize and adjust margintop
+
   window.onresize = () => {
     if (window.innerWidth >= 768) {
       console.log("navBarBig");
@@ -451,6 +517,16 @@ function App() {
           .getBoundingClientRect().bottom + "px";
     }
   };
+
+  // window.onbeforeunload = () => {
+  //   if (parseInt(localStorage.getItem("NumTabsOpened"), 10) <= 1) {
+  //     localStorage.clear();
+  //   } else {
+  //     let y = parseInt(localStorage.getItem("NumTabsOpened"), 10) - 1;
+  //     localStorage.setItem("NumTabsOpened", y.toString());
+  //   }
+  // };
+
   useEffect(() => {
     if (document.querySelectorAll(".AddressSelection")[0]) {
       console.log(GlobalState);
@@ -477,9 +553,10 @@ function App() {
           .getBoundingClientRect().bottom + "px";
     }
   }, []);
-// following function will create route for all categories
+
   const CategoryRoutes = StaticData.Categories.map((Item, Index) => (
     <Route
+      caseSensitive
       path={`/Products/:${Item.replace(/\s+/g, "-")}/All`}
       element={<ProductsScreen />}
       key={Item[Index]}
