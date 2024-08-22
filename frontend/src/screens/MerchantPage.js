@@ -2,14 +2,13 @@ import React, { useEffect, useState, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 import StaticData from "../Data/StaticData.js";
-
+// This will be merchant page for merchant controls
 const MerchantPage = ({ globalState, setGlobal }) => {
   const [Data, SetData] = useState(""); // this state will be used to store the selected menu items to display data
-  const [ProductsList, SetProductsList] = useState([]);
-
+  const [ProductsList, SetProductsList] = useState([]);// this will be used to store all products of merchant
   const navigate = useNavigate();
-
   const params = useParams();
+  // The following function will be used to display Data inside page
   const DtataDisplay = () => {
     const [ShowAlert, SetShowAlert] = useState({
       Success: false,
@@ -36,12 +35,9 @@ const MerchantPage = ({ globalState, setGlobal }) => {
       UpdateProductUnitPrice: 0,
       UpdateProductInStockQty: 0,
     });
-
     const [UpdateProductsList, SetUpdateProductsList] = useState([]);
-
     const [Disabled, SetDisabled] = useState(false);
     const ProductTitle = useRef();
-
     const Alert = useRef();
     const LoginButtonRef = useRef();
 
@@ -118,7 +114,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
       } else {
       }
     };
-
+    // will be used to list sub Categories in addProduct section
     const Subcategories = () => {
       for (
         let index = 0;
@@ -153,6 +149,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
         }
       }
     };
+    // Will be used to list Features in add product section
     const Features = () => {
       console.log(AddProductData);
       for (
@@ -878,7 +875,6 @@ const MerchantPage = ({ globalState, setGlobal }) => {
               />
             </Col>
           </Row>
-
           <Row
             style={{ color: "white" }}
             className=" pb-2 align-items-center text-start"
@@ -967,7 +963,6 @@ const MerchantPage = ({ globalState, setGlobal }) => {
               ></div>
             </Col>
           </Row>
-
           <Row>
             <Col xs={12}>
               <button
@@ -1031,10 +1026,11 @@ const MerchantPage = ({ globalState, setGlobal }) => {
         console.log(params);
       }}
     >
+    {/* This will be the head of page */}
       <Row>
         <h2>Merchant Page</h2>
       </Row>
-
+{/* This will be page body */}
       <Row>
         {/* the following Col will be the side menu for the merchant page */}
         <Col
