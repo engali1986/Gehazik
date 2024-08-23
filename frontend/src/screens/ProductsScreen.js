@@ -355,7 +355,7 @@ const ProductsScreen = ({globalState}) => {
         const Category = Object.values(params)[0].replace(/-/g, " ");
         const CategoryData={
           Category:Category,
-          Goverorate:globalState.Governorate,
+          Governorate:globalState.Governorate,
           City:globalState.City+" "
         }
         console.log("Category is : ", Category);
