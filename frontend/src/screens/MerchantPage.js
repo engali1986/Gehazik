@@ -57,10 +57,11 @@ const MerchantPage = ({ globalState, setGlobal }) => {
       let Keyes = Object.keys(AddProductData);
       console.log(Keyes);
       let ProductDataChecked = false;
+     
       for (let index = 0; index < Keyes.length; index++) {
         if (
           AddProductData[Keyes[index]] === "" ||
-          AddProductData[Keyes[index]] === 0 || (AddProductData[Keyes[index]]===false && AddProductData[Keyes[index-1]]===false && AddProductData[Keyes[index-2]]===false)
+          AddProductData[Keyes[index]] === 0 
         ) {
           console.log("Product not added " + Keyes[index]);
           Alert.current.classList.replace("alert-success", "alert-danger");
@@ -75,46 +76,66 @@ const MerchantPage = ({ globalState, setGlobal }) => {
         }
       }
       if (ProductDataChecked === true) {
-        if (ProductImageFiles.length > 0) {
-          const formData = new FormData();
-          formData.append("Data", JSON.stringify(AddProductData));
-          ProductImageFiles.forEach((file) => {
-            formData.append("Files", file);
-          });
-          console.log(formData);
-
-          console.log("Submitting data");
-          const ProductAdded = await fetch(
-            "https://gehazik-server.onrender.com/Merchants/AddProduct",
-            {
-              method: "POST",
-              body: formData,
-
-              mode: "cors",
-            }
-          )
-            .then((res) => {
-              console.log(res);
-              SetDisabled(false);
-              return res.json();
-            })
-            .catch((err) => {
-              console.log(err);
-              SetDisabled(false);
+        if (AddProductData.CityDelivery===true) {
+          if (ProductImageFiles.length > 0) {
+            const formData = new FormData();
+            formData.append("Data", JSON.stringify(AddProductData));
+            ProductImageFiles.forEach((file) => {
+              formData.append("Files", file);
             });
-
-          console.log(ProductAdded);
-          Alert.current.classList.replace("alert-danger", "alert-success");
-          Alert.current.innerText = ProductAdded.resp;
-          Alert.current.style.maxHeight = "500px";
-          SetDisabled(false);
+            console.log(formData);
+  
+            console.log("Submitting data");
+            const ProductAdded = await fetch(
+              "https://gehazik-server.onrender.com/Merchants/AddProduct",
+              {
+                method: "POST",
+                body: formData,
+  
+                mode: "cors",
+              }
+            )
+              .then((res) => {
+                console.log(res);
+                SetDisabled(false);
+                return res.json();
+              })
+              .catch((err) => {
+                console.log(err);
+                SetDisabled(false);
+              });
+  
+            console.log(ProductAdded);
+            Alert.current.classList.replace("alert-danger", "alert-success");
+            Alert.current.innerText = ProductAdded.resp;
+            Alert.current.style.maxHeight = "500px";
+            SetDisabled(false);
+          } else {
+            Alert.current.classList.replace("alert-success", "alert-danger");
+            Alert.current.innerText = "Please add product image";
+            Alert.current.style.maxHeight = "500px";
+            SetDisabled(false);
+          }
+          
         } else {
+          console.log(AddProductData)
           Alert.current.classList.replace("alert-success", "alert-danger");
-          Alert.current.innerText = "Please add product image";
+          Alert.current.innerText = "Please select Delivery option ";
           Alert.current.style.maxHeight = "500px";
           SetDisabled(false);
+          ProductDataChecked = false;
+
+          
         }
+        
       } else {
+        // console.log("Product not added ");
+        //   Alert.current.classList.replace("alert-success", "alert-danger");
+        //   Alert.current.innerText = "Please complete form ";
+        //   Alert.current.style.maxHeight = "500px";
+        //   SetDisabled(false);
+        //   ProductDataChecked = false;
+
       }
     };
     // will be used to list sub Categories in addProduct section
@@ -886,8 +907,10 @@ const MerchantPage = ({ globalState, setGlobal }) => {
             <Col xs={6}>
              <select onChange={(e)=>{
               console.log(e.target.value)
-              if (e.target.value==="yes") {
-                SetAddProductData({...AddProductData,EgyptDelivery:true})
+              console.log(AddProductData)
+              if (e.target.value==="Yes") {
+                console.log("Egypt Delivery")
+                SetAddProductData({...AddProductData,EgyptDelivery:true, GovernorateDelivery:true,CityDelivery:true})
                 
               } else {
                 SetAddProductData({...AddProductData,EgyptDelivery:false})
@@ -911,8 +934,8 @@ const MerchantPage = ({ globalState, setGlobal }) => {
             <Col xs={6}>
              <select onChange={(e)=>{
               console.log(e.target.value)
-              if (e.target.value==="yes") {
-                SetAddProductData({...AddProductData,GoverorateDelivery:true})
+              if (e.target.value==="Yes") {
+                SetAddProductData({...AddProductData,GoverorateDelivery:true, CityDelivery:true})
                 
               } else {
                 SetAddProductData({...AddProductData,GoverorateDelivery:false})
@@ -936,7 +959,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
             <Col xs={6}>
              <select onChange={(e)=>{
               console.log(e.target.value)
-              if (e.target.value==="yes") {
+              if (e.target.value==="Yes") {
                 SetAddProductData({...AddProductData,CityDelivery:true})
                 
               } else {
