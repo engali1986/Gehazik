@@ -214,6 +214,8 @@ app.post("/Merchants/AddProduct", upload.array("Files"), async (req, res) => {
       console.log("server/AddProduct 3 MerchantVarification done");
       // Next we will add product and get product Id to use it as the folder name for product Images
       AddProductData.MerchantID = MerchantVarification._id;
+      AddProductData.Governorate=MerchantVarification.Governorate
+      AddProductData.City=MerchantVarification.City
       console.log(AddProductData);
       const ProductAdded = await AddProduct(AddProductData);
       console.log("server/AddProduct 4 ProductAdded result");
