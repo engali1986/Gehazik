@@ -13,7 +13,7 @@ const UsersProductsList = async (CategoryData) => {
     const UsersProductsList = await client
       .db("Gehazik")
       .collection("Products")
-      .find({ $and: [{ProductCategory: CategoryData.Category},{$or:[{EgyptDelivery:true},{$and:[{City:CategoryData.City},{CityDelivery:true}]}]}] })
+      .find({ $and: [{ProductCategory: CategoryData.Category},{$or:[{EgyptDelivery:true},{$and:[{GovernorateDelivery:true},{Governorate:CategoryData.Governorate}]},{$and:[{City:CategoryData.City},{CityDelivery:true}]}]}] })
       .project({
         ProductTitle: 1,
         InStockQty: 1,
