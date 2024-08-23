@@ -33,6 +33,9 @@ const AddProduct = async (AddProductData) => {
         MerchantID: AddProductData.MerchantID,
         InStockQty: AddProductData.ProductQty,
         OrderedQty: 0,
+        EgyptDelivery:AddProductData.EgyptDelivery,
+        GovernorateDelivery:AddProductData.GovernorateDelivery,
+        CityDelivery:AddProductData.CityDelivery
       })
       .then((res) => {
         console.log("AddProduct file 1");

@@ -290,7 +290,7 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
           PassmatchAlert.current.style.maxHeight = "500px";
 
           const AddMerchant = await fetch(
-            "https://gehazik-server.onrender.com/AddMerchant",
+            "http://localhost:5000/AddMerchant",
             {
               method: "POST",
               body: JSON.stringify(Credentials),
@@ -381,7 +381,7 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
     console.log(typeof Credentials.VarificationCode);
 
     const UserVarified = await fetch(
-      "https://gehazik-server.onrender.com/LogInMerchant",
+      "http://localhost:5000/LogInMerchant",
       {
         method: "POST",
         body: JSON.stringify(Credentials),

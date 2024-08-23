@@ -27,7 +27,7 @@ const MerchantLogIn = ({ globalState, setGlobal }) => {
     console.log(typeof Credentials.VarificationCode);
 
     const Merchantvarified = await fetch(
-      "https://gehazik-server.onrender.com/LogInMerchant",
+      "http://localhost:5000/LogInMerchant",
       {
         method: "POST",
         body: JSON.stringify(Credentials),
@@ -92,7 +92,7 @@ const MerchantLogIn = ({ globalState, setGlobal }) => {
       LoginButtonRef.current.innerText = "Loggin please wait";
       console.log("Submitted");
       const UserLogIn = await fetch(
-        "https://gehazik-server.onrender.com/LogInMerchant",
+        "http://localhost:5000/LogInMerchant",
         {
           method: "POST",
           body: JSON.stringify(Credentials),
