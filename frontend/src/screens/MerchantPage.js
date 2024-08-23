@@ -76,7 +76,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
         }
       }
       if (ProductDataChecked === true) {
-        if (AddProductData.CityDelivery===true) {
+        if (AddProductData.CityDelivery===true || AddProductData.GovernorateDelivery===true || AddProductData.EgyptDelivery===true) {
           if (ProductImageFiles.length > 0) {
             const formData = new FormData();
             formData.append("Data", JSON.stringify(AddProductData));
@@ -476,7 +476,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                                     } else {
                                     }
                                   }
-                                  if (Duplicate == false) {
+                                  if (Duplicate === false) {
                                     const UpdatedProductObj = {
                                       UpdateProductID:
                                         e.target.parentElement.parentElement
