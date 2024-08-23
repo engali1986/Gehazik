@@ -35,7 +35,9 @@ const AddProduct = async (AddProductData) => {
         OrderedQty: 0,
         EgyptDelivery:AddProductData.EgyptDelivery,
         GovernorateDelivery:AddProductData.GovernorateDelivery,
-        CityDelivery:AddProductData.CityDelivery
+        CityDelivery:AddProductData.CityDelivery,
+        Governorate:AddProductData.Governorate,
+        City:AddProductData.City
       })
       .then((res) => {
         console.log("AddProduct file 1");
