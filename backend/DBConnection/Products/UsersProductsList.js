@@ -4,16 +4,16 @@ const uri =
   "mongodb+srv://engaligulf:Cossacks%401@cluster0.fj9bpe7.mongodb.net/?maxIdleTimeMS=5000";
 
 const client = new MongoClient(uri);
-const UsersProductsList = async (Category) => {
+const UsersProductsList = async (CategoryData) => {
   try {
     console.log("UsersProductsList file 0");
     await client.connect();
     console.log("Connection established ");
-    console.log(Category);
+    console.log(CategoryData);
     const UsersProductsList = await client
       .db("Gehazik")
       .collection("Products")
-      .find({ ProductCategory: Category })
+      .find({ $and: [{ProductCategory: CategoryData.Category},{$or:[{EgyptDelivery:true},{$and:[{City:CategoryData.City},{CityDelivery:true}]}]}] })
       .project({
         ProductTitle: 1,
         InStockQty: 1,

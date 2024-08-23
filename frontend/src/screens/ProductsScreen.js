@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 import StaticData from "../Data/StaticData";
 
-const ProductsScreen = () => {
+const ProductsScreen = ({globalState}) => {
   const [Loader, SetLoader] = useState(false);
   const params = useParams();
   const [AllProduct, SetAllProducts] = useState([]);// All products will be stored in this state
@@ -353,13 +353,18 @@ const ProductsScreen = () => {
     const GetAllProducts = async () => {
       try {
         const Category = Object.values(params)[0].replace(/-/g, " ");
+        const CategoryData={
+          Category:Category,
+          Goverorate:globalState.Governorate,
+          City:globalState.City+" "
+        }
         console.log("Category is : ", Category);
         console.log("All Products");
         const ProductsList = await fetch(
           "http://localhost:5000/Users/ProductsList",
           {
             method: "post",
-            body: JSON.stringify({ Data: Category }),
+            body: JSON.stringify({ Data: CategoryData }),
             headers: {
               "Content-Type": "application/json",
             },

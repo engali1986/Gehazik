@@ -481,7 +481,7 @@ function App() {
   const CategoryRoutes = StaticData.Categories.map((Item, Index) => (
     <Route
       path={`/Products/:${Item.replace(/\s+/g, "-")}/All`}
-      element={<ProductsScreen />}
+      element={<ProductsScreen globalState={GlobalState} />}
       key={Item[Index]}
     />
   ));
