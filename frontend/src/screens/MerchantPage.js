@@ -28,6 +28,9 @@ const MerchantPage = ({ globalState, setGlobal }) => {
       Token: globalState.Token,
       Name: globalState.Name,
       Email: globalState.email,
+      EgyptDelivery:false,
+      GovernorateDelivery:false,
+      CityDelivery:false
     });
     const [editProductId, setEditProductId] = useState(null);
     const [UpdateProduct, SetUpdateProduct] = useState({
@@ -57,7 +60,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
       for (let index = 0; index < Keyes.length; index++) {
         if (
           AddProductData[Keyes[index]] === "" ||
-          AddProductData[Keyes[index]] === 0
+          AddProductData[Keyes[index]] === 0 || (AddProductData[Keyes[index]]===false && AddProductData[Keyes[index-1]]===false && AddProductData[Keyes[index-2]]===false)
         ) {
           console.log("Product not added " + Keyes[index]);
           Alert.current.classList.replace("alert-success", "alert-danger");
@@ -879,6 +882,81 @@ const MerchantPage = ({ globalState, setGlobal }) => {
             style={{ color: "white" }}
             className=" pb-2 align-items-center text-start"
           >
+            <Col xs={6}> Egypt Delivery</Col>
+            <Col xs={6}>
+             <select onChange={(e)=>{
+              console.log(e.target.value)
+              if (e.target.value==="yes") {
+                SetAddProductData({...AddProductData,EgyptDelivery:true})
+                
+              } else {
+                SetAddProductData({...AddProductData,EgyptDelivery:false})
+                
+              }
+             }} >
+              <option>
+                No
+              </option>
+              <option>
+                Yes
+              </option>
+             </select>
+            </Col>
+          </Row>
+          <Row
+            style={{ color: "white" }}
+            className=" pb-2 align-items-center text-start"
+          >
+            <Col xs={6}> Goverorate Delivery</Col>
+            <Col xs={6}>
+             <select onChange={(e)=>{
+              console.log(e.target.value)
+              if (e.target.value==="yes") {
+                SetAddProductData({...AddProductData,GoverorateDelivery:true})
+                
+              } else {
+                SetAddProductData({...AddProductData,GoverorateDelivery:false})
+                
+              }
+             }} >
+              <option>
+                No
+              </option>
+              <option>
+                Yes
+              </option>
+             </select>
+            </Col>
+          </Row>
+          <Row
+            style={{ color: "white" }}
+            className=" pb-2 align-items-center text-start"
+          >
+            <Col xs={6}> City Delivery</Col>
+            <Col xs={6}>
+             <select onChange={(e)=>{
+              console.log(e.target.value)
+              if (e.target.value==="yes") {
+                SetAddProductData({...AddProductData,CityDelivery:true})
+                
+              } else {
+                SetAddProductData({...AddProductData,CityDelivery:false})
+                
+              }
+             }} >
+              <option>
+                No
+              </option>
+              <option>
+                Yes
+              </option>
+             </select>
+            </Col>
+          </Row>
+          <Row
+            style={{ color: "white" }}
+            className=" pb-2 align-items-center text-start"
+          >
             <Col xs={6}> Pleas add product photos</Col>
             <Col xs={6}>
               <input
@@ -1034,7 +1112,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
       <Row>
         {/* the following Col will be the side menu for the merchant page */}
         <Col
-          xs={2}
+          xs={12} md={2}
           style={{
             overflowWrap: "break-word",
             textAlign: "start",
@@ -1448,7 +1526,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
           </Row>
         </Col>
         {/* the following Col will display the data after merchant select option from side menu */}
-        <Col xs={10}>
+        <Col xs={12} md={10}>
           <DtataDisplay />
         </Col>
       </Row>
