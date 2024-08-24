@@ -268,7 +268,7 @@ const ProductDetails = ({ AddOrders }) => {
               <span
                 onClick={(e) => {
                   e.stopPropagation();
-                  if (Count >= 1) {
+                  if (Count >= 1 && Count<Product.InStockQty) {
                     SetCount(Count + 1);
                   }
                 }}

@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import {useNavigate} from "react-router-dom"
 
-const CartPage = ({ GlobalState, UpdateCart }) => {
+const CartPage = ({ GlobalState, UpdateCart,AddOrder }) => {
   const [SubTotal,SetSubTotal]=useState([]) // this state will be used to calculate subtotal
   const [SubTotalValue,SetSubTotalValue]=useState(0)
+  const [DeliveryChargesValue,SetDeliveryChargesValue]=useState(0)
+  const [TotalValue,SetTotalValue]=useState(0)
   const Navigate=useNavigate()
   
   // the following function will be used to update total price for each item
@@ -66,13 +68,23 @@ const CartPage = ({ GlobalState, UpdateCart }) => {
     console.log(typeof SubTotalValue)
     if (SubTotalValue>500) {
       let x=Math.round(SubTotalValue*0.2)
+      SetDeliveryChargesValue(x)
       return <h5> {x} EGP</h5>
       
       
     } else {
+      let y=100
+      SetDeliveryChargesValue(y)
       return <h5>100 EGP</h5>
       
     }
+  }
+  // The following Function for calculate total value
+  const TotalOrderPrice=()=>{
+    let x=SubTotalValue+DeliveryChargesValue
+    SetTotalValue(x)
+    return <h5> {TotalValue} EGP</h5>
+    
   }
 
   useEffect(() => {
@@ -243,17 +255,36 @@ const CartPage = ({ GlobalState, UpdateCart }) => {
             
           </div>
           </div>
+          {/* Total Price */}
+          <div className=" d-flex flex-row">
+          
+          <div style={{minWidth:'40%'}}>
+            <h4>
+              Total Price:
+            </h4>
+          </div>
+          <div className=" flex-grow-1 text-end">
+            {<TotalOrderPrice/>}
+            
+          </div>
+          </div>
           {/* Checkout button */}
           <div>
             <button className="SignUpButton" onClick={(e)=>{
               e.stopPropagation()
               console.log(GlobalState)
-              if (GlobalState.UserLogged===true && GlobalState.Admin===false && GlobalState.Merchant===false) {
+              const Order={OrderValue:TotalValue,OrderDetails:GlobalState.CartItems,OrderConfirmed:false}
+              AddOrder(Order)
+              if (GlobalState.UserLogged===false) {
+                Navigate('/LogIn')
+                
+                
+              } else if(GlobalState.UserLogged===true && GlobalState.Admin===false && GlobalState.Merchant===false) {
                 Navigate(`/${GlobalState.Name}/Checkout`)
                 
-              } else {
-                Navigate("/")
-                
+              }else{
+                Navigate('/')
+
               }
             }}>
               Checkout

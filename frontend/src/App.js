@@ -338,7 +338,7 @@ function App() {
       if (Array.isArray(GlobalState.CartItems)) {
         let y;
         GlobalState.CartItems.forEach((item) => {
-          if (item.ID === UpdateData.ID) {
+          if (item.ID === UpdateData.ID && item.Qty<item.InStockQty) {
             console.log(item.Qty);
             console.log(typeof item.Qty);
             let j = item.Qty + 1;
@@ -349,6 +349,10 @@ function App() {
 
             console.log(GlobalState);
           } else {
+            console.log("Item qty exceeded")
+            y = GlobalState.CartItems;
+            console.log(GlobalState);
+
           }
         });
         SetGlobal((PervState) => ({
@@ -428,6 +432,11 @@ function App() {
     } else {
     }
   };
+// following function will store order data
+const AddOrder=(Order)=>{
+  console.log(Order)
+  
+} 
 
   console.log(typeof new Date().getTime());
 
@@ -597,7 +606,7 @@ function App() {
               <Route
                 path="/Cart"
                 element={
-                  <CartPage GlobalState={GlobalState} UpdateCart={UpdateCart} />
+                  <CartPage GlobalState={GlobalState} UpdateCart={UpdateCart} AddOrder={AddOrder} />
                 }
               />
               <Route path="/:Name/Checkout" element={<UserCheckOutPage />}/>
