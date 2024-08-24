@@ -27,6 +27,7 @@ import MerchantSignUp from "./screens/MerchantSignUp.js";
 import MerchantPage from "./screens/MerchantPage.js";
 import ProductDetails from "./screens/ProductDetails.js";
 import CartPage from "./screens/CartPage.js";
+import UserCheckOutPage from "./screens/UserCheckOutPage.js";
 
 function App() {
   const BackDrop = useRef();
@@ -599,6 +600,7 @@ function App() {
                   <CartPage GlobalState={GlobalState} UpdateCart={UpdateCart} />
                 }
               />
+              <Route path="/:Name/Checkout" element={<UserCheckOutPage />}/>
 
               <Route
                 path="/SignUp"

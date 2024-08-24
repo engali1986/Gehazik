@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
+import {useNavigate} from "react-router-dom"
 
 const CartPage = ({ GlobalState, UpdateCart }) => {
   const [SubTotal,SetSubTotal]=useState([]) // this state will be used to calculate subtotal
   const [SubTotalValue,SetSubTotalValue]=useState(0)
+  const Navigate=useNavigate()
   
   // the following function will be used to update total price for each item
   const TotalPrice = ({ ID }) => {
@@ -243,7 +245,17 @@ const CartPage = ({ GlobalState, UpdateCart }) => {
           </div>
           {/* Checkout button */}
           <div>
-            <button className="SignUpButton">
+            <button className="SignUpButton" onClick={(e)=>{
+              e.stopPropagation()
+              console.log(GlobalState)
+              if (GlobalState.UserLogged===true && GlobalState.Admin===false && GlobalState.Merchant===false) {
+                Navigate(`/${GlobalState.Name}/Checkout`)
+                
+              } else {
+                Navigate("/")
+                
+              }
+            }}>
               Checkout
             </button>
           </div>
