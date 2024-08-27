@@ -1,34 +1,39 @@
 import React, { useState, useEffect,useRef } from "react";
 import jsPDF from"jspdf"
-
+import {Dropdown} from "react-bootstrap"
 const Test = () => {
   const divRef = useRef();
+  
   return (
     <>
-    <div>
-      <div ref={divRef} style={{ padding: 20 }}>
-        <h1>Hello, World!</h1>
-        <p>This is the content of the div that will be saved as a PDF.</p>
+    <div className=" d-flex flex-row justify-content-between flex-wrap">
+      <div className=" flex-grow-1">
+        hgjhgjh
       </div>
-      <button onClick={()=>{
-        const doc = new jsPDF();
+    <Dropdown>
+    <button className="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Dropdown button
+  </button>
+  <ul className="dropdown-menu">
+    <li><a className="dropdown-item" href="#">Action</a></li>
+    <li><a className="dropdown-item" href="#"><Dropdown>
+    <button className="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Dropdown button
+  </button>
+  <ul className="dropdown-menu">
+  <li><a className="dropdown-item" href="#">Action</a></li>
 
-        doc.html(divRef.current, {
-          callback: function (doc) {
-            doc.save('document.pdf');
-          },
-          x: 10,
-          y: 10,
-          width: 180, // Width of content on the page
-          windowWidth: divRef.current.offsetWidth, // HTML width used for rendering
-        });
-      }}>Download as PDF</button>
+  </ul>
+
+      </Dropdown></a></li>
+    <li><a className="dropdown-item" href="#">Something else here</a></li>
+  </ul>
+    </Dropdown>
+
     </div>
-      
-      <div className="AA">
-        njhljlkjljk
-
-      </div>
+    
+ 
+    
     </>
   );
 };
