@@ -6,7 +6,7 @@ const Test = () => {
   
   return (
     <>
-    <div className=" d-flex flex-row justify-content-between flex-wrap">
+    <div className=" d-flex flex-row justify-content-between flex-wrap gap-5">
       <div className=" flex-grow-1">
         hgjhgjh
       </div>
