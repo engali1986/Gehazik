@@ -5,9 +5,9 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Navbar } from "react-bootstrap";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import "./App.css";
-
 import { useState, useRef, useEffect } from "react";
 import Main from "./screens/Main.js";
 import ErrorWindow from "./screens/ErrorWindow.js";
@@ -502,7 +502,11 @@ const AddOrder=(Order)=>{
         console.log(window.innerWidth);
       }}
     >
+      
       <AddressSelect globalState={GlobalState} updateAddress={UpdateAddress} />
+      <ToastContainer position="top-center"
+autoClose={3000}
+hideProgressBar />
       <div
         ref={BackDrop}
         onClick={(e) => {

@@ -1,17 +1,29 @@
 import React, { useState, useEffect,useRef } from "react";
 import jsPDF from"jspdf"
-import {Dropdown, Toast, ToastHeader, ToastBody, ToastContainer,Row} from "react-bootstrap"
+import {Dropdown,Row} from "react-bootstrap"
+import { toast} from 'react-toastify';
+  import "react-toastify/dist/ReactToastify.css";
 const Test = () => {
   const divRef = useRef();
   
   return (
     <>
     <div className=" d-flex flex-row justify-content-between flex-wrap gap-5">
-      <div className="flex-grow-1">
+      <div className="flex-grow-1" onClick={(e)=>{
+        e.stopPropagation()
+        toast.success("Success Notification !");
+        toast((<div style={{color:'red'}}> jhjhjkkj
+          </div>),{
+          autoClose:2000
+        })
+      }}>
         hgjhgjh
       </div>
       <Dropdown>
-      <Dropdown.Toggle variant="success" id="dropdown-basic">
+      <Dropdown.Toggle variant="success" id="dropdown-basic" onClick={(e)=>{
+        e.stopPropagation()
+        toast.error("Success Notification !");
+      }}>
         Dropdown Button
       </Dropdown.Toggle>
 
