@@ -224,7 +224,7 @@ const SignUp = ({ globalState, setGlobal }) => {
       Credentials.ConfirmPass.length > 0 &&
       Credentials.Name.length > 0 &&
       Credentials.Password === Credentials.ConfirmPass &&
-      PasswordCheckState === true
+      PasswordCheckState === true && Governorate.length>0 && City.length>0
     ) {
       if (
         Credentials.Email.match(whiteSpaceRegex) ||
