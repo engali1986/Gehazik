@@ -463,25 +463,23 @@ app.post("/GetOrders", async (req, res) => {
 
 // Orders Route end
 
-app.post("/test", upload.array("files"), async (req, res) => {
+app.post("/test", async (req, res) => {
   try {
-    const files = req.files;
+    if (req.body.test==="yes") {
+      res.json({resp:"yes"})
+      
+    }
 
-    console.log(files);
-
-    const fileLinks = await Promise.all(
-      files.map(async (file) => {
-        const fileData = await uploadFileToDrive(file);
-        return { name: file.originalname, link: fileData.webViewLink };
-      })
-    );
-    console.log(fileLinks);
-
-    res.status(200).json({ fileLinks });
+    if (req.body.test2==="no") {
+      res.json({resp:"no"})
+      
+    }
+    
   } catch (error) {
-    console.error("Error uploading files:", error);
-    res.status(500).send("Internal Server Error");
+    res.json({error})
+    
   }
+ 
 });
 
 const __filename = fileURLToPath(import.meta.url);
