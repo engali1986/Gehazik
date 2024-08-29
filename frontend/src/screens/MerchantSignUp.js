@@ -230,7 +230,7 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
       Credentials.ConfirmPass.length > 0 &&
       Credentials.Name.length > 0 &&
       Credentials.Password === Credentials.ConfirmPass &&
-      PasswordCheckState === true
+      PasswordCheckState === true && Credentials.Governorate.length>0 && Credentials.City.length>0
     ) {
       if (
         Credentials.Email.match(whiteSpaceRegex) ||
@@ -490,8 +490,10 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
         if (e.target.value==="Please select Governorate") {
           toast.error("Please select Governorate")
           SetGovernorate("")  
+          setCredentials({...Credentials,Governorate:"", City:""}) 
         } else {
           SetGovernorate(e.target.value) 
+          setCredentials({...Credentials,Governorate:e.target.value}) 
         }
       }}>
         <option>
@@ -509,8 +511,10 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
         if (e.target.value==="Please select a City") {
           toast.error("Please select a City")
           SetCity("")  
+          setCredentials({...Credentials,City:""}) 
         } else {
           SetCity(e.target.value) 
+          setCredentials({...Credentials,City:e.target.value}) 
         }
       }}>
         <option>

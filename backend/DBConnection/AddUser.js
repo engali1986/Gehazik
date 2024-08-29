@@ -52,6 +52,8 @@ async function AddUser(Credentials) {
           uservarified: false,
           varificationcode: x,
           Date: new Date(),
+          Governorate:Credentials.Governorate,
+          City:Credentials.City
         })
         .then((res) => {
           console.log("AddUser file 2");
