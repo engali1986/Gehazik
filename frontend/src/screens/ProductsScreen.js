@@ -356,7 +356,7 @@ const ProductsScreen = ({globalState}) => {
         const CategoryData={
           Category:Category,
           Governorate:globalState.Governorate,
-          City:globalState.City+" "
+          City:globalState.City
         }
         console.log("Category is : ", Category);
         console.log("All Products");

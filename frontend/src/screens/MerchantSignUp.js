@@ -2,8 +2,12 @@ import React, { useEffect, useRef, useState } from "react";
 import { json, useNavigate } from "react-router-dom";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
+import StaticData from "../Data/StaticData";
+import { toast } from "react-toastify";
 
 const MerchantSignUp = ({ globalState, setGlobal }) => {
+  const [Governorate,SetGovernorate]=useState("")
+  const [City,SetCity]=useState("")
   const [Disabled, setDisabled] = useState(false); // this will be used to disable all fields edit after signup button pressed
   const [SignUpBtn, setButton] = useState(true); // Signup button disabled attrebute
   const [ConfirmPassword, setConfirmPassword] = useState(true); // true if password matches password requirements
@@ -14,6 +18,8 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
     Email: "",
     Password: "",
     ConfirmPass: "",
+    Governorate:Governorate,
+    City:City
   });
   const PasswordCheck = {
     LowerCase: false,
@@ -475,6 +481,48 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
         onKeyUp={(e) => EnterEmail(e)}
         required
       />
+       <Row>
+      <Col className=" d-flex flex-column my-3" xs={12} md={6}>
+      <div >
+        Please select your Governorate
+      </div>
+      <select onChange={(e)=>{
+        if (e.target.value==="Please select Governorate") {
+          toast.error("Please select Governorate")
+          SetGovernorate("")  
+        } else {
+          SetGovernorate(e.target.value) 
+        }
+      }}>
+        <option>
+          Please select Governorate
+        </option>
+        {Array.isArray(Object.keys(StaticData.Cities))?Object.keys(StaticData.Cities).map((city)=>(<option key={city}>{city}</option>)):""}
+      </select>
+
+      </Col>
+      <Col className=" d-flex flex-column my-3" xs={12} md={6}>
+      <div>
+        Please select your City
+      </div>
+      <select onChange={(e)=>{
+        if (e.target.value==="Please select a City") {
+          toast.error("Please select a City")
+          SetCity("")  
+        } else {
+          SetCity(e.target.value) 
+        }
+      }}>
+        <option>
+          Please select a City
+        </option>
+        {StaticData.Cities[Governorate] && Array.isArray(Object.keys(StaticData.Cities[Governorate]))?Object.keys(StaticData.Cities[Governorate]).map((city)=>(<option key={city}>
+          {city}
+        </option>)):""}
+      </select>
+
+      </Col>
+     </Row>
 
       <label htmlFor="psw">
         <b>Password</b>

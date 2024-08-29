@@ -464,10 +464,7 @@ const SignUp = ({ globalState, setGlobal }) => {
       />
      <Row>
       <Col className=" d-flex flex-column my-3" xs={12} md={6}>
-      <div onClick={(e)=>{
-        e.stopPropagation()
-        console.log(StaticData.Cities[Governorate])
-      }}>
+      <div >
         Please select your Governorate
       </div>
       <select onChange={(e)=>{
