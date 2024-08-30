@@ -39,7 +39,7 @@ const ProductDetails = ({ GlobalState,AddOrders }) => {
       if (typeof Productdetails.resp === "object") {
         console.log(Productdetails.resp);
         SetLoader(false);
-        prod = await Productdetails.resp;
+        prod = Productdetails.resp;
         console.log(prod);
         setProduct((Perv) => ({
           ...Perv,
@@ -48,7 +48,13 @@ const ProductDetails = ({ GlobalState,AddOrders }) => {
           ProductUnitPrice: prod.ProductUnitPrice,
           InStockQty: prod.InStockQty,
           ProductAdditionalFeatures: prod.ProductAdditionalFeatures,
+          EgyptDelivery:prod.EgyptDelivery,
+          GovernorateDelivery:prod.GovernorateDelivery,
+          CityDelivery:prod.CityDelivery,
+          Governorate:prod.Governorate,
+          City:prod.City.split('\t')[0]
         }));
+       
         console.log(Product);
       } else {
         Navigate("/ProductNotFound");
@@ -298,13 +304,20 @@ const ProductDetails = ({ GlobalState,AddOrders }) => {
               <button
                 onClick={(e) => {
                   e.stopPropagation();
+                  console.log(Product)
                   console.log(Count);
-                  console.log(AddOrders);
+                  if (GlobalState.UserLogged===true && GlobalState.Client===true && GlobalState.Name.length>0 && GlobalState.Merchant===false && GlobalState.Admin===false && GlobalState.Governorate.length>0 && GlobalState.City.length>0) {
+                    console.log(AddOrders);
                   let AddedProduct = { ...Product, Qty: Count, ID: params.id };
                   console.log(AddedProduct);
                   AddOrders(AddedProduct);
                   e.target.innerText = "Added...";
                   e.target.disabled = true;
+                  } else {
+                    toast.warn((<div>Please <a href="/LogIn">Login/Signup</a> to Client account</div>))
+                    
+                  }
+                  
                 }}
                 style={{
                   width: "100%",
