@@ -4,17 +4,22 @@ import { Container, Row, Col } from "react-bootstrap";
 import StaticData from "../Data/StaticData.js";
 // This will be merchant page for merchant controls
 const MerchantPage = ({ globalState, setGlobal }) => {
+  const [ShowAlert, SetShowAlert] = useState({
+    Success: false,
+    Show: false,
+    Massage: "",
+  });
   const [Data, SetData] = useState(""); // this state will be used to store the selected menu items to display data
   const [ProductsList, SetProductsList] = useState([]);// this will be used to store all products of merchant
   const navigate = useNavigate();
   const params = useParams();
   // The following function will be used to display Data inside page
   const DtataDisplay = () => {
-    const [ShowAlert, SetShowAlert] = useState({
-      Success: false,
-      Show: false,
-      Massage: "",
-    });
+    // const [ShowAlert, SetShowAlert] = useState({
+    //   Success: false,
+    //   Show: false,
+    //   Massage: "",
+    // });
     const [ProductImageFiles, SetProductImageFiles] = useState([]);
     const [AddProductData, SetAddProductData] = useState({
       ProductCategory: "",
@@ -609,22 +614,26 @@ const MerchantPage = ({ globalState, setGlobal }) => {
             <Col xs={12}>
               {ProductsList.length === 0 ? (
                 <div
-                  ref={Alert}
-                  className=" alert alert-success text-start"
-                  style={{
-                    boxSizing: "border-box",
-                    marginBottom: "0",
-                    width: "100%",
-                    overflow: "hidden",
-                    padding: "0px",
-                    border: "0px",
-                    maxHeight: "500px",
-                    transition: "all 0.3s ease-in-out",
-                  }}
-                  role="alert"
-                >
-                  Please wait recieving data
-                </div>
+                ref={Alert}
+                className={
+                  ShowAlert.Success === false
+                    ? " alert alert-danger text-start"
+                    : " alert alert-success text-start"
+                }
+                style={{
+                  boxSizing: "border-box",
+                  marginBottom: "0",
+                  width: "100%",
+                  overflow: "hidden",
+                  padding: "0px",
+                  border: "0px",
+                  maxHeight: ShowAlert.Show === true ? "500px" : "0px",
+                  transition: "all 0.3s ease-in-out",
+                }}
+                role="alert"
+              >
+                {ShowAlert.Massage.length>0?ShowAlert.Massage:"Please wait"}
+              </div>
               ) : (
                 <div
                   ref={Alert}
@@ -1129,7 +1138,10 @@ const MerchantPage = ({ globalState, setGlobal }) => {
     >
     {/* This will be the head of page */}
       <Row>
-        <h2>Merchant Page</h2>
+        <h2 onClick={(e)=>{
+          e.stopPropagation()
+          console.log(ShowAlert)
+        }}>Merchant Page</h2>
       </Row>
 {/* This will be page body */}
       <Row>
@@ -1370,6 +1382,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                     console.log(e.target.innerText);
                     let Menues = document.querySelectorAll(".MerchantMenu");
                     let MenuArrows = document.querySelectorAll(".MenuArrow");
+                    SetShowAlert({...ShowAlert,Show:true,Success:true,Massage:"Please wait"})
                     for (let index = 0; index < Menues.length; index++) {
                       if (
                         Menues[index].classList.contains("MerchantMenuActive")
@@ -1411,7 +1424,17 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                     console.log(GetProductsList.resp);
                     if (Array.isArray(GetProductsList.resp)) {
                       SetProductsList(GetProductsList.resp);
+                      SetShowAlert({...ShowAlert,Show:false, Success:true, Massage:''})
                     } else {
+                      SetShowAlert({...ShowAlert,Show:true, Success:false, Massage:"No Products Found"})
+
+                      setTimeout(()=>{
+                        SetShowAlert({...ShowAlert,Show:false, Success:false, Massage:""})
+
+                      }, 3000)
+                      
+                      
+
                     }
                   }}
                 >

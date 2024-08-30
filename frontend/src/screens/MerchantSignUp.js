@@ -415,7 +415,7 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
         false,
         false,
         true,
-        UserVarified.resp.token, UserVarified.resp.Governorate, UserVarified.resp.City
+        UserVarified.resp.Token, UserVarified.resp.Governorate, UserVarified.resp.City
       );
       PassmatchAlert.current.classList.replace("alert-danger", "alert-success");
       PassmatchAlert.current.innerText = "User Logged in successfully";
