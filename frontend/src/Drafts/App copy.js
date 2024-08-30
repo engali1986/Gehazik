@@ -21,13 +21,14 @@ import AdminPage from "./screens/AdminPage.js";
 import WrongPage from "./screens/WrongPage.js";
 import StaticData from "./Data/StaticData.js";
 import ProductsScreen from "./screens/ProductsScreen.js";
+import AddressSelect from "./screens/AddressSelect.js";
 import MerchantLogIn from "./screens/MerchantLogIn.js";
 import MerchantSignUp from "./screens/MerchantSignUp.js";
 import MerchantPage from "./screens/MerchantPage.js";
 import ProductDetails from "./screens/ProductDetails.js";
 import CartPage from "./screens/CartPage.js";
 import UserCheckOutPage from "./screens/UserCheckOutPage.js";
-
+//  in this copy we deleted Addaddress component functionality line 472, 513
 function App() {
   const BackDrop = useRef();
   const ProfileItems = useRef();
@@ -468,7 +469,17 @@ const AddOrder=(Order)=>{
     }
   };
   useEffect(() => {
-    
+    if (document.querySelectorAll(".AddressSelection")[0]) {
+      console.log(GlobalState);
+      if (GlobalState.Governorate.length > 0 && GlobalState.City.length > 0) {
+        console.log("Location added");
+        document.querySelectorAll(".AddressSelection")[0].style.display =
+          "none";
+      } else {
+        console.log("Location not added");
+        // document.querySelectorAll(".AddressSelection")[0].style.display="block"
+      }
+    }
 
     if (window.innerWidth >= 768) {
       console.log("navBarBig");
@@ -499,7 +510,7 @@ const AddOrder=(Order)=>{
       }}
     >
       
-      
+      <AddressSelect globalState={GlobalState} updateAddress={UpdateAddress} />
       <ToastContainer position="top-center"
 autoClose={3000}
 hideProgressBar />
@@ -601,7 +612,7 @@ hideProgressBar />
               />
               <Route
                 path="/ProductDetails/:id"
-                element={<ProductDetails GlobalState={GlobalState} AddOrders={AddToCart} />}
+                element={<ProductDetails AddOrders={AddToCart} />}
               />
               <Route
                 path="/Cart"

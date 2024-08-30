@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
+import { toast } from "react-toastify";
 
-const ProductDetails = ({ AddOrders }) => {
+const ProductDetails = ({ GlobalState,AddOrders }) => {
   const [Product, setProduct] = useState({ ProductImages: [] }); // this will sore product details
   const [Loader, SetLoader] = useState(false); // this will handle loader visbility during fetch product details
   const [Count, SetCount] = useState(1); // this will store ordered qty
@@ -55,6 +56,15 @@ const ProductDetails = ({ AddOrders }) => {
     };
 
     GetProductDetails(params.id);
+
+    if (GlobalState.UserLogged===false && GlobalState.Name.length===0) {
+      toast.warn((<div>Please <a href="/LogIn">LogIn/Signup</a> to add product </div>), {
+        autoClose:false
+      })
+      
+    } else {
+      
+    }
 
     console.log(Product);
   }, []);
