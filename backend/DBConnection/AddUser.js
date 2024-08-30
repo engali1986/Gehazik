@@ -37,6 +37,7 @@ async function AddUser(Credentials) {
     // if user not regestered we add user to database and create varificationcode
     if (IsUserRegistered === "User Not Found") {
       let x = Math.floor(Math.random() * 9999);
+      let NewToken = Math.floor(Math.random() * 10000) + 1;
 
       if (x < 1000) {
         x = x + 1000;
@@ -52,6 +53,7 @@ async function AddUser(Credentials) {
           uservarified: false,
           varificationcode: x,
           Date: new Date(),
+          Token:NewToken,
           Governorate:Credentials.Governorate,
           City:Credentials.City
         })

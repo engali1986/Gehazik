@@ -60,7 +60,7 @@ async function AddMerchant(Credentials) {
           Merchantvarified: false,
           varificationcode: x,
           Date: new Date(),
-          token: NewToken,
+          Token: NewToken,
           Governorate:Credentials.Governorate,
           City:Credentials.City
         })
