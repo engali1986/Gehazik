@@ -52,7 +52,7 @@ const LogIn = ({ globalState, setGlobal }) => {
         UserVarified.resp.email,
         false,
         true,
-        false, UserVarified.resp.Token
+        false, UserVarified.resp.Token,UserVarified.resp.Governorate,UserVarified.resp.City
       );
       Alert.current.classList.replace("alert-danger", "alert-success");
       Alert.current.innerText = "User Logged in successfully";
@@ -116,7 +116,7 @@ const LogIn = ({ globalState, setGlobal }) => {
               false,
               true,
               false,
-              UserLogIn.resp.Token
+              UserLogIn.resp.Token,UserLogIn.resp.Governorate,UserLogIn.resp.City
             );
             Alert.current.classList.replace("alert-danger", "alert-success");
             Alert.current.innerText = "User Logged in successfully";
@@ -153,7 +153,7 @@ const LogIn = ({ globalState, setGlobal }) => {
             UserLogIn.resp.email,
             false,
             true,
-            false,UserLogIn.resp.Token
+            false,UserLogIn.resp.Token,UserLogIn.resp.Governorate,UserLogIn.resp.City
           );
           Alert.current.classList.replace("alert-danger", "alert-success");
           Alert.current.innerText = "User Logged in successfully";

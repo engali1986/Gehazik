@@ -317,6 +317,7 @@ const ProductDetails = ({ GlobalState,AddOrders }) => {
                   AddOrders(AddedProduct);
                   e.target.innerText = "Added...";
                   e.target.disabled = true;
+                  toast.success((<div>Product added, view <a href="/cart">Cart</a> or <a href="/">continue shopping</a></div>))
                     } else {
                       toast.error(`This product cannot be shipped to ${GlobalState.City}`)
                       
