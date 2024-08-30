@@ -6,8 +6,6 @@ import StaticData from "../Data/StaticData";
 import { toast } from "react-toastify";
 
 const SignUp = ({ globalState, setGlobal }) => {
-  const [Governorate,SetGovernorate]=useState("")
-  const [City,SetCity]=useState("")
   const [Disabled, setDisabled] = useState(false); // this will be used to disable all fields edit after signup button pressed
   const [SignUpBtn, setButton] = useState(true); // Signup button disabled attrebute
   const [ConfirmPassword, setConfirmPassword] = useState(true); // true if password matches password requirements
@@ -18,8 +16,8 @@ const SignUp = ({ globalState, setGlobal }) => {
     Email: "",
     Password: "",
     ConfirmPass: "",
-    Governorate:Governorate,
-    City:City
+    Governorate:"",
+    City:""
   });
   const PasswordCheck = {
     LowerCase: false,
@@ -397,9 +395,9 @@ const SignUp = ({ globalState, setGlobal }) => {
       .catch((err) => {
         return "user Not Added";
       });
-
+console.log(UserVarified)
     if (UserVarified.resp.email && UserVarified.resp.uservarified === true) {
-      setGlobal(UserVarified.resp.name, true, UserVarified.resp.email, false);
+      setGlobal(UserVarified.resp.name, true, UserVarified.resp.email, false, true, false, UserVarified.resp.Token,UserVarified.resp.Governorate,UserVarified.resp.City);
       PassmatchAlert.current.classList.replace("alert-danger", "alert-success");
       PassmatchAlert.current.innerText = "User Logged in successfully";
       PassmatchAlert.current.style.maxHeight = "500px";
@@ -470,10 +468,10 @@ const SignUp = ({ globalState, setGlobal }) => {
       <select onChange={(e)=>{
         if (e.target.value==="Please select Governorate") {
           toast.error("Please select Governorate")
-          SetGovernorate("") 
+          
           setCredentials({...Credentials,Governorate:"", City:""}) 
         } else {
-          SetGovernorate(e.target.value) 
+          
           setCredentials({ ...Credentials, Governorate: e.target.value });
         }
       }}>
@@ -491,17 +489,17 @@ const SignUp = ({ globalState, setGlobal }) => {
       <select onChange={(e)=>{
         if (e.target.value==="Please select a City") {
           toast.error("Please select a City")
-          SetCity("")  
+          
           setCredentials({...Credentials,City:""}) 
         } else {
-          SetCity(e.target.value)
+          
           setCredentials({...Credentials,City:e.target.value})  
         }
       }}>
         <option>
           Please select a City
         </option>
-        {StaticData.Cities[Governorate] && Array.isArray(Object.keys(StaticData.Cities[Governorate]))?Object.keys(StaticData.Cities[Governorate]).map((city)=>(<option key={city}>
+        {StaticData.Cities[Credentials.Governorate] && Array.isArray(Object.keys(StaticData.Cities[Credentials.Governorate]))?Object.keys(StaticData.Cities[Credentials.Governorate]).map((city)=>(<option key={city}>
           {city}
         </option>)):""}
       </select>

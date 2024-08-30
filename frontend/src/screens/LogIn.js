@@ -43,6 +43,7 @@ const LogIn = ({ globalState, setGlobal }) => {
       .catch((err) => {
         return "user Not Added";
       });
+      console.log(UserVarified)
 
     if (UserVarified.resp.email && UserVarified.resp.uservarified === true) {
       setGlobal(
@@ -51,7 +52,7 @@ const LogIn = ({ globalState, setGlobal }) => {
         UserVarified.resp.email,
         false,
         true,
-        false
+        false, UserVarified.resp.Token
       );
       Alert.current.classList.replace("alert-danger", "alert-success");
       Alert.current.innerText = "User Logged in successfully";
@@ -102,6 +103,7 @@ const LogIn = ({ globalState, setGlobal }) => {
         .catch((err) => {
           return "user Not Added";
         });
+        console.log(UserLogIn)
 
       if (UserLogIn.resp) {
         LoginButtonRef.current.innerText = "Login";
@@ -113,7 +115,8 @@ const LogIn = ({ globalState, setGlobal }) => {
               UserLogIn.resp.email,
               false,
               true,
-              false
+              false,
+              UserLogIn.resp.Token
             );
             Alert.current.classList.replace("alert-danger", "alert-success");
             Alert.current.innerText = "User Logged in successfully";
@@ -150,7 +153,7 @@ const LogIn = ({ globalState, setGlobal }) => {
             UserLogIn.resp.email,
             false,
             true,
-            false
+            false,UserLogIn.resp.Token
           );
           Alert.current.classList.replace("alert-danger", "alert-success");
           Alert.current.innerText = "User Logged in successfully";

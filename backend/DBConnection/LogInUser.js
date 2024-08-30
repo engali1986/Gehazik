@@ -13,6 +13,7 @@ async function LogInUser(Credentials) {
       console.log(res);
     });
     console.log(Credentials);
+    let NewToken = Math.floor(Math.random() * 10000) + 1;
     const GetUser = await client
       .db("Gehazik")
       .collection("Users")
@@ -51,7 +52,7 @@ async function LogInUser(Credentials) {
               .collection("Users")
               .updateOne(
                 { email: Credentials.Email, pass: Credentials.Password },
-                { $set: { uservarified: true } }
+                { $set: { uservarified: true,Token:NewToken } }
               )
               .then((res) => {
                 console.log("LogInUser file 7.5");
@@ -66,6 +67,7 @@ async function LogInUser(Credentials) {
             if (typeof VarifyUser === "object") {
               console.log("LogInUser file 8");
               GetUser.uservarified = true;
+              GetUser.Token=NewToken
 
               return GetUser;
             } else {
@@ -131,18 +133,40 @@ async function LogInUser(Credentials) {
         }
       } else {
         console.log("LogInUser file 15");
-        return GetUser;
+        const UpdateUserToken=await client
+        .db("Gehazik")
+        .collection("Users")
+        .updateOne(
+          { email: Credentials.Email, pass: Credentials.Password },
+          { $set: {Token:NewToken } }).then(res=>{
+            console.log("LogInUser file 15.5 Update Token");
+            return res
+
+          }).catch(err=>{
+            console.log("LogInUser file 15.5 err");
+            console.log(err)
+            return "Connection error" 
+
+          })
+          if (typeof UpdateUserToken==="object"  && UpdateUserToken.modifiedCount>0) {
+            console.log("LogInUser file 15.5 Token Updated");
+            GetUser.Token=NewToken
+
+            return GetUser;
+            
+          } else {
+            return "Connection error" 
+            
+          }
+
+        
       }
     } else {
       console.log("LogInUser file 16");
       return GetUser;
     }
   } finally {
-    // Ensures that the client will close when you finish/error
-    await client.close(true).then((res) => {
-      console.log("LogInUser file 5");
-      console.log(res);
-    });
+   
     setTimeout(() => {
       console.log("done");
     }, 10000);

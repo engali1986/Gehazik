@@ -55,7 +55,7 @@ async function LogInMerchant(Credentials) {
               .updateOne(
                 { email: Credentials.Email, pass: Credentials.Password },
                 { $set: { Merchantvarified: true } },
-                { $set: { token: NewToken } }
+                { $set: { Token: NewToken } }
               )
               .then((res) => {
                 console.log("LogInMerchant file 7.5");
@@ -70,7 +70,7 @@ async function LogInMerchant(Credentials) {
             if (typeof VarifyMerchant === "object") {
               console.log("LogInMerchant file 8");
               GetMerchant.Merchantvarified = true;
-              GetMerchant.token = NewToken;
+              GetMerchant.Token = NewToken;
 
               return GetMerchant;
             } else {
@@ -141,7 +141,7 @@ async function LogInMerchant(Credentials) {
           .collection("Merchants")
           .updateOne(
             { email: Credentials.Email, pass: Credentials.Password },
-            { $set: { token: NewToken } }
+            { $set: { Token: NewToken } }
           )
           .then((res) => {
             console.log("LogInMerchant file 15 UpdateMerchantToken");
@@ -153,7 +153,7 @@ async function LogInMerchant(Credentials) {
             return "Connection error";
           });
         if (typeof UpdateMerchantToken === "object") {
-          GetMerchant.token = NewToken;
+          GetMerchant.Token = NewToken;
           return GetMerchant;
         } else {
           return "Connection error";

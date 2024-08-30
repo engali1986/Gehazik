@@ -61,6 +61,8 @@ async function AddMerchant(Credentials) {
           varificationcode: x,
           Date: new Date(),
           token: NewToken,
+          Governorate:Credentials.Governorate,
+          City:Credentials.City
         })
         .then((res) => {
           console.log("AddMerchant file 2");

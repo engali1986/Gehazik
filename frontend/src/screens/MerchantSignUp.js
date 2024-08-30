@@ -18,8 +18,8 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
     Email: "",
     Password: "",
     ConfirmPass: "",
-    Governorate:Governorate,
-    City:City
+    Governorate:"",
+    City:""
   });
   const PasswordCheck = {
     LowerCase: false,
@@ -415,7 +415,7 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
         false,
         false,
         true,
-        UserVarified.resp.token
+        UserVarified.resp.token, UserVarified.resp.Governorate, UserVarified.resp.City
       );
       PassmatchAlert.current.classList.replace("alert-danger", "alert-success");
       PassmatchAlert.current.innerText = "User Logged in successfully";
@@ -489,10 +489,10 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
       <select onChange={(e)=>{
         if (e.target.value==="Please select Governorate") {
           toast.error("Please select Governorate")
-          SetGovernorate("")  
+         
           setCredentials({...Credentials,Governorate:"", City:""}) 
         } else {
-          SetGovernorate(e.target.value) 
+          
           setCredentials({...Credentials,Governorate:e.target.value}) 
         }
       }}>
@@ -510,17 +510,17 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
       <select onChange={(e)=>{
         if (e.target.value==="Please select a City") {
           toast.error("Please select a City")
-          SetCity("")  
+         
           setCredentials({...Credentials,City:""}) 
         } else {
-          SetCity(e.target.value) 
+          
           setCredentials({...Credentials,City:e.target.value}) 
         }
       }}>
         <option>
           Please select a City
         </option>
-        {StaticData.Cities[Governorate] && Array.isArray(Object.keys(StaticData.Cities[Governorate]))?Object.keys(StaticData.Cities[Governorate]).map((city)=>(<option key={city}>
+        {StaticData.Cities[Credentials.Governorate] && Array.isArray(Object.keys(StaticData.Cities[Credentials.Governorate]))?Object.keys(StaticData.Cities[Credentials.Governorate]).map((city)=>(<option key={city}>
           {city}
         </option>)):""}
       </select>

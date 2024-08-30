@@ -27,6 +27,12 @@ const UsersProductDetails = async (ProductID) => {
             ProductFeatures: 1,
             ProductCategory: 1,
             ProductSubCategory: 1,
+            EgyptDelivery:1,
+            GovernorateDelivery:1,
+            CityDelivery:1,
+            Governorate:1,
+            City:1
+
           },
         }
       )

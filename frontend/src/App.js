@@ -193,7 +193,8 @@ function App() {
     Admin,
     Client,
     Merchant,
-    Token
+    Token,
+    Governorate, City
   ) => {
     SetGlobal({
       ...GlobalState,
@@ -204,6 +205,8 @@ function App() {
       Client: Client,
       Merchant: Merchant,
       Token: Token,
+      Governorate:Governorate,
+      City:City
     });
 
     sessionStorage.setItem(
@@ -217,6 +220,10 @@ function App() {
         Client: Client,
         Merchant: Merchant,
         Token: Token,
+        TimeLogged: new Date().getTime(),
+        Governorate:Governorate,
+      City:City
+
       })
     );
     localStorage.setItem("globalState", sessionStorage.getItem("globalState"));

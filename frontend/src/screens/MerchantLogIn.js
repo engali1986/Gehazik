@@ -57,7 +57,7 @@ const MerchantLogIn = ({ globalState, setGlobal }) => {
         Merchantvarified.resp.email,
         false,
         false,
-        true
+        true, Merchantvarified.resp.Token, Merchantvarified.resp.Governorate, Merchantvarified.resp.City
       );
       Alert.current.classList.replace("alert-danger", "alert-success");
       Alert.current.innerText = "User Logged in successfully";
@@ -129,7 +129,8 @@ const MerchantLogIn = ({ globalState, setGlobal }) => {
               false,
               false,
               true,
-              UserLogIn.resp.token
+              UserLogIn.resp.Token,
+              UserLogIn.resp.Governorate, UserLogIn.resp.City
             );
             Alert.current.classList.replace("alert-danger", "alert-success");
             Alert.current.innerText = "User Logged in successfully";
@@ -168,7 +169,7 @@ const MerchantLogIn = ({ globalState, setGlobal }) => {
             UserLogIn.resp.email,
             false,
             false,
-            true
+            true, UserLogIn.resp.Token, UserLogIn.resp.Governorate, UserLogIn.resp.City
           );
           Alert.current.classList.replace("alert-danger", "alert-success");
           Alert.current.innerText = "User Logged in successfully";
