@@ -27,7 +27,7 @@ import MerchantPage from "./screens/MerchantPage.js";
 import ProductDetails from "./screens/ProductDetails.js";
 import CartPage from "./screens/CartPage.js";
 import UserCheckOutPage from "./screens/UserCheckOutPage.js";
-
+import bootstrapBundle from "bootstrap/dist/js/bootstrap.bundle";
 function App() {
   const BackDrop = useRef();
   const ProfileItems = useRef();
@@ -468,7 +468,8 @@ const AddOrder=(Order)=>{
     }
   };
   useEffect(() => {
-    
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrapBundle.Tooltip(tooltipTriggerEl))
 
     if (window.innerWidth >= 768) {
       console.log("navBarBig");

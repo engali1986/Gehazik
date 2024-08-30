@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 import { toast } from "react-toastify";
 
+
 const ProductDetails = ({ GlobalState,AddOrders }) => {
   const [Product, setProduct] = useState({ ProductImages: [] }); // this will sore product details
   const [Loader, SetLoader] = useState(false); // this will handle loader visbility during fetch product details
@@ -13,6 +14,8 @@ const ProductDetails = ({ GlobalState,AddOrders }) => {
   let prod;
 
   useEffect(() => {
+    
+    
     SetLoader(true);
     const GetProductDetails = async (ProductID) => {
       const Productdetails = await fetch(
@@ -307,12 +310,18 @@ const ProductDetails = ({ GlobalState,AddOrders }) => {
                   console.log(Product)
                   console.log(Count);
                   if (GlobalState.UserLogged===true && GlobalState.Client===true && GlobalState.Name.length>0 && GlobalState.Merchant===false && GlobalState.Admin===false && GlobalState.Governorate.length>0 && GlobalState.City.length>0) {
-                    console.log(AddOrders);
+                    if ((Product.EgyptDelivery===true)|| (Product.GovernorateDelivery===true && Product.Governorate===GlobalState.Governorate)||(Product.CityDelivery===true && Product.City===GlobalState.City)) {
+                      console.log(AddOrders);
                   let AddedProduct = { ...Product, Qty: Count, ID: params.id };
                   console.log(AddedProduct);
                   AddOrders(AddedProduct);
                   e.target.innerText = "Added...";
                   e.target.disabled = true;
+                    } else {
+                      toast.error(`This product cannot be shipped to ${GlobalState.City}`)
+                      
+                    }
+                    
                   } else {
                     toast.warn((<div>Please <a href="/LogIn">Login/Signup</a> to Client account</div>))
                     
@@ -326,6 +335,9 @@ const ProductDetails = ({ GlobalState,AddOrders }) => {
                   border: "1px solid white",
                   borderRadius: "5%",
                 }}
+                data-bs-toggle="tooltip" data-bs-placement="top"
+                data-bs-title="Click to Add"
+       
               >
                 Add to cart
               </button>
