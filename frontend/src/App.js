@@ -441,8 +441,23 @@ function App() {
 // following function will store order data
 const AddOrder=(Order)=>{
   console.log(Order)
+  SetGlobal({...GlobalState,Order:Order})
+  sessionStorage.setItem(
+    "globalState",
+    JSON.stringify({
+      ...JSON.parse(sessionStorage.getItem("globalState")),
+     Order:Order
+
+    })
+  );
+  localStorage.setItem("globalState", sessionStorage.getItem("globalState"));
+
   
 } 
+// following function will Add details to Order ( Address, phone number )
+const AddOrderDetails=()=>{
+  console.log(GlobalState)
+}
 
   console.log(typeof new Date().getTime());
 
@@ -610,7 +625,7 @@ hideProgressBar />
                   <CartPage GlobalState={GlobalState} UpdateCart={UpdateCart} AddOrder={AddOrder} />
                 }
               />
-              <Route path="/:Name/Checkout" element={<UserCheckOutPage />}/>
+              <Route path="/:Name/Checkout" element={<UserCheckOutPage GlobalState={GlobalState} AddOrderDetails={AddOrderDetails} />}/>
 
               <Route
                 path="/SignUp"
