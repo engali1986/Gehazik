@@ -4,6 +4,7 @@ import { Container,Row,Col } from 'react-bootstrap'
 const UserCheckOutPage = ({GlobalState,AddOrderDetails}) => {
   const [Step,SetStep]=useState(0)
   
+  
   const PageContent=()=>{
     const [ShippingData,SetShippingData]=useState({
       FirstName:''
