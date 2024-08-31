@@ -11,114 +11,6 @@ const ProductsScreen = ({globalState}) => {
   const [SelectedFilter,SetSelectedFilter]=useState("")
   const [FeatureFilterArr,SetFeatureFilterArr]=useState([]) // this array will be used for feature filter
   const [SetSubCategoriesFilterArr,SetSetSubCategoriesFilterArr]=useState([]) // this array for sub categories filter
-  // the following funcion will get sub categories to list them on side Column
-  const SubCategoriesList=()=>{
-    
-    for (let index = 0; index < StaticData.ProductCategories.length; index++) {
-      if (StaticData.ProductCategories[index][Object.values(params)[0].replace(/-+/g,"_")]) {
-        console.log(Object.values(params)[0].replace(/-+/g,"_"))
-        console.log("Sub categories found")
-        let arr=StaticData.ProductCategories[index][Object.values(params)[0].replace(/-+/g,"_")]
-        console.log(arr)
-        SetSubCategories(arr)
-        break;
-        
-      } else {
-        console.log(Object.values(params)[0].replace(/-+/g,"_"))
-        console.log("SubCategorie not found")
-        
-      }
-      
-    }
-
-    if (SubCategories.length>0) {
-      return<>
-      {SubCategories.map((item,index)=>(
-        <Row key={index}>
-          <div id={index}  className={`SubCategories fs-6 text-decoration-underline ${SelectedFilter===Object.keys(item)[0].replace(/_+/g," ")?"Selected":""}`} onClick={(e)=>{
-            e.stopPropagation()
-           
-            console.log(e.target.id)
-            let select=e.target.innerText
-            SetSelectedFilter(select)
-            console.log(SelectedFilter)
-            console.log(Object.keys(item)[0].replace(/_+/g," "))
-            console.log(SelectedFilter===Object.keys(item)[0].replace(/_+/g," "))
-            
-            let arr=[]
-            
-            
-            console.log(AllProduct)
-            for (let index = 0; index < AllProduct.length; index++) {
-              if (AllProduct[index].ProductSubCategory===e.target.innerText) {
-                arr.push(AllProduct[index])
-              } else {
-                
-              }
-              
-            }
-            console.log(arr)
-            SetFeatureFilterArr([])
-            SetSetSubCategoriesFilterArr(arr)
-            
-            
-          }} > 
-          
-          {Object.keys(item)[0].replace(/_+/g," ")}
-          </div>
-          {Object.values(item)[0].map(elem=>(
-            <div key={elem} className={`Features ps-3 ${SelectedFilter===elem?"Selected":""}`} onClick={(e)=>{
-              e.stopPropagation()
-              let select=e.target.innerText
-            SetSelectedFilter(select)
-
-             
-              const Features=document.querySelectorAll(".Feature")
-              let arr=[]
-              
-              console.log(FeatureFilterArr)
-              
-              
-              for (let index = 0; index < Features.length; index++) {
-                Features[index].style.backgroundColor="#ffffffff"
-                
-              }
-              e.target.classList.add("Selected")
-             
-               console.log(e.target)
-              
-              console.log(AllProduct)
-              for (let index = 0; index < AllProduct.length; index++) {
-                if (AllProduct[index].ProductFeature===e.target.innerText) {
-                  arr.push(AllProduct[index])
-
-                } else {
-                  
-                }
-                
-              }
-              console.log(arr)
-              SetSetSubCategoriesFilterArr([])
-             
-              SetFeatureFilterArr(arr)
-              console.log(FeatureFilterArr.length)
-              
-              
-            }}>
-              {elem}
-            </div>
-          ))}
-        </Row>
-      ))}
-      </>
-      
-    }else{
-      return "Sub Categories"
-
-    }
-    
-    
-  }
   // the following function will provide page Content 
   const PageContent=()=>{
     if (SetSubCategoriesFilterArr.length===0 && FeatureFilterArr.length===0 && SelectedFilter.length>0) {
@@ -393,7 +285,24 @@ const ProductsScreen = ({globalState}) => {
       }
     };
     GetAllProducts();
-  }, []);
+    // Generate subCategories
+    for (let index = 0; index < StaticData.ProductCategories.length; index++) {
+      if (StaticData.ProductCategories[index][Object.values(params)[0].replace(/-+/g,"_")]) {
+        console.log(Object.values(params)[0].replace(/-+/g,"_"))
+        console.log("Sub categories found")
+        let arr=StaticData.ProductCategories[index][Object.values(params)[0].replace(/-+/g,"_")]
+        console.log(arr)
+        SetSubCategories(arr)
+        break;
+        
+      } else {
+        console.log(Object.values(params)[0].replace(/-+/g,"_"))
+        console.log("SubCategorie not found")
+        
+      }
+      
+    }
+  }, [SubCategories]);
   return (
     <Container
       onClick={(e) => {
@@ -438,7 +347,86 @@ const ProductsScreen = ({globalState}) => {
         style={{ textAlign: "start" }}
       >
         {/* Side Column */}
-        <Col xs={4}>{<SubCategoriesList/>}</Col>
+        <Col xs={4}>
+       
+        {Array.isArray(SubCategories) && SubCategories.length>0?SubCategories.map((item,index)=>(
+        <Row key={index}>
+          <div id={index}  className={`SubCategories fs-6 text-decoration-underline ${SelectedFilter===Object.keys(item)[0].replace(/_+/g," ")?"Selected":""}`} onClick={(e)=>{
+            e.stopPropagation()
+           
+            console.log(e.target.id)
+            let select=e.target.innerText
+            SetSelectedFilter(select)
+            console.log(SelectedFilter)
+            console.log(Object.keys(item)[0].replace(/_+/g," "))
+            console.log(SelectedFilter===Object.keys(item)[0].replace(/_+/g," "))
+            
+            let arr=[]
+            
+            
+            console.log(AllProduct)
+            for (let index = 0; index < AllProduct.length; index++) {
+              if (AllProduct[index].ProductSubCategory===e.target.innerText) {
+                arr.push(AllProduct[index])
+              } else {
+                
+              }
+              
+            }
+            console.log(arr)
+            SetFeatureFilterArr([])
+            SetSetSubCategoriesFilterArr(arr)
+            
+            
+          }} > 
+          
+          {Object.keys(item)[0].replace(/_+/g," ")}
+          </div>
+          {Object.values(item)[0].map(elem=>(
+            <div key={elem} className={`Features ps-3 ${SelectedFilter===elem?"Selected":""}`} onClick={(e)=>{
+              e.stopPropagation()
+              let select=e.target.innerText
+            SetSelectedFilter(select)
+
+             
+              const Features=document.querySelectorAll(".Feature")
+              let arr=[]
+              
+              console.log(FeatureFilterArr)
+              
+              
+              for (let index = 0; index < Features.length; index++) {
+                Features[index].style.backgroundColor="#ffffffff"
+                
+              }
+              e.target.classList.add("Selected")
+             
+               console.log(e.target)
+              
+              console.log(AllProduct)
+              for (let index = 0; index < AllProduct.length; index++) {
+                if (AllProduct[index].ProductFeature===e.target.innerText) {
+                  arr.push(AllProduct[index])
+
+                } else {
+                  
+                }
+                
+              }
+              console.log(arr)
+              SetSetSubCategoriesFilterArr([])
+             
+              SetFeatureFilterArr(arr)
+              console.log(FeatureFilterArr.length)
+              
+              
+            }}>
+              {elem}
+            </div>
+          ))}
+        </Row>
+      )):"Sub Categories"}
+        </Col>
         {/* Content Column */}
         <Col xs={8}>
          {<PageContent/>}

@@ -31,7 +31,8 @@ const UsersProductDetails = async (ProductID) => {
             GovernorateDelivery:1,
             CityDelivery:1,
             Governorate:1,
-            City:1
+            City:1,
+            MerchantID:1
 
           },
         }

@@ -602,7 +602,7 @@ hideProgressBar />
               />
               <Route
                 path="/ProductDetails/:id"
-                element={<ProductDetails GlobalState={GlobalState} AddOrders={AddToCart} />}
+                element={<ProductDetails GlobalState={GlobalState} AddToCart={AddToCart} />}
               />
               <Route
                 path="/Cart"

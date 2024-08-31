@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import {useNavigate} from "react-router-dom"
 
+
+
 const CartPage = ({ GlobalState, UpdateCart,AddOrder }) => {
   const [SubTotal,SetSubTotal]=useState([]) // this state will be used to calculate subtotal
   const [SubTotalValue,SetSubTotalValue]=useState(0)
@@ -30,8 +32,13 @@ const CartPage = ({ GlobalState, UpdateCart,AddOrder }) => {
       return <div> No result</div>;
     }
   };
-  // the following function will calculate sub total
-  const SubTotalPrice=()=>{
+ 
+
+  useEffect(() => {
+    console.log(GlobalState);
+    console.log(SubTotalValue)
+    console.log(typeof SubTotalValue)
+    // Calculate sub total
     let x=0
     let y=0
     let j=0
@@ -48,55 +55,39 @@ const CartPage = ({ GlobalState, UpdateCart,AddOrder }) => {
           console.log(SubTotal)
         }
   
-        return <h5>{j.toString()} EGP</h5>
+        
         
       } else {
         console.log(SubTotal)
         console.log(GlobalState.CartItems)
         console.log("Not equal")
-        return <h5>{j.toString()} EGP</h5>
-  
-        
       }
-
-   
-   
-  }
-  // the following function for calculate delivery charges
-  const DeliveryCharges=()=>{
-    console.log(SubTotalValue)
-    console.log(typeof SubTotalValue)
+  // Calculate Delivery charges
     if (SubTotalValue>500) {
       let x=Math.round(SubTotalValue*0.2)
       SetDeliveryChargesValue(x)
-      return <h5> {x} EGP</h5>
+      
       
       
     } else {
       let y=100
       SetDeliveryChargesValue(y)
-      return <h5>100 EGP</h5>
+      
       
     }
-  }
-  // The following Function for calculate total value
-  const TotalOrderPrice=()=>{
-    let x=SubTotalValue+DeliveryChargesValue
-    SetTotalValue(x)
-    return <h5> {TotalValue} EGP</h5>
-    
-  }
-
-  useEffect(() => {
-    console.log(GlobalState);
+  //  Calculate Total price
+  let f=SubTotalValue+DeliveryChargesValue
+    SetTotalValue(f)
    
-  }, []);
+  }, [GlobalState, SubTotalValue, DeliveryChargesValue]);
 
   return (
     <Container
       onClick={(e) => {
         e.stopPropagation();
         console.log(GlobalState);
+        console.log(DeliveryChargesValue)
+        console.log(SubTotalValue)
       }}
     >
       {/* head of page */}
@@ -238,7 +229,8 @@ const CartPage = ({ GlobalState, UpdateCart,AddOrder }) => {
             </h4>
           </div>
           <div className=" flex-grow-1 text-end">
-            {<SubTotalPrice/>}
+          
+            <h5>{SubTotalValue}</h5>
           </div>
 
           </div>
@@ -251,7 +243,9 @@ const CartPage = ({ GlobalState, UpdateCart,AddOrder }) => {
             </h4>
           </div>
           <div className=" flex-grow-1 text-end">
-            {<DeliveryCharges/>}
+           
+            <h5>{DeliveryChargesValue}</h5>
+           
             
           </div>
           </div>
@@ -264,7 +258,8 @@ const CartPage = ({ GlobalState, UpdateCart,AddOrder }) => {
             </h4>
           </div>
           <div className=" flex-grow-1 text-end">
-            {<TotalOrderPrice/>}
+           
+            <h5>{TotalValue}</h5>
             
           </div>
           </div>

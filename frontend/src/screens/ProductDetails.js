@@ -4,7 +4,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import { toast } from "react-toastify";
 
 
-const ProductDetails = ({ GlobalState,AddOrders }) => {
+const ProductDetails = ({ GlobalState,AddToCart }) => {
   const [Product, setProduct] = useState({ ProductImages: [] }); // this will sore product details
   const [Loader, SetLoader] = useState(false); // this will handle loader visbility during fetch product details
   const [Count, SetCount] = useState(1); // this will store ordered qty
@@ -55,7 +55,9 @@ const ProductDetails = ({ GlobalState,AddOrders }) => {
           GovernorateDelivery:prod.GovernorateDelivery,
           CityDelivery:prod.CityDelivery,
           Governorate:prod.Governorate,
-          City:prod.City.split('\t')[0]
+          City:prod.City.split('\t')[0],
+          MerchantID:prod.MerchantID,
+          ID:prod._id
         }));
        
         console.log(Product);
@@ -78,7 +80,10 @@ const ProductDetails = ({ GlobalState,AddOrders }) => {
     console.log(Product);
   }, []);
   return (
-    <Container>
+    <Container onClick={(e)=>{
+      e.stopPropagation()
+      console.log(Product)
+    }}>
       <Row
         style={{
           position: "fixed",
@@ -311,10 +316,10 @@ const ProductDetails = ({ GlobalState,AddOrders }) => {
                   console.log(Count);
                   if (GlobalState.UserLogged===true && GlobalState.Client===true && GlobalState.Name.length>0 && GlobalState.Merchant===false && GlobalState.Admin===false && GlobalState.Governorate.length>0 && GlobalState.City.length>0) {
                     if ((Product.EgyptDelivery===true)|| (Product.GovernorateDelivery===true && Product.Governorate===GlobalState.Governorate)||(Product.CityDelivery===true && Product.City===GlobalState.City)) {
-                      console.log(AddOrders);
-                  let AddedProduct = { ...Product, Qty: Count, ID: params.id };
+                      console.log(AddToCart);
+                  let AddedProduct = { ...Product, Qty: Count };
                   console.log(AddedProduct);
-                  AddOrders(AddedProduct);
+                  AddToCart(AddedProduct);
                   e.target.innerText = "Added...";
                   e.target.disabled = true;
                   toast.success((<div>Product added, view <a href="/cart">Cart</a> or <a href="/">continue shopping</a></div>))
