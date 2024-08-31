@@ -8,40 +8,38 @@ const Test = () => {
   
   return (
     <>
-    <div className=" d-flex flex-row justify-content-between flex-wrap gap-5">
-      <div className="flex-grow-1" onClick={(e)=>{
-        e.stopPropagation()
-        toast.success("Success Notification !");
-        toast((<div style={{color:'red'}}> jhjhjkkj
-          </div>),{
-          autoClose:2000
-        })
-      }}>
-        hgjhgjh
+    <div id="Printed">
+      jhkljkjlkjlkk
+      <div style={{color:'red'}}>
+        jkoo099999
       </div>
-      <div className="dropdown">
-  <button className="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Dropdown button
-  </button>
-  <ul className="dropdown-menu">
-    <li><a className="dropdown-item" href="#">Action</a></li>
-    <li><a className="dropdown-item" href="#">Another action</a></li>
-    <li><a className="dropdown-item" href="#">Something else here</a></li>
-  </ul>
-</div>
 
     </div>
-
-    <div onClick={(e)=>{
+    <button onClick={(e)=>{
       e.stopPropagation()
+      let mywindow = window.open('', 'PRINT', 'height=650,width=900,top=100,left=150');
+
+  // mywindow.document.write(`<html><head><title>aaa</title>`);
+  // mywindow.document.write('</head><body >');
+  mywindow.document.write(document.getElementById("Printed").innerHTML);
+  // mywindow.document.write('</body></html>');
+  // mywindow.document.close();
+  console.log(mywindow)
+  console.log(mywindow.document)
+  // mywindow.print();
+  // mywindow.close();
+  console.log(window.btoa(mywindow.document))
+  console.log(window.atob(window.btoa(mywindow.document)))
+  let File= new Blob([mywindow.document],{type:'application/pdf'})
+  console.log(File)
+  const downloadLink = document.createElement("a")
+downloadLink.href = 'data:application/octet-stream;base64,' + window.btoa(mywindow.document)
+downloadLink.download = "convertedPDFFile.pdf"
+downloadLink.click()
     }}>
-      jhggkhkjhkj
-    </div>
-    
-   <input type="email" onChange={(e)=>{
-    console.log(e.target.value)
-   }}/>
- 
+      Print
+    </button>
+  
     
     </>
   );
