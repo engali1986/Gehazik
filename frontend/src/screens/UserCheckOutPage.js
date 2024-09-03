@@ -1,8 +1,12 @@
 import React, {useState,useEffect} from 'react'
 import { Container,Row,Col } from 'react-bootstrap'
 import { toast } from 'react-toastify'
+import {useNavigate,useParams} from "react-router-dom"
 
 const UserCheckOutPage = ({GlobalState,AddOrderDetails}) => {
+  const Navigate=useNavigate()
+  const Params=useParams()
+  console.log(Params.Name)
   const [ShippingData,SetShippingData]=useState({
     FirstName:"",
     LastName:"",
@@ -10,6 +14,7 @@ const UserCheckOutPage = ({GlobalState,AddOrderDetails}) => {
     Phone:"",
     Payment:"Cash on Delivery"
   })
+
  
   const PlaceOrder=(e)=>{
     e.stopPropagation()
@@ -43,7 +48,18 @@ const UserCheckOutPage = ({GlobalState,AddOrderDetails}) => {
     
   }
   
- 
+ useEffect(()=>{
+  if (GlobalState.UserLogged===false || GlobalState.Name.length===0 || GlobalState.Admin===true || GlobalState.Merchant===true || GlobalState.Client===false) {
+    Navigate("/")
+    
+  } else if(GlobalState.Admin===true || GlobalState.Merchant===true || Params.Name!==GlobalState.Name) {
+    Navigate("/")
+    
+  }else {
+
+  }
+
+ },[])
 
   return (
     <Container>
