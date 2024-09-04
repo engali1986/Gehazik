@@ -27,6 +27,7 @@ import MerchantProductsList from "./DBConnection/Products/MerchantProductsList.j
 import UsersProductsList from "./DBConnection/Products/UsersProductsList.js";
 import UsersProductDetails from "./DBConnection/Products/UsersProductDetails.js";
 import CheckUser from "./DBConnection/Users/CheckUser.js";
+import AddOrder from "./DBConnection/AddOrder.js";
 
 // const require = createRequire(import.meta.url);
 // const ServiceAccountKey = require("./API keys/ServiceAccountKey.json");
@@ -451,6 +452,7 @@ app.post("/Orders/AddOrder", async (req, res) => {
   if (typeof User==="object" && User._id) {
     console.log("Server/AddOrder 3 User found")
   // Next we will add the order
+  
 
     
   }else{
