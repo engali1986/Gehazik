@@ -455,13 +455,25 @@ app.post("/Orders/AddOrder", async (req, res) => {
   const OrderAdd=await AddOrder(OrderData)
   console.log("Server/AddOrder 4 AddOrder result")
   console.log(OrderAdd)
+  if (typeof OrderAdd==="object" && OrderAdd.res.insertedId) {
+    console.log("Server/AddOrder 5 Order Added")
+
+    
+  }else{
+    console.log("Server/AddOrder 6 Order Not Added")
+    res.json({resp:"Order Not Added"})
+
+  }
+  
       
   }else{
+    console.log("Server/AddOrder 7 user Not Found")
     res.json({resp:"User Not Found"})
   }
 
   
  } catch (error) {
+  console.log("Server/AddOrder 8 Order Add error")
   console.log(error)
   res.json({resp:"Order Not Added"})
   
