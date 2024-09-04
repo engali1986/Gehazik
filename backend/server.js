@@ -26,6 +26,7 @@ import UpdateProduct from "./DBConnection/Products/UpdateProduct.js";
 import MerchantProductsList from "./DBConnection/Products/MerchantProductsList.js";
 import UsersProductsList from "./DBConnection/Products/UsersProductsList.js";
 import UsersProductDetails from "./DBConnection/Products/UsersProductDetails.js";
+import CheckUser from "./DBConnection/Users/CheckUser.js";
 
 // const require = createRequire(import.meta.url);
 // const ServiceAccountKey = require("./API keys/ServiceAccountKey.json");
@@ -432,21 +433,36 @@ app.post("/Users/GetProductDetails", async (req, res) => {
 
 //  Orders Route start
 // AddOrder route to Add orders
-app.post("/AddOrder", async (req, res) => {
-  const OrderData = await req.body;
-  console.log("Server AddOrder 0");
-  console.log(OrderData);
-  const OrderAdded = await AddOrder(OrderData);
-  console.log("Server AddOrder 1");
-  console.log(OrderAdded);
-  if (typeof OrderAdded === "string") {
-    console.log("Server AddOrder 2");
-
-    res.send(OrderAdded);
-  } else {
-    console.log("Server AddOrder 3");
-    res.send(OrderAdded._id);
+app.post("/Orders/AddOrder", async (req, res) => {
+ try {
+  const OrderData=await req.body
+  console.log("Server/AddOrder 0 OrderData is ")
+  console.log(OrderData)
+  // First we check if the user credentials is correct using OrderData.ClientEmail, OrderData.Token
+  const UserData={
+    Email:OrderData.ClientEmail,
+    Token:OrderData.ClientToken
   }
+  console.log("Server/AddOrder 1 UserData is ")
+  console.log(UserData)
+  const User=await CheckUser(UserData)
+  console.log("Server/AddOrder 2 User Check result ")
+  console.log(User)
+  if (typeof User==="object" && User._id) {
+    console.log("Server/AddOrder 3 User found")
+  // Next we will add the order
+
+    
+  }else{
+    res.json({resp:"User Not Found"})
+  }
+
+  
+ } catch (error) {
+  console.log(error)
+  res.json({resp:"Order Not Added"})
+  
+ }
 });
 
 // GetOrders Route to get list of all orders in DB

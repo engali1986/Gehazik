@@ -3,7 +3,7 @@ import { Container,Row,Col } from 'react-bootstrap'
 import { toast } from 'react-toastify'
 import {useNavigate,useParams} from "react-router-dom"
 
-const UserCheckOutPage = ({GlobalState,AddOrderDetails}) => {
+const UserCheckOutPage = ({GlobalState}) => {
   const Navigate=useNavigate()
   const Params=useParams()
   console.log(Params.Name)
@@ -13,13 +13,18 @@ const UserCheckOutPage = ({GlobalState,AddOrderDetails}) => {
     Address:"",
     Phone:"",
     Payment:"Cash on Delivery"
-  })
+  })// this will store Address and phone number
+  const [Disabled,SetDisabled]=useState(false) // this will be used to disable place order button 
+  const [Loader, SetLoader] = useState(false); // this will handle loader visbility during fetch product details
 
  
-  const PlaceOrder=(e)=>{
-    e.stopPropagation()
+  const PlaceOrder=async (e)=>{
+    try {
+      e.stopPropagation()
     console.log(ShippingData)
     console.log(GlobalState)
+    SetDisabled(true)
+    SetLoader(true)
     let x=Object.keys(ShippingData)
     let DataChicked=false
     for (let index = 0; index < x.length; index++) {
@@ -37,12 +42,37 @@ const UserCheckOutPage = ({GlobalState,AddOrderDetails}) => {
     }
 
     if (DataChicked===true) {
-      AddOrderDetails(ShippingData)
       console.log(GlobalState)
+      let OrderData={...GlobalState.Order,OrderConfirmed:true,Address:ShippingData,ClientName:GlobalState.Name,ClientPhone:ShippingData.Phone,ClientEmail:GlobalState.email,ClientToken:GlobalState.Token}
+     
+      console.log(OrderData)
+      const AddOrder=await fetch(
+        "http://localhost:5000/Orders/AddOrder",
+        {
+          method: "POST",
+          body: JSON.stringify(OrderData),
+          headers: {
+            "Content-Type": "application/json",
+          },
+
+          mode: "cors",
+        }
+      )
       
     }else{
       toast.error("Order not Added")
+      SetDisabled(false)
+      SetLoader(false)
     }
+      
+    } catch (error) {
+      console.log(error)
+      toast.error("Internal error")
+      SetDisabled(false)
+      SetLoader(false)
+      
+    }
+    
    
    
     
@@ -63,6 +93,33 @@ const UserCheckOutPage = ({GlobalState,AddOrderDetails}) => {
 
   return (
     <Container>
+      {/* Loader */}
+      <Row
+        style={{
+          position: "fixed",
+          display: Loader === true ? "block" : "none",
+          minWidth: "100vw",
+          minHeight: "100vh",
+          backgroundColor: "gray",
+          opacity: "0.3",
+          top: "0px",
+          left: "0px",
+          zIndex: "100",
+        }}
+      >
+        <div
+          style={{
+            color: "black",
+            opacity: "1",
+            fontSize: "3rem",
+            marginTop: "25%",
+            backgroundColor: "white",
+            
+          }}
+        >
+          Please wait
+        </div>
+      </Row>
       {/* Page heading */}
       <Row onClick={(e)=>{
         e.stopPropagation()
@@ -135,8 +192,8 @@ const UserCheckOutPage = ({GlobalState,AddOrderDetails}) => {
       
       <Row className=' my-3'>
         <Col xs={12} >
-        <button onClick={(e)=>PlaceOrder(e)} className='SignUpButton'>
-          Place Order
+        <button disabled={Disabled} onClick={(e)=>PlaceOrder(e)} className='SignUpButton'>
+          Place Order for {GlobalState.Order.OrderValue} EGP
         </button>
         </Col>
         

@@ -268,13 +268,14 @@ const CartPage = ({ GlobalState, UpdateCart,AddOrder }) => {
             <button className="SignUpButton" onClick={(e)=>{
               e.stopPropagation()
               console.log(GlobalState)
-              const Order={OrderValue:TotalValue,OrderDetails:GlobalState.CartItems,OrderConfirmed:false}
-              AddOrder(Order)
+              
               if (GlobalState.UserLogged===false) {
                 Navigate('/LogIn')
                 
                 
-              } else if(GlobalState.UserLogged===true && GlobalState.Admin===false && GlobalState.Merchant===false) {
+              } else if(GlobalState.UserLogged===true && GlobalState.Client===true &&GlobalState.Admin===false && GlobalState.Merchant===false) {
+                const Order={OrderValue:TotalValue,OrderDetails:GlobalState.CartItems,OrderConfirmed:false}
+              AddOrder(Order)
                 Navigate(`/${GlobalState.Name}/Checkout`)
                 
               }else{
