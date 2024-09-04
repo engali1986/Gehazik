@@ -1,14 +1,8 @@
 import React, { useState} from "react";
+import Staticdata from "../Data/StaticData"
+import StaticData from "../Data/StaticData";
 
-const AddAdress=({ Address, SetAddress })=>{
-  return(
-    <>
-    <input onChange={(e)=>{
-      SetAddress({...Address,FirstName:e.target.value})
-    }} type="text"  value={Address.FirstName} placeholder="Add First name" />
-    </>
-  )
- }
+
 
 const Test = () => {
  const [Address,SetAddress]=useState({FirstName:''})
@@ -17,7 +11,12 @@ const Test = () => {
   
   return (
  <>
- <AddAdress Address={Address} SetAddress={SetAddress}/>
+ <button onClick={(e)=>{
+  e.stopPropagation()
+  StaticData.AA="bbcc"
+ }}>
+  click
+ </button>
  </>
   );
 };

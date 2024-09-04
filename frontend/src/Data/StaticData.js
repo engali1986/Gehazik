@@ -1,4 +1,4 @@
-const Egypt = {
+let Egypt = {
   Cairo: {
     "Hadayek Al Zaiton": "حدائق الزيتون",
     "El Shorouk": "الشروق",
@@ -446,6 +446,7 @@ const StaticData = {
     },
   ],
   Units: ["Kilograms", "Piece"],
+  AA:""
 };
 
 export default StaticData;
