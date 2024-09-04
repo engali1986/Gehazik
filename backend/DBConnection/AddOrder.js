@@ -15,17 +15,18 @@ const AddOrder = async (OrderData) => {
     await client.connect();
     console.log("Connection established ");
     console.log(OrderData)
-    let OrderNumber = Math.floor(Math.random() * 1000000) + 1;
+   
    
     const res = await client.db("Gehazik").collection("Orders").insertOne({
-        OrderNumber:OrderNumber,
+        
         OrderedBy:OrderData.ClientName,
         OrderedEmail:OrderData.ClientEmail,
         OrderedDate:new Date(),
         OrderedPhone:OrderData.Address.Phone,
-        OrderedPayed:OrderData.Address.Payment==="Cash on Delivery"?true:false,
+        OrderedPayed:false,
+        OrderedPaymentMethod:OrderData.Address.Payment,
         OrdedredItems:OrderData.OrderDetails,
-        OrderedValue:OrderData.Ordervalue,
+        OrderedValue:OrderData.OrderValue,
         OrderedAddress:OrderData.Address,
         MerchantConfirmed:false,
         OrderDelivered:false
@@ -57,17 +58,24 @@ const AddOrder = async (OrderData) => {
                 }).catch(err=>{
                     return "Connection error"
                 })
-                if (typeof CheckAvailability==="Object") {
+                console.log("AddOrder file CheckAvailability result")
+                console.log(CheckAvailability)
+                console.log(typeof CheckAvailability)
+                if (typeof CheckAvailability==="object") {
                  if (CheckAvailability.InStockQty>=OrderData.OrderDetails[index].Qty) {
+                    console.log("AddOrder file InStockQty Check true")
+
                     AvailabilityChicked=true
                     
                  } else {
+                    console.log("AddOrder file InStockQty Check false")
                     AvailabilityChicked=false
                     break
                     
                  }
                     
                 } else {
+                    console.log("AddOrder file Check availablity not object")
                     AvailabilityChicked=false
                     break
                     
@@ -75,6 +83,8 @@ const AddOrder = async (OrderData) => {
                 
             }
             // Next we upfdate stock qty of each product
+            console.log("AddOrder file 3.5 AvailabilityChicked");
+            console.log(AvailabilityChicked)
 
             if (AvailabilityChicked===true) {
                 for (let index = 0; index < OrderData.OrderDetails.length; index++) {
@@ -116,8 +126,8 @@ const AddOrder = async (OrderData) => {
 
            if (AllItemsChecked===true && AvailabilityChicked===true) {
             console.log("AddOrder file 7 Update Products Finished");
-            let Order={res:res, OrderNumber:OrderNumber}
-            return Order
+           
+            return res
             
            } else {
             console.log("AddOrder file 8 Update Products Finished");

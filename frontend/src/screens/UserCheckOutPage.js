@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from 'react'
+import React, {useState,useEffect,useRef} from 'react'
 import { Container,Row,Col } from 'react-bootstrap'
 import { toast } from 'react-toastify'
 import {useNavigate,useParams} from "react-router-dom"
@@ -6,6 +6,7 @@ import {useNavigate,useParams} from "react-router-dom"
 const UserCheckOutPage = ({GlobalState}) => {
   const Navigate=useNavigate()
   const Params=useParams()
+  const Alert=useRef()
   console.log(Params.Name)
   const [ShippingData,SetShippingData]=useState({
     FirstName:"",
@@ -16,6 +17,7 @@ const UserCheckOutPage = ({GlobalState}) => {
   })// this will store Address and phone number
   const [Disabled,SetDisabled]=useState(false) // this will be used to disable place order button 
   const [Loader, SetLoader] = useState(false); // this will handle loader visbility during fetch product details
+  const [OrderAdded,SetOrderAdded]=useState("")
 
  
   const PlaceOrder=async (e)=>{
@@ -57,7 +59,25 @@ const UserCheckOutPage = ({GlobalState}) => {
 
           mode: "cors",
         }
-      )
+      ).then(res=>{
+        return res.json()
+      }).catch(err=>{
+        console.log(err)
+        toast.error("Order not Added")
+        SetDisabled(false)
+        SetLoader(false)
+      })
+
+      if (AddOrder.resp==="Order Not Added" || AddOrder.resp==="User Not Found" ) {
+        toast.error(AddOrder.resp)
+        SetDisabled(false)
+        SetLoader(false)
+        
+      } else {
+        SetOrderAdded(AddOrder.resp)
+        Alert.current.style.maxHeight="500px"
+        SetLoader(false)
+      }
       
     }else{
       toast.error("Order not Added")
@@ -198,7 +218,14 @@ const UserCheckOutPage = ({GlobalState}) => {
         </Col>
         
       </Row>
+     <Row ref={Alert} style={{maxHeight:'0px',overflow:'hidden', transition:"maxHeight 0.3s ease-in-out", textAlign:'start'}}>
+      <Col xs={12}>
+      <div  className="alert alert-success" role="alert" >
+  {OrderAdded}
+</div>
+      </Col>
      
+     </Row>
       
       
     </Container>
