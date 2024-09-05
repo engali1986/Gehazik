@@ -457,7 +457,7 @@ app.post("/Orders/AddOrder", async (req, res) => {
   console.log(OrderAdd)
   if (typeof OrderAdd==="object" && OrderAdd.insertedId) {
     console.log("Server/AddOrder 5 Order Added")
-    res.json({resp:`Your Order No: ${OrderAdd.OrderNumber} Added successfully`})
+    res.json({resp:`Your Order No: ${OrderAdd.insertedId} Added successfully`})
 
     
   }else{
