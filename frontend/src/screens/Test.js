@@ -13,7 +13,18 @@ const Test = () => {
  <>
  <button onClick={(e)=>{
   e.stopPropagation()
-  StaticData.AA="bbcc"
+  let x=10
+  if (x>5) {
+    console.log(x)
+   return
+    
+  }
+  
+
+  if (x>0) {
+    console.log("aass")
+    return
+  }
  }}>
   click
  </button>
