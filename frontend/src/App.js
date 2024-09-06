@@ -28,6 +28,7 @@ import ProductDetails from "./screens/ProductDetails.js";
 import CartPage from "./screens/CartPage.js";
 import UserCheckOutPage from "./screens/UserCheckOutPage.js";
 import bootstrapBundle from "bootstrap/dist/js/bootstrap.bundle";
+import ClientPage from "./screens/ClientPage.js";
 function App() {
   const BackDrop = useRef();
   const ProfileItems = useRef();
@@ -435,7 +436,47 @@ function App() {
           sessionStorage.getItem("globalState")
         );
       }
-    } else {
+    } else if(UpdateData.Field === "Empty") {
+      console.log("Empty cart Item");
+      if (Array.isArray(GlobalState.CartItems)) {
+        let y = []
+        SetGlobal((PervState) => ({
+          ...PervState,
+          CartItems: y,
+        }));
+        sessionStorage.setItem(
+          "globalState",
+          JSON.stringify({
+            ...JSON.parse(sessionStorage.getItem("globalState")),
+            CartItems: y,
+          })
+        );
+        localStorage.setItem(
+          "globalState",
+          sessionStorage.getItem("globalState")
+        );
+      }
+      if(GlobalState.Order){
+        SetGlobal((PervState) => ({
+          ...PervState,
+          Order: {},
+        }));
+        sessionStorage.setItem(
+          "globalState",
+          JSON.stringify({
+            ...JSON.parse(sessionStorage.getItem("globalState")),
+            Order: {},
+          })
+        );
+        localStorage.setItem(
+          "globalState",
+          sessionStorage.getItem("globalState")
+        );
+
+      }
+
+    }else{
+
     }
   };
 // following function will store order data
@@ -621,7 +662,7 @@ hideProgressBar />
                   <CartPage GlobalState={GlobalState} UpdateCart={UpdateCart} AddOrder={AddOrder} />
                 }
               />
-              <Route path="/:Name/Checkout" element={<UserCheckOutPage GlobalState={GlobalState} />}/>
+              <Route path="/:Name/Checkout" element={<UserCheckOutPage GlobalState={GlobalState} UpdateCart={UpdateCart} />}/>
 
               <Route
                 path="/SignUp"
@@ -642,6 +683,15 @@ hideProgressBar />
                 path="/MerchantSignUp"
                 element={
                   <MerchantSignUp
+                    globalState={GlobalState}
+                    setGlobal={userChange}
+                  />
+                }
+              />
+              <Route
+                path="/Clients/:Name"
+                element={
+                  <ClientPage
                     globalState={GlobalState}
                     setGlobal={userChange}
                   />

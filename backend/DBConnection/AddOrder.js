@@ -143,6 +143,11 @@ const AddOrder = async (OrderData) => {
             
         } else {
             console.log("AddOrder file 9 Order Not added");
+            const DeleteOrder=await client.db("Gehazik").collection("Orders").deleteOne({_id:res.insertedId}).then(res=>{
+                return res
+            }).catch(err=>{
+                return "Order Not Added"
+            })
             return "Order Not Added"
             
         }

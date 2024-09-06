@@ -59,7 +59,7 @@ const Home = (params) => {
             console.log("Login/Signup clicked");
           }}
         >
-          Hi,{params.GlobalState.Name}
+          <a style={{textDecoration:'none', color:'black'}} href={`/Clients/${params.GlobalState.Name}`}> Hi,{params.GlobalState.Name}</a>
         </div>
         </>
       );

@@ -3,7 +3,7 @@ import { Container,Row,Col } from 'react-bootstrap'
 import { toast } from 'react-toastify'
 import {useNavigate,useParams} from "react-router-dom"
 
-const UserCheckOutPage = ({GlobalState}) => {
+const UserCheckOutPage = ({GlobalState, UpdateCart}) => {
   const Navigate=useNavigate()
   const Params=useParams()
   const Alert=useRef()
@@ -43,7 +43,7 @@ const UserCheckOutPage = ({GlobalState}) => {
       
     }
 
-    if (DataChicked===true) {
+    if (DataChicked===true && GlobalState.Order.OrderDetails.length>0 && GlobalState.Order.OrderValue>0 && GlobalState.Order.OrderConfirmed===false) {
       console.log(GlobalState)
       let OrderData={...GlobalState.Order,OrderConfirmed:true,Address:ShippingData,ClientName:GlobalState.Name,ClientPhone:ShippingData.Phone,ClientEmail:GlobalState.email,ClientToken:GlobalState.Token}
      
@@ -74,13 +74,16 @@ const UserCheckOutPage = ({GlobalState}) => {
         SetLoader(false)
         
       } else {
+        let UpdateData={Field:"Empty"}
         SetOrderAdded(AddOrder.resp)
+        await UpdateCart(UpdateData)
         Alert.current.style.maxHeight="500px"
         SetLoader(false)
       }
       
     }else{
       toast.error("Order not Added")
+      console.log("OrderData not available")
       SetDisabled(false)
       SetLoader(false)
     }

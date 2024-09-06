@@ -8,6 +8,8 @@ const Test = () => {
  const [Address,SetAddress]=useState({FirstName:''})
 
  
+
+ 
   
   return (
  <>
@@ -16,6 +18,7 @@ const Test = () => {
   let x=10
   if (x>5) {
     console.log(x)
+    console.log(Address)
    return
     
   }
