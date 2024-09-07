@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 import { toast } from "react-toastify";
-
-
 const ProductDetails = ({ GlobalState,AddToCart }) => {
   const [Product, setProduct] = useState({ ProductImages: [] }); // this will sore product details
   const [Loader, SetLoader] = useState(false); // this will handle loader visbility during fetch product details
@@ -12,7 +10,6 @@ const ProductDetails = ({ GlobalState,AddToCart }) => {
   const Navigate = useNavigate();
   console.log(params.id);
   let prod;
-
   useEffect(() => {
     
     
@@ -65,9 +62,7 @@ const ProductDetails = ({ GlobalState,AddToCart }) => {
         Navigate("/ProductNotFound");
       }
     };
-
     GetProductDetails(params.id);
-
     if (GlobalState.UserLogged===false && GlobalState.Name.length===0) {
       toast.warn((<div>Please <a href="/LogIn">LogIn/Signup</a> to add product </div>), {
         autoClose:false
@@ -76,7 +71,6 @@ const ProductDetails = ({ GlobalState,AddToCart }) => {
     } else {
       
     }
-
     console.log(Product);
   }, []);
   return (
@@ -130,7 +124,6 @@ const ProductDetails = ({ GlobalState,AddToCart }) => {
                   onLoad={(e) => {
                     console.log(e.target.complete);
                     console.log(e.target.naturalHeight);
-
                     if (e.target.complete && e.target.naturalHeight > 20) {
                       console.log("Image loded");
                       console.log(e.target.naturalHeight);
@@ -167,7 +160,6 @@ const ProductDetails = ({ GlobalState,AddToCart }) => {
                     width: "100%",
                     maxWidth: "100%",
                     aspectRatio: "1/1",
-
                     cursor: "pointer",
                   }}
                   src={`https://drive.google.com/thumbnail?id=${item}`}
@@ -192,7 +184,6 @@ const ProductDetails = ({ GlobalState,AddToCart }) => {
               onLoad={(e) => {
                 console.log(e.target.complete);
                 console.log(e.target.naturalHeight);
-
                 if (e.target.complete && e.target.naturalHeight > 20) {
                   console.log("Image loded");
                 } else {
@@ -367,5 +358,4 @@ const ProductDetails = ({ GlobalState,AddToCart }) => {
     </Container>
   );
 };
-
 export default ProductDetails;

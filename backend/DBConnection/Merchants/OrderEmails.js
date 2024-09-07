@@ -3,7 +3,6 @@ import mailer from "nodemailer"
 //  This will send Email to all Merchants 
 const uri =
   "mongodb+srv://engaligulf:Cossacks%401@cluster0.fj9bpe7.mongodb.net/?maxIdleTimeMS=5000";
-
 const client = new MongoClient(uri);
 const OrderEmails=async(OrderData, OrderID)=>{
     try {
@@ -52,7 +51,6 @@ const OrderEmails=async(OrderData, OrderID)=>{
                 subject: 'New Order Confirmation !',
                 html: `<h1> You have got new Order Please confirm</h1><h2>Order Number :${OrderID}</h2>`
               };
-
               const result=await Transporter.sendMail(mailOptions).then(res=>{
                 console.log(res)
                 return res
@@ -69,7 +67,6 @@ const OrderEmails=async(OrderData, OrderID)=>{
     // then we return to server
     
     return
-
         
     } catch (error) {
         console.log(error)

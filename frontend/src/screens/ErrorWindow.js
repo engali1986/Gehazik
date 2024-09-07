@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-
 const ErrorWindow = () => {
   useEffect(() => {
     document.getElementById("ToHome").click();
@@ -14,5 +13,4 @@ const ErrorWindow = () => {
     </div>
   );
 };
-
 export default ErrorWindow;

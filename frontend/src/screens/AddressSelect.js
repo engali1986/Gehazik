@@ -2,14 +2,12 @@ import React, { useRef, useState } from "react";
 import { Container, Col, Row, Alert } from "react-bootstrap";
 import StaticData from "../Data/StaticData";
 import { getOverlayDirection } from "react-bootstrap/esm/helpers";
-
 const AddressSelect = ({ globalState, updateAddress }) => {
   const [Cities, SetCities] = useState([]);
   const [Address, SetAddress] = useState({
     Governorate: "",
     City: "",
   });
-
   return (
     <Container
       className="AddressSelection p-5"
@@ -95,5 +93,4 @@ const AddressSelect = ({ globalState, updateAddress }) => {
     </Container>
   );
 };
-
 export default AddressSelect;

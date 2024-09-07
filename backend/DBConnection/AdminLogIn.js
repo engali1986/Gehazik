@@ -1,9 +1,7 @@
 import { MongoClient } from "mongodb";
 import Uservarification from "./UserVarification.js";
-
 const uri =
   "mongodb+srv://engaligulf:Cossacks%401@cluster0.fj9bpe7.mongodb.net/?maxIdleTimeMS=5000";
-
 const client = new MongoClient(uri);
 async function AdminLogIn(Credentials) {
   try {
@@ -31,17 +29,13 @@ async function AdminLogIn(Credentials) {
         console.log(err)
         return "Connection error";
       });
-
     if (GetUser.email) {
       console.log("AdminLogIn file 5");
       console.log(GetUser);
-
       if (GetUser.uservarified === false) {
         console.log("AdminLogIn file 6");
         if (Credentials.VarificationCode) {
           console.log("AdminLogIn file 7");
-
-
           if (Credentials.VarificationCode === GetUser.varificationcode) {
             const VarifyUser = await client
               .db("Gehazik")
@@ -49,7 +43,6 @@ async function AdminLogIn(Credentials) {
               .updateOne(
                 { email: Credentials.Email, pass: Credentials.Password },
                 { $set: { uservarified: true } }
-
               )
               .then((res) => {
                 console.log("AdminLogIn file 7.5");
@@ -60,15 +53,9 @@ async function AdminLogIn(Credentials) {
                 console.log(err)
                 return "Connection error";
               });
-
             if (typeof VarifyUser === "object") {
               console.log("AdminLogIn file 8");
               GetUser.uservarified = true
-
-
-
-
-
               return GetUser;
             } else {
               console.log("AdminLogIn file 9");
@@ -83,7 +70,6 @@ async function AdminLogIn(Credentials) {
               .then((res) => {
                 console.log("AdminLogIn file 10");
                 console.log(res);
-
                 return res;
               })
               .catch((err) => {
@@ -108,7 +94,6 @@ async function AdminLogIn(Credentials) {
             .then((res) => {
               console.log("AdminLogIn file 14-10");
               console.log(res);
-
               return res;
             })
             .catch((err) => {
@@ -135,16 +120,13 @@ async function AdminLogIn(Credentials) {
         .updateOne(
           { email: Credentials.Email, pass: Credentials.Password },
           { $set: { token: NewToken } }
-
         ).then(res=>{
           console.log(console.log("AdminLogIn file 15 new token added"))
           console.log(res)
           return res
         })
-
         if (updateToken.modifiedCount===1) {
           
-
           GetUser.token=NewToken
           console.log("AdminLogIn file 15 new AdminData")
           console.log(GetUser.token)
@@ -166,7 +148,6 @@ async function AdminLogIn(Credentials) {
     // await client.close(true).then(res=>{
     //     console.log("AdminLogIn file 5")
     //     console.log(res)
-
     // });
     setTimeout(() => {
       console.log("done");
@@ -174,5 +155,4 @@ async function AdminLogIn(Credentials) {
   }
 }
 // AdminLogIn().catch(console.dir);
-
 export default AdminLogIn;

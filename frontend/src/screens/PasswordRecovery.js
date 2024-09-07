@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-
 const PasswordRecovery = () => {
   const navigate = useNavigate();
   const Alert = useRef();
@@ -8,14 +7,11 @@ const PasswordRecovery = () => {
   const EmailInput = (x) => {
     Alert.current.style.maxHeight = "0px";
     setEmail(x.target.value);
-
     console.log(Email);
     console.log(x.target.value);
   };
-
   const PasswordRecoverySubmit = async () => {
     console.log("submitted");
-
     if (Email.length === 0 || Email.match(/\s/)) {
       console.log("enter valid email");
       Alert.current.classList.replace("alert-success", "alert-danger");
@@ -29,7 +25,6 @@ const PasswordRecovery = () => {
       const Credintials = {
         email: Email,
       };
-
       const PassRecovery = await fetch(
         "http://localhost:5000/PasswordRecovery",
         {
@@ -43,26 +38,21 @@ const PasswordRecovery = () => {
       )
         .then((res) => {
           console.log(res);
-
           return res.json();
         })
         .catch((err) => {
           return "user Not Added";
         });
-
       console.log(PassRecovery);
-
       if (PassRecovery.resp === Email) {
         Alert.current.classList.replace("alert-danger", "alert-success");
         Alert.current.innerText =
           "Your password sent by Email you will be redirected to Login page in 3 seconds";
         Alert.current.style.maxHeight = "500px";
-
         setTimeout(() => {
           Alert.current.classList.replace("alert-danger", "alert-success");
           Alert.current.innerText = "";
           Alert.current.style.maxHeight = "0px";
-
           navigate("/LogIn");
         }, 3000);
       } else {
@@ -72,7 +62,6 @@ const PasswordRecovery = () => {
       }
     }
   };
-
   return (
     <div className="container1">
       <div>
@@ -107,5 +96,4 @@ const PasswordRecovery = () => {
     </div>
   );
 };
-
 export default PasswordRecovery;

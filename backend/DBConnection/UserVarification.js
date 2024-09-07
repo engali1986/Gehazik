@@ -1,12 +1,8 @@
 import mailer from "nodemailer"
 import {MongoClient} from "mongodb"
-
 const uri= "mongodb+srv://engaligulf:Cossacks%401@cluster0.fj9bpe7.mongodb.net/?maxIdleTimeMS=5000"
 const client = new MongoClient(uri
   );
-
-
-
 const Uservarification=async(Email,Password)=>{
     console.log("Uservarification 0")
     console.log(Email)
@@ -61,16 +57,10 @@ const Uservarification=async(Email,Password)=>{
     }else{
       console.log("Uservarification 3")
       return "User Not Found"
-
     }
     
-
     
-
    
-
       
-
 }
-
 export default Uservarification

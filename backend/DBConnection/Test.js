@@ -1,8 +1,5 @@
 import {MongoClient} from "mongodb"
-
 const uri= "mongodb+srv://engaligulf:Cossacks%401@cluster0.fj9bpe7.mongodb.net/?maxIdleTimeMS=5000"
-
-
 const client = new MongoClient(uri
 );
 async function Test(Credintials) {
@@ -79,7 +76,5 @@ async function Test(Credintials) {
         
       }
 // run().catch(console.dir);
-
     }
-
 export default Test

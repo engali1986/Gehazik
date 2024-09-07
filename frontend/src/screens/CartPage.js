@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import {useNavigate} from "react-router-dom"
-
-
-
 const CartPage = ({ GlobalState, UpdateCart,AddOrder }) => {
   const [SubTotal,SetSubTotal]=useState([]) // this state will be used to calculate subtotal
   const [SubTotalValue,SetSubTotalValue]=useState(0)
@@ -33,7 +30,6 @@ const CartPage = ({ GlobalState, UpdateCart,AddOrder }) => {
     }
   };
  
-
   useEffect(() => {
     console.log(GlobalState);
     console.log(SubTotalValue)
@@ -80,7 +76,6 @@ const CartPage = ({ GlobalState, UpdateCart,AddOrder }) => {
     SetTotalValue(f)
    
   }, [GlobalState, SubTotalValue, DeliveryChargesValue]);
-
   return (
     <Container
       onClick={(e) => {
@@ -184,7 +179,6 @@ const CartPage = ({ GlobalState, UpdateCart,AddOrder }) => {
                     className=" ms-2 fa-solid fa-trash-can fa-xl"
                   ></i>
                 </div>
-
                 <div className="text-start" style={{ color: "red" }}>
                   {<TotalPrice ID={item.ID} />}
                 </div>
@@ -205,7 +199,6 @@ const CartPage = ({ GlobalState, UpdateCart,AddOrder }) => {
               href="/"
               style={{
                 textDecoration: "none",
-
                 width: "100%",
                 color: "white",
                 fontSize: "2rem",
@@ -216,7 +209,6 @@ const CartPage = ({ GlobalState, UpdateCart,AddOrder }) => {
           </div>
         </Row>
       )}
-
     
       {/* Total price and checkout button */}
       <Row className= {Array.isArray(GlobalState.CartItems)&&GlobalState.CartItems.length>0?" d-flex text-start": " d-none"}>
@@ -232,7 +224,6 @@ const CartPage = ({ GlobalState, UpdateCart,AddOrder }) => {
           
             <h5>{SubTotalValue}</h5>
           </div>
-
           </div>
           {/* Delivery charges */}
           <div className=" d-flex flex-row">
@@ -280,21 +271,16 @@ const CartPage = ({ GlobalState, UpdateCart,AddOrder }) => {
                 
               }else{
                 Navigate('/')
-
               }
             }}>
               Checkout
             </button>
           </div>
-
-
         </div>
-
       </Row>
      
      
     </Container>
   );
 };
-
 export default CartPage;

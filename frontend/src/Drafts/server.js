@@ -1,3 +1,4 @@
+// this server file before using socket io
 import express from "express";
 import run from "./DBConnection/DBConnection.js";
 import cors from "cors";

@@ -1,6 +1,5 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
-
 const ContactUs = () => {
   return (
     <Container style={{ marginTop: "25%" }}>
@@ -47,7 +46,6 @@ const ContactUs = () => {
             <a href="mailto:engaligulf@gmail.com">Email us</a>
           </div>
         </Col>
-
         <Col
           className=" p-1"
           xs={12}
@@ -78,5 +76,4 @@ const ContactUs = () => {
     </Container>
   );
 };
-
 export default ContactUs;

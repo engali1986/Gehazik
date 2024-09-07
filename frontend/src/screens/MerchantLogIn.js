@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-
 const MerchantLogIn = ({ globalState, setGlobal }) => {
   const navigate = useNavigate();
   const Email = useRef();
@@ -10,14 +9,11 @@ const MerchantLogIn = ({ globalState, setGlobal }) => {
   const Alert = useRef();
   const varificationCodeRef = useRef();
   const LoginButtonRef = useRef();
-
   const [Credentials, setCredentials] = useState({
     Email: "",
     Password: "",
   });
-
   const [Disabled, setDisabled] = useState(false);
-
   const EmailInput = (x) => {
     Alert.current.style.maxHeight = "0px";
     setCredentials({ ...Credentials, Email: x.target.value });
@@ -25,7 +21,6 @@ const MerchantLogIn = ({ globalState, setGlobal }) => {
   const VarifyEmail = async () => {
     console.log(Credentials);
     console.log(typeof Credentials.VarificationCode);
-
     const Merchantvarified = await fetch(
       "http://localhost:5000/LogInMerchant",
       {
@@ -44,9 +39,7 @@ const MerchantLogIn = ({ globalState, setGlobal }) => {
         console.log(err);
         return "user Not Added";
       });
-
     console.log(Merchantvarified);
-
     if (
       Merchantvarified.resp.email &&
       Merchantvarified.resp.Merchantvarified === true
@@ -82,7 +75,6 @@ const MerchantLogIn = ({ globalState, setGlobal }) => {
     Alert.current.style.maxHeight = "0px";
     setCredentials({ ...Credentials, Password: x.target.value });
   };
-
   const LogInSubmit = async () => {
     console.log("Log in");
     console.log(Credentials);
@@ -109,9 +101,7 @@ const MerchantLogIn = ({ globalState, setGlobal }) => {
           console.log(err);
           return "user Not Added";
         });
-
       console.log(UserLogIn);
-
       if (UserLogIn.resp) {
         console.log(UserLogIn.resp);
         LoginButtonRef.current.innerText = "Login";
@@ -194,7 +184,6 @@ const MerchantLogIn = ({ globalState, setGlobal }) => {
       Alert.current.style.maxHeight = "500px";
     }
   };
-
   useEffect(() => {
     if (globalState.UserLogged === true) {
       if (globalState.Admin === true) {
@@ -207,7 +196,6 @@ const MerchantLogIn = ({ globalState, setGlobal }) => {
     } else {
     }
   });
-
   return (
     <div
       className="container1"
@@ -230,7 +218,6 @@ const MerchantLogIn = ({ globalState, setGlobal }) => {
         required
         disabled={Disabled}
       />
-
       <label htmlFor="psw">
         <b>Password</b>
       </label>
@@ -242,7 +229,6 @@ const MerchantLogIn = ({ globalState, setGlobal }) => {
         required
         disabled={Disabled}
       />
-
       <div
         ref={Alert}
         className=" alert alert-danger text-start"
@@ -257,7 +243,6 @@ const MerchantLogIn = ({ globalState, setGlobal }) => {
         }}
         role="alert"
       ></div>
-
       <button
         ref={LoginButtonRef}
         className="LogInButton"
@@ -280,7 +265,6 @@ const MerchantLogIn = ({ globalState, setGlobal }) => {
             }}
           />
         </Col>
-
         <Col xs={12} md={4}>
           <button
             className="SignUpButton"
@@ -291,7 +275,6 @@ const MerchantLogIn = ({ globalState, setGlobal }) => {
           </button>
         </Col>
       </Row>
-
       <div style={{ textAlign: "start" }}>
         <span>
           Don't have account{" "}
@@ -330,5 +313,4 @@ const MerchantLogIn = ({ globalState, setGlobal }) => {
     </div>
   );
 };
-
 export default MerchantLogIn;

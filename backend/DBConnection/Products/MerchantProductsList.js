@@ -2,7 +2,6 @@ import { MongoClient } from "mongodb";
 //  this will AddProduct to the DB
 const uri =
   "mongodb+srv://engaligulf:Cossacks%401@cluster0.fj9bpe7.mongodb.net/?maxIdleTimeMS=5000";
-
 const client = new MongoClient(uri);
 const MerchantProductsList = async (MerchantID) => {
   try {
@@ -37,5 +36,4 @@ const MerchantProductsList = async (MerchantID) => {
     });
   }
 };
-
 export default MerchantProductsList;

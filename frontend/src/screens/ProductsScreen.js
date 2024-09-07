@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 import StaticData from "../Data/StaticData";
-
 const ProductsScreen = ({globalState}) => {
   const [Loader, SetLoader] = useState(false);
   const params = useParams();
@@ -88,7 +87,6 @@ const ProductsScreen = ({globalState}) => {
         </Col>
       ))}
     </Row>
-
       
     } else if(FeatureFilterArr.length>0){
       console.log("All products in features")
@@ -159,11 +157,9 @@ const ProductsScreen = ({globalState}) => {
         </Col>
       ))}
     </Row>
-
     } else{
       console.log("All Products")
       return   <Row>
-
       {AllProduct.map((Product) => (
         <Col
           xs={6}
@@ -230,11 +226,9 @@ const ProductsScreen = ({globalState}) => {
         </Col>
       ))}
     </Row>
-
     }
    
     
-
   }
 // UseEffect will be used to get the product list from backend
   useEffect(() => {
@@ -387,7 +381,6 @@ const ProductsScreen = ({globalState}) => {
               e.stopPropagation()
               let select=e.target.innerText
             SetSelectedFilter(select)
-
              
               const Features=document.querySelectorAll(".Feature")
               let arr=[]
@@ -407,7 +400,6 @@ const ProductsScreen = ({globalState}) => {
               for (let index = 0; index < AllProduct.length; index++) {
                 if (AllProduct[index].ProductFeature===e.target.innerText) {
                   arr.push(AllProduct[index])
-
                 } else {
                   
                 }
@@ -435,5 +427,4 @@ const ProductsScreen = ({globalState}) => {
     </Container>
   );
 };
-
 export default ProductsScreen;

@@ -2,12 +2,9 @@ import React, { useEffect, useState, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 import StaticData from "../Data/StaticData.js";
-
 const MerchantPage = ({ globalState, setGlobal }) => {
   const [Data, SetData] = useState(""); // this state will be used to store the selected menu items to display data
-
   const navigate = useNavigate();
-
   const params = useParams();
   const DtataDisplay = () => {
     const [ProductImageFile, SetProductImageFile] = useState();
@@ -26,10 +23,8 @@ const MerchantPage = ({ globalState, setGlobal }) => {
     });
     const [Disabled, SetDisabled] = useState(false);
     const ProductTitle = useRef();
-
     const Alert = useRef();
     const LoginButtonRef = useRef();
-
     const Subcategories = () => {
       for (
         let index = 0;
@@ -54,7 +49,6 @@ const MerchantPage = ({ globalState, setGlobal }) => {
             console.log(Object.keys(Arr2[index])[0]);
             Arr3.push(Object.keys(Arr2[index])[0]);
           }
-
           return Arr3.map((item) => (
             <option key={item.replace(/_/g, " ")}>
               {item.replace(/_/g, " ")}
@@ -113,12 +107,9 @@ const MerchantPage = ({ globalState, setGlobal }) => {
     //  AddProduct function will be initiated when user clicks on Add Product button to add products to data base
     const AddProduct = async (e) => {
       e.stopPropagation();
-
       console.log("Adding new product");
       console.log(AddProductData);
-
       SetDisabled(true);
-
       // Next we will check for any missing data
       let Keyes = Object.keys(AddProductData);
       console.log(Keyes);
@@ -134,13 +125,11 @@ const MerchantPage = ({ globalState, setGlobal }) => {
           Alert.current.style.maxHeight = "500px";
           SetDisabled(false);
           ProductDataChecked = false;
-
           break;
         } else {
           ProductDataChecked = true;
         }
       }
-
       if (ProductDataChecked === true) {
         console.log("Submitting data");
         const ProductAdded = await fetch(
@@ -163,7 +152,6 @@ const MerchantPage = ({ globalState, setGlobal }) => {
             console.log(err);
             SetDisabled(false);
           });
-
         console.log(ProductAdded);
         Alert.current.classList.replace("alert-danger", "alert-success");
         Alert.current.innerText = ProductAdded.resp;
@@ -223,12 +211,10 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                   <div>Order Id</div>
                   <div>hjkhjshadudwuhduay78iu9uihjdakshd</div>
                 </div>
-
                 <div className=" mx-2 px-2">
                   <div>Product Id</div>
                   <div>hjghjg7678jghjghjghjgjh</div>
                 </div>
-
                 <div className=" mx-2 px-2">
                   <div>Product</div>
                   <div>جبنه ملح خفيف</div>
@@ -615,7 +601,6 @@ const MerchantPage = ({ globalState, setGlobal }) => {
       <Row>
         <h2>Merchant Page</h2>
       </Row>
-
       <Row>
         {/* the following Col will be the side menu for the merchant page */}
         <Col
@@ -630,7 +615,6 @@ const MerchantPage = ({ globalState, setGlobal }) => {
             <Col xs={12} className=" d-flex flex-wrap">
               <div style={{ width: "fit-content" }}>
                 <span>Welcome, </span>
-
                 <span>{params.Name}</span>
                 <span
                   className="MenuArrow"
@@ -640,7 +624,6 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                     e.stopPropagation();
                     let Menues = document.querySelectorAll(".MerchantMenu");
                     let MenuArrows = document.querySelectorAll(".MenuArrow");
-
                     if (
                       document
                         .getElementById("MerchantProfile")
@@ -756,7 +739,6 @@ const MerchantPage = ({ globalState, setGlobal }) => {
               >
                 &#11206;
               </span>
-
               <div
                 id="MerchantOrders"
                 className="MerchantMenu d-flex flex-column"
@@ -843,7 +825,6 @@ const MerchantPage = ({ globalState, setGlobal }) => {
               >
                 &#11206;
               </span>
-
               <div
                 id="MerchantProducts"
                 className="MerchantMenu d-flex flex-column"
@@ -950,7 +931,6 @@ const MerchantPage = ({ globalState, setGlobal }) => {
               >
                 &#11206;
               </span>
-
               <div
                 id="MerchantPayments"
                 className="MerchantMenu d-flex flex-column"
@@ -1007,5 +987,4 @@ const MerchantPage = ({ globalState, setGlobal }) => {
     </Container>
   );
 };
-
 export default MerchantPage;

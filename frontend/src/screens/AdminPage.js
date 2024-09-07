@@ -2,15 +2,12 @@ import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { Link, useNavigate } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
-
 //  the main Componebt is AdminPage and child Component is ControlPanel
 //  when user clicks on any item on the AdminPage component side items >SetData function will update the Data state > then the ControlPanel will be updated using useState
 //  useeffect will be used to redirect unauthorized users away from the page
-
 const AdminPage = ({ globalState, setGlobal }) => {
   const Category = useRef();
   const SubCategory = useRef();
-
   const [AllOrders, SetAllOrders] = useState([]);
   const [SelectedOrder, SetSelectedOrder] = useState([]);
   const [AllOrdersKeys, SetAllOrdersKeys] = useState([]);
@@ -18,7 +15,6 @@ const AdminPage = ({ globalState, setGlobal }) => {
   const navigate = useNavigate();
   const [Data, SelectData] = useState("");
   //  ControlPanel Component Start
-
   const ControlPanel = ({ Data }) => {
     useEffect(() => {
       console.log(Data);
@@ -33,7 +29,6 @@ const AdminPage = ({ globalState, setGlobal }) => {
                 e.stopPropagation();
                 console.log(e.target.value);
                 let OrderArr = [];
-
                 for (let index = 0; index < AllOrders.length; index++) {
                   if (AllOrders[index]._id === e.target.value) {
                     OrderArr.push(AllOrders[index]);
@@ -68,10 +63,8 @@ const AdminPage = ({ globalState, setGlobal }) => {
                   {AllOrdersKeys.map(Key=>(
                     <span style={{width:'fit-content'}} key={Key}>
                       {String(Order[Key])}
-
                     </span>
                   ))}
-
                 </div>
               ))} */}
           </Col>
@@ -134,7 +127,6 @@ const AdminPage = ({ globalState, setGlobal }) => {
                     console.log(Category.current.value.trim());
                     let SubCategories = SubCategory.current.value.split(/\n/);
                     SubCategories.pop();
-
                     Obj[Key] = SubCategories;
                     console.log(Obj);
                     try {
@@ -172,9 +164,7 @@ const AdminPage = ({ globalState, setGlobal }) => {
     }
   };
   //  ControlPanel Component End
-
   // SetData function start
-
   const Orders = async () => {
     console.log("Orders Selected");
     console.log(globalState);
@@ -183,7 +173,6 @@ const AdminPage = ({ globalState, setGlobal }) => {
       {
         method: "POST",
         body: JSON.stringify(globalState),
-
         headers: {
           "Content-Type": "application/json",
         },
@@ -196,16 +185,13 @@ const AdminPage = ({ globalState, setGlobal }) => {
       .catch((err) => {
         console.log(err);
       });
-
     const Keys = Object.keys(Orders[0]);
     console.log(Keys);
     SetAllOrdersKeys(Keys);
-
     console.log(Orders);
     SetAllOrders(Orders);
     console.log(AllOrders);
   };
-
   const SetData = (e) => {
     e.stopPropagation();
     console.log(e.target.innerText);
@@ -219,9 +205,7 @@ const AdminPage = ({ globalState, setGlobal }) => {
     } else {
     }
   };
-
   // SetData function end
-
   useEffect(() => {
     if (globalState.UserLogged === true) {
       if (globalState.Admin === true) {
@@ -234,7 +218,6 @@ const AdminPage = ({ globalState, setGlobal }) => {
       navigate("/");
     }
   });
-
   return (
     <>
       <Row>
@@ -255,5 +238,4 @@ const AdminPage = ({ globalState, setGlobal }) => {
     </>
   );
 };
-
 export default AdminPage;

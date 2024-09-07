@@ -2,7 +2,6 @@ import { MongoClient } from "mongodb";
 //  this will get All products from DB
 const uri =
   "mongodb+srv://engaligulf:Cossacks%401@cluster0.fj9bpe7.mongodb.net/?maxIdleTimeMS=5000";
-
 const client = new MongoClient(uri);
 const UsersProductsList = async (CategoryData) => {
   try {
@@ -39,5 +38,4 @@ const UsersProductsList = async (CategoryData) => {
     // await client.close();
   }
 };
-
 export default UsersProductsList;

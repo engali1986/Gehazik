@@ -1,8 +1,5 @@
 import {MongoClient} from "mongodb"
-
 const uri= "mongodb+srv://engaligulf:Cossacks%401@cluster0.fj9bpe7.mongodb.net/?maxIdleTimeMS=5000"
-
-
 const client = new MongoClient(uri
 );
 async function run() {
@@ -25,16 +22,11 @@ const res=await client.db("Projectman",{
 })
 console.log("DB file")
 console.log(res)
-
-
 // Send a ping to confirm a successful connection
 await client.db("ppdb").command({ ping: 1 }).then(res=>console.log(typeof res)).catch(err=>{
     console.log("connection error 2")
     console.log(err)
 });
-
-
-
 if (res.acknowledged===true) {
     const user=await client.db("Projectman",{
     
@@ -43,21 +35,16 @@ if (res.acknowledged===true) {
     }).catch(err=>{
         return "no user found"
     })
-
     return user
     
 } else {
     return "error"
     
 }
-
 }finally {
 // Ensures that the client will close when you finish/error
-
 await client.close();
-
 }
 }
 // run().catch(console.dir);
-
 export default run

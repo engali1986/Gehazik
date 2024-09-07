@@ -2,7 +2,6 @@ import { MongoClient, ObjectId } from "mongodb";
 //  this will UpdateProduct to the DB
 const uri =
   "mongodb+srv://engaligulf:Cossacks%401@cluster0.fj9bpe7.mongodb.net/?maxIdleTimeMS=5000";
-
 const client = new MongoClient(uri);
 const UpdateProduct = async (UpdateProductData) => {
   try {
@@ -10,7 +9,6 @@ const UpdateProduct = async (UpdateProductData) => {
       console.log("Connection res ");
       //   console.log(res);
     });
-
     console.log("UpdateProduct file 0");
     console.log(UpdateProductData);
     if (UpdateProductData.FieldToUpdate === "Product Images IDs") {
@@ -36,10 +34,8 @@ const UpdateProduct = async (UpdateProductData) => {
           console.log(err);
           return "Product Images IDs not added";
         });
-
       if (AddProductImagesIDs.modifiedCount > 0) {
         ("UpdateProduct file 4 Add product Images ID to procduct Done");
-
         return "Product Images IDs Added";
       } else {
         ("UpdateProduct file 5 Add product Images ID to procdut Not done");
@@ -49,11 +45,9 @@ const UpdateProduct = async (UpdateProductData) => {
       console.log("UpdateProduct file 6 Update list of products");
       let ModefiedCounts = 0;
       let ObjectID = new ObjectId();
-
       console.log(UpdateProductData.UpdateData);
       console.log(UpdateProductData.UpdateData.length);
       console.log(UpdateProductData.UpdateData[0]);
-
       for (
         let index = 0;
         index < UpdateProductData.UpdateData.length;
@@ -111,7 +105,6 @@ const UpdateProduct = async (UpdateProductData) => {
           return "Products Not updated";
         }
       }
-
       console.log(
         "UpdateProduct file 10 Update products compare ModefiedCounts with UpdateProductData.UpdateData.length "
       );
@@ -137,5 +130,4 @@ const UpdateProduct = async (UpdateProductData) => {
     });
   }
 };
-
 export default UpdateProduct;

@@ -2,7 +2,6 @@ import React, {useState,useEffect,useRef} from 'react'
 import { Container,Row,Col } from 'react-bootstrap'
 import { toast } from 'react-toastify'
 import {useNavigate,useParams} from "react-router-dom"
-
 const UserCheckOutPage = ({GlobalState, UpdateCart}) => {
   const Navigate=useNavigate()
   const Params=useParams()
@@ -18,7 +17,6 @@ const UserCheckOutPage = ({GlobalState, UpdateCart}) => {
   const [Disabled,SetDisabled]=useState(false) // this will be used to disable place order button 
   const [Loader, SetLoader] = useState(false); // this will handle loader visbility during fetch product details
   const [OrderAdded,SetOrderAdded]=useState("")
-
  
   const PlaceOrder=async (e)=>{
     try {
@@ -38,11 +36,9 @@ const UserCheckOutPage = ({GlobalState, UpdateCart}) => {
         break
       }else{
         DataChicked=true
-
       }
       
     }
-
     if (DataChicked===true && GlobalState.Order.OrderDetails.length>0 && GlobalState.Order.OrderValue>0 && GlobalState.Order.OrderConfirmed===false) {
       console.log(GlobalState)
       let OrderData={...GlobalState.Order,OrderConfirmed:true,Address:ShippingData,ClientName:GlobalState.Name,ClientPhone:ShippingData.Phone,ClientEmail:GlobalState.email,ClientToken:GlobalState.Token}
@@ -56,7 +52,6 @@ const UserCheckOutPage = ({GlobalState, UpdateCart}) => {
           headers: {
             "Content-Type": "application/json",
           },
-
           mode: "cors",
         }
       ).then(res=>{
@@ -67,7 +62,6 @@ const UserCheckOutPage = ({GlobalState, UpdateCart}) => {
         SetDisabled(false)
         SetLoader(false)
       })
-
       if (AddOrder.resp==="Order Not Added" || AddOrder.resp==="User Not Found" ) {
         toast.error(AddOrder.resp)
         SetDisabled(false)
@@ -109,11 +103,8 @@ const UserCheckOutPage = ({GlobalState, UpdateCart}) => {
     Navigate("/")
     
   }else {
-
   }
-
  },[])
-
   return (
     <Container>
       {/* Loader */}
@@ -183,7 +174,6 @@ const UserCheckOutPage = ({GlobalState, UpdateCart}) => {
         }} type="phone"  className="form-control my-2 h-75" id="inputPhone" placeholder="contact number"></input>
         </Col>
       </Row>
-
       <Row className=' my-3'>
         <h5 className=' text-start'> Payment method</h5>
         <Row className=' text-start'>
@@ -191,7 +181,6 @@ const UserCheckOutPage = ({GlobalState, UpdateCart}) => {
     e.stopPropagation()
     console.log(e.target)
     ShippingData.Payment="Vodafone Cash"
-
   }} className="form-check">
   <input  className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
   <label className="form-check-label" htmlFor="flexRadioDefault1">
@@ -202,14 +191,12 @@ const UserCheckOutPage = ({GlobalState, UpdateCart}) => {
     e.stopPropagation()
     console.log(e.target)
     ShippingData.Payment="Cash on Delivery"
-
   }} className="form-check">
   <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" defaultChecked/>
   <label className="form-check-label" htmlFor="flexRadioDefault2">
     Cash on Delivery
   </label>
 </div>
-
         </Row>
       </Row>
       
@@ -234,5 +221,4 @@ const UserCheckOutPage = ({GlobalState, UpdateCart}) => {
     </Container>
   )
 }
-
 export default UserCheckOutPage

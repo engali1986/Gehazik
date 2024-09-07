@@ -32,7 +32,6 @@ import ClientPage from "./screens/ClientPage.js";
 function App() {
   const BackDrop = useRef();
   const ProfileItems = useRef();
-
   //  first check if there is GlobalState in session and local storage
   if (
     localStorage.getItem("globalState") === null &&
@@ -55,7 +54,6 @@ function App() {
         CartItems: [],
       })
     );
-
     sessionStorage.setItem(
       "globalState",
       JSON.stringify({
@@ -73,11 +71,8 @@ function App() {
       })
     );
     localStorage.setItem("NoLocalStorage", "yes");
-
     console.log(JSON.parse(sessionStorage.getItem("globalState")));
-
     console.log("initial sessionstorage");
-
     console.log(localStorage.getItem("globalState"));
   } else if (
     sessionStorage.getItem("globalState") === null &&
@@ -85,7 +80,6 @@ function App() {
   ) {
     console.log("there is local storage, no sission storage");
     console.log(JSON.parse(localStorage.getItem("globalState")).TimeLogged);
-
     if (
       new Date().getTime() -
         JSON.parse(localStorage.getItem("globalState")).TimeLogged <=
@@ -95,7 +89,6 @@ function App() {
         "globalState",
         localStorage.getItem("globalState")
       );
-
       // if (
       //   localStorage.getItem("NumTabsOpened") === null ||
       //   localStorage.getItem("NumTabsOpened") == "NaN"
@@ -108,7 +101,6 @@ function App() {
       //   let y = x + 1;
       //   localStorage.setItem("NumTabsOpened", y.toString());
       // }
-
       console.log(sessionStorage.getItem("globalState"));
       console.log("initial sessionstorage");
     } else {
@@ -129,7 +121,6 @@ function App() {
           CartItems: [],
         })
       );
-
       sessionStorage.setItem(
         "globalState",
         JSON.stringify({
@@ -147,7 +138,6 @@ function App() {
         })
       );
       // let j = 1;
-
       // localStorage.setItem("NumTabsOpened", j.toString());
     }
   } else if (
@@ -170,11 +160,9 @@ function App() {
         Merchant: JSON.parse(localStorage.getItem("globalState")).Merchant,
       })
     );
-
     console.log("initial sessionstorage");
   }
   //  if no data set session and local storage above
-
   const [GlobalState, SetGlobal] = useState(
     JSON.parse(sessionStorage.getItem("globalState"))
   );
@@ -183,7 +171,6 @@ function App() {
   console.log(sessionStorage.getItem("globalState"));
   console.log(localStorage.getItem("globalState"));
   console.log(localStorage.getItem("globalState") === !null);
-
  
 //  following function will store user/Admin/Merchant data when login
   const userChange = (
@@ -208,7 +195,6 @@ function App() {
       Governorate:Governorate,
       City:City
     });
-
     sessionStorage.setItem(
       "globalState",
       JSON.stringify({
@@ -223,7 +209,6 @@ function App() {
         TimeLogged: new Date().getTime(),
         Governorate:Governorate,
       City:City
-
       })
     );
     localStorage.setItem("globalState", sessionStorage.getItem("globalState"));
@@ -234,11 +219,9 @@ function App() {
     console.log(AddressData);
     SetGlobal({
       ...GlobalState,
-
       Governorate: AddressData.Governorate,
       City: AddressData.City,
     });
-
     sessionStorage.setItem(
       "globalState",
       JSON.stringify({
@@ -279,10 +262,8 @@ function App() {
           ...PervState,
           CartItems: [...PervState.CartItems, Order],
         }));
-
         let arr = GlobalState.CartItems;
         console.log(arr);
-
         sessionStorage.setItem(
           "globalState",
           JSON.stringify({
@@ -313,15 +294,12 @@ function App() {
       }
     } else {
       console.log("First Order Added");
-
       SetGlobal((PervState) => ({
         ...PervState,
         CartItems: [...PervState.CartItems, Order],
       }));
-
       let arr = GlobalState.CartItems;
       console.log(arr);
-
       sessionStorage.setItem(
         "globalState",
         JSON.stringify({
@@ -353,13 +331,11 @@ function App() {
             item.Qty = j;
             y = GlobalState.CartItems;
             console.log(y);
-
             console.log(GlobalState);
           } else {
             console.log("Item qty exceeded")
             y = GlobalState.CartItems;
             console.log(GlobalState);
-
           }
         });
         SetGlobal((PervState) => ({
@@ -390,7 +366,6 @@ function App() {
             item.Qty = j;
             y = GlobalState.CartItems;
             console.log(y);
-
             console.log(GlobalState);
           } else {
           }
@@ -419,7 +394,6 @@ function App() {
             return item;
           }
         });
-
         SetGlobal((PervState) => ({
           ...PervState,
           CartItems: y,
@@ -472,11 +446,8 @@ function App() {
           "globalState",
           sessionStorage.getItem("globalState")
         );
-
       }
-
     }else{
-
     }
   };
 // following function will store order data
@@ -488,16 +459,12 @@ const AddOrder=(Order)=>{
     JSON.stringify({
       ...JSON.parse(sessionStorage.getItem("globalState")),
      Order:Order
-
     })
   );
   localStorage.setItem("globalState", sessionStorage.getItem("globalState"));
-
   
 } 
-
   console.log(typeof new Date().getTime());
-
   console.log(typeof GlobalState);
  
   window.onresize = () => {
@@ -522,7 +489,6 @@ const AddOrder=(Order)=>{
   useEffect(() => {
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
 const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrapBundle.Tooltip(tooltipTriggerEl))
-
     if (window.innerWidth >= 768) {
       console.log("navBarBig");
       document.getElementsByClassName("MainBage")[0].style.marginTop =
@@ -544,7 +510,6 @@ const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstra
       key={Item[Index]}
     />
   ));
-
   return (
     <div
       onClick={() => {
@@ -561,7 +526,6 @@ hideProgressBar />
         onClick={(e) => {
           e.stopPropagation();
           console.log("backdrop clicked");
-
           document.getElementsByClassName("Categories")[0].style.height = "0vh";
           document.getElementsByClassName("Categories")[0].style.overflowY =
             "hidden";
@@ -571,7 +535,6 @@ hideProgressBar />
         }}
         className="BackDrop "
       ></div>
-
       <Container
         className="App "
         style={{ border: "2px solid red", fontSize: "1rem", zIndex: "100" }}
@@ -585,7 +548,6 @@ hideProgressBar />
               e.stopPropagation();
               console.log("nav clicked");
               console.log(GlobalState);
-
               if (
                 document.getElementsByClassName("Categories")[0].style
                   .height === "90vh"
@@ -606,7 +568,6 @@ hideProgressBar />
             <Home BackDropRef={BackDrop} GlobalState={GlobalState} />
           </div>
         </Row>
-
         <div className="row px-2 ps-2">
           <div
             className="MainBage col-12"
@@ -619,7 +580,6 @@ hideProgressBar />
           >
             <Routes>
               {CategoryRoutes}
-
               <Route
                 path="/"
                 element={
@@ -663,7 +623,6 @@ hideProgressBar />
                 }
               />
               <Route path="/:Name/Checkout" element={<UserCheckOutPage GlobalState={GlobalState} UpdateCart={UpdateCart} />}/>
-
               <Route
                 path="/SignUp"
                 element={
@@ -758,5 +717,4 @@ hideProgressBar />
     </div>
   );
 }
-
 export default App;

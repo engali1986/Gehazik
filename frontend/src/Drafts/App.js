@@ -5,9 +5,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Navbar } from "react-bootstrap";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-
 import "./App.css";
-
 import { useState, useRef, useEffect } from "react";
 import Main from "./screens/Main.js";
 import ErrorWindow from "./screens/ErrorWindow.js";
@@ -27,11 +25,9 @@ import MerchantSignUp from "./screens/MerchantSignUp.js";
 import MerchantPage from "./screens/MerchantPage.js";
 import ProductDetails from "./screens/ProductDetails.js";
 import CartPage from "./screens/CartPage.js";
-
 function App() {
   const BackDrop = useRef();
   const ProfileItems = useRef();
-
   //  first check if there is GlobalState in session and local storage
   if (
     localStorage.getItem("globalState") === null &&
@@ -54,7 +50,6 @@ function App() {
         CartItems: [],
       })
     );
-
     sessionStorage.setItem(
       "globalState",
       JSON.stringify({
@@ -71,7 +66,6 @@ function App() {
         CartItems: [],
       })
     );
-
     // if (
     //   localStorage.getItem("NumTabsOpened") === null ||
     //   localStorage.getItem("NumTabsOpened") == "NaN"
@@ -85,11 +79,8 @@ function App() {
     //   localStorage.setItem("NumTabsOpened", y.toString());
     // }
     localStorage.setItem("NoLocalStorage", "yes");
-
     console.log(JSON.parse(sessionStorage.getItem("globalState")));
-
     console.log("initial sessionstorage");
-
     console.log(localStorage.getItem("globalState"));
   } else if (
     sessionStorage.getItem("globalState") === null &&
@@ -97,7 +88,6 @@ function App() {
   ) {
     console.log("there is local storage, no sission storage");
     console.log(JSON.parse(localStorage.getItem("globalState")).TimeLogged);
-
     if (
       new Date().getTime() -
         JSON.parse(localStorage.getItem("globalState")).TimeLogged <=
@@ -107,7 +97,6 @@ function App() {
         "globalState",
         localStorage.getItem("globalState")
       );
-
       // if (
       //   localStorage.getItem("NumTabsOpened") === null ||
       //   localStorage.getItem("NumTabsOpened") == "NaN"
@@ -120,7 +109,6 @@ function App() {
       //   let y = x + 1;
       //   localStorage.setItem("NumTabsOpened", y.toString());
       // }
-
       console.log(sessionStorage.getItem("globalState"));
       console.log("initial sessionstorage");
     } else {
@@ -141,7 +129,6 @@ function App() {
           CartItems: [],
         })
       );
-
       sessionStorage.setItem(
         "globalState",
         JSON.stringify({
@@ -159,12 +146,9 @@ function App() {
         })
       );
       // let j = 1;
-
       // localStorage.setItem("NumTabsOpened", j.toString());
     }
-
     //  add increament for each tab open to local storage start
-
     //  add increament for each tab open to local storage end
   } else if (
     sessionStorage.getItem("globalState") !== null &&
@@ -197,11 +181,9 @@ function App() {
         Merchant: JSON.parse(localStorage.getItem("globalState")).Merchant,
       })
     );
-
     console.log("initial sessionstorage");
   }
   //  if no data set session and local storage above
-
   const [GlobalState, SetGlobal] = useState(
     JSON.parse(sessionStorage.getItem("globalState"))
   );
@@ -210,7 +192,6 @@ function App() {
   console.log(sessionStorage.getItem("globalState"));
   console.log(localStorage.getItem("globalState"));
   console.log(localStorage.getItem("globalState") === !null);
-
   //  if user logged time stamp will be addded to local storage to allow for other tabs
   // if (localStorage.getItem("globalState") === null) {
   //   console.log("No data in local storage")
@@ -229,7 +210,6 @@ function App() {
   //     console.log("No time Logged");
   //   }
   // }
-
   const userChange = (
     name,
     LogInStatus,
@@ -249,7 +229,6 @@ function App() {
       Merchant: Merchant,
       Token: Token,
     });
-
     sessionStorage.setItem(
       "globalState",
       JSON.stringify({
@@ -265,17 +244,14 @@ function App() {
     );
     localStorage.setItem("globalState", sessionStorage.getItem("globalState"));
   };
-
   const UpdateAddress = (AddressData) => {
     console.log("AddressData Updated");
     console.log(AddressData);
     SetGlobal({
       ...GlobalState,
-
       Governorate: AddressData.Governorate,
       City: AddressData.City,
     });
-
     sessionStorage.setItem(
       "globalState",
       JSON.stringify({
@@ -286,7 +262,6 @@ function App() {
     );
     localStorage.setItem("globalState", sessionStorage.getItem("globalState"));
   };
-
   const AddToCart = (Order) => {
     console.log("Order added to cart");
     let OrderAdded = false;
@@ -316,10 +291,8 @@ function App() {
           ...PervState,
           CartItems: [...PervState.CartItems, Order],
         }));
-
         let arr = GlobalState.CartItems;
         console.log(arr);
-
         sessionStorage.setItem(
           "globalState",
           JSON.stringify({
@@ -350,15 +323,12 @@ function App() {
       }
     } else {
       console.log("First Order Added");
-
       SetGlobal((PervState) => ({
         ...PervState,
         CartItems: [...PervState.CartItems, Order],
       }));
-
       let arr = GlobalState.CartItems;
       console.log(arr);
-
       sessionStorage.setItem(
         "globalState",
         JSON.stringify({
@@ -375,7 +345,6 @@ function App() {
       );
     }
   };
-
   const UpdateCart = (UpdateData) => {
     console.log(UpdateData);
     if (UpdateData.Field === "Add") {
@@ -390,7 +359,6 @@ function App() {
             item.Qty = j;
             y = GlobalState.CartItems;
             console.log(y);
-
             console.log(GlobalState);
           } else {
           }
@@ -423,7 +391,6 @@ function App() {
             item.Qty = j;
             y = GlobalState.CartItems;
             console.log(y);
-
             console.log(GlobalState);
           } else {
           }
@@ -452,7 +419,6 @@ function App() {
             return item;
           }
         });
-
         SetGlobal((PervState) => ({
           ...PervState,
           CartItems: y,
@@ -472,37 +438,27 @@ function App() {
     } else {
     }
   };
-
   console.log(typeof new Date().getTime());
-
   // if (JSON.parse(localStorage.getItem("globalState")).TimeLogged) {
   //   if (new Date().getTime() - JSON.parse(localStorage.getItem("globalState")).TimeLogged >= 20000) {
-
   //     localStorage.setItem("globalState",JSON.stringify({
   //       "UserLogged":false,
   //       "Name":"",
   //       "email":"",
-
   //     }))
-
   //   } else {
   //     console.log(new Date().getTime() - JSON.parse(localStorage.getItem("globalState")).TimeLogged)
-
   //   }
-
   // } else {
   //   console.log("User Not")
-
   // }
   // used localStorage to keep state when page refresh
-
   console.log(typeof GlobalState);
   // console.log(typeof GlobalState.UserLogged)
   window.onresize = () => {
     console.log(window.innerWidth);
   };
   // Main bage to be directly below navbar we use window,onresize and adjust margintop
-
   window.onresize = () => {
     if (window.innerWidth >= 768) {
       console.log("navBarBig");
@@ -517,7 +473,6 @@ function App() {
           .getBoundingClientRect().bottom + "px";
     }
   };
-
   // window.onbeforeunload = () => {
   //   if (parseInt(localStorage.getItem("NumTabsOpened"), 10) <= 1) {
   //     localStorage.clear();
@@ -526,7 +481,6 @@ function App() {
   //     localStorage.setItem("NumTabsOpened", y.toString());
   //   }
   // };
-
   useEffect(() => {
     if (document.querySelectorAll(".AddressSelection")[0]) {
       console.log(GlobalState);
@@ -539,7 +493,6 @@ function App() {
         // document.querySelectorAll(".AddressSelection")[0].style.display="block"
       }
     }
-
     if (window.innerWidth >= 768) {
       console.log("navBarBig");
       document.getElementsByClassName("MainBage")[0].style.marginTop =
@@ -553,7 +506,6 @@ function App() {
           .getBoundingClientRect().bottom + "px";
     }
   }, []);
-
   const CategoryRoutes = StaticData.Categories.map((Item, Index) => (
     <Route
       caseSensitive
@@ -562,7 +514,6 @@ function App() {
       key={Item[Index]}
     />
   ));
-
   return (
     <div
       onClick={() => {
@@ -575,7 +526,6 @@ function App() {
         onClick={(e) => {
           e.stopPropagation();
           console.log("backdrop clicked");
-
           document.getElementsByClassName("Categories")[0].style.height = "0vh";
           document.getElementsByClassName("Categories")[0].style.overflowY =
             "hidden";
@@ -585,7 +535,6 @@ function App() {
         }}
         className="BackDrop "
       ></div>
-
       <Container
         className="App "
         style={{ border: "2px solid red", fontSize: "1rem", zIndex: "100" }}
@@ -599,7 +548,6 @@ function App() {
               e.stopPropagation();
               console.log("nav clicked");
               console.log(GlobalState);
-
               if (
                 document.getElementsByClassName("Categories")[0].style
                   .height === "90vh"
@@ -620,7 +568,6 @@ function App() {
             <Home BackDropRef={BackDrop} GlobalState={GlobalState} />
           </div>
         </Row>
-
         <div className="row px-2 ps-2">
           <div
             className="MainBage col-12"
@@ -633,7 +580,6 @@ function App() {
           >
             <Routes>
               {CategoryRoutes}
-
               <Route
                 path="/"
                 element={
@@ -676,7 +622,6 @@ function App() {
                   <CartPage GlobalState={GlobalState} UpdateCart={UpdateCart} />
                 }
               />
-
               <Route
                 path="/SignUp"
                 element={
@@ -762,5 +707,4 @@ function App() {
     </div>
   );
 }
-
 export default App;

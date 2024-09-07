@@ -1,9 +1,7 @@
 import { MongoClient } from "mongodb";
 import Merchantvarification from "./MerchantVarification.js";
-
 const uri =
   "mongodb+srv://engaligulf:Cossacks%401@cluster0.fj9bpe7.mongodb.net/?maxIdleTimeMS=5000";
-
 const client = new MongoClient(uri);
 async function LogInMerchant(Credentials) {
   try {
@@ -37,17 +35,14 @@ async function LogInMerchant(Credentials) {
         console.log(err);
         return "Connection error";
       });
-
     if (GetMerchant.email) {
       console.log("LogInMerchant file 5");
       console.log(GetMerchant);
       //  next we will check if Merchant varified through email or not
-
       if (GetMerchant.Merchantvarified === false) {
         console.log("LogInMerchant file 6");
         if (Credentials.VarificationCode) {
           console.log("LogInMerchant file 7");
-
           if (Credentials.VarificationCode === GetMerchant.varificationcode) {
             const VarifyMerchant = await client
               .db("Gehazik")
@@ -66,12 +61,10 @@ async function LogInMerchant(Credentials) {
                 console.log(err);
                 return "Connection error";
               });
-
             if (typeof VarifyMerchant === "object") {
               console.log("LogInMerchant file 8");
               GetMerchant.Merchantvarified = true;
               GetMerchant.Token = NewToken;
-
               return GetMerchant;
             } else {
               console.log("LogInMerchant file 9");
@@ -86,7 +79,6 @@ async function LogInMerchant(Credentials) {
               .then((res) => {
                 console.log("LogInMerchant file 10");
                 console.log(res);
-
                 return res;
               })
               .catch((err) => {
@@ -114,7 +106,6 @@ async function LogInMerchant(Credentials) {
             .then((res) => {
               console.log("LogInMerchant file 14-10");
               console.log(res);
-
               return res;
             })
             .catch((err) => {
@@ -175,5 +166,4 @@ async function LogInMerchant(Credentials) {
   }
 }
 // LogInMerchant().catch(console.dir);
-
 export default LogInMerchant;

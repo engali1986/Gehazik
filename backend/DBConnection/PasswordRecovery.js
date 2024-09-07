@@ -1,12 +1,8 @@
 import mailer from "nodemailer"
 import {MongoClient} from "mongodb"
-
 const uri= "mongodb+srv://engaligulf:Cossacks%401@cluster0.fj9bpe7.mongodb.net/?maxIdleTimeMS=5000"
 const client = new MongoClient(uri
   );
-
-
-
 const PasswordRecovery=async(Email)=>{
     console.log("PassordRecovery 0")
     console.log(Email)
@@ -61,16 +57,10 @@ const PasswordRecovery=async(Email)=>{
     }else{
       console.log("PassordRecovery 3")
       return "User Not Found"
-
     }
     
-
     
-
    
-
       
-
 }
-
 export default PasswordRecovery

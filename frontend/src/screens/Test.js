@@ -1,14 +1,9 @@
 import React, { useState} from "react";
 import Staticdata from "../Data/StaticData"
 import StaticData from "../Data/StaticData";
-
-
-
 const Test = () => {
  const [Address,SetAddress]=useState({FirstName:''})
-
  
-
  
   
   return (
@@ -23,7 +18,6 @@ const Test = () => {
     
   }
   
-
   if (x>0) {
     console.log("aass")
     return
@@ -34,5 +28,4 @@ const Test = () => {
  </>
   );
 };
-
 export default Test;

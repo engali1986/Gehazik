@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-
 import { Link, useNavigate } from "react-router-dom";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -10,14 +9,11 @@ const LogIn = ({ globalState, setGlobal }) => {
   const Alert = useRef();
   const varificationCodeRef = useRef();
   const LoginButtonRef = useRef();
-
   const [Credentials, setCredentials] = useState({
     Email: "",
     Password: "",
   });
-
   const [Disabled, setDisabled] = useState(false);
-
   const EmailInput = (x) => {
     Alert.current.style.maxHeight = "0px";
     setCredentials({ ...Credentials, Email: x.target.value });
@@ -25,7 +21,6 @@ const LogIn = ({ globalState, setGlobal }) => {
   const VarifyEmail = async () => {
     console.log(Credentials);
     console.log(typeof Credentials.VarificationCode);
-
     const UserVarified = await fetch(
       "http://localhost:5000/LogInUser",
       {
@@ -44,7 +39,6 @@ const LogIn = ({ globalState, setGlobal }) => {
         return "user Not Added";
       });
       console.log(UserVarified)
-
     if (UserVarified.resp.email && UserVarified.resp.uservarified === true) {
       setGlobal(
         UserVarified.resp.name,
@@ -77,7 +71,6 @@ const LogIn = ({ globalState, setGlobal }) => {
     Alert.current.style.maxHeight = "0px";
     setCredentials({ ...Credentials, Password: x.target.value });
   };
-
   const LogInSubmit = async () => {
     console.log("Log in");
     console.log(Credentials);
@@ -104,7 +97,6 @@ const LogIn = ({ globalState, setGlobal }) => {
           return "user Not Added";
         });
         console.log(UserLogIn)
-
       if (UserLogIn.resp) {
         LoginButtonRef.current.innerText = "Login";
         if (typeof UserLogIn.resp === "object") {
@@ -177,13 +169,11 @@ const LogIn = ({ globalState, setGlobal }) => {
       Alert.current.style.maxHeight = "500px";
     }
   };
-
   useEffect(() => {
     if (globalState.UserLogged === true) {
       navigate("/");
     }
   });
-
   return (
     <div
       className="container1"
@@ -203,7 +193,6 @@ const LogIn = ({ globalState, setGlobal }) => {
         required
         disabled={Disabled}
       />
-
       <label htmlFor="psw">
         <b>Password</b>
       </label>
@@ -215,7 +204,6 @@ const LogIn = ({ globalState, setGlobal }) => {
         required
         disabled={Disabled}
       />
-
       <div
         ref={Alert}
         className=" alert alert-danger text-start"
@@ -230,7 +218,6 @@ const LogIn = ({ globalState, setGlobal }) => {
         }}
         role="alert"
       ></div>
-
       <button
         ref={LoginButtonRef}
         className="LogInButton"
@@ -253,7 +240,6 @@ const LogIn = ({ globalState, setGlobal }) => {
             }}
           />
         </Col>
-
         <Col xs={12} md={4}>
           <button
             className="SignUpButton"
@@ -264,7 +250,6 @@ const LogIn = ({ globalState, setGlobal }) => {
           </button>
         </Col>
       </Row>
-
       <div style={{ textAlign: "start" }}>
         <span>
           Don't have account{" "}
@@ -303,5 +288,4 @@ const LogIn = ({ globalState, setGlobal }) => {
     </div>
   );
 };
-
 export default LogIn;

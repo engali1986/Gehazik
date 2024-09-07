@@ -4,7 +4,6 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import StaticData from "../Data/StaticData";
 import { toast } from "react-toastify";
-
 const MerchantSignUp = ({ globalState, setGlobal }) => {
   const [Governorate,SetGovernorate]=useState("")
   const [City,SetCity]=useState("")
@@ -33,16 +32,13 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
   const PassmatchAlert = useRef();
   const varificationCodeRef = useRef();
   const ContainerRef = useRef();
-
   // function for password requirements
   //  below we used useRef to wrap every document.getElementById then in useEffect we assigned every useref.current to its element
-
   let myInput = document.getElementById("psw");
   let letter = useRef(document.getElementById("letter"));
   let capital = useRef(document.getElementById("capital"));
   let number = useRef(document.getElementById("number"));
   let length = useRef(document.getElementById("length"));
-
   useEffect(() => {
     if (globalState.UserLogged === true) {
       if (globalState.Admin === true) {
@@ -71,42 +67,31 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
       length.current = el4;
     }
   });
-
   const EnterEmail = (x) => {
     let curr = x.target.value.length - 1;
     let EmailValue = "";
-
     console.log(curr);
-
     setCredentials({ ...Credentials, Email: x.target.value });
     console.log(Credentials);
-
     // console.log(x.target.value)
     // const regex=/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/
     // if (x.target.value.match(regex)) {
-
     //   console.log("Email correct")
-
     // } else {
     //   console.log("Email Not correct")
-
     // }
   };
-
   const focus = () => {
     document.getElementById("Alert").style.display = "block";
     PassmatchAlert.current.style.maxHeight = "0px";
   };
-
   const blur = () => {
     document.getElementById("Alert").style.display = "none";
   };
-
   const KeyUp = (x) => {
     console.log(x.target.value);
     console.log(letter.current.className);
     ConfirmPasswordValue.current.value = "";
-
     let lowerCaseLetters = /[a-z]/g;
     if (x.target.value.match(lowerCaseLetters)) {
       letter.current.classList.remove("PassInvalid");
@@ -117,7 +102,6 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
       letter.current.classList.add("PassInvalid");
       PasswordCheck.LowerCase = false;
     }
-
     // Validate capital letters
     let upperCaseLetters = /[A-Z]/g;
     if (x.target.value.match(upperCaseLetters)) {
@@ -129,7 +113,6 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
       capital.current.classList.add("PassInvalid");
       PasswordCheck.UpperCase = false;
     }
-
     // Validate numbers
     let numbers = /[0-9]/g;
     if (x.target.value.match(numbers)) {
@@ -141,7 +124,6 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
       number.current.classList.add("PassInvalid");
       PasswordCheck.NumberCase = false;
     }
-
     // Validate length
     if (x.target.value.length >= 8) {
       length.current.classList.remove("PassInvalid");
@@ -152,10 +134,8 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
       length.current.classList.add("PassInvalid");
       PasswordCheck.LengthCase = false;
     }
-
     console.log(PasswordCheck);
     setConfirmPassword(false);
-
     if (
       PasswordCheck.LowerCase === true &&
       PasswordCheck.UpperCase === true &&
@@ -168,11 +148,9 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
       setPasswordCheckState(false);
       console.log(PasswordCheck);
     }
-
     ConfirmPasswordCheck();
     setCredentials({ ...Credentials, Password: x.target.value });
   };
-
   const ConfirmPasswordCheck = () => {
     if (
       PasswordValue.current.value.length === 0 ||
@@ -202,28 +180,23 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
         );
         PassmatchAlert.current.innerText = "Password mismatch";
         setPasswordmatch(false);
-
         console.log("Password mismatch");
       }
     }
-
     setCredentials({
       ...Credentials,
       ConfirmPass: ConfirmPasswordValue.current.value,
     });
     console.log(Credentials.ConfirmPass);
   };
-
   const SignUpSubmit = async () => {
     setButton(true);
     setConfirmPassword(true);
     setDisabled(true);
-
     console.log(Credentials);
     const emailregx = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
     const passwordregex = /[a-zA-z0-9.-_@#$%^&*]/;
     const whiteSpaceRegex = /\s/;
-
     if (
       Credentials.Email.length > 0 &&
       Credentials.Password.length > 0 &&
@@ -264,37 +237,26 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
           console.log(JSON.stringify(Credentials));
           console.log(Credentials.Email.length);
           console.log(Credentials.Password.length);
-
           // for (let index = 0; index <Credentials.Email.length; index++) {
           //   const element = Credentials.Email[index];
-
           //   if (element.match(/^[a-zA-Z0-9@._-]/)) {
           //     console.log("Email passed")
-
           //   }
-
           // }
-
           // for (let index = 0; index <Credentials.Password.length; index++) {
           //   const element = Credentials.Password[index];
-
           //   if (element.match(passwordregex)) {
           //     console.log("Password passed")
-
           //   }
-
           // }
-
           console.log("Email password checked");
           ContainerRef.current.style.cursor = "wait";
-
           PassmatchAlert.current.classList.replace(
             "alert-danger",
             "alert-success"
           );
           PassmatchAlert.current.innerText = "Sign Up please wait";
           PassmatchAlert.current.style.maxHeight = "500px";
-
           const AddMerchant = await fetch(
             "http://localhost:5000/AddMerchant",
             {
@@ -312,15 +274,11 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
             .catch((err) => {
               return "user Not Added";
             });
-
           // const result=await AddMerchant.json()
-
           console.log(AddMerchant);
           ContainerRef.current.style.cursor = "default";
-
           if (typeof AddMerchant.resp === "object") {
             console.log(AddMerchant.resp);
-
             PassmatchAlert.current.classList.replace(
               "alert-danger",
               "alert-success"
@@ -353,7 +311,6 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
           );
           PassmatchAlert.current.innerText = "Email/Password not correct";
           PassmatchAlert.current.style.maxHeight = "500px";
-
           setButton(false);
           setConfirmPassword(false);
           setDisabled(false);
@@ -363,29 +320,23 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
       PassmatchAlert.current.classList.replace("alert-success", "alert-danger");
       PassmatchAlert.current.innerText = "Please complete/check all fields";
       PassmatchAlert.current.style.maxHeight = "500px";
-
       setButton(false);
       setConfirmPassword(false);
       setDisabled(false);
     }
-
     // console.log(Passwordmatch)
     // console.log(PasswordCheckState)
     // if (Passwordmatch===true && PasswordCheckState===true) {
     //   console.log( "submitted")
-
     // } else {
     //   PassmatchAlert.current.classList.replace("alert-success","alert-danger")
     //   PassmatchAlert.current.style.maxHeight="500px"
     //   PassmatchAlert.current.innerText="Password requirements/match error"
-
     // }
   };
-
   const VarifyEmail = async () => {
     console.log(Credentials);
     console.log(typeof Credentials.VarificationCode);
-
     const UserVarified = await fetch(
       "http://localhost:5000/LogInMerchant",
       {
@@ -403,7 +354,6 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
       .catch((err) => {
         return "user Not Added";
       });
-
     if (
       UserVarified.resp.email &&
       UserVarified.resp.Merchantvarified === true
@@ -436,9 +386,7 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
       setDisabled(false);
     }
   };
-
   // const KeyUp=()=>{
-
   // -----------------------------------
   return (
     <div
@@ -449,7 +397,6 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
         console.log(PasswordCheckState);
         console.log(Credentials);
         console.log(new Date());
-
         console.log(globalState);
       }}
     >
@@ -469,7 +416,6 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
         }}
         required
       />
-
       <label htmlFor="email">
         <b>E-mail</b>
       </label>
@@ -501,7 +447,6 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
         </option>
         {Array.isArray(Object.keys(StaticData.Cities))?Object.keys(StaticData.Cities).map((city)=>(<option key={city}>{city}</option>)):""}
       </select>
-
       </Col>
       <Col className=" d-flex flex-column my-3" xs={12} md={6}>
       <div>
@@ -524,10 +469,8 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
           {city}
         </option>)):""}
       </select>
-
       </Col>
      </Row>
-
       <label htmlFor="psw">
         <b>Password</b>
       </label>
@@ -544,7 +487,6 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
         onKeyUp={(e) => KeyUp(e)}
         required
       />
-
       <div className="d-flex flex-wrap">
         {/* in the following used w-100 class and wordWrap style to break work indide the div width */}
         <div
@@ -568,7 +510,6 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
           </p>
         </div>
       </div>
-
       <label htmlFor="confirmpsw">
         <b>Confirm Password</b>
       </label>
@@ -580,7 +521,6 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
           name="confirmpsw"
           onFocus={() => {
             ConfirmPasswordCheck();
-
             PassmatchAlert.current.style.maxHeight = "500px";
           }}
           onBlur={() => {
@@ -590,7 +530,6 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
           required
           disabled={ConfirmPassword}
         />
-
         <div
           ref={PassmatchAlert}
           className=" alert alert-danger text-start"
@@ -619,7 +558,6 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
               }}
             />
           </Col>
-
           <Col xs={12} md={4}>
             <button
               className="SignUpButton"
@@ -631,7 +569,6 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
           </Col>
         </Row>
       </div>
-
       <button
         className="SignUpButton"
         disabled={SignUpBtn}
@@ -639,7 +576,6 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
       >
         SignUp
       </button>
-
       <span className="psw">
         have account{" "}
         <span
@@ -658,5 +594,4 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
     </div>
   );
 };
-
 export default MerchantSignUp;

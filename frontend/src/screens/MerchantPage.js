@@ -48,16 +48,12 @@ const MerchantPage = ({ globalState, setGlobal }) => {
     const ProductTitle = useRef();
     const Alert = useRef();
     const LoginButtonRef = useRef();
-
     //  AddProduct function will be initiated when user clicks on Add Product button to add products to data base
     const AddProduct = async (e) => {
       e.stopPropagation();
-
       console.log("Adding new product");
       console.log(AddProductData);
-
       SetDisabled(true);
-
       // Next we will check for any missing data
       let Keyes = Object.keys(AddProductData);
       console.log(Keyes);
@@ -74,7 +70,6 @@ const MerchantPage = ({ globalState, setGlobal }) => {
           Alert.current.style.maxHeight = "500px";
           SetDisabled(false);
           ProductDataChecked = false;
-
           break;
         } else {
           ProductDataChecked = true;
@@ -129,7 +124,6 @@ const MerchantPage = ({ globalState, setGlobal }) => {
           Alert.current.style.maxHeight = "500px";
           SetDisabled(false);
           ProductDataChecked = false;
-
           
         }
         
@@ -140,7 +134,6 @@ const MerchantPage = ({ globalState, setGlobal }) => {
         //   Alert.current.style.maxHeight = "500px";
         //   SetDisabled(false);
         //   ProductDataChecked = false;
-
       }
     };
     // will be used to list sub Categories in addProduct section
@@ -168,7 +161,6 @@ const MerchantPage = ({ globalState, setGlobal }) => {
             console.log(Object.keys(Arr2[index])[0]);
             Arr3.push(Object.keys(Arr2[index])[0]);
           }
-
           return Arr3.map((item) => (
             <option key={item.replace(/_/g, " ")}>
               {item.replace(/_/g, " ")}
@@ -225,7 +217,6 @@ const MerchantPage = ({ globalState, setGlobal }) => {
         }
       }
     };
-
     useEffect(() => {
       console.log(UpdateProductsList);
     }, [UpdateProductsList]);
@@ -281,12 +272,10 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                   <div>Order Id</div>
                   <div>hjkhjshadudwuhduay78iu9uihjdakshd</div>
                 </div>
-
                 <div className=" mx-2 px-2">
                   <div>Product Id</div>
                   <div>hjghjg7678jghjghjghjgjh</div>
                 </div>
-
                 <div className=" mx-2 px-2">
                   <div>Product</div>
                   <div>جبنه ملح خفيف</div>
@@ -476,7 +465,6 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                                         10
                                       );
                                       Duplicate = true;
-
                                       break;
                                     } else {
                                     }
@@ -537,7 +525,6 @@ const MerchantPage = ({ globalState, setGlobal }) => {
               <button
                 onClick={async (e) => {
                   e.stopPropagation();
-
                   console.log(UpdateProductsList);
                   e.target.disabled = true;
                   e.target.innerText = "Please wait";
@@ -569,11 +556,9 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                       return { resp: "Internal Error" };
                     });
                   console.log(UpdateProduct);
-
                   if (UpdateProduct.resp === "Products Updated Successfully") {
                     e.target.innerText = "Confirm Update";
                     e.target.disabled = false;
-
                     SetShowAlert({
                       ...ShowAlert,
                       Massage: UpdateProduct.resp,
@@ -593,7 +578,6 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                   setTimeout(() => {
                     SetShowAlert({
                       ...ShowAlert,
-
                       Success: false,
                       Show: false,
                     });
@@ -675,7 +659,6 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                 for (const item of ard) {
                   console.log(item);
                 }
-
                 let brd = { a: "aa", b: "bb" };
                 for (const key in brd) {
                   console.log(brd[key]);
@@ -1023,7 +1006,6 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                       ) {
                         console.log("Images added");
                         const files = Array.from(e.target.files);
-
                         SetProductImageFiles(files);
                       } else {
                         console.log("Images not added");
@@ -1157,7 +1139,6 @@ const MerchantPage = ({ globalState, setGlobal }) => {
             <Col xs={12} className=" d-flex flex-wrap">
               <div style={{ width: "fit-content" }}>
                 <span>Welcome, </span>
-
                 <span>{params.Name}</span>
                 <span
                   className="MenuArrow"
@@ -1167,7 +1148,6 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                     e.stopPropagation();
                     let Menues = document.querySelectorAll(".MerchantMenu");
                     let MenuArrows = document.querySelectorAll(".MenuArrow");
-
                     if (
                       document
                         .getElementById("MerchantProfile")
@@ -1284,7 +1264,6 @@ const MerchantPage = ({ globalState, setGlobal }) => {
               >
                 &#11206;
               </span>
-
               <div
                 id="MerchantOrders"
                 className="MerchantMenu d-flex flex-column"
@@ -1371,7 +1350,6 @@ const MerchantPage = ({ globalState, setGlobal }) => {
               >
                 &#11206;
               </span>
-
               <div
                 id="MerchantProducts"
                 className="MerchantMenu d-flex flex-column"
@@ -1399,10 +1377,8 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                       Email: globalState.email,
                       Token: globalState.Token,
                     };
-
                     console.log(ProductsListCredentials);
                     console.log("ProductsList submitted");
-
                     const GetProductsList = await fetch(
                       "http://localhost:5000/Merchants/ProductsList",
                       {
@@ -1427,14 +1403,11 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                       SetShowAlert({...ShowAlert,Show:false, Success:true, Massage:''})
                     } else {
                       SetShowAlert({...ShowAlert,Show:true, Success:false, Massage:"No Products Found"})
-
                       setTimeout(()=>{
                         SetShowAlert({...ShowAlert,Show:false, Success:false, Massage:""})
-
                       }, 3000)
                       
                       
-
                     }
                   }}
                 >
@@ -1522,7 +1495,6 @@ const MerchantPage = ({ globalState, setGlobal }) => {
               >
                 &#11206;
               </span>
-
               <div
                 id="MerchantPayments"
                 className="MerchantMenu d-flex flex-column"
@@ -1579,5 +1551,4 @@ const MerchantPage = ({ globalState, setGlobal }) => {
     </Container>
   );
 };
-
 export default MerchantPage;

@@ -2,14 +2,12 @@ import { MongoClient, ObjectId } from "mongodb";
 //  this will get All products from DB
 const uri =
   "mongodb+srv://engaligulf:Cossacks%401@cluster0.fj9bpe7.mongodb.net/?maxIdleTimeMS=5000";
-
 const client = new MongoClient(uri);
 const UsersProductDetails = async (ProductID) => {
   try {
     console.log("UserGetProductDetails file 0");
     await client.connect();
     console.log("Connection established ");
-
     const ProductDetails = await client
       .db("Gehazik")
       .collection("Products")
@@ -33,7 +31,6 @@ const UsersProductDetails = async (ProductID) => {
             Governorate:1,
             City:1,
             MerchantID:1
-
           },
         }
       )
@@ -46,10 +43,8 @@ const UsersProductDetails = async (ProductID) => {
         console.log(err);
         return "Connection Error";
       });
-
     console.log("UserGetProductDetails file 3 ProductDetails is :");
     console.log(ProductDetails);
-
     return ProductDetails;
   } catch (error) {
     console.log("UserGetProductDetails file 4 error :");
@@ -57,5 +52,4 @@ const UsersProductDetails = async (ProductID) => {
     return "Connection Error";
   }
 };
-
 export default UsersProductDetails;

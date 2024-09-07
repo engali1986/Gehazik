@@ -3,5 +3,3 @@ node_modules
 /backend/secrets/ServiceAccountKey.json
 /backend/ServiceAccountKey.json
 .env
-
-

@@ -1,10 +1,8 @@
 import React, { useEffect, useRef } from "react";
-
 const AdsSlider = () => {
   const NextArrow = useRef();
   const PrevArrow = useRef();
   let x = 0;
-
   const NextSlide = (e) => {
     e.stopPropagation();
     if (x < 3) {
@@ -15,7 +13,6 @@ const AdsSlider = () => {
     }
     document.getElementsByClassName("AdsImages")[0].style.left = `-${x * 100}%`;
   };
-
   const PrevSlide = (e) => {
     e.stopPropagation();
     if (x > 0) {
@@ -25,12 +22,10 @@ const AdsSlider = () => {
     }
     document.getElementsByClassName("AdsImages")[0].style.left = `-${x * 100}%`;
   };
-
   useEffect(() => {
     const interval = setInterval(() => {
       NextArrow.current.click();
     }, 4000);
-
     return () => clearInterval(interval); // Cleanup the interval on component unmount
   }, []);
   return (
@@ -195,7 +190,6 @@ const AdsSlider = () => {
           }}
           onClick={(e) => NextSlide(e)}
         ></i>
-
         <i
           ref={PrevArrow}
           className="fa-solid fa-arrow-left fa-xl"
@@ -212,5 +206,4 @@ const AdsSlider = () => {
     </div>
   );
 };
-
 export default AdsSlider;

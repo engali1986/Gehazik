@@ -1,9 +1,7 @@
 import { MongoClient } from "mongodb";
 import Uservarification from "./UserVarification.js";
-
 const uri =
   "mongodb+srv://engaligulf:Cossacks%401@cluster0.fj9bpe7.mongodb.net/?maxIdleTimeMS=5000";
-
 const client = new MongoClient(uri);
 async function LogInUser(Credentials) {
   try {
@@ -36,16 +34,13 @@ async function LogInUser(Credentials) {
         console.log(err);
         return "Connection error";
       });
-
     if (GetUser.email) {
       console.log("LogInUser file 5");
       console.log(GetUser);
-
       if (GetUser.uservarified === false) {
         console.log("LogInUser file 6");
         if (Credentials.VarificationCode) {
           console.log("LogInUser file 7");
-
           if (Credentials.VarificationCode === GetUser.varificationcode) {
             const VarifyUser = await client
               .db("Gehazik")
@@ -63,12 +58,10 @@ async function LogInUser(Credentials) {
                 console.log(err);
                 return "Connection error";
               });
-
             if (typeof VarifyUser === "object") {
               console.log("LogInUser file 8");
               GetUser.uservarified = true;
               GetUser.Token=NewToken
-
               return GetUser;
             } else {
               console.log("LogInUser file 9");
@@ -83,7 +76,6 @@ async function LogInUser(Credentials) {
               .then((res) => {
                 console.log("LogInUser file 10");
                 console.log(res);
-
                 return res;
               })
               .catch((err) => {
@@ -111,7 +103,6 @@ async function LogInUser(Credentials) {
             .then((res) => {
               console.log("LogInUser file 14-10");
               console.log(res);
-
               return res;
             })
             .catch((err) => {
@@ -141,24 +132,20 @@ async function LogInUser(Credentials) {
           { $set: {Token:NewToken } }).then(res=>{
             console.log("LogInUser file 15.5 Update Token");
             return res
-
           }).catch(err=>{
             console.log("LogInUser file 15.5 err");
             console.log(err)
             return "Connection error" 
-
           })
           if (typeof UpdateUserToken==="object"  && UpdateUserToken.modifiedCount>0) {
             console.log("LogInUser file 15.5 Token Updated");
             GetUser.Token=NewToken
-
             return GetUser;
             
           } else {
             return "Connection error" 
             
           }
-
         
       }
     } else {
@@ -173,5 +160,4 @@ async function LogInUser(Credentials) {
   }
 }
 // LogInUser().catch(console.dir);
-
 export default LogInUser;

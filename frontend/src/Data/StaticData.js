@@ -407,7 +407,6 @@ let Egypt = {
     "Taba	": "	طابا",
   },
 };
-
 const StaticData = {
   Cities: Egypt,
   Categories: [
@@ -448,5 +447,4 @@ const StaticData = {
   Units: ["Kilograms", "Piece"],
   AA:""
 };
-
 export default StaticData;

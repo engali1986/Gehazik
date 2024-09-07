@@ -3,9 +3,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import Feedback from "react-bootstrap/esm/Feedback";
 import { Link } from "react-router-dom";
 import StaticData, { Categories } from "../Data/StaticData.js";
-
 // here we use if else to check params.GlobalState.Admin if false display NavBar items means normal user else means admin donot display navbar items except home
-
 const Home = (params) => {
   console.log();
   const LogInItems = () => {
@@ -105,12 +103,10 @@ const Home = (params) => {
               ></i>
             </a>
           </div>
-
           <div
             style={{ width: "fit-content", marginLeft: "5%" }}
             onClick={(e) => {
               e.stopPropagation();
-
               document.getElementsByClassName("BackDrop")[0].click();
               document.getElementsByClassName("LogIn")[0].click();
               console.log("Login/Signup clicked");
@@ -123,7 +119,6 @@ const Home = (params) => {
       );
     }
   };
-
   //  here we check if normal user or admin
   if (
     params.GlobalState.Admin === true ||
@@ -192,7 +187,6 @@ const Home = (params) => {
               console.log(
                 document.getElementsByClassName("Categories")[0].style.height
               );
-
               if (
                 document.getElementsByClassName("Categories")[0].style
                   .height === "90vh"
@@ -220,7 +214,6 @@ const Home = (params) => {
           >
             categories
           </div>
-
           <div
             className="SearchBar d-flex"
             style={{
@@ -240,7 +233,6 @@ const Home = (params) => {
               style={{ color: "blue" }}
             ></i>
           </div>
-
           <LogInItems />
         </Row>
         {/* Small screen navbar-------------------------------------------------------------------------------------------------- */}
@@ -267,7 +259,6 @@ const Home = (params) => {
               console.log(
                 document.getElementsByClassName("Categories")[0].style.height
               );
-
               if (
                 document.getElementsByClassName("Categories")[0].style
                   .height === "90vh"
@@ -313,7 +304,6 @@ const Home = (params) => {
               style={{ color: "blue" }}
             ></i>
           </Col>
-
           <div
             className=" order-3"
             style={{ width: "fit-content", marginLeft: "auto" }}
@@ -357,5 +347,4 @@ const Home = (params) => {
     );
   }
 };
-
 export default Home;

@@ -2,10 +2,8 @@
 // then we import Merchantvarification function which will send email to Merchant after regester with varificationcode to confirm Merchant email
 import { GridFSBucket, MongoClient } from "mongodb";
 import Merchantvarification from "./MerchantVarification.js";
-
 const uri =
   "mongodb+srv://engaligulf:Cossacks%401@cluster0.fj9bpe7.mongodb.net/?maxIdleTimeMS=5000";
-
 const client = new MongoClient(uri);
 // AddMerchant function is used to add Merchant to database
 async function AddMerchant(Credentials) {
@@ -16,7 +14,6 @@ async function AddMerchant(Credentials) {
     });
     console.log("AddMerchant file 0");
     console.log(Credentials);
-
     // First we check if Merchant already regestered by searching for Merchant email in database
     const IsMerchantRegistered = await client
       .db("Gehazik")
@@ -34,22 +31,17 @@ async function AddMerchant(Credentials) {
       .catch((err) => {
         console.log("AddMerchant file 1.1");
         console.log(err);
-
         return "Connection error";
       });
-
     console.log("AddMerchant file 2");
     console.log(IsMerchantRegistered);
-
     // if Merchant not regestered we add Merchant to database and create varificationcode
     if (IsMerchantRegistered === "Merchant Not Found") {
       let x = Math.floor(Math.random() * 9999);
       let NewToken = Math.floor(Math.random() * 10000) + 1;
-
       if (x < 1000) {
         x = x + 1000;
       }
-
       const res = await client
         .db("Gehazik")
         .collection("Merchants")
@@ -75,7 +67,6 @@ async function AddMerchant(Credentials) {
           console.log(err);
           return "Connection error";
         });
-
       // next we search for Merchant by email in database to return the Merchant full data to client
       if (res.acknowledged === true) {
         const Merchant = await client
@@ -92,7 +83,6 @@ async function AddMerchant(Credentials) {
           .catch((err) => {
             return "Connection error";
           });
-
         if (
           Merchant !== "Merchant Not Found" ||
           Merchant !== "Connection error"
@@ -111,7 +101,6 @@ async function AddMerchant(Credentials) {
               return "Varification Email not sent";
             });
         }
-
         return Merchant;
       } else {
         return "Connection error";
@@ -123,7 +112,6 @@ async function AddMerchant(Credentials) {
         return "Merchant Already Registered";
       }
     }
-
     // Send a ping to confirm a successful connection
   } finally {
     // Ensures that the client will close when you finish/error
@@ -137,5 +125,4 @@ async function AddMerchant(Credentials) {
   }
 }
 // AddMerchant().catch(console.dir);
-
 export default AddMerchant;

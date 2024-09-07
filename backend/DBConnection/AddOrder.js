@@ -1,14 +1,10 @@
 // AddOrder is used to Add orders to Database
 import { MongoClient, ObjectId } from "mongodb";
 const Object=new ObjectId()
-
-
 const uri =
     "mongodb+srv://engaligulf:Cossacks%401@cluster0.fj9bpe7.mongodb.net/?maxIdleTimeMS=5000";
-
 const client = new MongoClient(uri);
 // AddOrder function is used to add Order to database
-
 const AddOrder = async (OrderData) => {
     try {
         console.log("AddOrder file 0");
@@ -31,20 +27,15 @@ const AddOrder = async (OrderData) => {
         MerchantConfirmed:false,
         OrderDelivered:false
         
-
-
-
     }).then(res => {
         console.log("AddOrder file 1 res result");
         console.log(res)
         return res
-
     }).catch(err => {
         console.log("AddOrder 2 error")
         console.log(err)
         return "Connection error"
     })
-
     console.log("AddOrder file 3 res result");
         console.log(res)
     //  Next we adjust InstockQty for each product
@@ -64,7 +55,6 @@ const AddOrder = async (OrderData) => {
                 if (typeof CheckAvailability==="object") {
                  if (CheckAvailability.InStockQty>=OrderData.OrderDetails[index].Qty) {
                     console.log("AddOrder file InStockQty Check true")
-
                     AvailabilityChicked=true
                     
                  } else {
@@ -85,7 +75,6 @@ const AddOrder = async (OrderData) => {
             // Next we upfdate stock qty of each product
             console.log("AddOrder file 3.5 AvailabilityChicked");
             console.log(AvailabilityChicked)
-
             if (AvailabilityChicked===true) {
                 for (let index = 0; index < OrderData.OrderDetails.length; index++) {
            
@@ -123,7 +112,6 @@ const AddOrder = async (OrderData) => {
             }
             
         
-
            if (AllItemsChecked===true && AvailabilityChicked===true) {
             console.log("AddOrder file 7 Update Products Finished");
            
@@ -139,7 +127,6 @@ const AddOrder = async (OrderData) => {
             return "Order Not Added"
             
            }
-
             
         } else {
             console.log("AddOrder file 9 Order Not added");
@@ -152,25 +139,15 @@ const AddOrder = async (OrderData) => {
             
         }
         
-
-
         
     } catch (error) {
         console.log("AddOrder file 10 error");
         console.log(error)
-
         return "Connection error"
-
         
     }
     
     
-
     
-
-
-
-
 }
-
 export default AddOrder

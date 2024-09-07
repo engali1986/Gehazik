@@ -2,7 +2,6 @@ import { MongoClient, ObjectId } from "mongodb";
 //  This will check user credentials
 const uri =
   "mongodb+srv://engaligulf:Cossacks%401@cluster0.fj9bpe7.mongodb.net/?maxIdleTimeMS=5000";
-
 const client = new MongoClient(uri);
 const CheckUser=async(UserData)=>{
     
@@ -22,12 +21,10 @@ const CheckUser=async(UserData)=>{
             console.log(err)
             return "Connection error" 
         })
-
        if (typeof User==="object") {
         console.log("CheckUserFile 3 User found data")
         console.log(User)
         return User
-
         
        } else if (User==="Connection error") {
         console.log("CheckUserFile 4 Connection Error")
@@ -45,6 +42,5 @@ const CheckUser=async(UserData)=>{
        return "Connection error"
         
     }
-
 }
 export default CheckUser

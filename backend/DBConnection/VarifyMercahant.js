@@ -1,8 +1,6 @@
 import { MongoClient } from "mongodb";
-
 const uri =
   "mongodb+srv://engaligulf:Cossacks%401@cluster0.fj9bpe7.mongodb.net/?maxIdleTimeMS=5000";
-
 const client = new MongoClient(uri);
 const VarifyMerchant = async (Credentials) => {
   console.log("varifyMerchant file 0");
@@ -11,7 +9,6 @@ const VarifyMerchant = async (Credentials) => {
       console.log("Connection res ");
       //   console.log(res);
     });
-
     const MerchantVarification = await client
       .db("Gehazik")
       .collection("Merchants")
@@ -28,9 +25,7 @@ const VarifyMerchant = async (Credentials) => {
         console.log(err);
         return "Connection Error";
       });
-
     console.log("varifyMerchant file 2 MerchantVarification result");
-
     console.log(MerchantVarification);
     if (MerchantVarification) {
       console.log("varifyMerchant file 3");
@@ -38,7 +33,6 @@ const VarifyMerchant = async (Credentials) => {
     } else if (!MerchantVarification) {
       console.log("varifyMerchant file 4");
       console.log(MerchantVarification);
-
       return "Merchant Not Found";
     } else {
       console.log("varifyMerchant file 4.4");
@@ -55,5 +49,4 @@ const VarifyMerchant = async (Credentials) => {
     });
   }
 };
-
 export default VarifyMerchant;

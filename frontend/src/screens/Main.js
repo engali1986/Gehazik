@@ -1,7 +1,6 @@
 import React, { useRef, useState } from "react";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import { Container, Col, Row } from "react-bootstrap";
-
 import ErrorWindow from "./ErrorWindow";
 import AdsSlider from "./AdsSlider";
 import StaticData from "../Data/StaticData";
@@ -10,7 +9,6 @@ const Main = ({ globalState, UpdateAddress }) => {
     <>
       <Container style={{ position: "relative" }}>
         <AdsSlider />
-
         <div
           className="MainAds"
           onClick={(e) => {
@@ -25,5 +23,4 @@ const Main = ({ globalState, UpdateAddress }) => {
     </>
   );
 };
-
 export default Main;

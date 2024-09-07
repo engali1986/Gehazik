@@ -2,7 +2,6 @@ import { MongoClient } from "mongodb";
 //  this will AddProduct to the DB
 const uri =
   "mongodb+srv://engaligulf:Cossacks%401@cluster0.fj9bpe7.mongodb.net/?maxIdleTimeMS=5000";
-
 const client = new MongoClient(uri);
 const AddProduct = async (AddProductData) => {
   try {
@@ -10,12 +9,9 @@ const AddProduct = async (AddProductData) => {
       console.log("Connection res ");
       //   console.log(res);
     });
-
     console.log("AddProduct file 0");
     console.log(AddProductData);
-
     const NewProduct = await client
-
       .db("Gehazik")
       .collection("Products")
       .insertOne({
@@ -49,7 +45,6 @@ const AddProduct = async (AddProductData) => {
         console.log(err);
         return "Connection Error";
       });
-
     if (NewProduct.acknowledged === true) {
       console.log("AddProduct file 2.5 Product added");
       return NewProduct;
@@ -68,5 +63,4 @@ const AddProduct = async (AddProductData) => {
     });
   }
 };
-
 export default AddProduct;
