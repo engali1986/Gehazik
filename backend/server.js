@@ -27,9 +27,27 @@ import UsersProductsList from "./DBConnection/Products/UsersProductsList.js";
 import UsersProductDetails from "./DBConnection/Products/UsersProductDetails.js";
 import CheckUser from "./DBConnection/Users/CheckUser.js";
 import OrderEmails from "./DBConnection/Merchants/OrderEmails.js";
-// const require = createRequire(import.meta.url);
+import http from "http"
+const require = createRequire(import.meta.url);
+const socketIo = require('socket.io');
 // const ServiceAccountKey = require("./API keys/ServiceAccountKey.json");
 const app = express();
+const server = http.createServer(app);
+const io = socketIo(server, {
+  cors: {
+    origin: "http://localhost:3000", // React App's URL
+    methods: ["GET", "POST"]
+  }
+});
+io.on("connection",(socket)=>{
+  console.log("Socket connected, socket")
+  console.log(socket.id)
+
+  socket.on('disconnect', () => {
+    console.log('User disconnected:', socket.id);
+  });
+})
+
 env.config();
 console.log(process.env.ALI);
 const uri =
@@ -472,7 +490,7 @@ const __dirname = path.dirname(__filename);
 console.log(__dirname);
 console.log(path.join(__dirname, "uploads"));
 app.use(express.static(path.join(__dirname, "uploads")));
-const server = app.listen("5000", () => {
+server.listen("5000", () => {
   console.log("server started");
 });
 // close DB connection on shutdown
