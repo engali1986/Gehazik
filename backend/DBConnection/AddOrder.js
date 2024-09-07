@@ -12,8 +12,8 @@ const client = new MongoClient(uri);
 const AddOrder = async (OrderData) => {
     try {
         console.log("AddOrder file 0");
-    await client.connect();
-    console.log("Connection established ");
+    // await client.connect();
+    // console.log("Connection established ");
     console.log(OrderData)
    
    

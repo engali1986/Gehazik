@@ -27,6 +27,7 @@ import MerchantProductsList from "./DBConnection/Products/MerchantProductsList.j
 import UsersProductsList from "./DBConnection/Products/UsersProductsList.js";
 import UsersProductDetails from "./DBConnection/Products/UsersProductDetails.js";
 import CheckUser from "./DBConnection/Users/CheckUser.js";
+import OrderEmails from "./DBConnection/Merchants/OrderEmails.js";
 
 
 // const require = createRequire(import.meta.url);
@@ -35,6 +36,13 @@ import CheckUser from "./DBConnection/Users/CheckUser.js";
 const app = express();
 env.config();
 console.log(process.env.ALI);
+const uri =
+  "mongodb+srv://engaligulf:Cossacks%401@cluster0.fj9bpe7.mongodb.net/?maxIdleTimeMS=5000";
+
+const client = new MongoClient(uri);
+client.connect();
+    console.log("Connection established ");
+    
 
 app.use(cors());
 app.use(express.json());
@@ -457,6 +465,8 @@ app.post("/Orders/AddOrder", async (req, res) => {
   console.log(OrderAdd)
   if (typeof OrderAdd==="object" && OrderAdd.insertedId) {
     console.log("Server/AddOrder 5 Order Added")
+    // Next we will send emails to all merchants to prepare the order
+    const Emails=await OrderEmails(OrderData, OrderAdd.insertedId)
     res.json({resp:`Your Order No: ${OrderAdd.insertedId} Added successfully`})
 
     
@@ -526,9 +536,7 @@ const server = app.listen("5000", () => {
 });
 
 // close DB connection on shutdown
-const uri =
-  "mongodb+srv://engaligulf:Cossacks%401@cluster0.fj9bpe7.mongodb.net/?maxIdleTimeMS=5000";
-const client = new MongoClient(uri);
+
 
 const gracefulShutdown = () => {
   console.log("Shutting down gracefully...");
