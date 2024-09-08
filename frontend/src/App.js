@@ -29,8 +29,7 @@ import CartPage from "./screens/CartPage.js";
 import UserCheckOutPage from "./screens/UserCheckOutPage.js";
 import bootstrapBundle from "bootstrap/dist/js/bootstrap.bundle";
 import ClientPage from "./screens/ClientPage.js";
-import { io } from 'socket.io-client';
-const socket = io('http://localhost:5000');
+import {SocketContext, socket} from './Context/Socket.js'
 function App() {
   const BackDrop = useRef();
   const ProfileItems = useRef();
@@ -489,6 +488,7 @@ const AddOrder=(Order)=>{
     }
   };
   useEffect(() => {
+   
 
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
 const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrapBundle.Tooltip(tooltipTriggerEl))
@@ -504,9 +504,9 @@ const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstra
           .getElementsByClassName("NavBarSmall")[0]
           .getBoundingClientRect().bottom + "px";
     }
-    return () => {
-      socket.off('messageToBB');
-    };
+    // return () => {
+    //   socket.off('messageToBB');
+    // };
   }, []);
 // following function will create route for all categories
   const CategoryRoutes = StaticData.Categories.map((Item, Index) => (
@@ -517,6 +517,7 @@ const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstra
     />
   ));
   return (
+    <SocketContext.Provider value={socket}>
     <div
       onClick={() => {
         console.log(window.innerWidth);
@@ -721,6 +722,7 @@ hideProgressBar />
         </Row>
       </Container>
     </div>
+    </SocketContext.Provider>
   );
 }
 export default App;

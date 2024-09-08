@@ -42,6 +42,16 @@ const io = socketIo(server, {
 io.on("connection",(socket)=>{
   console.log("Socket connected, socket")
   console.log(socket.id)
+  let Massages=["bb"]
+
+  socket.on("Massage",(Mass)=>{
+    console.log(Mass)
+    Massages.push(Mass)
+   console.log(Massages)
+    console.log("Massage recieved")
+
+  } )
+  socket.emit("Massages",Massages)
 
   socket.on('disconnect', () => {
     console.log('User disconnected:', socket.id);
