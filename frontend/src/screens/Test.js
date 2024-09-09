@@ -44,8 +44,8 @@ const Test = ({globalState}) => {
     }}/>
   </div>
   {chat.map((item,index)=>(
-    <div className={item.Sender===globalState.Name?"d-flex justify-content-end my-4":"d-flex justify-content-start my-4"}  key={index}>
-      <div style={{width:'80%',backgroundColor:item.Sender===globalState.Name?"green":"gray", wordBreak:'break-word'}}>
+    <div className={item.Sender===globalState.Name?"d-flex justify-content-end my-1":"d-flex justify-content-start my-1"}  key={index}>
+      <div style={{width:'80%',backgroundColor:item.Sender===globalState.Name?"#BBF8A7":"#A7DDF8", wordBreak:'break-word'}}>
       {item.Sender}: {item.Message}
         </div>
         
