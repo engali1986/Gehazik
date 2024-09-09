@@ -26,7 +26,8 @@ const Test = ({globalState}) => {
  <>
  <button onClick={(e)=>{
   e.stopPropagation()
-  socket.emit('send_message', message);
+  let MassageData={Sender:globalState.Name,Message:message}
+  socket.emit('send_message', MassageData);
  }}>
   click
  </button>
@@ -42,9 +43,12 @@ const Test = ({globalState}) => {
       setMessage(e.target.value)
     }}/>
   </div>
-  {chat.map(item=>(
-    <div key={item}>
-      {item}
+  {chat.map((item,index)=>(
+    <div className={item.Sender===globalState.Name?"d-flex justify-content-end my-4":"d-flex justify-content-start my-4"}  key={index}>
+      <div style={{width:'80%',backgroundColor:item.Sender===globalState.Name?"green":"gray", wordBreak:'break-word'}}>
+      {item.Sender}: {item.Message}
+        </div>
+        
       </div>
   ))}
  </div>

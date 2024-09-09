@@ -59,13 +59,15 @@ io.on("connection",(socket)=>{
     console.log('Received message:', message);
    
     // Broadcast the message to all other connected clients
-    Users.forEach((user)=>{
-      if (user.email==='engali@mailedaa.com' || user.email==='engali@mailedbb.com') {
-        io.to(user.id).emit('receive_message', message);
-      } else {
+    io.emit('receive_message', message);
+    //Send the message to specific clients
+    // Users.forEach((user)=>{
+    //   if (user.email==='engali@mailedaa.com' || user.email==='engali@mailedbb.com') {
+    //     io.to(user.id).emit('receive_message', message);
+    //   } else {
         
-      }
-    })
+    //   }
+    // })
     
 
    
