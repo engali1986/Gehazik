@@ -87,7 +87,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
   
             console.log("Submitting data");
             const ProductAdded = await fetch(
-              "http://localhost:5000/Merchants/AddProduct",
+              "https://gehazik-server.onrender.com/Merchants/AddProduct",
               {
                 method: "POST",
                 body: formData,
@@ -539,7 +539,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                   };
                   console.log(UploadProductListData);
                   const UpdateProduct = await fetch(
-                    "http://localhost:5000/Merchants/UpdateProduct",
+                    "https://gehazik-server.onrender.com/Merchants/UpdateProduct",
                     {
                       method: "post",
                       body: JSON.stringify(UploadProductListData),
@@ -1380,7 +1380,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                     console.log(ProductsListCredentials);
                     console.log("ProductsList submitted");
                     const GetProductsList = await fetch(
-                      "http://localhost:5000/Merchants/ProductsList",
+                      "https://gehazik-server.onrender.com/Merchants/ProductsList",
                       {
                         method: "post",
                         body: JSON.stringify(ProductsListCredentials),

@@ -131,7 +131,7 @@ const AdminPage = ({ globalState, setGlobal }) => {
                     console.log(Obj);
                     try {
                       const AddCategory = await fetch(
-                        "http://localhost:5000/AddCategory",
+                        "https://gehazik-server.onrender.com/AddCategory",
                         {
                           method: "POST",
                           body: JSON.stringify(Obj),
@@ -169,7 +169,7 @@ const AdminPage = ({ globalState, setGlobal }) => {
     console.log("Orders Selected");
     console.log(globalState);
     const Orders = await fetch(
-      "http://localhost:5000/GetOrders",
+      "https://gehazik-server.onrender.com/GetOrders",
       {
         method: "POST",
         body: JSON.stringify(globalState),

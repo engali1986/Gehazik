@@ -249,7 +249,7 @@ const SignUp = ({ globalState, setGlobal }) => {
           PassmatchAlert.current.innerText = "Sign Up please wait";
           PassmatchAlert.current.style.maxHeight = "500px";
           const AddUser = await fetch(
-            "http://localhost:5000/AddUser",
+            "https://gehazik-server.onrender.com/AddUser",
             {
               method: "POST",
               body: JSON.stringify(Credentials),
@@ -329,7 +329,7 @@ const SignUp = ({ globalState, setGlobal }) => {
     console.log(Credentials);
     console.log(typeof Credentials.VarificationCode);
     const UserVarified = await fetch(
-      "http://localhost:5000/LogInUser",
+      "https://gehazik-server.onrender.com/LogInUser",
       {
         method: "POST",
         body: JSON.stringify(Credentials),

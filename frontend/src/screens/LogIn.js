@@ -22,7 +22,7 @@ const LogIn = ({ globalState, setGlobal }) => {
     console.log(Credentials);
     console.log(typeof Credentials.VarificationCode);
     const UserVarified = await fetch(
-      "http://localhost:5000/LogInUser",
+      "https://gehazik-server.onrender.com/LogInUser",
       {
         method: "POST",
         body: JSON.stringify(Credentials),
@@ -80,7 +80,7 @@ const LogIn = ({ globalState, setGlobal }) => {
       LoginButtonRef.current.innerText = "Loggin please wait";
       console.log("Submitted");
       const UserLogIn = await fetch(
-        "http://localhost:5000/LogInUser",
+        "https://gehazik-server.onrender.com/LogInUser",
         {
           method: "POST",
           body: JSON.stringify(Credentials),
