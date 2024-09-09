@@ -28,8 +28,9 @@ import ProductDetails from "./screens/ProductDetails.js";
 import CartPage from "./screens/CartPage.js";
 import UserCheckOutPage from "./screens/UserCheckOutPage.js";
 import bootstrapBundle from "bootstrap/dist/js/bootstrap.bundle";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import ClientPage from "./screens/ClientPage.js";
-import {SocketContext, socket} from './Context/Socket.js'
 function App() {
   const BackDrop = useRef();
   const ProfileItems = useRef();
@@ -517,7 +518,7 @@ const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstra
     />
   ));
   return (
-    <SocketContext.Provider value={socket}>
+   
     <div
       onClick={() => {
         console.log(window.innerWidth);
@@ -596,7 +597,7 @@ hideProgressBar />
                   />
                 }
               />
-              <Route path="/Test" element={<Test />} />
+              <Route path="/Test" element={<Test globalState={GlobalState} />} />
               <Route path="/ContactUs" element={<ContactUs />} />
               <Route
                 path="/AdminLogIn"
@@ -722,7 +723,7 @@ hideProgressBar />
         </Row>
       </Container>
     </div>
-    </SocketContext.Provider>
+   
   );
 }
 export default App;

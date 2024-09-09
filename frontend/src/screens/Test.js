@@ -1,37 +1,32 @@
-import React, { useState,useEffect,useContext,useCallback} from "react";
-import Staticdata from "../Data/StaticData"
-import StaticData from "../Data/StaticData";
-import {SocketContext} from "../Context/Socket.js"
-
-const Test = () => {
- const [Massage,SetMassage]=useState("")
- const [Massages,SetMassages]=useState([])
- const socket=useContext(SocketContext)
- const fun=useCallback(()=>{
-  console.log("aassww")
- })
+import React, { useState,useEffect, useRef} from "react";
+import io from 'socket.io-client';
+const socket = io('http://localhost:5000'); // Connect to the Node.js server
+const Test = ({globalState}) => {
+  const [message, setMessage] = useState('');
+  const [chat, setChat] = useState([]);
+  const Hasemitted=useRef(false)
  
-
- 
- 
-  useEffect(()=>{
-    socket.on("Massages",fun)
-   
+  useEffect(() => {
+    console.log(globalState)
+    if(!Hasemitted.current){
+      socket.emit("Add_User",globalState.email)
+      Hasemitted.current=true
+    }
+    
+    // Listen for incoming messages
+    socket.on('receive_message', (data) => {
+      setChat((prevChat) => [...prevChat, data]);
+    });
     return () => {
-      // before the component is destroyed
-      // unbind all event handlers used in this component
-      socket.off("Massage");
+      socket.off('Add_User');
+      socket.off('receive_message');
     };
-
-  },[Massage])
+  }, []);
   return (
  <>
  <button onClick={(e)=>{
   e.stopPropagation()
-  socket.emit("Massage",Massage)
-  
- 
-
+  socket.emit('send_message', message);
  }}>
   click
  </button>
@@ -44,10 +39,10 @@ const Test = () => {
  <div>
   <div>
     <input type="text" onChange={(e)=>{
-      SetMassage(e.target.value)
+      setMessage(e.target.value)
     }}/>
   </div>
-  {Massages.map(item=>(
+  {chat.map(item=>(
     <div key={item}>
       {item}
       </div>

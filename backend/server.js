@@ -39,22 +39,45 @@ const io = socketIo(server, {
     methods: ["GET", "POST"]
   }
 });
+
+let Users=[]
 io.on("connection",(socket)=>{
+  
   console.log("Socket connected, socket")
   console.log(socket.id)
-  let Massages=["bb"]
+ 
 
-  socket.on("Massage",(Mass)=>{
-    console.log(Mass)
-    Massages.push(Mass)
-   console.log(Massages)
-    console.log("Massage recieved")
+  socket.on("Add_User",(email)=>{
+    console.log(email)
+    let User={id:socket.id,email:email}
+    Users.push(User)
+    console.log(Users)
 
-  } )
-  socket.emit("Massages",Massages)
+  })
 
+  socket.on('send_message', (message) => {
+    console.log('Received message:', message);
+   
+    // Broadcast the message to all other connected clients
+    Users.forEach((user)=>{
+      if (user.email==='engali@mailedaa.com' || user.email==='engali@mailedbb.com') {
+        io.to(user.id).emit('receive_message', message);
+      } else {
+        
+      }
+    })
+    
+
+   
+  });
+  
   socket.on('disconnect', () => {
+    Users=Users.filter((item)=>{
+      return item.id !== socket.id
+    })
+
     console.log('User disconnected:', socket.id);
+    console.log(Users)
   });
 })
 
