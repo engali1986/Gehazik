@@ -1292,7 +1292,8 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                           toast.error(err.toString(),{autoClose:false})
                         })
                         if (typeof GetMerchantOrders==="object" && GetMerchantOrders.resp) {
-                          toast.success(GetMerchantOrders.resp)
+                          toast.success(GetMerchantOrders.resp.toString())
+                          console.log(GetMerchantOrders.resp)
                         }else{
                           toast.error(GetMerchantOrders,{autoClose:false})
                         }

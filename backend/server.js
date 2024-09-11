@@ -360,9 +360,13 @@ app.post("/Merchants/OrdersList",async(req,res)=>{
     console.log(CheckMerchant);
     if (CheckMerchant._id) {
       const GetMerchantOrders=await MerchantOrders(CheckMerchant._id)
-      res.json({resp:"Orders List"})
+      if (Array.isArray(GetMerchantOrders)) {
+        res.json({resp:GetMerchantOrders})
+      } else {
+        res.json({resp:GetMerchantOrders})
+      }
     } else {
-      res.json({resp:"No Orders List"})
+      res.json({resp:"No Orders Found"})
     }
   } catch (error) {
     console.log(error)
