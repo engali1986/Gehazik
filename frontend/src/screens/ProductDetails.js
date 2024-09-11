@@ -16,7 +16,7 @@ const ProductDetails = ({ GlobalState,AddToCart }) => {
     SetLoader(true);
     const GetProductDetails = async (ProductID) => {
       const Productdetails = await fetch(
-        "https://gehazik-server.onrender.com/Users/GetProductDetails",
+        "http://localhost:5000/Users/GetProductDetails",
         {
           method: "post",
           body: JSON.stringify({ Data: ProductID }),

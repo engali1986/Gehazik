@@ -35,7 +35,7 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIo(server, {
   cors: {
-    origin: "https://gehazik.vercel.app", // React App's URL
+    origin: "http://localhost:3000", // React App's URL
     methods: ["GET", "POST"]
   }
 });
@@ -349,6 +349,14 @@ app.post("/Merchants/AddProduct", upload.array("Files"), async (req, res) => {
     res.status(500).json({ resp: "Internal Server Error" });
   }
 });
+app.post("/Merchants/AllOrders",async(req,res)=>{
+  try {
+    
+  } catch (error) {
+    console.log(error)
+    res.json({resp:"Connection Error"})
+  }
+})
 // ProductsList route for merchant
 app.post("/Merchants/ProductsList", async (req, res) => {
   console.log("server/ProductsList 0 ");

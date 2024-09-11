@@ -45,7 +45,7 @@ const UserCheckOutPage = ({GlobalState, UpdateCart}) => {
      
       console.log(OrderData)
       const AddOrder=await fetch(
-        "https://gehazik-server.onrender.com/Orders/AddOrder",
+        "http://localhost:5000/Orders/AddOrder",
         {
           method: "POST",
           body: JSON.stringify(OrderData),
