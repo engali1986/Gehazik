@@ -13,9 +13,11 @@ const VarifyMerchant = async (Credentials) => {
       .db("Gehazik")
       .collection("Merchants")
       .findOne({
-        email: Credentials.Email,
-        name: Credentials.Name,
-        token: Credentials.Token,
+        Email: Credentials.Email,
+        Name: Credentials.Name,
+        Token: Credentials.Token,
+        
+        
       })
       .then((res) => {
         return res;
@@ -42,11 +44,6 @@ const VarifyMerchant = async (Credentials) => {
     console.log(error);
     console.log("varifyMerchant file 5 error found");
     return "Connection Error";
-  } finally {
-    await client.close(true).then((res) => {
-      console.log("VarifyMerchant file 6");
-      console.log(res);
-    });
-  }
+  } 
 };
 export default VarifyMerchant;

@@ -16,7 +16,7 @@ async function LogInMerchant(Credentials) {
     const GetMerchant = await client
       .db("Gehazik")
       .collection("Merchants")
-      .findOne({ email: Credentials.Email, pass: Credentials.Password })
+      .findOne({ Email: Credentials.Email, Pass: Credentials.Password })
       .then((res) => {
         console.log("LogInMerchant file 1");
         console.log(res);
@@ -48,7 +48,7 @@ async function LogInMerchant(Credentials) {
               .db("Gehazik")
               .collection("Merchants")
               .updateOne(
-                { email: Credentials.Email, pass: Credentials.Password },
+                { Email: Credentials.Email, Pass: Credentials.Password },
                 { $set: { Merchantvarified: true } },
                 { $set: { Token: NewToken } }
               )
@@ -131,7 +131,7 @@ async function LogInMerchant(Credentials) {
           .db("Gehazik")
           .collection("Merchants")
           .updateOne(
-            { email: Credentials.Email, pass: Credentials.Password },
+            { Email: Credentials.Email, Pass: Credentials.Password },
             { $set: { Token: NewToken } }
           )
           .then((res) => {

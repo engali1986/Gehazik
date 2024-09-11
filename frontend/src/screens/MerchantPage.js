@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 import StaticData from "../Data/StaticData.js";
+import {toast} from "react-toastify"
 // This will be merchant page for merchant controls
 const MerchantPage = ({ globalState, setGlobal }) => {
   const [ShowAlert, SetShowAlert] = useState({
@@ -10,7 +11,9 @@ const MerchantPage = ({ globalState, setGlobal }) => {
     Massage: "",
   });
   const [Data, SetData] = useState(""); // this state will be used to store the selected menu items to display data
-  const [ProductsList, SetProductsList] = useState([]);// this will be used to store all products of merchant
+  const [NewOrders,SetNewOrders]=useState([]) // this will be used to store all NewOrders of merchant
+  const [Orders,SetOrders]=useState([]) // this will be used to store all Orders of merchant
+  const [ProductsList, SetProductsList] = useState([]); // this will be used to store all products of merchant
   const navigate = useNavigate();
   const params = useParams();
   // The following function will be used to display Data inside page
@@ -262,36 +265,15 @@ const MerchantPage = ({ globalState, setGlobal }) => {
     } else if (Data === "New Orders") {
       return (
         <Container>
+        {/* Page head */}
           <Row>
             <h3>{Data}</h3>
           </Row>
+        {/* Page Content */}
           <Row>
-            <div style={{ overflow: "scroll" }}>
+            <div style={{ overflow: "auto" }}>
               <div className=" d-flex" style={{ width: "max-content" }}>
-                <div className=" mx-2 px-2">
-                  <div>Order Id</div>
-                  <div>hjkhjshadudwuhduay78iu9uihjdakshd</div>
-                </div>
-                <div className=" mx-2 px-2">
-                  <div>Product Id</div>
-                  <div>hjghjg7678jghjghjghjgjh</div>
-                </div>
-                <div className=" mx-2 px-2">
-                  <div>Product</div>
-                  <div>جبنه ملح خفيف</div>
-                </div>
-                <div className=" mx-2 px-2">
-                  <div>Order Qty</div>
-                  <div>20</div>
-                </div>
-                <div className=" mx-2 px-2">
-                  <div>Unit</div>
-                  <div>Kg</div>
-                </div>
-                <div className=" mx-2 px-2">
-                  <div>Confirmation</div>
-                  <button className="SignUpButton">Confirm</button>
-                </div>
+               {NewOrders.length>0?"Orders":"No Orders yet"}
               </div>
             </div>
           </Row>
@@ -1269,21 +1251,56 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                 className="MerchantMenu d-flex flex-column"
               >
                 <div
-                  onClick={(e) => {
+                  onClick={async(e) => {
                     e.stopPropagation();
-                    console.log(e.target.innerText);
-                    let Menues = document.querySelectorAll(".MerchantMenu");
-                    let MenuArrows = document.querySelectorAll(".MenuArrow");
-                    for (let index = 0; index < Menues.length; index++) {
-                      if (
-                        Menues[index].classList.contains("MerchantMenuActive")
-                      ) {
-                        Menues[index].classList.remove("MerchantMenuActive");
-                        MenuArrows[index].innerHTML = "&#11206;";
-                      } else {
+                    try {
+                      console.log(e.target.innerText);
+                      let Menues = document.querySelectorAll(".MerchantMenu");
+                      let MenuArrows = document.querySelectorAll(".MenuArrow");
+                      for (let index = 0; index < Menues.length; index++) {
+                        if (
+                          Menues[index].classList.contains("MerchantMenuActive")
+                        ) {
+                          Menues[index].classList.remove("MerchantMenuActive");
+                          MenuArrows[index].innerHTML = "&#11206;";
+                        } else {
+                        }
                       }
+                      SetData(e.target.innerText);
+                      toast.info("Please wait while we get New Orders")
+                      if (Orders.length===0) {
+                        const MerchantCredentials={
+                          Email:globalState.email,
+                          Name:globalState.Name,
+                          Token:globalState.Token
+                        }
+                        console.log(MerchantCredentials)
+                        const GetMerchantOrders=await fetch(
+                          "http://localhost:5000/Merchants/OrdersList",
+                          {
+                            method: "post",
+                            body: JSON.stringify(MerchantCredentials),
+                            headers: {
+                              "Content-Type": "application/json",
+                            },
+                            mode: "cors",
+                          }
+                        ).then((res)=>{
+                          return res.json()
+                        }).catch(err=>{
+                          console.log(err)
+                          toast.error(err.toString(),{autoClose:false})
+                        })
+                        if (typeof GetMerchantOrders==="object" && GetMerchantOrders.resp) {
+                          toast.success(GetMerchantOrders.resp)
+                        }else{
+                          toast.error(GetMerchantOrders,{autoClose:false})
+                        }
+                      }
+                    } catch (error) {
+                      toast.error(error.toString(),{autoClose:false})
                     }
-                    SetData(e.target.innerText);
+                   
                   }}
                 >
                   New Orders

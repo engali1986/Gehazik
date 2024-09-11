@@ -231,7 +231,6 @@ app.post("/LogInMerchant", async (req, res) => {
     res.json({ resp: "Internal error" });
   }
 });
-// Merchant routes end
 // Product routes start
 // AddProduct route
 const upload = multer({ storage: multer.memoryStorage() });
@@ -349,9 +348,16 @@ app.post("/Merchants/AddProduct", upload.array("Files"), async (req, res) => {
     res.status(500).json({ resp: "Internal Server Error" });
   }
 });
-app.post("/Merchants/AllOrders",async(req,res)=>{
+// Merchant Orders list
+app.post("/Merchants/OrdersList",async(req,res)=>{
   try {
-    
+    console.log("server/MerchantOrdersList 0 ");
+    const MerchantCredentials = await req.body;
+    console.log(MerchantCredentials);
+    const CheckMerchant = await VarifyMerchant(MerchantCredentials);
+    console.log("server/MerchantOrdersList 1 ");
+    console.log(CheckMerchant);
+    res.json({resp:"Orders List"})
   } catch (error) {
     console.log(error)
     res.json({resp:"Connection Error"})
@@ -360,7 +366,7 @@ app.post("/Merchants/AllOrders",async(req,res)=>{
 // ProductsList route for merchant
 app.post("/Merchants/ProductsList", async (req, res) => {
   console.log("server/ProductsList 0 ");
-  const MerchantCredentials = await req.body;
+  const MerchantCredentials = await JSON.parse(req.body);
   console.log(MerchantCredentials);
   const CheckMerchant = await VarifyMerchant(MerchantCredentials);
   console.log("server/ProductsList 1 Merchant Varification result ");
@@ -416,6 +422,7 @@ app.post("/Merchants/UpdateProduct", async (req, res) => {
     res.json({ resp: "Internal error" });
   }
 });
+// Merchant routes end
 // productslist for users
 app.post("/Users/ProductsList", async (req, res) => {
   console.log("server/Productslist users 0");

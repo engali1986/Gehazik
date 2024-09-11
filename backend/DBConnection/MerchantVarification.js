@@ -6,7 +6,7 @@ const client = new MongoClient(uri
 const Merchantvarification=async(Email,Password)=>{
     console.log("Merchantvarification 0")
     console.log(Email)
-    const Merchant=await client.db("Gehazik").collection("Merchants").findOne({email:Email,pass:Password}).then(res=>{
+    const Merchant=await client.db("Gehazik").collection("Merchants").findOne({Email:Email,Pass:Password}).then(res=>{
       console.log(res)
       return res
     }).catch(err=>{
@@ -15,7 +15,7 @@ const Merchantvarification=async(Email,Password)=>{
     if (Merchant!=="Database Error") {
       if (Merchant!==null) {
         console.log("Merchantvarification 1")
-        console.log(Merchant.varificationcode)
+        console.log(Merchant.VarificationCode)
   
         let Transporter=await mailer.createTransport({
         service:"gmail",
@@ -31,7 +31,7 @@ const Merchantvarification=async(Email,Password)=>{
           from: 'Ali Mohammed <engaligulf1986@gmail.com>',
           to: Merchant.email,
           subject: 'New Merchant varification',
-          html: `<h1> Please find below your varification code</h1><h2>Varification Code:${Merchant.varificationcode}</h2>`
+          html: `<h1> Please find below your varification code</h1><h2>Varification Code:${Merchant.VarificationCode}</h2>`
         };
         
         const result=await Transporter.sendMail(mailOptions).then(res=>{
