@@ -8,7 +8,7 @@ async function LogInMerchant(Credentials) {
     console.log("LogInMerchant file 0");
     await client.connect().then((res) => {
       console.log("Connection res ");
-      console.log(res);
+      // console.log(res);
     });
     let NewToken = Math.floor(Math.random() * 10000) + 1;
     console.log(Credentials);
@@ -35,10 +35,10 @@ async function LogInMerchant(Credentials) {
         console.log(err);
         return "Connection error";
       });
-    if (GetMerchant.email) {
+    if (GetMerchant.Email) {
       console.log("LogInMerchant file 5");
       console.log(GetMerchant);
-      //  next we will check if Merchant varified through email or not
+      //  next we will check if Merchant varified through Email or not
       if (GetMerchant.Merchantvarified === false) {
         console.log("LogInMerchant file 6");
         if (Credentials.VarificationCode) {
@@ -73,8 +73,8 @@ async function LogInMerchant(Credentials) {
             }
           } else {
             const MerchantVarification = await Merchantvarification(
-              GetMerchant.email,
-              GetMerchant.pass
+              GetMerchant.Email,
+              GetMerchant.Pass
             )
               .then((res) => {
                 console.log("LogInMerchant file 10");
@@ -91,7 +91,7 @@ async function LogInMerchant(Credentials) {
               typeof MerchantVarification === "object"
             ) {
               console.log("LogInMerchant file 12");
-              return "Varification Code sent by email";
+              return "Varification Code sent by Email";
             } else {
               console.log("LogInMerchant file 13");
               return "Connection error";
@@ -100,8 +100,8 @@ async function LogInMerchant(Credentials) {
         } else {
           console.log("LogInMerchant file 14");
           const MerchantVarification = await Merchantvarification(
-            GetMerchant.email,
-            GetMerchant.pass
+            GetMerchant.Email,
+            GetMerchant.Pass
           )
             .then((res) => {
               console.log("LogInMerchant file 14-10");
@@ -119,7 +119,7 @@ async function LogInMerchant(Credentials) {
           ) {
             console.log("LogInMerchant file 14-12");
             console.log(MerchantVarification);
-            return "Varification Code sent by email";
+            return "Varification Code sent by Email";
           } else {
             console.log("LogInMerchant file 14-13");
             return "Connection error";
@@ -156,10 +156,10 @@ async function LogInMerchant(Credentials) {
     }
   } finally {
     // Ensures that the client will close when you finish/error
-    await client.close(true).then((res) => {
-      console.log("LogInMerchant file 5");
-      console.log(res);
-    });
+    // await client.close(true).then((res) => {
+    //   console.log("LogInMerchant file 5");
+    //   console.log(res);
+    // });
     setTimeout(() => {
       console.log("done");
     }, 10000);

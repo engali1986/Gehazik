@@ -28,6 +28,7 @@ import UsersProductDetails from "./DBConnection/Products/UsersProductDetails.js"
 import CheckUser from "./DBConnection/Users/CheckUser.js";
 import OrderEmails from "./DBConnection/Merchants/OrderEmails.js";
 import http from "http"
+import MerchantOrders from "./DBConnection/Merchants/MerchantOrders.js";
 const require = createRequire(import.meta.url);
 const socketIo = require('socket.io');
 // const ServiceAccountKey = require("./API keys/ServiceAccountKey.json");
@@ -214,7 +215,7 @@ app.post("/LogInMerchant", async (req, res) => {
   const result = await LogInMerchant(credentials);
   console.log("server /LogInMerchant 1");
   console.log(result);
-  if (result.email) {
+  if (result.Email) {
     console.log("server /LogInMerchant 2");
     res.json({ resp: result });
   } else if (result === "Merchant Not Found") {
@@ -357,7 +358,12 @@ app.post("/Merchants/OrdersList",async(req,res)=>{
     const CheckMerchant = await VarifyMerchant(MerchantCredentials);
     console.log("server/MerchantOrdersList 1 ");
     console.log(CheckMerchant);
-    res.json({resp:"Orders List"})
+    if (CheckMerchant._id) {
+      const GetMerchantOrders=await MerchantOrders(CheckMerchant._id)
+      res.json({resp:"Orders List"})
+    } else {
+      res.json({resp:"No Orders List"})
+    }
   } catch (error) {
     console.log(error)
     res.json({resp:"Connection Error"})

@@ -41,13 +41,13 @@ const MerchantLogIn = ({ globalState, setGlobal }) => {
       });
     console.log(Merchantvarified);
     if (
-      Merchantvarified.resp.email &&
+      Merchantvarified.resp.Email &&
       Merchantvarified.resp.Merchantvarified === true
     ) {
       setGlobal(
-        Merchantvarified.resp.name,
+        Merchantvarified.resp.Name,
         true,
-        Merchantvarified.resp.email,
+        Merchantvarified.resp.Email,
         false,
         false,
         true, Merchantvarified.resp.Token, Merchantvarified.resp.Governorate, Merchantvarified.resp.City
@@ -56,7 +56,7 @@ const MerchantLogIn = ({ globalState, setGlobal }) => {
       Alert.current.innerText = "User Logged in successfully";
       Alert.current.style.maxHeight = "500px";
     } else if (
-      Merchantvarified.resp.email &&
+      Merchantvarified.resp.Email &&
       Merchantvarified.resp.Merchantvarified === false
     ) {
       Alert.current.classList.replace("alert-danger", "alert-success");
@@ -108,14 +108,14 @@ const MerchantLogIn = ({ globalState, setGlobal }) => {
         if (typeof UserLogIn.resp === "object") {
           console.log(UserLogIn.resp);
           if (
-            UserLogIn.resp.email &&
+            UserLogIn.resp.Email &&
             UserLogIn.resp.Merchantvarified === true
           ) {
             console.log(UserLogIn);
             setGlobal(
-              UserLogIn.resp.name,
+              UserLogIn.resp.Name,
               true,
-              UserLogIn.resp.email,
+              UserLogIn.resp.Email,
               false,
               false,
               true,
@@ -126,7 +126,7 @@ const MerchantLogIn = ({ globalState, setGlobal }) => {
             Alert.current.innerText = "User Logged in successfully";
             Alert.current.style.maxHeight = "500px";
           } else if (
-            UserLogIn.resp.email &&
+            UserLogIn.resp.Email &&
             UserLogIn.resp.Merchantvarified === false
           ) {
             console.log(UserLogIn);
@@ -154,9 +154,9 @@ const MerchantLogIn = ({ globalState, setGlobal }) => {
           varificationCodeRef.current.style.display = "flex";
         } else if (UserLogIn.resp === "User varified") {
           setGlobal(
-            UserLogIn.resp.name,
+            UserLogIn.resp.Name,
             true,
-            UserLogIn.resp.email,
+            UserLogIn.resp.Email,
             false,
             false,
             true, UserLogIn.resp.Token, UserLogIn.resp.Governorate, UserLogIn.resp.City
