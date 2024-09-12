@@ -21,12 +21,15 @@ const AddOrder = async (OrderData) => {
         OrderedPhone:OrderData.Address.Phone,
         OrderedPayed:false,
         OrderedPaymentMethod:OrderData.Address.Payment,
-        OrdedredItems:OrderData.OrderDetails,
+        OrderedItems:OrderData.OrderDetails,
         OrderedValue:OrderData.OrderValue,
         OrderedAddress:OrderData.Address,
-        MerchantConfirmed:false,
-        OrderDelivered:false
-        
+        OrderDelivered:false,
+        OrderPayed:false,
+        OrderPaymentDate:"",
+        MerchantPaymentSent:false,
+        MerchantPaymentDate:"",
+        OrderCompleted:false
     }).then(res => {
         console.log("AddOrder file 1 res result");
         console.log(res)

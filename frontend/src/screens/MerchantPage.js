@@ -14,6 +14,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
   const [NewOrders,SetNewOrders]=useState([]) // this will be used to store all NewOrders of merchant
   const [Orders,SetOrders]=useState([]) // this will be used to store all Orders of merchant
   const [ProductsList, SetProductsList] = useState([]); // this will be used to store all products of merchant
+  const [UpdateProductsList, SetUpdateProductsList] = useState([]); // Removed from inside DataDisplay component to save product updates
   const navigate = useNavigate();
   const params = useParams();
   // The following function will be used to display Data inside page
@@ -46,7 +47,6 @@ const MerchantPage = ({ globalState, setGlobal }) => {
       UpdateProductUnitPrice: 0,
       UpdateProductInStockQty: 0,
     });
-    const [UpdateProductsList, SetUpdateProductsList] = useState([]);
     const [Disabled, SetDisabled] = useState(false);
     const ProductTitle = useRef();
     const Alert = useRef();
@@ -273,7 +273,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
           <Row>
             <div style={{ overflow: "auto" }}>
               <div className=" d-flex" style={{ width: "max-content" }}>
-               {NewOrders.length>0?"Orders":"No Orders yet"}
+               {Orders.length>0?Orders.length:"No Orders yet"}
               </div>
             </div>
           </Row>
@@ -392,7 +392,9 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                                 ) >= 0
                               ) {
                                 console.log("Values updated");
+                                console.log(UpdateProductsList)
                                 if (UpdateProductsList.length === 0) {
+                                  console.log(UpdateProductsList)
                                   const UpdatedProductObj = {
                                     UpdateProductID:
                                       e.target.parentElement.parentElement
@@ -414,6 +416,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                                     UpdatedProductObj,
                                   ]);
                                 } else {
+                                  console.log(UpdateProductsList)
                                   let Duplicate = false;
                                   for (
                                     let index = 0;
@@ -547,6 +550,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                       Success: true,
                       Show: true,
                     });
+                    SetUpdateProductsList([])
                   } else {
                     e.target.disabled = false;
                     e.target.innerText = "Confirm Update";
@@ -1291,8 +1295,9 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                           console.log(err)
                           toast.error(err.toString(),{autoClose:false})
                         })
-                        if (typeof GetMerchantOrders==="object" && GetMerchantOrders.resp) {
-                          toast.success(GetMerchantOrders.resp.toString())
+                        if (typeof GetMerchantOrders==="object" && GetMerchantOrders.resp && Array.isArray(GetMerchantOrders.resp)) {
+                          toast.success("Done!")
+                          SetOrders(GetMerchantOrders.resp)
                           console.log(GetMerchantOrders.resp)
                         }else{
                           toast.error(GetMerchantOrders,{autoClose:false})

@@ -375,25 +375,33 @@ app.post("/Merchants/OrdersList",async(req,res)=>{
 })
 // ProductsList route for merchant
 app.post("/Merchants/ProductsList", async (req, res) => {
-  console.log("server/ProductsList 0 ");
-  const MerchantCredentials = await JSON.parse(req.body);
-  console.log(MerchantCredentials);
-  const CheckMerchant = await VarifyMerchant(MerchantCredentials);
-  console.log("server/ProductsList 1 Merchant Varification result ");
-  console.log(CheckMerchant);
-  if (CheckMerchant._id) {
-    console.log("server/ProductsList 2 Merchant Varification done ");
-    const MerchantProducts = await MerchantProductsList(CheckMerchant._id);
-    console.log("server/ProductsList 3 Merchant Products result ");
-    console.log(MerchantProducts);
-    if (Array.isArray(MerchantProducts)) {
-      res.json({ resp: MerchantProducts });
+  try {
+    console.log("server/ProductsList 0 ");
+    const MerchantCredentials = await req.body ;
+    console.log(MerchantCredentials);
+    const CheckMerchant = await VarifyMerchant(MerchantCredentials);
+    console.log("server/ProductsList 1 Merchant Varification result ");
+    console.log(CheckMerchant);
+    if (CheckMerchant._id) {
+      console.log("server/ProductsList 2 Merchant Varification done ");
+      const MerchantProducts = await MerchantProductsList(CheckMerchant._id);
+      console.log("server/ProductsList 3 Merchant Products result ");
+      console.log(MerchantProducts);
+      if (Array.isArray(MerchantProducts)) {
+        res.json({ resp: MerchantProducts });
+      } else {
+        res.json({ resp: "Connection Error" });
+      }
     } else {
-      res.json({ resp: "Connection Error" });
+      res.json({ resp: "Merchant Not found" });
     }
-  } else {
-    res.json({ resp: "Merchant Not found" });
+    
+  } catch (error) {
+    console.log(error)
+    res.json({ resp: "Connection Error" });
+    
   }
+ 
 });
 // UpdateProduct route for merchant
 app.post("/Merchants/UpdateProduct", async (req, res) => {

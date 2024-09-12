@@ -205,7 +205,7 @@ const MerchantLogIn = ({ globalState, setGlobal }) => {
       }}
     >
       <Row>
-        <h3>Mercgant LogIn</h3>
+        <h3>Merchant LogIn</h3>
       </Row>
       <label htmlFor="Email">
         <b>Email</b>
