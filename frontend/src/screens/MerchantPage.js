@@ -307,7 +307,49 @@ const MerchantPage = ({ globalState, setGlobal }) => {
         </Container>
       );
     } else if (Data === "Orders History") {
-      return <Container>{Data}</Container>;
+      return (
+        <Container>
+        {/* Page head */}
+          <Row>
+            <h3>{Data}</h3>
+          </Row>
+        {/* Page Content */}
+          <Row>
+            <Col xs={12}>
+              <div style={{ maxWidth:'100%', overflow:"auto", border: "1px solid black" }}>
+              <table border="1">
+                  <thead>
+                    <tr>
+                      <th>Order ID</th>
+                      <th>Product ID</th>
+                      <th>Product Title</th>
+                      <th>Unit Price</th>
+                      <th>Ordered Quantity</th>
+                      <th>Delivered</th>
+                      <th>Payment Released</th>
+                      <th>Order Completed</th>
+                    </tr>
+                  </thead>
+                 <tbody>
+                  {Array.isArray(Orders) && Orders.length>0? 
+                  Orders.map((item,index)=>(<tr key={item._id}>
+                    <td>{item._id}</td>
+                    <td>{item.OrderedItems.map((SubItem)=>(<div key={SubItem.ID}><a href={`/ProductDetails/${SubItem.ID.toString()}`}>{SubItem.ID}</a></div>))}</td>
+                    <td>{item.OrderedItems.map((SubItem)=>(<div key={SubItem.ID}>{SubItem.ProductTitle}</div>))}</td>
+                    <td>{item.OrderedItems.map(SubItem=>(<div key={SubItem.ProductUnitPrice}>{SubItem.ProductUnitPrice}</div>))}</td>
+                    <td>{item.OrderedItems.map(SubItem=>(<div key={SubItem.ID}>{SubItem.Qty}</div>))}</td>
+                    <td>{item.OrderDelivered.toString()}</td>
+                    <td>{item.MerchantPaymentSent.toString()}</td>
+                    <td>{item.OrderCompleted.toString()}</td>
+                    </tr>)):(<tr><td>No Data</td></tr>)}
+                 </tbody>
+                </table>
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      ); 
+      
     } else if (Data === "All Products") {
       return (
         <Container>
@@ -1344,21 +1386,63 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                   New Orders
                 </div>
                 <div
-                  onClick={(e) => {
+                  onClick={async(e) => {
                     e.stopPropagation();
-                    console.log(e.target.innerText);
-                    let Menues = document.querySelectorAll(".MerchantMenu");
-                    let MenuArrows = document.querySelectorAll(".MenuArrow");
-                    for (let index = 0; index < Menues.length; index++) {
-                      if (
-                        Menues[index].classList.contains("MerchantMenuActive")
-                      ) {
-                        Menues[index].classList.remove("MerchantMenuActive");
-                        MenuArrows[index].innerHTML = "&#11206;";
-                      } else {
+                    try {
+                      console.log(e.target.innerText);
+                      let Menues = document.querySelectorAll(".MerchantMenu");
+                      let MenuArrows = document.querySelectorAll(".MenuArrow");
+                      for (let index = 0; index < Menues.length; index++) {
+                        if (
+                          Menues[index].classList.contains("MerchantMenuActive")
+                        ) {
+                          Menues[index].classList.remove("MerchantMenuActive");
+                          MenuArrows[index].innerHTML = "&#11206;";
+                        } else {
+                        }
                       }
+                      SetData(e.target.innerText);
+                      toast.info("Please wait while we get New Orders")
+                      if (Orders.length===0) {
+                        const MerchantCredentials={
+                          Email:globalState.email,
+                          Name:globalState.Name,
+                          Token:globalState.Token
+                        }
+                        console.log(MerchantCredentials)
+                        const GetMerchantOrders=await fetch(
+                          "http://localhost:5000/Merchants/OrdersList",
+                          {
+                            method: "post",
+                            body: JSON.stringify(MerchantCredentials),
+                            headers: {
+                              "Content-Type": "application/json",
+                            },
+                            mode: "cors",
+                          }
+                        ).then((res)=>{
+                          return res.json()
+                        }).catch(err=>{
+                          console.log(err)
+                          toast.error(err.toString(),{autoClose:false})
+                        })
+                        if (typeof GetMerchantOrders==="object" && GetMerchantOrders.resp && Array.isArray(GetMerchantOrders.resp)) {
+                          toast.success("Done!")
+                          SetOrders(GetMerchantOrders.resp)
+                          SetNewOrders(GetMerchantOrders.resp.filter((item)=>{
+                            if (item.OrderDelivered===false) {
+                              return item
+                            }
+                          }))
+                          console.log(GetMerchantOrders.resp)
+                        }else{
+                          toast.error(GetMerchantOrders,{autoClose:false})
+                        }
+                      }
+                    } catch (error) {
+                      toast.error(error.toString(),{autoClose:false})
                     }
-                    SetData(e.target.innerText);
+                   
                   }}
                 >
                   Orders History
