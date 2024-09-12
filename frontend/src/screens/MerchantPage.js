@@ -15,6 +15,11 @@ const MerchantPage = ({ globalState, setGlobal }) => {
   const [Orders,SetOrders]=useState([]) // this will be used to store all Orders of merchant
   const [ProductsList, SetProductsList] = useState([]); // this will be used to store all products of merchant
   const [UpdateProductsList, SetUpdateProductsList] = useState([]); // Removed from inside DataDisplay component to save product updates
+  const [UpdateProduct, SetUpdateProduct] = useState({
+    UpdateProductID: "",
+    UpdateProductUnitPrice: 0,
+    UpdateProductInStockQty: 0,
+  });
   const navigate = useNavigate();
   const params = useParams();
   // The following function will be used to display Data inside page
@@ -42,11 +47,11 @@ const MerchantPage = ({ globalState, setGlobal }) => {
       CityDelivery:false
     });
     const [editProductId, setEditProductId] = useState(null);
-    const [UpdateProduct, SetUpdateProduct] = useState({
-      UpdateProductID: "",
-      UpdateProductUnitPrice: 0,
-      UpdateProductInStockQty: 0,
-    });
+    // const [UpdateProduct, SetUpdateProduct] = useState({
+    //   UpdateProductID: "",
+    //   UpdateProductUnitPrice: 0,
+    //   UpdateProductInStockQty: 0,
+    // });
     const [Disabled, SetDisabled] = useState(false);
     const ProductTitle = useRef();
     const Alert = useRef();
@@ -271,11 +276,33 @@ const MerchantPage = ({ globalState, setGlobal }) => {
           </Row>
         {/* Page Content */}
           <Row>
-            <div style={{ overflow: "auto" }}>
-              <div className=" d-flex" style={{ width: "max-content" }}>
-               {Orders.length>0?Orders.length:"No Orders yet"}
+            <Col xs={12}>
+              <div style={{ maxWidth:'100%', overflow:"auto", border: "1px solid black" }}>
+              <table border="1">
+                  <thead>
+                    <tr>
+                      <th>Order ID</th>
+                      <th>Product ID</th>
+                      <th>Product Title</th>
+                      <th>Unit Price</th>
+                      <th>Ordered Quantity</th>
+                      <th>Delivered</th>
+                    </tr>
+                  </thead>
+                 <tbody>
+                  {Array.isArray(NewOrders) && NewOrders.length>0? 
+                  NewOrders.map((item,index)=>(<tr key={item._id}>
+                    <td>{item._id}</td>
+                    <td>{item.OrderedItems.map((SubItem)=>(<div key={SubItem.ID}><a href={`/ProductDetails/${SubItem.ID.toString()}`}>{SubItem.ID}</a></div>))}</td>
+                    <td>{item.OrderedItems.map((SubItem)=>(<div key={SubItem.ID}>{SubItem.ProductTitle}</div>))}</td>
+                    <td>{item.OrderedItems.map(SubItem=>(<div key={SubItem.ProductUnitPrice}>{SubItem.ProductUnitPrice}</div>))}</td>
+                    <td>{item.OrderedItems.map(SubItem=>(<div key={SubItem.ID}>{SubItem.Qty}</div>))}</td>
+                    <td>{item.OrderDelivered.toString()}</td>
+                    </tr>)):(<tr><td>No Data</td></tr>)}
+                 </tbody>
+                </table>
               </div>
-            </div>
+            </Col>
           </Row>
         </Container>
       );
@@ -300,7 +327,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
               <div
                 style={{
                   maxWidth: "100%",
-                  overflow: "scroll",
+                  overflow: "auto",
                   border: "1px solid black",
                 }}
               >
@@ -1298,6 +1325,11 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                         if (typeof GetMerchantOrders==="object" && GetMerchantOrders.resp && Array.isArray(GetMerchantOrders.resp)) {
                           toast.success("Done!")
                           SetOrders(GetMerchantOrders.resp)
+                          SetNewOrders(GetMerchantOrders.resp.filter((item)=>{
+                            if (item.OrderDelivered===false) {
+                              return item
+                            }
+                          }))
                           console.log(GetMerchantOrders.resp)
                         }else{
                           toast.error(GetMerchantOrders,{autoClose:false})
