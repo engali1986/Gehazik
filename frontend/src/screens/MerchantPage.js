@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 import StaticData from "../Data/StaticData.js";
 import {toast} from "react-toastify"
+
 // This will be merchant page for merchant controls
 const MerchantPage = ({ globalState, setGlobal }) => {
   const [ShowAlert, SetShowAlert] = useState({
@@ -13,6 +14,8 @@ const MerchantPage = ({ globalState, setGlobal }) => {
   const [Data, SetData] = useState(""); // this state will be used to store the selected menu items to display data
   const [NewOrders,SetNewOrders]=useState([]) // this will be used to store all NewOrders of merchant
   const [Orders,SetOrders]=useState([]) // this will be used to store all Orders of merchant
+  const [RecievedPayments,SetRecievedPayments]=useState([]) // This will be used to store all Recieved payments of merchant
+  const [AllPayments,SetAllPayments]=useState([]) // This will be used to store all All Payments of merchant
   const [ProductsList, SetProductsList] = useState([]); // this will be used to store all products of merchant
   const [UpdateProductsList, SetUpdateProductsList] = useState([]); // Removed from inside DataDisplay component to save product updates
   const [UpdateProduct, SetUpdateProduct] = useState({
@@ -20,10 +23,29 @@ const MerchantPage = ({ globalState, setGlobal }) => {
     UpdateProductUnitPrice: 0,
     UpdateProductInStockQty: 0,
   });
+ 
+  
   const navigate = useNavigate();
   const params = useParams();
+  // The following function will be used to calculate payment for each order
+  const PaymentOrderValue=({Ordered})=>{
+    let x=0
+    for (let index = 0; index < Ordered.length; index++) {
+      let y=Ordered[index].Qty*Ordered[index].ProductUnitPrice
+      x=x+y
+    }
+    return x.toString()
+  }
   // The following function will be used to display Data inside page
   const DtataDisplay = () => {
+    const [ChangePasswordData,SetChangePasswordData]=useState({
+      Name:globalState.Name,
+      Email:globalState.email,
+      Token:globalState.Token,
+      OldPassword:"",
+      NewPassword:"",
+      ConfirmNewPassword:""
+    })
     // const [ShowAlert, SetShowAlert] = useState({
     //   Success: false,
     //   Show: false,
@@ -56,6 +78,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
     const ProductTitle = useRef();
     const Alert = useRef();
     const LoginButtonRef = useRef();
+    const PasswordValue=useRef()
     //  AddProduct function will be initiated when user clicks on Add Product button to add products to data base
     const AddProduct = async (e) => {
       e.stopPropagation();
@@ -239,7 +262,18 @@ const MerchantPage = ({ globalState, setGlobal }) => {
               Please enter old password
             </Col>
             <Col xs={12} md={8}>
-              <input type="password" style={{ width: "100%" }} />
+              <input 
+                 id="OldPassword"
+                 type="password"
+                 pattern="[0-9]{3}"
+                 placeholder="Enter Password"
+                 name="psw"
+                 disabled={Disabled}
+                 onChange={(e)=>{
+                  e.stopPropagation()
+                  SetChangePasswordData({...ChangePasswordData,OldPassword:e.target.value})
+                 }}
+        required style={{ width: "100%" }} />
             </Col>
           </Row>
           <Row className=" align-items-center">
@@ -247,7 +281,17 @@ const MerchantPage = ({ globalState, setGlobal }) => {
               Please enter new password
             </Col>
             <Col xs={12} md={8}>
-              <input type="password" style={{ width: "100%" }} />
+              <input id="NewPassword"
+                 type="password"
+                 pattern="[0-9]{3}"
+                 placeholder="Enter Password"
+                 name="psw"
+                 disabled={Disabled}
+                 onChange={(e)=>{
+                  e.stopPropagation()
+                  SetChangePasswordData({...ChangePasswordData,NewPassword:e.target.value})
+                 }}
+        required style={{ width: "100%" }} />
             </Col>
           </Row>
           <Row className=" align-items-center">
@@ -255,12 +299,25 @@ const MerchantPage = ({ globalState, setGlobal }) => {
               Please confirm new password
             </Col>
             <Col xs={12} md={8}>
-              <input type="password" style={{ width: "100%" }} />
+              <input id="ConfirmNewPassword"
+                 type="password"
+                 pattern="[0-9]{3}"
+                 placeholder="Enter Password"
+                 name="psw"
+                 disabled={Disabled}
+                 onChange={(e)=>{
+                  e.stopPropagation()
+                  SetChangePasswordData({...ChangePasswordData,ConfirmNewPassword:e.target.value})
+                 }}
+        required style={{ width: "100%" }} />
             </Col>
           </Row>
           <Row>
             <Col xs={12}>
-              <button className="SignUpButton" style={{ width: "100%" }}>
+              <button className="SignUpButton" onClick={(e)=>{
+                e.stopPropagation()
+                console.log(ChangePasswordData)
+              }} style={{ width: "100%" }}>
                 confirm
               </button>
             </Col>
@@ -1135,16 +1192,70 @@ const MerchantPage = ({ globalState, setGlobal }) => {
     } else if (Data === "Recieved Payments") {
       return (
         <Container>
+        {/* Page head */}
           <Row>
             <h3>{Data}</h3>
           </Row>
+        {/* Page Content */}
+          <Row>
+            <Col xs={12}>
+              <div style={{ maxWidth:'100%', overflow:"auto", border: "1px solid black" }}>
+              <table border="1">
+                  <thead>
+                    <tr>
+                      <th>Order ID</th>
+                      <th>Order Value</th>
+                      <th>Payment Sent</th>
+                      <th>Payment Sent Date</th>
+                    </tr>
+                  </thead>
+                 <tbody>
+                  {Array.isArray(RecievedPayments) && RecievedPayments.length>0? 
+                  RecievedPayments.map((item,index)=>(<tr key={item._id}>
+                    <td>{item._id}</td>
+                    <td><PaymentOrderValue Ordered={item.OrderedItems} /></td>
+                    <td>{item.MerchantPaymentSent.toString()}</td>
+                    <td>{item.MerchantPaymentDate.toString()}</td>
+                    </tr>)):(<tr><td>No Data</td></tr>)}
+                 </tbody>
+                </table>
+              </div>
+            </Col>
+          </Row>
         </Container>
       );
-    } else if (Data === "Bending Payments") {
+    } else if (Data === "All Payments") {
       return (
         <Container>
+        {/* Page head */}
           <Row>
             <h3>{Data}</h3>
+          </Row>
+        {/* Page Content */}
+          <Row>
+            <Col xs={12}>
+              <div style={{ maxWidth:'100%', overflow:"auto", border: "1px solid black" }}>
+              <table border="1">
+                  <thead>
+                    <tr>
+                      <th>Order ID</th>
+                      <th>Order Value</th>
+                      <th>Payment Sent</th>
+                      <th>Payment Sent Date</th>
+                    </tr>
+                  </thead>
+                 <tbody>
+                  {Array.isArray(AllPayments) && AllPayments.length>0? 
+                  AllPayments.map((item,index)=>(<tr key={item._id}>
+                    <td>{item._id}</td>
+                    <td><PaymentOrderValue Ordered={item.OrderedItems} /></td>
+                    <td>{item.MerchantPaymentSent.toString()}</td>
+                    <td>{item.MerchantPaymentDate.toString()}</td>
+                    </tr>)):(<tr><td>No Data</td></tr>)}
+                 </tbody>
+                </table>
+              </div>
+            </Col>
           </Row>
         </Container>
       );
@@ -1340,8 +1451,9 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                         }
                       }
                       SetData(e.target.innerText);
-                      toast.info("Please wait while we get New Orders")
+                     
                       if (Orders.length===0) {
+                        toast.info("Please wait while we get Your Orders")
                         const MerchantCredentials={
                           Email:globalState.email,
                           Name:globalState.Name,
@@ -1402,8 +1514,9 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                         }
                       }
                       SetData(e.target.innerText);
-                      toast.info("Please wait while we get New Orders")
+                      
                       if (Orders.length===0) {
+                        toast.info("Please wait while we get Your Orders")
                         const MerchantCredentials={
                           Email:globalState.email,
                           Name:globalState.Name,
@@ -1639,44 +1752,128 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                 className="MerchantMenu d-flex flex-column"
               >
                 <div
-                  onClick={(e) => {
+                  onClick={async(e) => {
                     e.stopPropagation();
-                    console.log(e.target.innerText);
-                    let Menues = document.querySelectorAll(".MerchantMenu");
-                    let MenuArrows = document.querySelectorAll(".MenuArrow");
-                    for (let index = 0; index < Menues.length; index++) {
-                      if (
-                        Menues[index].classList.contains("MerchantMenuActive")
-                      ) {
-                        Menues[index].classList.remove("MerchantMenuActive");
-                        MenuArrows[index].innerHTML = "&#11206;";
-                      } else {
+                    try {
+                      console.log(e.target.innerText);
+                      let Menues = document.querySelectorAll(".MerchantMenu");
+                      let MenuArrows = document.querySelectorAll(".MenuArrow");
+                      for (let index = 0; index < Menues.length; index++) {
+                        if (
+                          Menues[index].classList.contains("MerchantMenuActive")
+                        ) {
+                          Menues[index].classList.remove("MerchantMenuActive");
+                          MenuArrows[index].innerHTML = "&#11206;";
+                        } else {
+                        }
                       }
+                      SetData(e.target.innerText);
+                      if (AllPayments.length===0) {
+                        toast.info("Please wait while we get Your Orders")
+                        const MerchantCredentials={
+                          Email:globalState.email,
+                          Name:globalState.Name,
+                          Token:globalState.Token
+                        }
+                        console.log(MerchantCredentials)
+                        const GetMerchantOrders=await fetch(
+                          "http://localhost:5000/Merchants/OrdersList",
+                          {
+                            method: "post",
+                            body: JSON.stringify(MerchantCredentials),
+                            headers: {
+                              "Content-Type": "application/json",
+                            },
+                            mode: "cors",
+                          }
+                        ).then((res)=>{
+                          return res.json()
+                        }).catch(err=>{
+                          console.log(err)
+                          toast.error(err.toString(),{autoClose:false})
+                        })
+                        if (typeof GetMerchantOrders==="object" && GetMerchantOrders.resp && Array.isArray(GetMerchantOrders.resp)) {
+                          toast.success("Done!")
+                          SetAllPayments(GetMerchantOrders.resp)
+                          SetRecievedPayments(GetMerchantOrders.resp.filter((item)=>{
+                            if (item.MerchantPaymentSent===true) {
+                              return item
+                            }
+                          }))
+                          console.log(GetMerchantOrders.resp)
+                        }else{
+                          toast.error(GetMerchantOrders,{autoClose:false})
+                        }
+
+                      }
+                    } catch (error) {
+                      toast.error(error.toString(),{autoClose:false})
                     }
-                    SetData(e.target.innerText);
                   }}
                 >
                   Recieved Payments
                 </div>
                 <div
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    console.log(e.target.innerText);
-                    let Menues = document.querySelectorAll(".MerchantMenu");
-                    let MenuArrows = document.querySelectorAll(".MenuArrow");
-                    for (let index = 0; index < Menues.length; index++) {
-                      if (
-                        Menues[index].classList.contains("MerchantMenuActive")
-                      ) {
-                        Menues[index].classList.remove("MerchantMenuActive");
-                        MenuArrows[index].innerHTML = "&#11206;";
-                      } else {
+                    onClick={async(e) => {
+                      e.stopPropagation();
+                      try {
+                        console.log(e.target.innerText);
+                        let Menues = document.querySelectorAll(".MerchantMenu");
+                        let MenuArrows = document.querySelectorAll(".MenuArrow");
+                        for (let index = 0; index < Menues.length; index++) {
+                          if (
+                            Menues[index].classList.contains("MerchantMenuActive")
+                          ) {
+                            Menues[index].classList.remove("MerchantMenuActive");
+                            MenuArrows[index].innerHTML = "&#11206;";
+                          } else {
+                          }
+                        }
+                        SetData(e.target.innerText);
+                        if (AllPayments.length===0) {
+                          toast.info("Please wait while we get Your Orders")
+                          const MerchantCredentials={
+                            Email:globalState.email,
+                            Name:globalState.Name,
+                            Token:globalState.Token
+                          }
+                          console.log(MerchantCredentials)
+                          const GetMerchantOrders=await fetch(
+                            "http://localhost:5000/Merchants/OrdersList",
+                            {
+                              method: "post",
+                              body: JSON.stringify(MerchantCredentials),
+                              headers: {
+                                "Content-Type": "application/json",
+                              },
+                              mode: "cors",
+                            }
+                          ).then((res)=>{
+                            return res.json()
+                          }).catch(err=>{
+                            console.log(err)
+                            toast.error(err.toString(),{autoClose:false})
+                          })
+                          if (typeof GetMerchantOrders==="object" && GetMerchantOrders.resp && Array.isArray(GetMerchantOrders.resp)) {
+                            toast.success("Done!")
+                            SetAllPayments(GetMerchantOrders.resp)
+                            SetRecievedPayments(GetMerchantOrders.resp.filter((item)=>{
+                              if (item.MerchantPaymentSent===true) {
+                                return item
+                              }
+                            }))
+                            console.log(GetMerchantOrders.resp)
+                          }else{
+                            toast.error(GetMerchantOrders,{autoClose:false})
+                          }
+  
+                        }
+                      } catch (error) {
+                        toast.error(error.toString(),{autoClose:false})
                       }
-                    }
-                    SetData(e.target.innerText);
-                  }}
+                    }}
                 >
-                  Bending Payments
+                  All Payments
                 </div>
               </div>
             </div>
@@ -1684,7 +1881,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
         </Col>
         {/* the following Col will display the data after merchant select option from side menu */}
         <Col xs={12} md={10}>
-          <DtataDisplay />
+          <DtataDisplay  />
         </Col>
       </Row>
     </Container>
