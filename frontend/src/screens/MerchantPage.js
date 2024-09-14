@@ -1,11 +1,13 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef,useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 import StaticData from "../Data/StaticData.js";
 import {toast} from "react-toastify"
+import { LanguageContext } from "../Context/LanguageContext.js"
 
 // This will be merchant page for merchant controls
 const MerchantPage = ({ globalState, setGlobal }) => {
+  const {Language,SetLanguage}=useContext(LanguageContext)
   const [ShowAlert, SetShowAlert] = useState({
     Success: false,
     Show: false,
@@ -260,14 +262,14 @@ const MerchantPage = ({ globalState, setGlobal }) => {
           </Row>
           <Row className=" align-items-center">
             <Col xs={12} md={4}>
-              Please enter old password
+              {Language==="ar"?"برجاء ادخال كلمه المرور القديمه":"Please enter old password"}
             </Col>
             <Col xs={12} md={8}>
               <input 
                  id="OldPassword"
                  type="password"
                  pattern="[0-9]{3}"
-                 placeholder="Enter Password"
+                 placeholder={Language==="ar"?"ادخل كلمه المرور": "Enter Password"}
                  name="psw"
                  disabled={Disabled}
                  onChange={(e)=>{
@@ -279,13 +281,13 @@ const MerchantPage = ({ globalState, setGlobal }) => {
           </Row>
           <Row className=" align-items-center">
             <Col xs={12} md={4}>
-              Please enter new password
+              {Language==="ar"?"برجاء ادخال كلمه المرور الجديده":"Please enter new password"}
             </Col>
             <Col xs={12} md={8}>
               <input id="NewPassword"
                  type="password"
                  pattern="[0-9]{3}"
-                 placeholder="Enter Password"
+                 placeholder={Language==="ar"?"ادخل كلمه المرور": "Enter Password"}
                  name="psw"
                  disabled={Disabled}
                  onChange={(e)=>{
@@ -297,13 +299,13 @@ const MerchantPage = ({ globalState, setGlobal }) => {
           </Row>
           <Row className=" align-items-center">
             <Col xs={12} md={4}>
-              Please confirm new password
+              {Language==="ar"?"برجاء اعاده ادخال كلمه المرور الجديده":"Please confirm new password"}
             </Col>
             <Col xs={12} md={8}>
               <input id="ConfirmNewPassword"
                  type="password"
                  pattern="[0-9]{3}"
-                 placeholder="Enter Password"
+                 placeholder={Language==="ar"?"ادخل كلمه المرور": "Enter Password"}
                  name="psw"
                  disabled={Disabled}
                  onChange={(e)=>{
@@ -319,16 +321,16 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                 e.stopPropagation()
                 console.log(ChangePasswordData)
                 e.target.disabled=true
-                e.target.innerText="Please wait..."
+                e.target.innerText=Language==="ar"?"برجاء الانتظار...":"Please wait..."
                 try {
                   if (ChangePasswordData.NewPassword.length===0 || ChangePasswordData.OldPassword.length===0 || ChangePasswordData.ConfirmNewPassword.length===0 || ChangePasswordData.Email.length===0 || ChangePasswordData.Token===0) {
-                    toast.error("Please fill all fields")
+                    toast.error(Language==="ar"?"برجاء ملئ كافه الحقول": "Please fill all fields")
                     e.target.disabled=false
-                    e.target.innerText="confirm"
+                    e.target.innerText=Language==="ar"?"تاكيد":"confirm"
                   } else if(ChangePasswordData.ConfirmNewPassword!==ChangePasswordData.NewPassword) {
                     toast.error("New Passwords Dosenot match")
                     e.target.disabled=false
-                    e.target.innerText="confirm"
+                    e.target.innerText=Language==="ar"?"تاكيد":"confirm"
                   }else{
                     let RegTextVarify=false
                     let keys=Object.keys(ChangePasswordData)
@@ -339,9 +341,9 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                       RegTextVarify=true
                       }else{
                         RegTextVarify=false
-                       toast.error("New password shall be at least 8 characters, 1 lower case letter, 1 number and 1 uppercase letter", {autoClose:5000})
+                       toast.error(Language==="ar"?"يجب ان تحتوي كلمه السر على حرف صغير وحرف كبير ورقم ولا تقل عن 8 احرف" : "New password shall be at least 8 characters, 1 lower case letter, 1 number and 1 uppercase letter", {autoClose:5000})
                        e.target.disabled=false
-                       e.target.innerText="confirm"
+                       e.target.innerText=Language==="ar"?"تاكيد":"confirm"
                        break
                       }
                      } 
@@ -368,39 +370,39 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                         console.log(ChangePassword)
                         if (typeof ChangePassword==="object" && ChangePassword.resp && typeof ChangePassword.resp==="string") {
                           if (ChangePassword.resp==="Password Updated successfully") {
-                            toast.success(ChangePassword.resp)
+                            toast.success(Language==="ar"?"تم تغيير كلمه السر بنجاح":ChangePassword.resp)
                             e.target.disabled=false
-                            e.target.innerText="confirm"
+                            e.target.innerText=Language==="ar"?"تاكيد":"confirm"
 
                             
                           } else {
                             toast.error(ChangePassword.resp)
                             e.target.disabled=false
-                            e.target.innerText="confirm"
+                            e.target.innerText=Language==="ar"?"تاكيد":"confirm"
                             
                           }
                           
                         } else {
                           toast.error("Password Not Updated")
                        e.target.disabled=false
-                       e.target.innerText="confirm"
+                       e.target.innerText=Language==="ar"?"تاكيد":"confirm"
                           
                         }
                       
                     } else {
-                      toast.error("New password shall be at least 8 characters, 1 lower case letter, 1 number and 1 uppercase letter", {autoClose:5000})
+                      toast.error(Language==="ar"?"يجب ان تحتوي كلمه السر على حرف صغير وحرف كبير ورقم ولا تقل عن 8 احرف" : "New password shall be at least 8 characters, 1 lower case letter, 1 number and 1 uppercase letter", {autoClose:5000})
                        e.target.disabled=false
-                       e.target.innerText="confirm"
+                       e.target.innerText=Language==="ar"?"تاكيد":"confirm"
                       
                     }
                   }
                 } catch (error) {
                   toast.error("Internal Error")
                   e.target.disabled=false
-                  e.target.innerText="confirm"
+                  e.target.innerText=Language==="ar"?"تاكيد":"confirm"
                 }
               }} style={{ width: "100%" }}>
-                confirm
+                {Language==="ar"?"تاكيد":"confirm"}
               </button>
             </Col>
           </Row>

@@ -4,6 +4,7 @@ import "./index.css";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "../node_modules/bootstrap/dist/js/bootstrap.bundle.js"
 import "../node_modules/bootstrap/dist/js/bootstrap.min.js"
+import GoogleTranslate from "./Context/GoogleTranslate.js";
 import App from "./App";
 import {
   BrowserRouter,

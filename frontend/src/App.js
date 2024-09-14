@@ -32,6 +32,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import ClientPage from "./screens/ClientPage.js";
 import {LanguageProvider,LanguageContext} from "./Context/LanguageContext.js"
+import GoogleTranslate from "./Context/GoogleTranslate.js";
 function App() {
   const BackDrop = useRef();
   const ProfileItems = useRef();
@@ -510,9 +511,12 @@ const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstra
           .getElementsByClassName("NavBarSmall")[0]
           .getBoundingClientRect().bottom + "px";
     }
+    
     // return () => {
     //   socket.off('messageToBB');
     // };
+
+
   }, []);
 // following function will create route for all categories
   const CategoryRoutes = StaticData.Categories.map((Item, Index) => (
@@ -523,7 +527,7 @@ const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstra
     />
   ));
   return (
-    <div
+    <div 
       onClick={() => {
         console.log(window.innerWidth);
         console.log(Language)
@@ -535,6 +539,7 @@ const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstra
       <ToastContainer position="top-center"
 autoClose={3000}
 hideProgressBar />
+
       <div
         ref={BackDrop}
         onClick={(e) => {
@@ -556,7 +561,7 @@ hideProgressBar />
         <Row
           style={{ zIndex: "5", backgroundRowor: "gray", position: "relative" }}
         >
-          <div
+          <Col xs={12}
             className="fixed-top"
             onClick={(e) => {
               e.stopPropagation();
@@ -580,7 +585,7 @@ hideProgressBar />
             }}
           >
             <Home BackDropRef={BackDrop} GlobalState={GlobalState} />
-          </div>
+          </Col>
         </Row>
         <div className="row px-2 ps-2">
           <div
@@ -592,6 +597,7 @@ hideProgressBar />
               marginTop: "0px",
             }}
           >
+           
             <Routes>
               {CategoryRoutes}
               <Route
