@@ -318,27 +318,86 @@ const MerchantPage = ({ globalState, setGlobal }) => {
               <button className="SignUpButton" onClick={async (e)=>{
                 e.stopPropagation()
                 console.log(ChangePasswordData)
+                e.target.disabled=true
+                e.target.innerText="Please wait..."
                 try {
                   if (ChangePasswordData.NewPassword.length===0 || ChangePasswordData.OldPassword.length===0 || ChangePasswordData.ConfirmNewPassword.length===0 || ChangePasswordData.Email.length===0 || ChangePasswordData.Token===0) {
                     toast.error("Please fill all fields")
+                    e.target.disabled=false
+                    e.target.innerText="confirm"
                   } else if(ChangePasswordData.ConfirmNewPassword!==ChangePasswordData.NewPassword) {
                     toast.error("New Passwords Dosenot match")
+                    e.target.disabled=false
+                    e.target.innerText="confirm"
                   }else{
+                    let RegTextVarify=false
                     let keys=Object.keys(ChangePasswordData)
                     for (let index = 0; index <keys.length ; index++) {
                      if(keys[index]==="NewPassword" || keys[index]==="ConfirmNewPassword"){
                       console.log(keys[index])
                       if (ChangePasswordData[keys[index]].match(/[a-z]/g) && ChangePasswordData[keys[index]].match(/[A-Z]/g) && ChangePasswordData[keys[index]].match(/[0-9]/g) && ChangePasswordData[keys[index]].length>=8   ) {
-                      
+                      RegTextVarify=true
                       }else{
+                        RegTextVarify=false
                        toast.error("New password shall be at least 8 characters, 1 lower case letter, 1 number and 1 uppercase letter", {autoClose:5000})
+                       e.target.disabled=false
+                       e.target.innerText="confirm"
                        break
                       }
                      } 
                     }
+                    if (RegTextVarify===true) {
+                      console.log("Pdate password")
+                      const ChangePassword = await fetch(
+                        "http://localhost:5000/Merchants/ChangePassword",
+                        {
+                          method: "post",
+                          body: JSON.stringify(ChangePasswordData),
+                          headers: {
+                            "Content-Type": "application/json",
+                          },
+                          mode: "cors",
+                        }
+                      )
+                        .then((res) => {
+                          return res.json();
+                        })
+                        .catch((err) => {
+                          return { resp: "Internal Error" };
+                        });
+                        console.log(ChangePassword)
+                        if (typeof ChangePassword==="object" && ChangePassword.resp && typeof ChangePassword.resp==="string") {
+                          if (ChangePassword.resp==="Password Updated successfully") {
+                            toast.success(ChangePassword.resp)
+                            e.target.disabled=false
+                            e.target.innerText="confirm"
+
+                            
+                          } else {
+                            toast.error(ChangePassword.resp)
+                            e.target.disabled=false
+                            e.target.innerText="confirm"
+                            
+                          }
+                          
+                        } else {
+                          toast.error("Password Not Updated")
+                       e.target.disabled=false
+                       e.target.innerText="confirm"
+                          
+                        }
+                      
+                    } else {
+                      toast.error("New password shall be at least 8 characters, 1 lower case letter, 1 number and 1 uppercase letter", {autoClose:5000})
+                       e.target.disabled=false
+                       e.target.innerText="confirm"
+                      
+                    }
                   }
                 } catch (error) {
                   toast.error("Internal Error")
+                  e.target.disabled=false
+                  e.target.innerText="confirm"
                 }
               }} style={{ width: "100%" }}>
                 confirm

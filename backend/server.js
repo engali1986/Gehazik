@@ -29,6 +29,8 @@ import CheckUser from "./DBConnection/Users/CheckUser.js";
 import OrderEmails from "./DBConnection/Merchants/OrderEmails.js";
 import http from "http"
 import MerchantOrders from "./DBConnection/Merchants/MerchantOrders.js";
+import { type } from "os";
+import MerchantChangePassword from "./DBConnection/Merchants/MerchantChangePassword.js";
 const require = createRequire(import.meta.url);
 const socketIo = require('socket.io');
 // const ServiceAccountKey = require("./API keys/ServiceAccountKey.json");
@@ -349,6 +351,35 @@ app.post("/Merchants/AddProduct", upload.array("Files"), async (req, res) => {
     res.status(500).json({ resp: "Internal Server Error" });
   }
 });
+// Merchant route starts
+// Merchant Change password
+app.post("/Merchants/ChangePassword",async(req,res)=>{
+  try {
+    console.log("server/Merchant Changepassword 0")
+    const PasswordData=await req.body
+    console.log(PasswordData)
+    if (PasswordData.User==="Merchant") {
+      // First we varify Merchant login
+      const VarifyData={Name:PasswordData.Name,Email:PasswordData.Email,Token:PasswordData.Token}
+      const MerchantVarify=await VarifyMerchant(VarifyData)
+      console.log("server/Merchant Changepassword 1 MerchantVarify result")
+      console.log(MerchantVarify)
+      if (typeof MerchantVarify==="object" && MerchantVarify._id) {
+        const ChangePassword=await MerchantChangePassword(PasswordData,MerchantVarify)
+        console.log("server/Merchant Changepassword 2 ChangePassword result")
+        console.log(ChangePassword)
+        res.json({resp:ChangePassword})
+      } else {
+        res.json({resp:"Connection Error"})
+      }
+    } else {
+      res.json({resp:"Please LogIn as Merchant"})
+    }
+  } catch (error) {
+    console.log*error
+    res.json({resp:"Connection Error"})
+  }
+})
 // Merchant Orders list
 app.post("/Merchants/OrdersList",async(req,res)=>{
   try {
