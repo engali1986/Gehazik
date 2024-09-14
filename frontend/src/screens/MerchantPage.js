@@ -44,7 +44,8 @@ const MerchantPage = ({ globalState, setGlobal }) => {
       Token:globalState.Token,
       OldPassword:"",
       NewPassword:"",
-      ConfirmNewPassword:""
+      ConfirmNewPassword:"",
+      User:globalState.Merchant===true?"Merchant":""
     })
     // const [ShowAlert, SetShowAlert] = useState({
     //   Success: false,
@@ -314,9 +315,35 @@ const MerchantPage = ({ globalState, setGlobal }) => {
           </Row>
           <Row>
             <Col xs={12}>
-              <button className="SignUpButton" onClick={(e)=>{
+              <button className="SignUpButton" onClick={async (e)=>{
                 e.stopPropagation()
                 console.log(ChangePasswordData)
+                try {
+                  if (ChangePasswordData.NewPassword.length===0 || ChangePasswordData.OldPassword.length===0 || ChangePasswordData.ConfirmNewPassword.length===0 || ChangePasswordData.Email.length===0 || ChangePasswordData.Token===0) {
+                    toast.error("Please fill all fields")
+                  } else if(ChangePasswordData.ConfirmNewPassword!==ChangePasswordData.NewPassword) {
+                    toast.error("New Passwords Dosenot match")
+                  }else{
+                    let keys=Object.keys(ChangePasswordData)
+                    for (let index = 0; index <keys.length ; index++) {
+                     if(keys[index]==="NewPassword" || keys[index]==="ConfirmNewPassword"){
+                      console.log(keys[index])
+                      if (ChangePasswordData[keys[index]].match(/[a-z]/g) && ChangePasswordData[keys[index]].match(/[A-Z]/g) && ChangePasswordData[keys[index]].match(/[0-9]/g) && ChangePasswordData[keys[index]].length>=8   ) {
+                      
+                      }else{
+                       toast.error("New password shall be at least 8 characters, 1 lower case letter, 1 number and 1 uppercase letter", {autoClose:5000})
+                       break
+                      }
+
+                     }
+                     
+                      
+                    }
+                    
+                  }
+                } catch (error) {
+                  toast.error("Internal Error")
+                }
               }} style={{ width: "100%" }}>
                 confirm
               </button>
