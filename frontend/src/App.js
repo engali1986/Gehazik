@@ -562,7 +562,8 @@ hideProgressBar />
           style={{ zIndex: "5", backgroundRowor: "gray", position: "relative" }}
         >
           <Col xs={12}
-            className="fixed-top"
+            className="fixed-top" 
+            style={{top:'50px'}}
             onClick={(e) => {
               e.stopPropagation();
               console.log("nav clicked");
