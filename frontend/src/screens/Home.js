@@ -1,10 +1,12 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef,useContext } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import Feedback from "react-bootstrap/esm/Feedback";
 import { Link } from "react-router-dom";
 import StaticData, { Categories } from "../Data/StaticData.js";
+import {LanguageContext} from "../Context/LanguageContext.js"
 // here we use if else to check params.GlobalState.Admin if false display NavBar items means normal user else means admin donot display navbar items except home
 const Home = (params) => {
+  const {Language,ToggleLanguage}=useContext(LanguageContext)
   console.log();
   const LogInItems = () => {
     if (params.GlobalState.UserLogged === true) {
@@ -140,6 +142,19 @@ const Home = (params) => {
           >
             home
           </div>
+          <div
+            style={{
+              fontSize: "1rem",
+              textAlign: "start",
+              width: "fit-content",
+            }}
+            onClick={(e)=>{
+              e.stopPropagation()
+              ToggleLanguage()
+            }}
+          >
+            {Language==="en"?"العربيه":"English"}
+          </div>
           <Col className="Categories d-none"></Col>
         </Row>
         {/* Small screen navbar-------------------------------------------------------------------------------------------------- */}
@@ -152,6 +167,19 @@ const Home = (params) => {
             }}
           >
             home
+          </div>
+          <div
+            style={{
+              fontSize: "1rem",
+              textAlign: "start",
+              width: "fit-content",
+            }}
+            onClick={(e)=>{
+              e.stopPropagation()
+              ToggleLanguage()
+            }}
+          >
+            {Language==="en"?"العربيه":"English"}
           </div>
         </Row>
       </Container>
@@ -173,6 +201,19 @@ const Home = (params) => {
             }}
           >
             home
+          </div>
+          <div
+            style={{
+              fontSize: "1rem",
+              textAlign: "start",
+              width: "fit-content",
+            }}
+            onClick={(e)=>{
+              e.stopPropagation()
+              ToggleLanguage()
+            }}
+          >
+            {Language==="en"?"العربيه":"English"}
           </div>
           <div
             style={{
@@ -245,6 +286,19 @@ const Home = (params) => {
             }}
           >
             home
+          </div>
+          <div
+            style={{
+              fontSize: "1rem",
+              textAlign: "start",
+              width: "fit-content",
+            }}
+            onClick={(e)=>{
+              e.stopPropagation()
+              ToggleLanguage()
+            }}
+          >
+            {Language==="en"?"العربيه":"English"}
           </div>
           <div
             style={{

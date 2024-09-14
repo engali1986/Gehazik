@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useContext} from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
@@ -12,12 +12,15 @@ import {
   createBrowserRouter,
 } from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
+import {LanguageContext, LanguageProvider} from "./Context/LanguageContext.js"
 import Main from "./screens/Main";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
+    <LanguageProvider>
       <App />
+    </LanguageProvider>
     </BrowserRouter>
   </React.StrictMode>,
 );

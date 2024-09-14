@@ -334,12 +334,8 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                        toast.error("New password shall be at least 8 characters, 1 lower case letter, 1 number and 1 uppercase letter", {autoClose:5000})
                        break
                       }
-
-                     }
-                     
-                      
+                     } 
                     }
-                    
                   }
                 } catch (error) {
                   toast.error("Internal Error")

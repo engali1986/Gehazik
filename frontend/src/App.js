@@ -8,7 +8,7 @@ import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import "./App.css";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect,createContext, useContext } from "react";
 import Main from "./screens/Main.js";
 import ErrorWindow from "./screens/ErrorWindow.js";
 import LogIn from "./screens/LogIn.js";
@@ -31,9 +31,14 @@ import bootstrapBundle from "bootstrap/dist/js/bootstrap.bundle";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import ClientPage from "./screens/ClientPage.js";
+import {LanguageProvider,LanguageContext} from "./Context/LanguageContext.js"
 function App() {
   const BackDrop = useRef();
   const ProfileItems = useRef();
+  // useContext for language selection
+  const {Language,ToggleLanguage}=useContext(LanguageContext)
+ 
+  
   //  first check if there is GlobalState in session and local storage
   if (
     localStorage.getItem("globalState") === null &&
@@ -518,11 +523,12 @@ const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstra
     />
   ));
   return (
-   
     <div
       onClick={() => {
         console.log(window.innerWidth);
+        console.log(Language)
       }}
+    dir={Language==="ar"?"rtl":"ltr"}
     >
       
       
