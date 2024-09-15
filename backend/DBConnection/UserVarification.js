@@ -6,7 +6,7 @@ const client = new MongoClient(uri
 const Uservarification=async(Email,Password)=>{
     console.log("Uservarification 0")
     console.log(Email)
-    const user=await client.db("Gehazik").collection("Users").findOne({email:Email,pass:Password}).then(res=>{
+    const user=await client.db("Gehazik").collection("Users").findOne({Email:Email,Pass:Password}).then(res=>{
       console.log(res)
       return res
     }).catch(err=>{
@@ -15,7 +15,7 @@ const Uservarification=async(Email,Password)=>{
     if (user!=="Database Error") {
       if (user!==null) {
         console.log("Uservarification 1")
-        console.log(user.varificationcode)
+        console.log(user.VarificationCode)
   
         let Transporter=await mailer.createTransport({
         service:"gmail",
@@ -23,15 +23,15 @@ const Uservarification=async(Email,Password)=>{
         secure:true,
         auth: {
           user: "engaligulf1986@gmail.com",
-          pass: "swqtgeywhhucrcwh",
+          pass: "swqtgeywhhucrcwh"
         },
         })
       
         let mailOptions = {
           from: 'Ali Mohammed <engaligulf1986@gmail.com>',
-          to: user.email,
+          to: user.Email,
           subject: 'New user varification',
-          html: `<h1> Please find below your varification code</h1><h2>Varification Code:${user.varificationcode}</h2>`
+          html: `<h1> Please find below your varification code</h1><h2>Varification Code:${user.VarificationCode}</h2>`
         };
         
         const result=await Transporter.sendMail(mailOptions).then(res=>{

@@ -110,7 +110,7 @@ app.post("/AddUser", async (req, res) => {
   console.log("server file AddUser1");
   console.log(result);
   if (
-    result.email ||
+    result.Email ||
     result === "User Already Registered" ||
     result === "Connection error"
   ) {
@@ -127,7 +127,7 @@ app.post("/LogInUser", async (req, res) => {
   const result = await LogInUser(credentials);
   console.log("server /LogInUser 1");
   console.log(result);
-  if (result.email) {
+  if (result.Email) {
     console.log("server /LogInUser 2");
     res.json({ resp: result });
   } else if (result === "User Not Found") {
@@ -200,7 +200,7 @@ app.post("/AddMerchant", async (req, res) => {
   console.log("server file AddMerchant1");
   console.log(result);
   if (
-    result.email ||
+    result.Email ||
     result === "Merchant Already Registered" ||
     result === "Connection error"
   ) {

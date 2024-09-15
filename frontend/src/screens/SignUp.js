@@ -275,14 +275,14 @@ const SignUp = ({ globalState, setGlobal }) => {
               "alert-success"
             );
             PassmatchAlert.current.innerText =
-              AddUser.resp.name +
+              AddUser.resp.Name +
               " Added successfully an email has been sent to your email address with varification code Please enter varification code below";
             PassmatchAlert.current.style.maxHeight = "500px";
             varificationCodeRef.current.style.display = "flex";
             setButton(true);
             setConfirmPassword(true);
             setDisabled(true);
-            // setGlobal(AddUser.resp.name,true,AddUser.resp.email)
+            // setGlobal(AddUser.resp.Name,true,AddUser.resp.Email)
             // navigate("/")
           } else {
             PassmatchAlert.current.classList.replace(
@@ -346,14 +346,14 @@ const SignUp = ({ globalState, setGlobal }) => {
         return "user Not Added";
       });
 console.log(UserVarified)
-    if (UserVarified.resp.email && UserVarified.resp.uservarified === true) {
-      setGlobal(UserVarified.resp.name, true, UserVarified.resp.email, false, true, false, UserVarified.resp.Token,UserVarified.resp.Governorate,UserVarified.resp.City);
+    if (UserVarified.resp.Email && UserVarified.resp.UserVarified === true) {
+      setGlobal(UserVarified.resp.Name, true, UserVarified.resp.Email, false, true, false, UserVarified.resp.Token,UserVarified.resp.Governorate,UserVarified.resp.City);
       PassmatchAlert.current.classList.replace("alert-danger", "alert-success");
       PassmatchAlert.current.innerText = "User Logged in successfully";
       PassmatchAlert.current.style.maxHeight = "500px";
     } else if (
-      UserVarified.resp.email &&
-      UserVarified.resp.uservarified === false
+      UserVarified.resp.Email &&
+      UserVarified.resp.UserVarified === false
     ) {
       PassmatchAlert.current.classList.replace("alert-danger", "alert-success");
       PassmatchAlert.current.innerText = "Varification code sent by email";

@@ -7,7 +7,7 @@ const LogIn = ({ globalState, setGlobal }) => {
   const Email = useRef();
   const Password = useRef();
   const Alert = useRef();
-  const varificationCodeRef = useRef();
+  const VarificationCodeRef = useRef();
   const LoginButtonRef = useRef();
   const [Credentials, setCredentials] = useState({
     Email: "",
@@ -39,11 +39,11 @@ const LogIn = ({ globalState, setGlobal }) => {
         return "user Not Added";
       });
       console.log(UserVarified)
-    if (UserVarified.resp.email && UserVarified.resp.uservarified === true) {
+    if (UserVarified.resp.Email && UserVarified.resp.UserVarified === true) {
       setGlobal(
-        UserVarified.resp.name,
+        UserVarified.resp.Name,
         true,
-        UserVarified.resp.email,
+        UserVarified.resp.Email,
         false,
         true,
         false, UserVarified.resp.Token,UserVarified.resp.Governorate,UserVarified.resp.City
@@ -52,13 +52,13 @@ const LogIn = ({ globalState, setGlobal }) => {
       Alert.current.innerText = "User Logged in successfully";
       Alert.current.style.maxHeight = "500px";
     } else if (
-      UserVarified.resp.email &&
-      UserVarified.resp.uservarified === false
+      UserVarified.resp.Email &&
+      UserVarified.resp.UserVarified === false
     ) {
       Alert.current.classList.replace("alert-danger", "alert-success");
       Alert.current.innerText = "Varification code sent by email";
       Alert.current.style.maxHeight = "500px";
-      varificationCodeRef.current.style.display = "flex";
+      VarificationCodeRef.current.style.display = "flex";
       setDisabled(false);
     } else {
       Alert.current.classList.replace("alert-success", "alert-danger");
@@ -100,11 +100,11 @@ const LogIn = ({ globalState, setGlobal }) => {
       if (UserLogIn.resp) {
         LoginButtonRef.current.innerText = "Login";
         if (typeof UserLogIn.resp === "object") {
-          if (UserLogIn.resp.email && UserLogIn.resp.uservarified === true) {
+          if (UserLogIn.resp.Email && UserLogIn.resp.UserVarified === true) {
             setGlobal(
-              UserLogIn.resp.name,
+              UserLogIn.resp.Name,
               true,
-              UserLogIn.resp.email,
+              UserLogIn.resp.Email,
               false,
               true,
               false,
@@ -114,13 +114,13 @@ const LogIn = ({ globalState, setGlobal }) => {
             Alert.current.innerText = "User Logged in successfully";
             Alert.current.style.maxHeight = "500px";
           } else if (
-            UserLogIn.resp.email &&
-            UserLogIn.resp.uservarified === false
+            UserLogIn.resp.Email &&
+            UserLogIn.resp.UserVarified === false
           ) {
             Alert.current.classList.replace("alert-danger", "alert-success");
             Alert.current.innerText = "Varification code sent by email";
             Alert.current.style.maxHeight = "500px";
-            varificationCodeRef.current.style.display = "flex";
+            VarificationCodeRef.current.style.display = "flex";
             setDisabled(false);
           } else {
             Alert.current.classList.replace("alert-success", "alert-danger");
@@ -137,12 +137,12 @@ const LogIn = ({ globalState, setGlobal }) => {
           Alert.current.classList.replace("alert-success", "alert-danger");
           Alert.current.innerText = "Varification Code sent by email";
           Alert.current.style.maxHeight = "500px";
-          varificationCodeRef.current.style.display = "flex";
+          VarificationCodeRef.current.style.display = "flex";
         } else if (UserLogIn.resp === "User varified") {
           setGlobal(
-            UserLogIn.resp.name,
+            UserLogIn.resp.Name,
             true,
-            UserLogIn.resp.email,
+            UserLogIn.resp.Email,
             false,
             true,
             false,UserLogIn.resp.Token,UserLogIn.resp.Governorate,UserLogIn.resp.City
@@ -226,7 +226,7 @@ const LogIn = ({ globalState, setGlobal }) => {
       >
         Login
       </button>
-      <Row ref={varificationCodeRef} style={{ display: "none" }}>
+      <Row ref={VarificationCodeRef} style={{ display: "none" }}>
         <Col xs={12} md={8}>
           <input
             type="number"

@@ -51,7 +51,7 @@ function App() {
       JSON.stringify({
         UserLogged: false,
         Name: "",
-        email: "",
+        Email: "",
         Admin: false,
         Client: false,
         Merchant: false,
@@ -67,7 +67,7 @@ function App() {
       JSON.stringify({
         UserLogged: false,
         Name: "",
-        email: "",
+        Email: "",
         Admin: false,
         Client: false,
         Merchant: false,
@@ -118,7 +118,7 @@ function App() {
         JSON.stringify({
           UserLogged: false,
           Name: "",
-          email: "",
+          Email: "",
           Admin: false,
           Client: false,
           Merchant: false,
@@ -134,7 +134,7 @@ function App() {
         JSON.stringify({
           UserLogged: false,
           Name: "",
-          email: "",
+          Email: "",
           Admin: false,
           Client: false,
           Merchant: false,
@@ -162,7 +162,7 @@ function App() {
       JSON.stringify({
         UserLogged: JSON.parse(localStorage.getItem("globalState")).UserLogged,
         Name: JSON.parse(localStorage.getItem("globalState")).Name,
-        email: JSON.parse(localStorage.getItem("globalState")).email,
+        Email: JSON.parse(localStorage.getItem("globalState")).Email,
         Admin: JSON.parse(localStorage.getItem("globalState")).Admin,
         Client: JSON.parse(localStorage.getItem("globalState")).Client,
         Merchant: JSON.parse(localStorage.getItem("globalState")).Merchant,
@@ -195,7 +195,7 @@ function App() {
       ...GlobalState,
       UserLogged: LogInStatus,
       Name: name,
-      email: mail,
+      Email: mail,
       Admin: Admin,
       Client: Client,
       Merchant: Merchant,
@@ -209,7 +209,7 @@ function App() {
         ...JSON.parse(sessionStorage.getItem("globalState")),
         UserLogged: LogInStatus,
         Name: name,
-        email: mail,
+        Email: mail,
         Admin: Admin,
         Client: Client,
         Merchant: Merchant,

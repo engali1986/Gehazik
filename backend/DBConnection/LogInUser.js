@@ -6,16 +6,16 @@ const client = new MongoClient(uri);
 async function LogInUser(Credentials) {
   try {
     console.log("LogInUser file 0");
-    await client.connect().then((res) => {
-      console.log("Connection res ");
-      console.log(res);
-    });
+    // await client.connect().then((res) => {
+    //   console.log("Connection res ");
+    //   console.log(res);
+    // });
     console.log(Credentials);
     let NewToken = Math.floor(Math.random() * 10000) + 1;
     const GetUser = await client
       .db("Gehazik")
       .collection("Users")
-      .findOne({ email: Credentials.Email, pass: Credentials.Password })
+      .findOne({ Email: Credentials.Email, Pass: Credentials.Password })
       .then((res) => {
         console.log("LogInUser file 1");
         console.log(res);
@@ -34,20 +34,20 @@ async function LogInUser(Credentials) {
         console.log(err);
         return "Connection error";
       });
-    if (GetUser.email) {
+    if (GetUser.Email) {
       console.log("LogInUser file 5");
       console.log(GetUser);
-      if (GetUser.uservarified === false) {
+      if (GetUser.UserVarified === false) {
         console.log("LogInUser file 6");
         if (Credentials.VarificationCode) {
           console.log("LogInUser file 7");
-          if (Credentials.VarificationCode === GetUser.varificationcode) {
+          if (Credentials.VarificationCode === GetUser.VarificationCode) {
             const VarifyUser = await client
               .db("Gehazik")
               .collection("Users")
               .updateOne(
-                { email: Credentials.Email, pass: Credentials.Password },
-                { $set: { uservarified: true,Token:NewToken } }
+                { Email: Credentials.Email, Pass: Credentials.Password },
+                { $set: { UserVarified: true,Token:NewToken } }
               )
               .then((res) => {
                 console.log("LogInUser file 7.5");
@@ -60,7 +60,7 @@ async function LogInUser(Credentials) {
               });
             if (typeof VarifyUser === "object") {
               console.log("LogInUser file 8");
-              GetUser.uservarified = true;
+              GetUser.UserVarified = true;
               GetUser.Token=NewToken
               return GetUser;
             } else {
@@ -70,8 +70,8 @@ async function LogInUser(Credentials) {
             }
           } else {
             const UserVarification = await Uservarification(
-              GetUser.email,
-              GetUser.pass
+              GetUser.Email,
+              GetUser.Pass
             )
               .then((res) => {
                 console.log("LogInUser file 10");
@@ -88,7 +88,7 @@ async function LogInUser(Credentials) {
               typeof UserVarification === "object"
             ) {
               console.log("LogInUser file 12");
-              return "Varification Code sent by email";
+              return "Varification Code sent by Email";
             } else {
               console.log("LogInUser file 13");
               return "Connection error";
@@ -97,8 +97,8 @@ async function LogInUser(Credentials) {
         } else {
           console.log("LogInUser file 14");
           const UserVarification = await Uservarification(
-            GetUser.email,
-            GetUser.pass
+            GetUser.Email,
+            GetUser.Pass
           )
             .then((res) => {
               console.log("LogInUser file 14-10");
@@ -116,7 +116,7 @@ async function LogInUser(Credentials) {
           ) {
             console.log("LogInUser file 14-12");
             console.log(UserVarification);
-            return "Varification Code sent by email";
+            return "Varification Code sent by Email";
           } else {
             console.log("LogInUser file 14-13");
             return "Connection error";
@@ -128,7 +128,7 @@ async function LogInUser(Credentials) {
         .db("Gehazik")
         .collection("Users")
         .updateOne(
-          { email: Credentials.Email, pass: Credentials.Password },
+          { Email: Credentials.Email, Pass: Credentials.Password },
           { $set: {Token:NewToken } }).then(res=>{
             console.log("LogInUser file 15.5 Update Token");
             return res

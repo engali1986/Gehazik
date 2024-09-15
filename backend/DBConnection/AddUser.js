@@ -1,5 +1,5 @@
 // first we import MongoClient to connect to database
-// then we import Uservarification function which will send email to user after regester with varificationcode to confirm user email
+// then we import Uservarification function which will send Email to user after regester with VarificationCode to confirm user Email
 import { MongoClient } from "mongodb";
 import Uservarification from "./UserVarification.js";
 const uri =
@@ -10,11 +10,11 @@ async function AddUser(Credentials) {
   try {
     console.log("AddUser file 0");
     console.log(Credentials);
-    // First we check if user already regestered by searching for user email in database
+    // First we check if user already regestered by searching for user Email in database
     const IsUserRegistered = await client
       .db("Gehazik")
       .collection("Users")
-      .findOne({ email: Credentials.Email })
+      .findOne({ Email: Credentials.Email })
       .then((res) => {
         console.log("AddUser file 1");
         console.log(res);
@@ -29,7 +29,7 @@ async function AddUser(Credentials) {
       });
     console.log("AddUser file 2");
     console.log(IsUserRegistered);
-    // if user not regestered we add user to database and create varificationcode
+    // if user not regestered we add user to database and create VarificationCode
     if (IsUserRegistered === "User Not Found") {
       let x = Math.floor(Math.random() * 9999);
       let NewToken = Math.floor(Math.random() * 10000) + 1;
@@ -40,11 +40,11 @@ async function AddUser(Credentials) {
         .db("Gehazik")
         .collection("Users")
         .insertOne({
-          name: Credentials.Name,
-          email: Credentials.Email,
-          pass: Credentials.Password,
-          uservarified: false,
-          varificationcode: x,
+          Name: Credentials.Name,
+          Email: Credentials.Email,
+          Pass: Credentials.Password,
+          UserVarified: false,
+          VarificationCode: x,
           Date: new Date(),
           Token:NewToken,
           Governorate:Credentials.Governorate,
@@ -61,12 +61,12 @@ async function AddUser(Credentials) {
           console.log(err);
           return "Connection error";
         });
-      // next we search for user by email in database to return the user full data to client
+      // next we search for user by Email in database to return the user full data to client
       if (res.acknowledged === true) {
         const user = await client
           .db("Gehazik")
           .collection("Users")
-          .findOne({ email: Credentials.Email })
+          .findOne({ Email: Credentials.Email })
           .then((res) => {
             if (res === null) {
               return "User Not Found";
@@ -78,7 +78,7 @@ async function AddUser(Credentials) {
             return "Connection error";
           });
         if (user !== "User Not Found" || user !== "Connection error") {
-          const varification = await Uservarification(user.email,user.pass)
+          const varification = await Uservarification(user.Email,user.Pass)
             .then((res) => {
               console.log("AddUser file 4");
               console.log(res);
