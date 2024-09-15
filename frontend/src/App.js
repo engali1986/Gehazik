@@ -485,13 +485,13 @@ const AddOrder=(Order)=>{
       console.log("navBarBig");
       document.getElementsByClassName("MainBage")[0].style.marginTop =
         document.getElementsByClassName("NavBarBig")[0].getBoundingClientRect()
-          .bottom + "px";
+          .height+5 + "px";
     } else {
       console.log("navBarsmall");
       document.getElementsByClassName("MainBage")[0].style.marginTop =
         document
           .getElementsByClassName("NavBarSmall")[0]
-          .getBoundingClientRect().bottom + "px";
+          .getBoundingClientRect().height+5 + "px";
     }
   };
   useEffect(() => {
@@ -501,15 +501,17 @@ const AddOrder=(Order)=>{
 const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrapBundle.Tooltip(tooltipTriggerEl))
     if (window.innerWidth >= 768) {
       console.log("navBarBig");
+      console.log(document.getElementsByClassName("NavBarBig")[0].getBoundingClientRect()
+      .bottom)
       document.getElementsByClassName("MainBage")[0].style.marginTop =
         document.getElementsByClassName("NavBarBig")[0].getBoundingClientRect()
-          .bottom + "px";
+          .height+5 + "px";
     } else {
       console.log("navBarsmall");
       document.getElementsByClassName("MainBage")[0].style.marginTop =
         document
           .getElementsByClassName("NavBarSmall")[0]
-          .getBoundingClientRect().bottom + "px";
+          .getBoundingClientRect().height+5 + "px";
     }
     
     // return () => {

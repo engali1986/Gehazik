@@ -15,52 +15,60 @@ const ProductDetails = ({ GlobalState,AddToCart }) => {
     
     SetLoader(true);
     const GetProductDetails = async (ProductID) => {
-      const Productdetails = await fetch(
-        "http://localhost:5000/Users/GetProductDetails",
-        {
-          method: "post",
-          body: JSON.stringify({ Data: ProductID }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-          mode: "cors",
-        }
-      )
-        .then((res) => {
-          return res.json();
-        })
-        .catch((err) => {
-          console.log(err);
-          return { resp: "Connection error" };
-        });
-      console.log(Productdetails);
-      console.log(Productdetails.resp);
-      console.log(Productdetails.resp.resp);
-      if (typeof Productdetails.resp === "object") {
+      try {
+        const Productdetails = await fetch(
+          "http://localhost:5000/Users/GetProductDetails",
+          {
+            method: "post",
+            body: JSON.stringify({ Data: ProductID }),
+            headers: {
+              "Content-Type": "application/json",
+            },
+            mode: "cors",
+          }
+        )
+          .then((res) => {
+            return res.json();
+          })
+          .catch((err) => {
+            console.log(err);
+            return { resp: "Connection error" };
+          });
+        console.log(Productdetails);
         console.log(Productdetails.resp);
-        SetLoader(false);
-        prod = Productdetails.resp;
-        console.log(prod);
-        setProduct((Perv) => ({
-          ...Perv,
-          ProductImages: prod.ProductImagesIDs,
-          ProductTitle: prod.ProductTitle,
-          ProductUnitPrice: prod.ProductUnitPrice,
-          InStockQty: prod.InStockQty,
-          ProductAdditionalFeatures: prod.ProductAdditionalFeatures,
-          EgyptDelivery:prod.EgyptDelivery,
-          GovernorateDelivery:prod.GovernorateDelivery,
-          CityDelivery:prod.CityDelivery,
-          Governorate:prod.Governorate,
-          City:prod.City.split('\t')[0],
-          MerchantID:prod.MerchantID,
-          ID:prod._id
-        }));
-       
-        console.log(Product);
-      } else {
-        Navigate("/ProductNotFound");
+        console.log(Productdetails.resp.resp);
+        if (typeof Productdetails.resp === "object") {
+          console.log(Productdetails.resp);
+          SetLoader(false);
+          prod = Productdetails.resp;
+          console.log(prod);
+          setProduct((Perv) => ({
+            ...Perv,
+            ProductImages: prod.ProductImagesIDs,
+            ProductTitle: prod.ProductTitle,
+            ProductUnitPrice: prod.ProductUnitPrice,
+            InStockQty: prod.InStockQty,
+            ProductAdditionalFeatures: prod.ProductAdditionalFeatures,
+            EgyptDelivery:prod.EgyptDelivery,
+            GovernorateDelivery:prod.GovernorateDelivery,
+            CityDelivery:prod.CityDelivery,
+            Governorate:prod.Governorate,
+            City:prod.City.split('\t')[0],
+            MerchantID:prod.MerchantID,
+            ID:prod._id
+          }));
+         
+          console.log(Product);
+        } else {
+          Navigate("/ProductNotFound");
+        }
+        
+      } catch (error) {
+        console.log(error)
+        toast.error("Please close google translate")
+        
       }
+      
     };
     GetProductDetails(params.id);
     if (GlobalState.UserLogged===false && GlobalState.Name.length===0) {
