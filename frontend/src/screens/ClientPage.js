@@ -7,15 +7,15 @@ const DtataDisplay=({globalState,setGlobal,Data})=>{
   const [Disabled, SetDisabled] = useState(false);
   const [ChangePasswordData,SetChangePasswordData]=useState({
     Name:globalState.Name,
-    Email:globalState.email,
+    Email:globalState.Email,
     Token:globalState.Token,
     OldPassword:"",
     NewPassword:"",
     ConfirmNewPassword:"",
-    User:globalState.Merchant===true?"Merchant":""
+    User:globalState.Client===true?"User":""
   })
  
-    if (Data==="Change Password") {
+    if (Data==="تغيير كلمة المرور"||Data==="Change Password") {
       return(
         <Container>
           <Row>
@@ -89,7 +89,7 @@ const DtataDisplay=({globalState,setGlobal,Data})=>{
                     e.target.disabled=false
                     e.target.innerText=Language==="ar"?"تاكيد":"confirm"
                   } else if(ChangePasswordData.ConfirmNewPassword!==ChangePasswordData.NewPassword) {
-                    toast.error("New Passwords Dosenot match")
+                    toast.error(Language==="ar"?"يجب مطابقه كلمه المرور الجديده مع اعادة ادخال كلمه المرور الجديده":"New Passwords Dosenot match")
                     e.target.disabled=false
                     e.target.innerText=Language==="ar"?"تاكيد":"confirm"
                   }else{
@@ -102,7 +102,7 @@ const DtataDisplay=({globalState,setGlobal,Data})=>{
                       RegTextVarify=true
                       }else{
                         RegTextVarify=false
-                       toast.error(Language==="ar"?"يجب ان تحتوي كلمه السر على حرف صغير وحرف كبير ورقم ولا تقل عن 8 احرف" : "New password shall be at least 8 characters, 1 lower case letter, 1 number and 1 uppercase letter", {autoClose:5000})
+                       toast.error(Language==="ar"?"يجب ان تحتوي كلمه المرور على حرف صغير وحرف كبير ورقم ولا تقل عن 8 احرف" : "New password shall be at least 8 characters, 1 lower case letter, 1 number and 1 uppercase letter", {autoClose:5000})
                        e.target.disabled=false
                        e.target.innerText=Language==="ar"?"تاكيد":"confirm"
                        break
@@ -112,7 +112,7 @@ const DtataDisplay=({globalState,setGlobal,Data})=>{
                     if (RegTextVarify===true) {
                       console.log("Pdate password")
                       const ChangePassword = await fetch(
-                        "http://localhost:5000/Merchants/ChangePassword",
+                        "http://localhost:5000/Users/ChangePassword",
                         {
                           method: "post",
                           body: JSON.stringify(ChangePasswordData),
@@ -131,7 +131,7 @@ const DtataDisplay=({globalState,setGlobal,Data})=>{
                         console.log(ChangePassword)
                         if (typeof ChangePassword==="object" && ChangePassword.resp && typeof ChangePassword.resp==="string") {
                           if (ChangePassword.resp==="Password Updated successfully") {
-                            toast.success(Language==="ar"?"تم تغيير كلمه السر بنجاح":ChangePassword.resp)
+                            toast.success(Language==="ar"?"تم تغيير كلمه المرور بنجاح":ChangePassword.resp)
                             e.target.disabled=false
                             e.target.innerText=Language==="ar"?"تاكيد":"confirm"
 
@@ -144,21 +144,22 @@ const DtataDisplay=({globalState,setGlobal,Data})=>{
                           }
                           
                         } else {
-                          toast.error("Password Not Updated")
+                          toast.error(Language==="ar"?"لم يتم تغيير كلمه المرور":"Password Not Updated")
                        e.target.disabled=false
                        e.target.innerText=Language==="ar"?"تاكيد":"confirm"
                           
                         }
                       
                     } else {
-                      toast.error(Language==="ar"?"يجب ان تحتوي كلمه السر على حرف صغير وحرف كبير ورقم ولا تقل عن 8 احرف" : "New password shall be at least 8 characters, 1 lower case letter, 1 number and 1 uppercase letter", {autoClose:5000})
+                      toast.error(Language==="ar"?"يجب ان تحتوي كلمه المرور على حرف صغير وحرف كبير ورقم ولا تقل عن 8 احرف" : "New password shall be at least 8 characters, 1 lower case letter, 1 number and 1 uppercase letter", {autoClose:5000})
                        e.target.disabled=false
                        e.target.innerText=Language==="ar"?"تاكيد":"confirm"
                       
                     }
                   }
                 } catch (error) {
-                  toast.error("Internal Error")
+                  console.log(error)
+                  toast.error(Language==="ar"?"خطا داخلي":"Internal Error")
                   e.target.disabled=false
                   e.target.innerText=Language==="ar"?"تاكيد":"confirm"
                 }
@@ -169,7 +170,7 @@ const DtataDisplay=({globalState,setGlobal,Data})=>{
           </Row>
         </Container>
       )
-    } else if(Data==="LogOut") {
+    } else if(Data==="تسجيل الخروج"|| Data==="LogOut") {
       return(
         <Container>
           <Row>
@@ -177,7 +178,7 @@ const DtataDisplay=({globalState,setGlobal,Data})=>{
           </Row>
         </Container>
       )     
-    }else if(Data==="New Orders") {
+    }else if(Data==="الطلبات الجديده"|| Data==="New Orders") {
       return(
         <Container>
           <Row>
@@ -185,7 +186,7 @@ const DtataDisplay=({globalState,setGlobal,Data})=>{
           </Row>
         </Container>
       )     
-    }else if(Data==="All Orders") {
+    }else if(Data==="جميع الطلبات"|| Data==="All Orders") {
       return(
         <Container>
           <Row>
@@ -197,20 +198,21 @@ const DtataDisplay=({globalState,setGlobal,Data})=>{
       return(
         <Container>
           <Row>
-          <h3>Please select option</h3>
+          <h3>{Language==="ar"?"برجاء تحديد اختيار":"Please select option"}</h3>
           </Row>
         </Container>
       )     
     }
   }
 const ClientPage = ({globalState,setGlobal}) => {
+  const {Language,Togglelanguage}=useContext(LanguageContext)
   const [Data, SetData] = useState(""); // this state will be used to store the selected menu items to display data
   return (
     <Container>
       {/* This will be the head of page */}
       <Row>
         <h2>
-          Dashboard
+          {Language==="ar"?"لوحه التحكم":"Dashboard"}
         </h2>
       </Row>
       {/* This will be page body */}
@@ -219,7 +221,7 @@ const ClientPage = ({globalState,setGlobal}) => {
         <Col xs={12} md={2}>
         <Dropdown className=' d-inline-block w-100 my-2' size={{xs:"lg",md:"sm"}}>
       <Dropdown.Toggle className=' d-inline-block w-100 text-start ps-0' variant="success" id="dropdown-basic">
-        Profile
+        {Language==="ar"?"الصفحه الشخصيه":"Profile"}
       </Dropdown.Toggle>
 
       <Dropdown.Menu className=' w-100'>
@@ -228,18 +230,18 @@ const ClientPage = ({globalState,setGlobal}) => {
           e.stopPropagation()
           SetData(e.target.innerText)
           e.target.parentElement.parentElement.children[0].click()
-        }}>Change Password</Dropdown.Item>
+        }}>{Language==="ar"?"تغيير كلمة المرور":"Change Password"}</Dropdown.Item>
         <Dropdown.Item as={Button}
         onClick={(e)=>{
           e.stopPropagation()
           SetData(e.target.innerText)
           e.target.parentElement.parentElement.children[0].click()
-        }}>LogOut</Dropdown.Item>
+        }}>{Language==="ar"?"تسجيل الخروج":"LogOut"}</Dropdown.Item>
       </Dropdown.Menu>
         </Dropdown>
         <Dropdown className=' d-inline-block w-100 my-2' size={{xs:"lg",md:"sm"}}>
       <Dropdown.Toggle className=' d-inline-block w-100 text-start ps-0' variant="success" id="dropdown-basic">
-        Orders
+        {Language==="ar"?"طلبات الشراء":"Orders"}
       </Dropdown.Toggle>
 
       <Dropdown.Menu className=' w-100'>
@@ -248,13 +250,13 @@ const ClientPage = ({globalState,setGlobal}) => {
           e.stopPropagation()
           SetData(e.target.innerText)
           e.target.parentElement.parentElement.children[0].click()
-        }}>New Orders</Dropdown.Item>
+        }}>{Language==="ar"?"الطلبات الجديده":"New Orders"}</Dropdown.Item>
         <Dropdown.Item as={Button}
         onClick={(e)=>{
           e.stopPropagation()
           SetData(e.target.innerText)
           e.target.parentElement.parentElement.children[0].click()
-        }}>All Orders</Dropdown.Item>
+        }}>{Language==="ar"?"جميع الطلبات":"All Orders"}</Dropdown.Item>
       </Dropdown.Menu>
         </Dropdown>
     

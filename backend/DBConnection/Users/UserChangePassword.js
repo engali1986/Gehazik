@@ -1,21 +1,21 @@
 import { MongoClient } from "mongodb";
-//  This will get All Orders for Merchant 
+//  This will get All Orders for User 
 const uri =
   "mongodb+srv://engaligulf:Cossacks%401@cluster0.fj9bpe7.mongodb.net/?maxIdleTimeMS=5000";
 const client = new MongoClient(uri);
-const MerchantChangePassword= async (Passworddata,MerchantData)=>{
+const UserChangePassword= async (Passworddata,UserData)=>{
     try {
-        console.log("MerchantPasswordChange file 0")
-        console.log(Passworddata.OldPassword===MerchantData.Pass)
-        if (Passworddata.OldPassword===MerchantData.Pass) {
+        console.log("UserPasswordChange file 0")
+        console.log(Passworddata.OldPassword===UserData.Pass)
+        if (Passworddata.OldPassword===UserData.Pass) {
             const ChangePassword=await client
             .db("Gehazik")
-            .collection("Merchants").updateOne({Email:MerchantData.Email,Name:MerchantData.Name},{$set:{Pass:Passworddata.NewPassword}}).then(res=>{
-                console.log("MerchantPasswordChange file 1")
+            .collection("Users").updateOne({Email:UserData.Email,Name:UserData.Name},{$set:{Pass:Passworddata.NewPassword}}).then(res=>{
+                console.log("UserPasswordChange file 1")
                 console.log(res)
                 return res
             }).catch(err=>{
-                console.log("MerchantPasswordChange file 2 err")
+                console.log("UserPasswordChange file 2 err")
                 console.log(err)
                 return "Connection Error"
             })
@@ -37,4 +37,4 @@ const MerchantChangePassword= async (Passworddata,MerchantData)=>{
     }
 }
 
-export default MerchantChangePassword
+export default UserChangePassword

@@ -31,6 +31,7 @@ import http from "http"
 import MerchantOrders from "./DBConnection/Merchants/MerchantOrders.js";
 import { type } from "os";
 import MerchantChangePassword from "./DBConnection/Merchants/MerchantChangePassword.js";
+import UserChangePassword from "./DBConnection/Users/UserChangePassword.js";
 const require = createRequire(import.meta.url);
 const socketIo = require('socket.io');
 // const ServiceAccountKey = require("./API keys/ServiceAccountKey.json");
@@ -163,6 +164,33 @@ app.post("/PasswordRecovery", async (req, res) => {
     res.json({ resp: "User Not Found" });
   }
 });
+app.post("/Users/ChangePassword",async(req,res)=>{
+  try {
+    console.log("server/Users Changepassword 0")
+    const PasswordData=await req.body
+    console.log(PasswordData)
+    if (PasswordData.User==="User") {
+      // First we varify User login
+      const VarifyData={Name:PasswordData.Name,Email:PasswordData.Email,Token:PasswordData.Token}
+      const UserVarify=await CheckUser(VarifyData)
+      console.log("server/Users Changepassword 1 UserVarify result")
+      console.log(UserVarify)
+      if (typeof UserVarify==="object" && UserVarify._id) {
+        const ChangePassword=await UserChangePassword(PasswordData,UserVarify)
+        console.log("server/Users Changepassword 2 ChangePassword result")
+        console.log(ChangePassword)
+        res.json({resp:ChangePassword})
+      } else {
+        res.json({resp:"Connection Error"})
+      }
+    } else {
+      res.json({resp:"Please LogIn as User"})
+    }
+  } catch (error) {
+    console.log*error
+    res.json({resp:"Connection Error"})
+  }
+})
 // user routes end
 // Admin routes start
 app.post("/AdminLogIn", async (req, res) => {

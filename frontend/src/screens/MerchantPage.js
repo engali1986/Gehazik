@@ -328,7 +328,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                     e.target.disabled=false
                     e.target.innerText=Language==="ar"?"تاكيد":"confirm"
                   } else if(ChangePasswordData.ConfirmNewPassword!==ChangePasswordData.NewPassword) {
-                    toast.error("New Passwords Dosenot match")
+                    toast.error(Language==="ar"?"يجب مطابقه كلمه المرور الجديده مع اعادة ادخال كلمه المرور الجديده":"New Passwords Dosenot match")
                     e.target.disabled=false
                     e.target.innerText=Language==="ar"?"تاكيد":"confirm"
                   }else{
@@ -341,7 +341,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                       RegTextVarify=true
                       }else{
                         RegTextVarify=false
-                       toast.error(Language==="ar"?"يجب ان تحتوي كلمه السر على حرف صغير وحرف كبير ورقم ولا تقل عن 8 احرف" : "New password shall be at least 8 characters, 1 lower case letter, 1 number and 1 uppercase letter", {autoClose:5000})
+                       toast.error(Language==="ar"?"يجب ان تحتوي كلمه المرور على حرف صغير وحرف كبير ورقم ولا تقل عن 8 احرف" : "New password shall be at least 8 characters, 1 lower case letter, 1 number and 1 uppercase letter", {autoClose:5000})
                        e.target.disabled=false
                        e.target.innerText=Language==="ar"?"تاكيد":"confirm"
                        break
@@ -370,7 +370,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                         console.log(ChangePassword)
                         if (typeof ChangePassword==="object" && ChangePassword.resp && typeof ChangePassword.resp==="string") {
                           if (ChangePassword.resp==="Password Updated successfully") {
-                            toast.success(Language==="ar"?"تم تغيير كلمه السر بنجاح":ChangePassword.resp)
+                            toast.success(Language==="ar"?"تم تغيير كلمه المرور بنجاح":ChangePassword.resp)
                             e.target.disabled=false
                             e.target.innerText=Language==="ar"?"تاكيد":"confirm"
 
@@ -390,7 +390,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                         }
                       
                     } else {
-                      toast.error(Language==="ar"?"يجب ان تحتوي كلمه السر على حرف صغير وحرف كبير ورقم ولا تقل عن 8 احرف" : "New password shall be at least 8 characters, 1 lower case letter, 1 number and 1 uppercase letter", {autoClose:5000})
+                      toast.error(Language==="ar"?"يجب ان تحتوي كلمه المرور على حرف صغير وحرف كبير ورقم ولا تقل عن 8 احرف" : "New password shall be at least 8 characters, 1 lower case letter, 1 number and 1 uppercase letter", {autoClose:5000})
                        e.target.disabled=false
                        e.target.innerText=Language==="ar"?"تاكيد":"confirm"
                       

@@ -14,7 +14,7 @@ const CheckUser=async(UserData)=>{
         const User=await client
         .db("Gehazik")
         .collection("Users")
-        .findOne({email:UserData.Email,Token:UserData.Token}).then((res=>{
+        .findOne({Email:UserData.Email,Token:UserData.Token}).then((res=>{
             return res
         })).catch(err=>{
             console.log("CheckUserFile 2 Error")
