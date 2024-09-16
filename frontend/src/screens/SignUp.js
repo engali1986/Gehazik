@@ -1,10 +1,12 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState,useContext } from "react";
 import { json, useNavigate } from "react-router-dom";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import StaticData from "../Data/StaticData";
 import { toast } from "react-toastify";
+import { LanguageContext } from "../Context/LanguageContext";
 const SignUp = ({ globalState, setGlobal }) => {
+  const {Language} = useContext(LanguageContext)
   const [Disabled, setDisabled] = useState(false); // this will be used to disable all fields edit after signup button pressed
   const [SignUpBtn, setButton] = useState(true); // Signup button disabled attrebute
   const [ConfirmPassword, setConfirmPassword] = useState(true); // true if password matches password requirements
@@ -149,7 +151,7 @@ const SignUp = ({ globalState, setGlobal }) => {
       PasswordCheckState === false
     ) {
       PassmatchAlert.current.classList.replace("alert-success", "alert-danger");
-      PassmatchAlert.current.innerText = "Password mismatch";
+      PassmatchAlert.current.innerText =Language==="ar"?"كلمة المرور واعاده كلمه المرور غير متطابقه ":"Password mismatch";
       setPasswordmatch(false);
       console.log("Password mismatch");
     } else {
@@ -161,7 +163,7 @@ const SignUp = ({ globalState, setGlobal }) => {
           "alert-danger",
           "alert-success"
         );
-        PassmatchAlert.current.innerText = "Password match";
+        PassmatchAlert.current.innerText = Language==="ar"?"كلمه المرور متطابقه ":"Password match";
         setPasswordmatch(true);
         setButton(false);
       } else {
@@ -169,7 +171,7 @@ const SignUp = ({ globalState, setGlobal }) => {
           "alert-success",
           "alert-danger"
         );
-        PassmatchAlert.current.innerText = "Password mismatch";
+        PassmatchAlert.current.innerText = Language==="ar"?"كلمة المرور واعاده كلمه المرور غير متطابقه ":"Password mismatch";
         setPasswordmatch(false);
         console.log("Password mismatch");
       }
@@ -208,7 +210,7 @@ const SignUp = ({ globalState, setGlobal }) => {
           "alert-danger"
         );
         PassmatchAlert.current.innerText =
-          "Name/Email/Password cannot contain spaces  or arabic alphabit";
+          Language==="ar"?"الاسم والايميل وكلمه المرور لايمكن ان تحتوي على احرف عربيه ":"Name/Email/Password cannot contain spaces  or arabic alphabit";
         PassmatchAlert.current.style.maxHeight = "500px";
         setButton(false);
         setConfirmPassword(false);
@@ -246,7 +248,7 @@ const SignUp = ({ globalState, setGlobal }) => {
             "alert-danger",
             "alert-success"
           );
-          PassmatchAlert.current.innerText = "Sign Up please wait";
+          PassmatchAlert.current.innerText =Language==="ar"?"جاري انشاء الحساب برجاء الانتظار ":"Sign Up please wait";
           PassmatchAlert.current.style.maxHeight = "500px";
           const AddUser = await fetch(
             "http://localhost:5000/AddUser",
@@ -275,7 +277,7 @@ const SignUp = ({ globalState, setGlobal }) => {
               "alert-success"
             );
             PassmatchAlert.current.innerText =
-              AddUser.resp.Name +
+              AddUser.resp.Name +Language==="ar"?"تم انشاء الحساب بنجاح وتم ارسال بريدالكتروني بكود التفعيل ضعه بالاسفل ":
               " Added successfully an email has been sent to your email address with varification code Please enter varification code below";
             PassmatchAlert.current.style.maxHeight = "500px";
             varificationCodeRef.current.style.display = "flex";
@@ -300,7 +302,7 @@ const SignUp = ({ globalState, setGlobal }) => {
             "alert-success",
             "alert-danger"
           );
-          PassmatchAlert.current.innerText = "Email/Password not correct";
+          PassmatchAlert.current.innerText =Language==="ar"?"البريد الالكتروني / كلمه المرور غير صحيحه":"Email/Password not correct";
           PassmatchAlert.current.style.maxHeight = "500px";
           setButton(false);
           setConfirmPassword(false);
@@ -309,7 +311,7 @@ const SignUp = ({ globalState, setGlobal }) => {
       }
     } else {
       PassmatchAlert.current.classList.replace("alert-success", "alert-danger");
-      PassmatchAlert.current.innerText = "Please complete/check all fields";
+      PassmatchAlert.current.innerText =Language==="ar"?"برجاء ملئ كافه الحقول ":"Please complete/check all fields";
       PassmatchAlert.current.style.maxHeight = "500px";
       setButton(false);
       setConfirmPassword(false);
@@ -349,20 +351,20 @@ console.log(UserVarified)
     if (UserVarified.resp.Email && UserVarified.resp.UserVarified === true) {
       setGlobal(UserVarified.resp.Name, true, UserVarified.resp.Email, false, true, false, UserVarified.resp.Token,UserVarified.resp.Governorate,UserVarified.resp.City);
       PassmatchAlert.current.classList.replace("alert-danger", "alert-success");
-      PassmatchAlert.current.innerText = "User Logged in successfully";
+      PassmatchAlert.current.innerText = Language==="ar"?"تم تسجيل الدخول بنجاح ":"User Logged in successfully";
       PassmatchAlert.current.style.maxHeight = "500px";
     } else if (
       UserVarified.resp.Email &&
       UserVarified.resp.UserVarified === false
     ) {
       PassmatchAlert.current.classList.replace("alert-danger", "alert-success");
-      PassmatchAlert.current.innerText = "Varification code sent by email";
+      PassmatchAlert.current.innerText =Language==="ar"?"تم ارسال كود التفعيل عبر البريد الالكتروني ":"Varification code sent by email";
       PassmatchAlert.current.style.maxHeight = "500px";
       varificationCodeRef.current.style.display = "flex";
       setDisabled(false);
     } else {
       PassmatchAlert.current.classList.replace("alert-success", "alert-danger");
-      PassmatchAlert.current.innerText = "Varification code sent by email";
+      PassmatchAlert.current.innerText = Language==="ar"?"تم ارسال كود التفعيل عبر البريد الالكتروني ":"Varification code sent by email";
       PassmatchAlert.current.style.maxHeight = "500px";
       setDisabled(false);
     }
@@ -382,7 +384,7 @@ console.log(UserVarified)
       }}
     >
       <label htmlFor="name">
-        <b>Name</b>
+        <b>{Language==="ar"?"الاسم ":"Name"}</b>
       </label>
       <input
         type="text"
@@ -395,7 +397,7 @@ console.log(UserVarified)
         required
       />
       <label htmlFor="email">
-        <b>E-mail</b>
+        <b>{Language==="ar"?"البريد الالكتروني ":"Email"}</b>
       </label>
       <input
         type="text"
@@ -408,7 +410,7 @@ console.log(UserVarified)
      <Row>
       <Col className=" d-flex flex-column my-3" xs={12} md={6}>
       <div >
-        Please select your Governorate
+        {Language==="ar"?"برجاء تحديد محافظتك ":"Please select your Governorate"}
       </div>
       <select onChange={(e)=>{
         if (e.target.value==="Please select Governorate") {
@@ -428,7 +430,7 @@ console.log(UserVarified)
       </Col>
       <Col className=" d-flex flex-column my-3" xs={12} md={6}>
       <div>
-        Please select your City
+        {Language==="ar"?"برجاء تحديد مدينتك ":"Please select your City"}
       </div>
       <select onChange={(e)=>{
         if (e.target.value==="Please select a City") {
@@ -450,7 +452,7 @@ console.log(UserVarified)
       </Col>
      </Row>
       <label htmlFor="psw">
-        <b>Password</b>
+        <b>{Language==="ar"?"كلمة المرور ":"Password"}</b>
       </label>
       <input
         ref={PasswordValue}
@@ -473,23 +475,23 @@ console.log(UserVarified)
           style={{ wordWrap: "break-word" }}
           role="alert"
         >
-          <h3>Password must contain the following:</h3>
+          <h3>{Language==="ar"?"يجب ان تحتوي كلمة المرور على الاتي: ":"Password must contain the following:"}</h3>
           <p id="letter" className="PassInvalid">
-            A <b>lowercase</b> letter
+            <b>{Language==="ar"?"حرف ابجدي صغير ":"A Lowercase letter"}</b> 
           </p>
           <p id="capital" className="PassInvalid">
-            A <b>capital (uppercase)</b> letter
+          <b>{Language==="ar"?"حرف ابجدي كبير ":"A Uppercase letter"}</b> 
           </p>
           <p id="number" className="PassInvalid">
-            A <b>number</b>
+          <b>{Language==="ar"?"رقم ":"A Number"}</b> 
           </p>
           <p id="length" className="PassInvalid">
-            Minimum <b>8 characters</b>
+          <b>{Language==="ar"?"يتكون من 8 احرف ":"8 characters"}</b> 
           </p>
         </div>
       </div>
       <label htmlFor="confirmpsw">
-        <b>Confirm Password</b>
+        <b>{Language==="ar"?"تاكيد كلمه المرور ":"Confirm password"}</b>
       </label>
       <div className="d-block" style={{ boxSizing: "border-box" }}>
         <input
@@ -542,7 +544,7 @@ console.log(UserVarified)
               style={{ height: "50px", margin: "0", width: "100%" }}
               onClick={() => VarifyEmail()}
             >
-              Varify
+              {Language==="ar"?"تحقق ":"Varify"}
             </button>
           </Col>
         </Row>
@@ -552,10 +554,10 @@ console.log(UserVarified)
         disabled={SignUpBtn}
         onClick={() => SignUpSubmit()}
       >
-        SignUp
+        {Language==="ar"?"انشاء حساب ":"Sign Up"}
       </button>
       <span className="psw">
-        have account{" "}
+        {Language==="ar"?"لديك حساب ":"Have account "}
         <span
           style={{
             color: "blue",
@@ -566,7 +568,7 @@ console.log(UserVarified)
             navigate("/LogIn");
           }}
         >
-          LogIn
+          {Language==="ar"?"تسجيل الدخول ":"LogIn "}
         </span>
       </span>
     </div>

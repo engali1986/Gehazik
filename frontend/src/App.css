@@ -126,20 +126,20 @@ span.psw {
 .PassValid {
   color: green;
 }
-.PassValid:before {
+/* .PassValid:before {
   position: relative;
   left: -35px;
   content: "\2713";
-}
+} */
 /* Add a red text color and an "x" icon to make this icon use utf-8 hex code and put\before the hex code when the requirements are wrong */
 .PassInvalid {
   color: red;
 }
-.PassInvalid:before {
+/* .PassInvalid:before {
   position: relative;
   left: -35px;
   content: "\2715";
-}
+} */
 .SignUpButton {
   background-color: #04aa6d;
   color: white;

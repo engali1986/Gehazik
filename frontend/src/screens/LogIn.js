@@ -80,7 +80,7 @@ const LogIn = ({ globalState, setGlobal }) => {
     Alert.current.style.maxHeight = "0px";
     if (Credentials.Email.length > 0 && Credentials.Password.length > 0) {
       setDisabled(true);
-      LoginButtonRef.current.innerText =Language==="ar"?"جاري تسجيل الدخول برجاء الانتظار ":"Loggin please wait";
+      LoginButtonRef.current.innerText =Language==="ar"?"جاري تسجيل الدخول برجاء الانتظار ":"Login please wait";
       console.log("Submitted");
       const UserLogIn = await fetch(
         "http://localhost:5000/LogInUser",

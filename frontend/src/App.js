@@ -485,13 +485,13 @@ const AddOrder=(Order)=>{
       console.log("navBarBig");
       document.getElementsByClassName("MainBage")[0].style.marginTop =
         document.getElementsByClassName("NavBarBig")[0].getBoundingClientRect()
-          .height+5 + "px";
+          .bottom + "px";
     } else {
       console.log("navBarsmall");
       document.getElementsByClassName("MainBage")[0].style.marginTop =
         document
           .getElementsByClassName("NavBarSmall")[0]
-          .getBoundingClientRect().height+5 + "px";
+          .getBoundingClientRect().bottom + "px";
     }
   };
   useEffect(() => {
@@ -505,13 +505,13 @@ const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstra
       .bottom)
       document.getElementsByClassName("MainBage")[0].style.marginTop =
         document.getElementsByClassName("NavBarBig")[0].getBoundingClientRect()
-          .height+5 + "px";
+          .bottom + "px";
     } else {
       console.log("navBarsmall");
       document.getElementsByClassName("MainBage")[0].style.marginTop =
         document
           .getElementsByClassName("NavBarSmall")[0]
-          .getBoundingClientRect().height+5 + "px";
+          .getBoundingClientRect().bottom + "px";
     }
     
     // return () => {
@@ -565,7 +565,7 @@ hideProgressBar />
         >
           <Col xs={12}
             className="fixed-top" 
-            style={{top:'50px'}}
+            style={{top:'0px'}}
             onClick={(e) => {
               e.stopPropagation();
               console.log("nav clicked");
