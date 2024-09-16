@@ -42,7 +42,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
   const DtataDisplay = () => {
     const [ChangePasswordData,SetChangePasswordData]=useState({
       Name:globalState.Name,
-      Email:globalState.email,
+      Email:globalState.Email,
       Token:globalState.Token,
       OldPassword:"",
       NewPassword:"",
@@ -66,7 +66,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
       ProductAdditionalFeatures: [],
       Token: globalState.Token,
       Name: globalState.Name,
-      Email: globalState.email,
+      Email: globalState.Email,
       EgyptDelivery:false,
       GovernorateDelivery:false,
       CityDelivery:false
@@ -725,7 +725,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                   e.target.innerText = "Please wait";
                   const MerchantCredentials = {
                     Name: globalState.Name,
-                    Email: globalState.email,
+                    Email: globalState.Email,
                     Token: globalState.Token,
                   };
                   const UploadProductListData = {
@@ -1539,7 +1539,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                       if (Orders.length===0) {
                         toast.info("Please wait while we get Your Orders")
                         const MerchantCredentials={
-                          Email:globalState.email,
+                          Email:globalState.Email,
                           Name:globalState.Name,
                           Token:globalState.Token
                         }
@@ -1602,7 +1602,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                       if (Orders.length===0) {
                         toast.info("Please wait while we get Your Orders")
                         const MerchantCredentials={
-                          Email:globalState.email,
+                          Email:globalState.Email,
                           Name:globalState.Name,
                           Token:globalState.Token
                         }
@@ -1710,7 +1710,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                     console.log(globalState);
                     const ProductsListCredentials = {
                       Name: globalState.Name,
-                      Email: globalState.email,
+                      Email: globalState.Email,
                       Token: globalState.Token,
                     };
                     console.log(ProductsListCredentials);
@@ -1855,7 +1855,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                       if (AllPayments.length===0) {
                         toast.info("Please wait while we get Your Orders")
                         const MerchantCredentials={
-                          Email:globalState.email,
+                          Email:globalState.Email,
                           Name:globalState.Name,
                           Token:globalState.Token
                         }
@@ -1917,7 +1917,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                         if (AllPayments.length===0) {
                           toast.info("Please wait while we get Your Orders")
                           const MerchantCredentials={
-                            Email:globalState.email,
+                            Email:globalState.Email,
                             Name:globalState.Name,
                             Token:globalState.Token
                           }

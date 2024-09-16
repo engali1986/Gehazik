@@ -41,7 +41,7 @@ const UserCheckOutPage = ({GlobalState, UpdateCart}) => {
     }
     if (DataChicked===true && GlobalState.Order.OrderDetails.length>0 && GlobalState.Order.OrderValue>0 && GlobalState.Order.OrderConfirmed===false) {
       console.log(GlobalState)
-      let OrderData={...GlobalState.Order,OrderConfirmed:true,Address:ShippingData,ClientName:GlobalState.Name,ClientPhone:ShippingData.Phone,ClientEmail:GlobalState.email,ClientToken:GlobalState.Token}
+      let OrderData={...GlobalState.Order,OrderConfirmed:true,Address:ShippingData,ClientName:GlobalState.Name,ClientPhone:ShippingData.Phone,ClientEmail:GlobalState.Email,ClientToken:GlobalState.Token}
      
       console.log(OrderData)
       const AddOrder=await fetch(

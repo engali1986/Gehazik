@@ -32,6 +32,7 @@ import MerchantOrders from "./DBConnection/Merchants/MerchantOrders.js";
 import { type } from "os";
 import MerchantChangePassword from "./DBConnection/Merchants/MerchantChangePassword.js";
 import UserChangePassword from "./DBConnection/Users/UserChangePassword.js";
+import UserOrders from "./DBConnection/Users/UserOrders.js";
 const require = createRequire(import.meta.url);
 const socketIo = require('socket.io');
 // const ServiceAccountKey = require("./API keys/ServiceAccountKey.json");
@@ -188,6 +189,29 @@ app.post("/Users/ChangePassword",async(req,res)=>{
     }
   } catch (error) {
     console.log*error
+    res.json({resp:"Connection Error"})
+  }
+})
+app.post("/Users/OrdersList",async(req,res)=>{
+  try {
+    console.log("server/UserOrdersList 0 ");
+    const UserCredentials = await req.body;
+    console.log(UserCredentials);
+    const UserCheck = await CheckUser(UserCredentials);
+    console.log("server/UserOrdersList 1 ");
+    console.log(UserCheck);
+    if (UserCheck._id) {
+      const GetUserOrders=await UserOrders(UserCheck)
+      if (Array.isArray(GetUserOrders)) {
+        res.json({resp:GetUserOrders})
+      } else {
+        res.json({resp:GetUserOrders})
+      }
+    } else {
+      res.json({resp:"No Orders Found"})
+    }
+  } catch (error) {
+    console.log(error)
     res.json({resp:"Connection Error"})
   }
 })
