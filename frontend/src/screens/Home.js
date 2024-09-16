@@ -59,7 +59,7 @@ const Home = (params) => {
             console.log("Login/Signup clicked");
           }}
         >
-          <a style={{textDecoration:'none', color:'black'}} href={`/Clients/${params.GlobalState.Name}`}> Hi,{params.GlobalState.Name}</a>
+          <a style={{textDecoration:'none', color:'black'}} href={`/Clients/${params.GlobalState.Name}`}>{Language==="ar"?`مرحبا ${params.GlobalState.Name}`:`Hi ${params.GlobalState.Name}`}</a>
         </div>
         </>
       );
@@ -114,7 +114,7 @@ const Home = (params) => {
               console.log("Login/Signup clicked");
             }}
           >
-            LogIn/SignUp
+            {Language==="ar"?"تسجيل الدخول/ مستخدم جديد":"LogIn/SignUp"}
             <a className="LogIn" href="/LogIn"></a>
           </div>
         </div>
@@ -253,7 +253,7 @@ const Home = (params) => {
               console.log(e.target);
             }}
           >
-            categories
+            {Language==="ar"?"جميع الاقسام":"categories"}
           </div>
           <div
             className="SearchBar d-flex"
