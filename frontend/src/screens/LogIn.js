@@ -1,8 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState,useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
+import { LanguageContext } from "../Context/LanguageContext.js";
 const LogIn = ({ globalState, setGlobal }) => {
+  const {Language}=useContext(LanguageContext)
   const navigate = useNavigate();
   const Email = useRef();
   const Password = useRef();
@@ -49,20 +51,21 @@ const LogIn = ({ globalState, setGlobal }) => {
         false, UserVarified.resp.Token,UserVarified.resp.Governorate,UserVarified.resp.City
       );
       Alert.current.classList.replace("alert-danger", "alert-success");
-      Alert.current.innerText = "User Logged in successfully";
+      Alert.current.innerText = Language==="ar"?"تم تسجيل الدخول بنجاح ":"User Logged in successfully";
       Alert.current.style.maxHeight = "500px";
+      navigate("/");
     } else if (
       UserVarified.resp.Email &&
       UserVarified.resp.UserVarified === false
     ) {
       Alert.current.classList.replace("alert-danger", "alert-success");
-      Alert.current.innerText = "Varification code sent by email";
+      Alert.current.innerText = Language==="ar"?"تم ارسال رمز التحقق عبر البريد الالكتروني ":"Varification code sent by email";
       Alert.current.style.maxHeight = "500px";
       VarificationCodeRef.current.style.display = "flex";
       setDisabled(false);
     } else {
       Alert.current.classList.replace("alert-success", "alert-danger");
-      Alert.current.innerText = "User Not Found";
+      Alert.current.innerText = Language==="ar"?"لم يتم العثور على المستخدم ":"User Not Found";
       Alert.current.style.maxHeight = "500px";
       setDisabled(false);
     }
@@ -77,7 +80,7 @@ const LogIn = ({ globalState, setGlobal }) => {
     Alert.current.style.maxHeight = "0px";
     if (Credentials.Email.length > 0 && Credentials.Password.length > 0) {
       setDisabled(true);
-      LoginButtonRef.current.innerText = "Loggin please wait";
+      LoginButtonRef.current.innerText =Language==="ar"?"جاري تسجيل الدخول برجاء الانتظار ":"Loggin please wait";
       console.log("Submitted");
       const UserLogIn = await fetch(
         "http://localhost:5000/LogInUser",
@@ -98,7 +101,7 @@ const LogIn = ({ globalState, setGlobal }) => {
         });
         console.log(UserLogIn)
       if (UserLogIn.resp) {
-        LoginButtonRef.current.innerText = "Login";
+        LoginButtonRef.current.innerText =Language==="ar"?"تسجيل الدخول ":"Login";
         if (typeof UserLogIn.resp === "object") {
           if (UserLogIn.resp.Email && UserLogIn.resp.UserVarified === true) {
             setGlobal(
@@ -111,31 +114,32 @@ const LogIn = ({ globalState, setGlobal }) => {
               UserLogIn.resp.Token,UserLogIn.resp.Governorate,UserLogIn.resp.City
             );
             Alert.current.classList.replace("alert-danger", "alert-success");
-            Alert.current.innerText = "User Logged in successfully";
+            Alert.current.innerText = Language==="ar"?"تم تسجيل الدخول بنجاح ":"User Logged in successfully";
             Alert.current.style.maxHeight = "500px";
+            navigate("/");
           } else if (
             UserLogIn.resp.Email &&
             UserLogIn.resp.UserVarified === false
           ) {
             Alert.current.classList.replace("alert-danger", "alert-success");
-            Alert.current.innerText = "Varification code sent by email";
+            Alert.current.innerText = Language==="ar"?"تم ارسال رمز التحقق عبر البريد الالكتروني ":"Varification code sent by email";
             Alert.current.style.maxHeight = "500px";
             VarificationCodeRef.current.style.display = "flex";
             setDisabled(false);
           } else {
             Alert.current.classList.replace("alert-success", "alert-danger");
-            Alert.current.innerText = "User Not Found";
+            Alert.current.innerText = Language==="ar"?"لم يتم العثور على المستخدم ":"User Not Found";
             Alert.current.style.maxHeight = "500px";
             setDisabled(false);
           }
         } else if (UserLogIn.resp === "Connection error") {
           Alert.current.classList.replace("alert-success", "alert-danger");
-          Alert.current.innerText = "Connection error";
+          Alert.current.innerText = Language==="ar"?"خطا بالاتصال ":"Connection error";
           Alert.current.style.maxHeight = "500px";
           setDisabled(false);
-        } else if (UserLogIn.resp === "Varification Code sent by email") {
+        } else if (UserLogIn.resp === "Varification code sent by email") {
           Alert.current.classList.replace("alert-success", "alert-danger");
-          Alert.current.innerText = "Varification Code sent by email";
+          Alert.current.innerText = Language==="ar"?"تم ارسال رمز التحقق عبر البريد الالكتروني ":"Varification code sent by email";
           Alert.current.style.maxHeight = "500px";
           VarificationCodeRef.current.style.display = "flex";
         } else if (UserLogIn.resp === "User varified") {
@@ -148,24 +152,25 @@ const LogIn = ({ globalState, setGlobal }) => {
             false,UserLogIn.resp.Token,UserLogIn.resp.Governorate,UserLogIn.resp.City
           );
           Alert.current.classList.replace("alert-danger", "alert-success");
-          Alert.current.innerText = "User Logged in successfully";
+          Alert.current.innerText = Language==="ar"?"تم تسجيل الدخول بنجاح ":"User Logged in successfully";
           Alert.current.style.maxHeight = "500px";
+          navigate("/");
           setDisabled(false);
         } else {
           Alert.current.classList.replace("alert-success", "alert-danger");
-          Alert.current.innerText = "User not found";
+          Alert.current.innerText = Language==="ar"?"لم يتم العثور على المستخدم ":"User Not Found";
           Alert.current.style.maxHeight = "500px";
           setDisabled(false);
         }
       } else {
         Alert.current.classList.replace("alert-success", "alert-danger");
-        Alert.current.innerText = "User Not Found";
+        Alert.current.innerText = Language==="ar"?"لم يتم العثور على المستخدم ":"User Not Found";
         Alert.current.style.maxHeight = "500px";
       }
     } else {
       setDisabled(false);
       Alert.current.classList.replace("alert-success", "alert-danger");
-      Alert.current.innerText = "Enter Email/Password";
+      Alert.current.innerText = Language==="ar"?"ادخل البريد الالكتروني /  كلمه المرور":"Enter Email/Password";
       Alert.current.style.maxHeight = "500px";
     }
   };
@@ -183,7 +188,7 @@ const LogIn = ({ globalState, setGlobal }) => {
       }}
     >
       <label htmlFor="Email">
-        <b>Email</b>
+        <b>{Language==="ar"?"البريد الالكتروني":"Email"}</b>
       </label>
       <input
         type="text"
@@ -194,7 +199,7 @@ const LogIn = ({ globalState, setGlobal }) => {
         disabled={Disabled}
       />
       <label htmlFor="psw">
-        <b>Password</b>
+        <b>{Language==="ar"?"كلمة المرور":"Password"}</b>
       </label>
       <input
         type="password"
@@ -224,7 +229,7 @@ const LogIn = ({ globalState, setGlobal }) => {
         disabled={Disabled}
         onClick={() => LogInSubmit()}
       >
-        Login
+        {Language==="ar"?"تسجيل الدخول":"Login"}
       </button>
       <Row ref={VarificationCodeRef} style={{ display: "none" }}>
         <Col xs={12} md={8}>
@@ -246,13 +251,13 @@ const LogIn = ({ globalState, setGlobal }) => {
             style={{ height: "50px", margin: "0", width: "100%" }}
             onClick={() => VarifyEmail()}
           >
-            Varify
+            {Language==="ar"?"تحقق":"Varify"}
           </button>
         </Col>
       </Row>
       <div style={{ textAlign: "start" }}>
         <span>
-          Don't have account{" "}
+          {Language==="ar"?" لا يوجد حساب ":"Don't have account "}
           <span
             style={{
               color: "blue",
@@ -263,14 +268,14 @@ const LogIn = ({ globalState, setGlobal }) => {
               navigate("/SignUp");
             }}
           >
-            SignUp
+            {Language==="ar"?"انشاء حساب جديد":"SignUp"}
           </span>
         </span>
       </div>
       <div style={{ textAlign: "start" }}>
         <span>
           {" "}
-          Forgot password{" "}
+          {Language==="ar"?"نسيت كلمه المرور ":"Forgot password "}
           <span
             style={{
               color: "blue",
@@ -281,7 +286,7 @@ const LogIn = ({ globalState, setGlobal }) => {
               navigate("/PasswordRecovery");
             }}
           >
-            Click here
+            {Language==="ar"?"اضغط هنا ":"Click here"}
           </span>
         </span>
       </div>
