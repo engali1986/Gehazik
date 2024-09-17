@@ -1,8 +1,10 @@
-import React, {useState,useEffect,useRef} from 'react'
+import React, {useState,useEffect,useRef, useContext} from 'react'
 import { Container,Row,Col } from 'react-bootstrap'
 import { toast } from 'react-toastify'
 import {useNavigate,useParams} from "react-router-dom"
+import { LanguageContext } from '../Context/LanguageContext' 
 const UserCheckOutPage = ({GlobalState, UpdateCart}) => {
+  const {Language}=useContext(LanguageContext)
   const Navigate=useNavigate()
   const Params=useParams()
   const Alert=useRef()
@@ -131,7 +133,7 @@ const UserCheckOutPage = ({GlobalState, UpdateCart}) => {
             
           }}
         >
-          Please wait
+          {Language==="ar"?"برجاء الانتظار ":"Please wait"}Please wait
         </div>
       </Row>
       {/* Page heading */}
@@ -154,28 +156,28 @@ const UserCheckOutPage = ({GlobalState, UpdateCart}) => {
         <input onChange={(e)=>{
           console.log(e.target.value)
           SetShippingData({...ShippingData,FirstName:e.target.value})
-        }} type="text"   className="form-control" id="inputFirstName" placeholder="First Name"></input>
+        }} type="text"   className="form-control" id="inputFirstName" placeholder={Language==="ar"?"الاسم الاول ":"First Name"}></input>
         </Col>
         <Col xs={12} md={6}>
         <input onChange={(e)=>{
           SetShippingData({...ShippingData,LastName:e.target.value})
-        }} type="text"  className="form-control" id="inputLastName" placeholder="Last Name"></input>
+        }} type="text"  className="form-control" id="inputLastName" placeholder={Language==="ar"?"الاسم الاخير ":"Last Name"}></input>
         </Col>
       </Row>
       <Row className=' my-3'>
         <Col xs={12} md={6}>
         <input onChange={(e)=>{
           SetShippingData({...ShippingData,Address:e.target.value})
-        }} type="text"  className="form-control" id="inputAddress" placeholder="Street, Building number"></input>
+        }} type="text"  className="form-control" id="inputAddress" placeholder={Language==="ar"?"العنوان الشارع رقم العماره ":"Street, Building number"}></input>
         </Col>
         <Col xs={12} md={6}>
         <input onChange={(e)=>{
           SetShippingData({...ShippingData,Phone:e.target.value})
-        }} type="phone"  className="form-control my-2 h-75" id="inputPhone" placeholder="contact number"></input>
+        }} type="phone"  className="form-control my-2 h-75" id="inputPhone" placeholder={Language==="ar"?"رقم الهاتف ":"contact number"}></input>
         </Col>
       </Row>
       <Row className=' my-3'>
-        <h5 className=' text-start'> Payment method</h5>
+        <h5 className=' text-start'> {Language==="ar"?"طريقة الدفع ":"Payment method"}</h5>
         <Row className=' text-start'>
         <div onClick={(e)=>{
     e.stopPropagation()
@@ -184,7 +186,7 @@ const UserCheckOutPage = ({GlobalState, UpdateCart}) => {
   }} className="form-check">
   <input  className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
   <label className="form-check-label" htmlFor="flexRadioDefault1">
-    Vodafone Cash
+    {Language==="ar"?"فودافون كاش ":"Vodafone Cash"}
   </label>
 </div>
 <div onClick={(e)=>{
@@ -194,7 +196,7 @@ const UserCheckOutPage = ({GlobalState, UpdateCart}) => {
   }} className="form-check">
   <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" defaultChecked/>
   <label className="form-check-label" htmlFor="flexRadioDefault2">
-    Cash on Delivery
+    {Language==="ar"?"دفع عند الاستلام ":"Cash on Delivery"}
   </label>
 </div>
         </Row>
@@ -203,7 +205,7 @@ const UserCheckOutPage = ({GlobalState, UpdateCart}) => {
       <Row className=' my-3'>
         <Col xs={12} >
         <button disabled={Disabled} onClick={(e)=>PlaceOrder(e)} className='SignUpButton'>
-          Place Order for {GlobalState.Order.OrderValue} EGP
+          {Language==="ar"?`اضغط لتاكيد الطلب مقابل ${GlobalState.Order.OrderValue} جنيه مصري`:`Place order for ${GlobalState.Order.OrderValue} EGP`}
         </button>
         </Col>
         
