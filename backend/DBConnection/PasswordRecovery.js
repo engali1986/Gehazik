@@ -6,7 +6,7 @@ const client = new MongoClient(uri
 const PasswordRecovery=async(Email)=>{
     console.log("PassordRecovery 0")
     console.log(Email)
-    const user=await client.db("Gehazik").collection("Users").findOne({email:Email}).then(res=>{
+    const user=await client.db("Gehazik").collection("Users").findOne({Email:Email}).then(res=>{
       console.log(res)
       return res
     }).catch(err=>{
@@ -29,9 +29,9 @@ const PasswordRecovery=async(Email)=>{
       
         let mailOptions = {
           from: 'Ali Mohammed <engaligulf1986@gmail.com>',
-          to: user.email,
+          to: user.Email,
           subject: 'Password Recovery',
-          html: `<h1> Please find below your account details</h1><h2>Email:${user.email}</h2><h2>Password:${user.pass}</h2>`
+          html: `<h1> Please find below your account details</h1><h2>Email:${user.Email}</h2><h2>Password:${user.Pass}</h2>`
         };
         
         const result=await Transporter.sendMail(mailOptions).then(res=>{
