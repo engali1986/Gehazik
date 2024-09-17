@@ -23,14 +23,14 @@ const OrderEmails=async(OrderData, OrderID)=>{
         const MerchantEmail=await client
         .db("Gehazik")
         .collection("Merchants")
-        .findOne({_id:new ObjectId(MerchantIDsSorted[index])},{projection:{email:1}}).then(res=>{
+        .findOne({_id:new ObjectId(MerchantIDsSorted[index])},{projection:{Email:1}}).then(res=>{
             return res
         }).catch(error=>{
             console.log(error)
             return "Connection error"
         })
-        if (typeof MerchantEmail==="object" && MerchantEmail.email) {
-            MerchantEmails.push(MerchantEmail.email)   
+        if (typeof MerchantEmail==="object" && MerchantEmail.Email) {
+            MerchantEmails.push(MerchantEmail.Email)   
         } 
     }
     // then we send email of order number for each merchant
