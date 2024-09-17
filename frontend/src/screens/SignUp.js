@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState,useContext } from "react";
-import { json, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import StaticData from "../Data/StaticData";

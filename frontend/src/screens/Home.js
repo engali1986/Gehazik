@@ -16,7 +16,7 @@ const Home = (params) => {
             style={{
               position: "relative",
               width: "fit-content",
-              marginLeft: "5%",
+              
             }}
           >
             <div
@@ -70,7 +70,7 @@ const Home = (params) => {
             style={{
               position: "relative",
               width: "fit-content",
-              marginLeft: "5%",
+              
             }}
           >
             

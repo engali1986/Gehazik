@@ -223,8 +223,41 @@ const DtataDisplay=({globalState,setGlobal,Data,Orders,NewOrders})=>{
     }else if(Data==="جميع الطلبات"|| Data==="All Orders") {
       return(
         <Container>
+        {/* Page head */}
           <Row>
-          <h3>{Data}</h3>
+            <h3>{Data}</h3>
+          </Row>
+        {/* Page Content */}
+          <Row>
+            <Col xs={12}>
+              <div style={{ maxWidth:'100%', overflow:"auto", border: "1px solid black" }}>
+              <table border="1">
+                  <thead>
+                    <tr>
+                      <th>{Language==="ar"?"رقم الطلب":"Order ID"}</th>
+                      <th>{Language==="ar"?"تاريخ الطلب":"Order Date"}</th>
+                      <th>{Language==="ar"?"رقم المنتج":"Product ID"}</th>
+                      <th>{Language==="ar"?"اسم المنتج":"Product Title"}</th>
+                      <th>{Language==="ar"?"سعر الوحده":"Unit Price"}</th>
+                      <th>{Language==="ar"?"الكميه المطلوبه":"Ordered Quantity"}</th>
+                      <th>{Language==="ar"?"تم التوصيل":"Delivered"}</th>
+                    </tr>
+                  </thead>
+                 <tbody>
+                  {Array.isArray(Orders) && Orders.length>0? 
+                  Orders.map((item,index)=>(<tr key={item._id}>
+                    <td>{item._id}</td>
+                    <td>{item.OrderedDate.split("-")[2].split("T")[0]}/{item.OrderedDate.split("-")[1]}/{item.OrderedDate.split("-")[0]}</td>
+                    <td>{item.OrderedItems.map((SubItem)=>(<div key={SubItem.ID}><a href={`/ProductDetails/${SubItem.ID.toString()}`}>{SubItem.ID}</a></div>))}</td>
+                    <td>{item.OrderedItems.map((SubItem)=>(<div key={SubItem.ID}>{SubItem.ProductTitle}</div>))}</td>
+                    <td>{item.OrderedItems.map(SubItem=>(<div key={SubItem.ProductUnitPrice}>{SubItem.ProductUnitPrice}</div>))}</td>
+                    <td>{item.OrderedItems.map(SubItem=>(<div key={SubItem.ID}>{SubItem.Qty}</div>))}</td>
+                    <td>{item.OrderDelivered===false?Language==="ar"?"جار التوصيل":"On the way":Language==="ar"?"تم التوصيل":"Delivered"}</td>
+                    </tr>)):(<tr><td>No Data</td></tr>)}
+                 </tbody>
+                </table>
+              </div>
+            </Col>
           </Row>
         </Container>
       )     
@@ -290,7 +323,7 @@ const ClientPage = ({globalState,setGlobal}) => {
             e.target.parentElement.parentElement.children[0].click()
             console.log(e.target.innerText);
             if (Orders.length===0) {
-              toast.info("Please wait while we get Your Orders")
+              toast.info(Language==="ar"?"برجاء الانتظار جاري تحميل البيانات ":"Please wait while we get Your Orders")
               const MerchantCredentials={
                 Email:globalState.Email,
                 Name:globalState.Name,
@@ -331,10 +364,53 @@ const ClientPage = ({globalState,setGlobal}) => {
           }
         }}>{Language==="ar"?"الطلبات الجديده":"New Orders"}</Dropdown.Item>
         <Dropdown.Item as={Button}
-        onClick={(e)=>{
+        onClick={async (e)=>{
           e.stopPropagation()
-          SetData(e.target.innerText)
-          e.target.parentElement.parentElement.children[0].click()
+          
+          try {
+            SetData(e.target.innerText)
+            e.target.parentElement.parentElement.children[0].click()
+            console.log(e.target.innerText);
+            if (Orders.length===0) {
+              toast.info(Language==="ar"?"برجاء الانتظار جاري تحميل البيانات ":"Please wait while we get Your Orders")
+              const MerchantCredentials={
+                Email:globalState.Email,
+                Name:globalState.Name,
+                Token:globalState.Token
+              }
+              console.log(MerchantCredentials)
+              const GetMerchantOrders=await fetch(
+                "http://localhost:5000/Users/OrdersList",
+                {
+                  method: "post",
+                  body: JSON.stringify(MerchantCredentials),
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  mode: "cors",
+                }
+              ).then((res)=>{
+                return res.json()
+              }).catch(err=>{
+                console.log(err)
+                toast.error(err.toString(),{autoClose:false})
+              })
+              if (typeof GetMerchantOrders==="object" && GetMerchantOrders.resp && Array.isArray(GetMerchantOrders.resp)) {
+                toast.success("Done!")
+                SetOrders(GetMerchantOrders.resp)
+                SetNewOrders(GetMerchantOrders.resp.filter((item)=>{
+                  if (item.OrderDelivered===false) {
+                    return item
+                  }
+                }))
+                console.log(GetMerchantOrders.resp)
+              }else{
+                toast.error(GetMerchantOrders,{autoClose:false})
+              }
+            }
+          } catch (error) {
+            toast.error(error.toString(),{autoClose:false})
+          }
         }}>{Language==="ar"?"جميع الطلبات":"All Orders"}</Dropdown.Item>
       </Dropdown.Menu>
         </Dropdown>
