@@ -26,7 +26,7 @@ const PasswordRecovery = () => {
         email: Email,
       };
       const PassRecovery = await fetch(
-        "http://localhost:5000/PasswordRecovery",
+        "https://gehazik-server.onrender.com/PasswordRecovery",
         {
           method: "POST",
           body: JSON.stringify(Credintials),

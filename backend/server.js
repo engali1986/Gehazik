@@ -40,7 +40,7 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIo(server, {
   cors: {
-    origin: "http://localhost:3000", // React App's URL
+    origin: "https://gehazik.vercel.app", // React App's URL
     methods: ["GET", "POST"]
   }
 });
