@@ -7,15 +7,22 @@ const Test = ({globalState}) => {
   const {Language,ToggleLanguage}=useContext(LanguageContext)
   const [Text,SetText]=useState("")
 
-  // const Change=(x)=>{
-  //   SetText(x)
-  // }
- 
+  
  
  
   return (
    
      <>
+    <button onClick={(e)=>{
+      e.stopPropagation()
+      let x=new Date("2024-09-07T04:57:29.732+00:00")
+      console.log(x)
+      console.log(x.getDay())
+      console.log(typeof x)
+    }}>
+      click
+
+    </button>
      
      </>
     

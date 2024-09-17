@@ -211,7 +211,7 @@ const DtataDisplay=({globalState,setGlobal,Data,Orders,NewOrders})=>{
                     <td>{item.OrderedItems.map((SubItem)=>(<div key={SubItem.ID}>{SubItem.ProductTitle}</div>))}</td>
                     <td>{item.OrderedItems.map(SubItem=>(<div key={SubItem.ProductUnitPrice}>{SubItem.ProductUnitPrice}</div>))}</td>
                     <td>{item.OrderedItems.map(SubItem=>(<div key={SubItem.ID}>{SubItem.Qty}</div>))}</td>
-                    <td>{item.OrderDelivered===false?Language==="ar"?"جار التوصيل":"On the way":Language==="ar"?"تم التوصيل":"Delivered"}</td>
+                    <td>{item.OrderedPaymentMethod==="Vodafone Cash"&& item.OrderPayed===false ?Language==="ar"?"بانتظار الدفع ":"Waiting payment":item.OrderDelivered===false?Language==="ar"?"جاري التوصيل ":"On the way":Language==="ar"?"تم التوصيل":"Delivered"}</td>
                     </tr>)):(<tr><td>No Data</td></tr>)}
                  </tbody>
                 </table>
@@ -252,7 +252,7 @@ const DtataDisplay=({globalState,setGlobal,Data,Orders,NewOrders})=>{
                     <td>{item.OrderedItems.map((SubItem)=>(<div key={SubItem.ID}>{SubItem.ProductTitle}</div>))}</td>
                     <td>{item.OrderedItems.map(SubItem=>(<div key={SubItem.ProductUnitPrice}>{SubItem.ProductUnitPrice}</div>))}</td>
                     <td>{item.OrderedItems.map(SubItem=>(<div key={SubItem.ID}>{SubItem.Qty}</div>))}</td>
-                    <td>{item.OrderDelivered===false?Language==="ar"?"جار التوصيل":"On the way":Language==="ar"?"تم التوصيل":"Delivered"}</td>
+                    <td>{item.OrderedPaymentMethod==="Vodafone Cash"&& item.OrderPayed===false ?Language==="ar"?"بانتظار الدفع ":"Waiting payment":item.OrderDelivered===false?Language==="ar"?"جاري التوصيل ":"On the way":Language==="ar"?"تم التوصيل":"Delivered"}</td>
                     </tr>)):(<tr><td>No Data</td></tr>)}
                  </tbody>
                 </table>
@@ -288,7 +288,7 @@ const ClientPage = ({globalState,setGlobal}) => {
       <Row>
         {/* the following Col will be the side menu for the merchant page */}
         <Col xs={12} md={2}>
-        <Dropdown className=' d-inline-block w-100 my-2' size={{xs:"lg",md:"sm"}}>
+        <Dropdown className=' d-inline-block w-100 mb-1' size={{xs:"lg",md:"sm"}}>
       <Dropdown.Toggle className=' d-inline-block w-100 text-start ps-0' variant="success" id="dropdown-basic">
         {Language==="ar"?"الصفحه الشخصيه":"Profile"}
       </Dropdown.Toggle>
@@ -308,7 +308,7 @@ const ClientPage = ({globalState,setGlobal}) => {
         }}>{Language==="ar"?"تسجيل الخروج":"LogOut"}</Dropdown.Item>
       </Dropdown.Menu>
         </Dropdown>
-        <Dropdown className=' d-inline-block w-100 my-2' size={{xs:"lg",md:"sm"}}>
+        <Dropdown className=' d-inline-block w-100 mb-1' size={{xs:"lg",md:"sm"}}>
       <Dropdown.Toggle className=' d-inline-block w-100 text-start ps-0' variant="success" id="dropdown-basic">
         {Language==="ar"?"طلبات الشراء":"Orders"}
       </Dropdown.Toggle>

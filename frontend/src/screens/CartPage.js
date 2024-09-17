@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useContext } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import {useNavigate} from "react-router-dom"
+import { LanguageContext } from "../Context/LanguageContext";
 const CartPage = ({ GlobalState, UpdateCart,AddOrder }) => {
+  const {Language}=useContext(LanguageContext)
   const [SubTotal,SetSubTotal]=useState([]) // this state will be used to calculate subtotal
   const [SubTotalValue,SetSubTotalValue]=useState(0)
   const [DeliveryChargesValue,SetDeliveryChargesValue]=useState(0)
@@ -87,7 +89,7 @@ const CartPage = ({ GlobalState, UpdateCart,AddOrder }) => {
     >
       {/* head of page */}
       <Row style={{ textAlign: "start" }}>
-        <h3>Cart</h3>
+        <h3>{Language==="ar"?"عربة التسوق ":"Cart"}</h3>
       </Row>
       {/* Page content and array map */}
     
@@ -214,43 +216,43 @@ const CartPage = ({ GlobalState, UpdateCart,AddOrder }) => {
       <Row className= {Array.isArray(GlobalState.CartItems)&&GlobalState.CartItems.length>0?" d-flex text-start": " d-none"}>
         <div className=" d-flex flex-column my-2" style={{borderBottom:'2px solid gray'}}>
           {/* Sub total */}
-          <div className=" d-flex flex-row">
-          <div style={{minWidth:'40%'}}>
+          <div className=" d-flex flex-row justify-content-between">
+          <div  >
             <h4>
-              Sub Total:
+              {Language==="ar"?"المجموع الفرعي :":"Sub Total:"}
             </h4>
           </div>
-          <div className=" flex-grow-1 text-end">
+          <div className="  text-end">
           
-            <h5>{SubTotalValue}</h5>
+            <h5>{SubTotalValue} EGP</h5>
           </div>
           </div>
           {/* Delivery charges */}
-          <div className=" d-flex flex-row">
+          <div className=" d-flex flex-row justify-content-between">
           
-          <div style={{minWidth:'40%'}}>
+          <div >
             <h4>
-              Delivery charges:
+              {Language==="ar"?"رسوم التوصيل :":"Delivery charges:"}
             </h4>
           </div>
-          <div className=" flex-grow-1 text-end">
+          <div className="text-end">
            
-            <h5>{DeliveryChargesValue}</h5>
+            <h5>{DeliveryChargesValue} EGP</h5>
            
             
           </div>
           </div>
           {/* Total Price */}
-          <div className=" d-flex flex-row">
+          <div className=" d-flex flex-row justify-content-between">
           
-          <div style={{minWidth:'40%'}}>
+          <div>
             <h4>
-              Total Price:
+              {Language==="ar"?"المجموع الكلي :":"Total Price:"}
             </h4>
           </div>
-          <div className=" flex-grow-1 text-end">
+          <div className="text-end">
            
-            <h5>{TotalValue}</h5>
+            <h5>{TotalValue} EGP</h5>
             
           </div>
           </div>
@@ -273,7 +275,7 @@ const CartPage = ({ GlobalState, UpdateCart,AddOrder }) => {
                 Navigate('/')
               }
             }}>
-              Checkout
+              {Language==="ar"?"الدفع ":"Checkout"}
             </button>
           </div>
         </div>
