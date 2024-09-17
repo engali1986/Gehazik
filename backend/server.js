@@ -33,6 +33,7 @@ import { type } from "os";
 import MerchantChangePassword from "./DBConnection/Merchants/MerchantChangePassword.js";
 import UserChangePassword from "./DBConnection/Users/UserChangePassword.js";
 import UserOrders from "./DBConnection/Users/UserOrders.js";
+import UserDBChanges from "./DBConnection/DBChanges/UsersDBChange.js";
 const require = createRequire(import.meta.url);
 const socketIo = require('socket.io');
 // const ServiceAccountKey = require("./API keys/ServiceAccountKey.json");
@@ -98,6 +99,7 @@ client.connect();
     
 app.use(cors());
 app.use(express.json());
+UserDBChanges()
 app.get("/", (req, res) => {
   console.log("server running");
   res.send("Server is running");
