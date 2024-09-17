@@ -113,7 +113,7 @@ const DtataDisplay=({globalState,setGlobal,Data,Orders,NewOrders})=>{
                     if (RegTextVarify===true) {
                       console.log("Pdate password")
                       const ChangePassword = await fetch(
-                        "https://gehazik-server.onrender.com/Users/ChangePassword",
+                        "http://localhost:5000/Users/ChangePassword",
                         {
                           method: "post",
                           body: JSON.stringify(ChangePasswordData),
@@ -331,7 +331,7 @@ const ClientPage = ({globalState,setGlobal}) => {
               }
               console.log(MerchantCredentials)
               const GetMerchantOrders=await fetch(
-                "https://gehazik-server.onrender.com/Users/OrdersList",
+                "http://localhost:5000/Users/OrdersList",
                 {
                   method: "post",
                   body: JSON.stringify(MerchantCredentials),
@@ -380,7 +380,7 @@ const ClientPage = ({globalState,setGlobal}) => {
               }
               console.log(MerchantCredentials)
               const GetMerchantOrders=await fetch(
-                "https://gehazik-server.onrender.com/Users/OrdersList",
+                "http://localhost:5000/Users/OrdersList",
                 {
                   method: "post",
                   body: JSON.stringify(MerchantCredentials),

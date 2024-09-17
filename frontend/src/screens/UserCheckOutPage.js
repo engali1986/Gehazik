@@ -47,7 +47,7 @@ const UserCheckOutPage = ({GlobalState, UpdateCart}) => {
      
       console.log(OrderData)
       const AddOrder=await fetch(
-        "https://gehazik-server.onrender.com/Orders/AddOrder",
+        "http://localhost:5000/Orders/AddOrder",
         {
           method: "POST",
           body: JSON.stringify(OrderData),
@@ -192,7 +192,10 @@ const UserCheckOutPage = ({GlobalState, UpdateCart}) => {
 <div onClick={(e)=>{
     e.stopPropagation()
     console.log(e.target)
-    ShippingData.Payment="Cash on Delivery"
+    if (GlobalState.Order.OrderValue<=1000) {
+      ShippingData.Payment="Cash on Delivery"
+    }
+    
   }} className="form-check">
   <input className={GlobalState.Order.OrderValue<=1000?"form-check-input":" d-none form-check-input"} type="radio" name="flexRadioDefault" id="flexRadioDefault2"  defaultChecked={GlobalState.Order.OrderValue<=1000?true:false}/>
   <label className={GlobalState.Order.OrderValue<=1000?"form-check-label":" d-none form-check-label"} htmlFor="flexRadioDefault2">
