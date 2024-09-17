@@ -10,12 +10,18 @@ const MerchantOrders=async(MerchantID)=>{
         const Orders=await client
         .db("Gehazik")
         .collection("Orders")
-        .find({'OrderedItems.MerchantID': MerchantID.toString()},{projection:{OrderedBy:1,OrderedDate:1,OrderedItems:1,OrderDelivered:1,OrderPayed:1,OrderPaymentDate:1,MerchantPaymentSent:1, MerchantPaymentDate:1, OrderCompleted:1}}).toArray()
+        .find({'OrderedItems.MerchantID': MerchantID.toString()},{projection:{OrderedBy:1,OrderedDate:1, OrderedPaymentMethod:1,OrderedItems:1,OrderDelivered:1,OrderPayed:1,OrderPaymentDate:1,MerchantPaymentSent:1, MerchantPaymentDate:1, OrderCompleted:1}}).toArray()
         console.log("MerchantOrders file 1")
         console.log(Orders)
         console.log(Orders.length)
-        if (Orders.length>0) {
-            Orders.forEach((Order)=>{
+        if (Orders.length>0) { 
+            let OrderArr=Orders.filter(Item=>{
+                if((Item.OrderedPaymentMethod==="Vodafone Cash" && Item.OrderPayed===true) ||(Item.OrderedPaymentMethod==="Cash on Delivery") ){
+                    return Item
+                }
+            })
+
+            OrderArr.forEach((Order)=>{
                 let Arr=Order.OrderedItems.filter(item=>{
                     if(item.MerchantID===MerchantID.toString()){
                         return item
@@ -23,7 +29,7 @@ const MerchantOrders=async(MerchantID)=>{
                 })
                 Order.OrderedItems=Arr
             })
-            return Orders  
+            return OrderArr  
         } else {
             return "No Orders Found"
         }
