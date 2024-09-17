@@ -207,19 +207,6 @@ const Home = (params) => {
               fontSize: "1rem",
               textAlign: "start",
               width: "fit-content",
-            }}
-            onClick={(e)=>{
-              e.stopPropagation()
-              ToggleLanguage()
-            }}
-          >
-            {Language==="en"?"العربيه":"English"}
-          </div>
-          <div
-            style={{
-              fontSize: "1rem",
-              textAlign: "start",
-              width: "fit-content",
               position: "relative",
             }}
             onClick={(e) => {
@@ -256,6 +243,19 @@ const Home = (params) => {
             {Language==="ar"?"جميع الاقسام":"categories"}
           </div>
           <div
+            style={{
+              fontSize: "1rem",
+              textAlign: "start",
+              width: "fit-content",
+            }}
+            onClick={(e)=>{
+              e.stopPropagation()
+              ToggleLanguage()
+            }}
+          >
+            {Language==="en"?"العربيه":"English"}
+          </div>
+          <div
             className="SearchBar d-flex"
             style={{
               marginLeft: "auto",
@@ -286,19 +286,6 @@ const Home = (params) => {
             }}
           >
             home
-          </div>
-          <div
-            style={{
-              fontSize: "1rem",
-              textAlign: "start",
-              width: "fit-content",
-            }}
-            onClick={(e)=>{
-              e.stopPropagation()
-              ToggleLanguage()
-            }}
-          >
-            {Language==="en"?"العربيه":"English"}
           </div>
           <div
             style={{
@@ -339,6 +326,19 @@ const Home = (params) => {
             }}
           >
             &#9776;
+          </div>
+          <div
+            style={{
+              fontSize: "1rem",
+              textAlign: "start",
+              width: "fit-content",
+            }}
+            onClick={(e)=>{
+              e.stopPropagation()
+              ToggleLanguage()
+            }}
+          >
+            {Language==="en"?"العربيه":"English"}
           </div>
           <Col
             xs={12}
