@@ -14,7 +14,7 @@ const UserCheckOutPage = ({GlobalState, UpdateCart}) => {
     LastName:"",
     Address:"",
     Phone:"",
-    Payment:"Cash on Delivery"
+    Payment:GlobalState.Order.OrderValue<=1000?"Cash on Delivery":"Vodafone Cash"
   })// this will store Address and phone number
   const [Disabled,SetDisabled]=useState(false) // this will be used to disable place order button 
   const [Loader, SetLoader] = useState(false); // this will handle loader visbility during fetch product details
@@ -184,7 +184,7 @@ const UserCheckOutPage = ({GlobalState, UpdateCart}) => {
     console.log(e.target)
     ShippingData.Payment="Vodafone Cash"
   }} className="form-check">
-  <input  className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
+  <input  className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" defaultChecked={GlobalState.Order.OrderValue>1000?true:false}/>
   <label className="form-check-label" htmlFor="flexRadioDefault1">
     {Language==="ar"?"فودافون كاش ":"Vodafone Cash"}
   </label>
@@ -194,8 +194,8 @@ const UserCheckOutPage = ({GlobalState, UpdateCart}) => {
     console.log(e.target)
     ShippingData.Payment="Cash on Delivery"
   }} className="form-check">
-  <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" defaultChecked/>
-  <label className="form-check-label" htmlFor="flexRadioDefault2">
+  <input className={GlobalState.Order.OrderValue<=1000?"form-check-input":" d-none form-check-input"} type="radio" name="flexRadioDefault" id="flexRadioDefault2"  defaultChecked={GlobalState.Order.OrderValue<=1000?true:false}/>
+  <label className={GlobalState.Order.OrderValue<=1000?"form-check-label":" d-none form-check-label"} htmlFor="flexRadioDefault2">
     {Language==="ar"?"دفع عند الاستلام ":"Cash on Delivery"}
   </label>
 </div>
