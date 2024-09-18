@@ -284,11 +284,14 @@ const DtataDisplay=({globalState,setGlobal,Data,Orders,NewOrders})=>{
             </div>
             </div> 
           </Row>
-          <Row>
-            <div>
+          <div className=' d-flex'>
+            <div className=' flex-fill'>
+              adasda
+            </div>
+            <div className=' flex-fill'>
               jhjhkj
             </div>
-          </Row>
+          </div>
         </Container>
       )     
     }else {
