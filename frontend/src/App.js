@@ -538,7 +538,7 @@ const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstra
     >
       
       
-      <ToastContainer position="top-center"
+      <ToastContainer rtl={Language==="ar"?true:false} position="top-center"
 autoClose={3000}
 hideProgressBar />
 

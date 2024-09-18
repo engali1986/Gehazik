@@ -14,6 +14,10 @@ const DtataDisplay=({globalState,setGlobal,Data,Orders,NewOrders})=>{
     ConfirmNewPassword:"",
     User:globalState.Client===true?"User":""
   })
+  const [CancelOrder,SetcancelOrder]=useState(null)
+  const [CancelReason,SetCancelReason]=useState("")
+
+  
   
  
     if (Data==="تغيير كلمة المرور"||Data==="Change Password") {
@@ -276,7 +280,23 @@ const DtataDisplay=({globalState,setGlobal,Data,Orders,NewOrders})=>{
              <h4>{Language==="ar"?"برجاء تحديد الطلب المطلوب الغاؤه":"Please select order to cancel"}</h4>
             </div>
             <div className=' d-inline-block flex-fill'>
-            <select>
+            <select onClick={(e)=>{
+              e.stopPropagation(e)
+              console.log("Selecting Order")
+              if(e.target.value.length>0){
+                console.log("Select first Order")
+                let Order=Orders.find((order)=>order._id.toString()===e.target.value)
+                SetcancelOrder(Order)
+                console.log(CancelOrder)
+              }
+            }} onChange={(e)=>{
+              console.log("OrderSelected")
+              let Order=Orders.find((order)=>
+                order._id.toString()===e.target.value
+              )
+              SetcancelOrder(Order)
+              console.log(Order)
+            }}>
               {Orders.map(item=>(
                 new Date().getTime()-new Date(item.OrderedDate).getTime()<=86400000?<option key={item._id}>{item._id}</option>:""
               ))}
@@ -284,14 +304,114 @@ const DtataDisplay=({globalState,setGlobal,Data,Orders,NewOrders})=>{
             </div>
             </div> 
           </Row>
-          <div className=' d-flex'>
-            <div className=' flex-fill'>
-              adasda
-            </div>
-            <div className=' flex-fill'>
-              jhjhkj
-            </div>
-          </div>
+         <Row className=' align-items-center'>
+          <Col className=' mb-2' style={{overflow:'auto'}} xs={12}>
+          <table border="1" style={{minWidth:'100%'}}>
+                  <thead>
+                    <tr>
+                      <th>{Language==="ar"?"رقم الطلب":"Order ID"}</th>
+                      <th>{Language==="ar"?"تاريخ الطلب":"Order Date"}</th>
+                      <th>{Language==="ar"?"رقم المنتج":"Product ID"}</th>
+                      <th>{Language==="ar"?"اسم المنتج":"Product Title"}</th>
+                      <th>{Language==="ar"?"سعر الوحده":"Unit Price"}</th>
+                      <th>{Language==="ar"?"الكميه المطلوبه":"Ordered Quantity"}</th>
+                      <th>{Language==="ar"?"قيمه الطلب":"Order Value"}</th>
+                      <th>{Language==="ar"?"حالة الطلب":"Status"}</th>
+                    </tr>
+                  </thead>
+                 <tbody>
+                  
+                    {CancelOrder!==null?(<tr>
+                      <td>{CancelOrder._id}</td>
+                      <td>{new Date(CancelOrder.OrderedDate).toLocaleDateString("en-GB")}</td>
+                      <td>{Array.isArray(CancelOrder.OrderedItems)?CancelOrder.OrderedItems.map(item=>(
+                        <div key={item.ID}>{item.ID}</div>
+                      )):""}</td>
+                      <td>
+                        {Array.isArray(CancelOrder.OrderedItems)?CancelOrder.OrderedItems.map((item)=>(
+                          <div key={item.ProductTitle}>{item.ProductTitle}</div>
+                        )):""}
+                      </td>
+                      <td>
+                        {Array.isArray(CancelOrder.OrderedItems)?CancelOrder.OrderedItems.map((item)=>(
+                          <div key={item.ProductUnitPrice}>{item.ProductUnitPrice}</div>
+                        )):""}
+                      </td>
+                      <td>
+                        {Array.isArray(CancelOrder.OrderedItems)?CancelOrder.OrderedItems.map((item)=>(
+                          <div key={item.Qty}>{item.Qty}</div>
+                        )):""}
+                      </td>
+                      <td>
+                        {CancelOrder.OrderedValue}
+                      </td>
+                      <td>{CancelOrder.OrderedPaymentMethod==="Vodafone Cash"&& CancelOrder.OrderPayed===false ?Language==="ar"?"بانتظار الدفع ":"Waiting payment":CancelOrder.OrderDelivered===false?Language==="ar"?"جاري التوصيل ":"On the way":Language==="ar"?"تم التوصيل":"Delivered"}</td>
+                      </tr>):<tr><td></td></tr>}
+                  
+                  
+                 </tbody>
+                </table>
+          </Col>
+          <Col xs={12} >
+          <textarea  onChange={(e)=>{
+            SetCancelReason(e.target.value)
+          }} placeholder={Language==="ar"?"برجاء تحديد سبب الرفض ( اختياري )":"Please advice cancel reason (optional)"} style={{width:'100%'}}>
+
+          </textarea>
+          </Col>
+          <Col xs={12}>
+          <button onClick={async(e)=>{
+            e.stopPropagation()
+            console.log(CancelOrder)
+           
+            try {
+              if (CancelOrder!==null && CancelOrder._id) {
+                let CancelData={
+                  Reason:CancelReason,
+                  OrderId:CancelOrder._id,
+                  Name:globalState.Name,
+                  Email:globalState.Email,
+                  Token:globalState.Token
+                }
+                e.target.disabled=true
+                e.target.innerText=Language==="ar"?"برجاء الانتظار":"Please wait"
+                console.log(CancelData)
+                const DeleteOrder=await fetch(
+                  "http://localhost:5000/Orders/DeleteOrder",
+                  {
+                    method: "post",
+                    body: JSON.stringify(CancelData),
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    mode: "cors",
+                  }
+                ).then((res=>{
+                  console.log(res)
+                  return res
+                })).catch(err=>{
+                  console.log(err)
+                  return "Internal Error"
+                })
+
+                e.target.disabled=false
+                e.target.innerText=Language==="ar"?"الغاء":"Cancel"
+                
+              } else {
+                toast.warning(Language==="ar"?"برجاء اختيار الطلب المراد الغاؤه":"Please select order")
+                e.target.disabled=false
+                e.target.innerText=Language==="ar"?"الغاء":"Cancel"
+                
+              }
+              
+            } catch (error) {
+              toast.error(error.toString())
+            }
+          }} className='SignUpButton mb-2 mt-0'>
+            {Language==="ar"?"الغاء":"Cancel"}
+          </button>
+          </Col>
+         </Row>
         </Container>
       )     
     }else {

@@ -611,6 +611,19 @@ app.post("/Orders/AddOrder", async (req, res) => {
   
  }
 });
+// Delete Order
+app.post("/Orders/DeleteOrder",async(req,res)=>{
+  try {
+    const CancelData=await req.body
+    console.log("server/DeleteOrder 0 CancelData")
+    console.log(CancelData)
+    res.json({resp:"Order Cancelled successfully"})
+    
+  } catch (error) {
+    console.log(error)
+    res.json({resp:"Internal Error"})
+  }
+})
 // GetOrders Route to get list of all orders in DB
 app.post("/GetOrders", async (req, res) => {
   console.log("server GetOrders 0");
