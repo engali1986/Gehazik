@@ -261,6 +261,36 @@ const DtataDisplay=({globalState,setGlobal,Data,Orders,NewOrders})=>{
           </Row>
         </Container>
       )     
+    }else if(Data==="الغاء طلب"|| Data==="Cancel Order") {
+      return(
+        <Container>
+          <Row>
+          <h3>{Data}</h3>
+          </Row >
+          <Row>
+          <h4 className=" border-2 border-bottom">{Language==="ar"?"يرجى العلم انه يمكن فقط الغاء الطلبات اللتي لم يمر عليها اكثر من 24 ساعه ":"Please note you can only cancel orders that hase been ordered 24 hours earlier"}</h4>
+          </Row>
+          <Row>
+            <div className='d-flex flex-row justify-content-start align-items-center flex-wrap'>
+            <div className=' d-inline-block flex-fill'>
+             <h4>{Language==="ar"?"برجاء تحديد الطلب المطلوب الغاؤه":"Please select order to cancel"}</h4>
+            </div>
+            <div className=' d-inline-block flex-fill'>
+            <select>
+              {Orders.map(item=>(
+                new Date().getTime()-new Date(item.OrderedDate).getTime()<=86400000?<option key={item._id}>{item._id}</option>:""
+              ))}
+            </select>
+            </div>
+            </div> 
+          </Row>
+          <Row>
+            <div>
+              jhjhkj
+            </div>
+          </Row>
+        </Container>
+      )     
     }else {
       return(
         <Container>
@@ -412,6 +442,55 @@ const ClientPage = ({globalState,setGlobal}) => {
             toast.error(error.toString(),{autoClose:false})
           }
         }}>{Language==="ar"?"جميع الطلبات":"All Orders"}</Dropdown.Item>
+         <Dropdown.Item as={Button}
+          onClick={async (e)=>{
+            e.stopPropagation()
+            
+            try {
+              SetData(e.target.innerText)
+              e.target.parentElement.parentElement.children[0].click()
+              console.log(e.target.innerText);
+              if (Orders.length===0) {
+                toast.info(Language==="ar"?"برجاء الانتظار جاري تحميل البيانات ":"Please wait while we get Your Orders")
+                const MerchantCredentials={
+                  Email:globalState.Email,
+                  Name:globalState.Name,
+                  Token:globalState.Token
+                }
+                console.log(MerchantCredentials)
+                const GetMerchantOrders=await fetch(
+                  "http://localhost:5000/Users/OrdersList",
+                  {
+                    method: "post",
+                    body: JSON.stringify(MerchantCredentials),
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    mode: "cors",
+                  }
+                ).then((res)=>{
+                  return res.json()
+                }).catch(err=>{
+                  console.log(err)
+                  toast.error(err.toString(),{autoClose:false})
+                })
+                if (typeof GetMerchantOrders==="object" && GetMerchantOrders.resp && Array.isArray(GetMerchantOrders.resp)) {
+                  toast.success("Done!")
+                  SetOrders(GetMerchantOrders.resp)
+                  SetNewOrders(GetMerchantOrders.resp.filter((item)=>{
+                    if (item.OrderDelivered===false) {
+                      return item
+                    }
+                  }))
+                  console.log(GetMerchantOrders.resp)
+                }else{
+                  toast.error(GetMerchantOrders,{autoClose:false})
+                }
+              }
+            } catch (error) {
+              toast.error(error.toString(),{autoClose:false})
+            }
+          }}>{Language==="ar"?"الغاء طلب":"Cancel Order"}</Dropdown.Item>
       </Dropdown.Menu>
         </Dropdown>
     

@@ -99,7 +99,8 @@ client.connect();
     
 app.use(cors());
 app.use(express.json());
-UserDBChanges()
+// following function will watch any changes in Uses collection and send engali1986ac@mail.com an email
+// UserDBChanges()
 app.get("/", (req, res) => {
   console.log("server running");
   res.send("Server is running");
