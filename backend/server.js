@@ -34,6 +34,7 @@ import MerchantChangePassword from "./DBConnection/Merchants/MerchantChangePassw
 import UserChangePassword from "./DBConnection/Users/UserChangePassword.js";
 import UserOrders from "./DBConnection/Users/UserOrders.js";
 import UserDBChanges from "./DBConnection/DBChanges/UsersDBChange.js";
+import DeleteOrders from "./DBConnection/Orders/DeleteOrder.js";
 const require = createRequire(import.meta.url);
 const socketIo = require('socket.io');
 // const ServiceAccountKey = require("./API keys/ServiceAccountKey.json");
@@ -617,7 +618,24 @@ app.post("/Orders/DeleteOrder",async(req,res)=>{
     const CancelData=await req.body
     console.log("server/DeleteOrder 0 CancelData")
     console.log(CancelData)
-    res.json({resp:"Order Cancelled successfully"})
+    const UserData={
+      Email:CancelData.Email,
+      Token:CancelData.Token
+    }
+    console.log("Server/DeleteOrder 1 UserData is ")
+    console.log(UserData)
+    const User=await CheckUser(UserData)
+    console.log("Server/DeleteOrder 2 User Check result ")
+    console.log(User)
+    if (typeof User==="object" && User._id) {
+      const Cancelorder=await DeleteOrders(CancelData)
+      console.log("Server/DeleteOrder 3 DeleteOrder result ")
+      console.log(Cancelorder)
+      res.json({resp:Cancelorder})
+    } else {
+      res.json({resp:"User Not Found"})
+    }
+    
     
   } catch (error) {
     console.log(error)

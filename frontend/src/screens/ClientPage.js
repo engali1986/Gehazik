@@ -2,7 +2,7 @@ import React,{useState,useEffect, useContext} from 'react'
 import {Container, Row, Col, Dropdown, ButtonGroup, DropdownButton, Button} from "react-bootstrap"
 import {LanguageContext} from "../Context/LanguageContext"
 import { toast } from 'react-toastify'
-const DtataDisplay=({globalState,setGlobal,Data,Orders,NewOrders})=>{
+const DtataDisplay=({globalState,setGlobal,Data,Orders,NewOrders, SetOrders})=>{
   const {Language,Togglelanguage}=useContext(LanguageContext)
   const [Disabled, SetDisabled] = useState(false);
   const [ChangePasswordData,SetChangePasswordData]=useState({
@@ -388,15 +388,34 @@ const DtataDisplay=({globalState,setGlobal,Data,Orders,NewOrders})=>{
                   }
                 ).then((res=>{
                   console.log(res)
-                  return res
+                  return res.json()
                 })).catch(err=>{
                   console.log(err)
                   return "Internal Error"
                 })
+                console.log(DeleteOrder)
 
-                e.target.disabled=false
-                e.target.innerText=Language==="ar"?"الغاء":"Cancel"
-                
+                if (DeleteOrder.resp==="Order Deleted Successfully") {
+                  let Arr=Orders.filter((item)=>{
+                    if (item._id.toString()!==CancelOrder._id) {
+                      return item 
+                    }
+                    
+                    
+                  })
+                  SetOrders(Arr)
+                  SetcancelOrder(null)
+                  e.target.disabled=false
+                  e.target.innerText=Language==="ar"?"الغاء":"Cancel"
+                  toast.success(Language==="ar"?"تم الغاء الطلب بنجاح":"Order cancelled suucessfully")
+
+                } else {
+                  e.target.disabled=false
+                  e.target.innerText=Language==="ar"?"الغاء":"Cancel"
+                  console.log(DeleteOrder)
+                  toast.error(Language==="ar"?"لم يتم الغاء الطلب برجاء اعاده المحاوله لاحقا":"Order not cancelled Please try again later")
+                  
+                }
               } else {
                 toast.warning(Language==="ar"?"برجاء اختيار الطلب المراد الغاؤه":"Please select order")
                 e.target.disabled=false
@@ -620,7 +639,7 @@ const ClientPage = ({globalState,setGlobal}) => {
         </Col>
         {/* the following Col will display the data after merchant select option from side menu */}
         <Col xs={12} md={10}>
-        <DtataDisplay globalState={globalState} setGlobal={setGlobal} Data={Data} Orders={Orders} NewOrders={NewOrders}  />
+        <DtataDisplay globalState={globalState} setGlobal={setGlobal} Data={Data} Orders={Orders} NewOrders={NewOrders} SetOrders={SetOrders}  />
         </Col>
       </Row>
     </Container>

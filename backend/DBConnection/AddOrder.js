@@ -29,7 +29,10 @@ const AddOrder = async (OrderData) => {
         OrderPaymentDate:"",
         MerchantPaymentSent:false,
         MerchantPaymentDate:"",
-        OrderCompleted:false
+        OrderCompleted:false,
+        OrderCancelled:false,
+        OrderCancelledDate:'',
+        CancelReason:""
     }).then(res => {
         console.log("AddOrder file 1 res result");
         console.log(res)
