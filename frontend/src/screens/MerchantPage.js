@@ -254,7 +254,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
     useEffect(() => {
       console.log(UpdateProductsList);
     }, [UpdateProductsList]);
-    if (Data === "Change Password") {
+    if (Data === "تغيير كلمة المرور"||Data==="Change Password") {
       return (
         <Container>
           <Row>
@@ -408,7 +408,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
           </Row>
         </Container>
       );
-    } else if (Data === "New Orders") {
+    } else if (Data === "الطلبات الجديده"||Data==="New Orders") {
       return (
         <Container>
         {/* Page head */}
@@ -447,7 +447,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
           </Row>
         </Container>
       );
-    } else if (Data === "Orders History") {
+    } else if (Data === "جميع الطلبات"||Data==="All Orders") {
       return (
         <Container>
         {/* Page head */}
@@ -491,7 +491,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
         </Container>
       ); 
       
-    } else if (Data === "All Products") {
+    } else if (Data === "جميع المنتجات"||Data==="All Products") {
       return (
         <Container>
           <Row>
@@ -841,7 +841,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
           </Row>
         </Container>
       );
-    } else if (Data === "Add Products") {
+    } else if (Data === "اضافه منتج"||Data==="Add Products") {
       return (
         <Container style={{ backgroundColor: "gray" }}>
           <Row>
@@ -1265,7 +1265,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
           </Row>
         </Container>
       );
-    } else if (Data === "Update Products") {
+    } else if (Data === "تعديل منتج"||Data==="Update Product") {
       return (
         <Container>
           <Row>
@@ -1273,7 +1273,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
           </Row>
         </Container>
       );
-    } else if (Data === "Recieved Payments") {
+    } else if (Data === "الدفعات المستلمه"||Data==="Recieved Payments") {
       return (
         <Container>
         {/* Page head */}
@@ -1308,7 +1308,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
           </Row>
         </Container>
       );
-    } else if (Data === "All Payments") {
+    } else if (Data === "جميع الدفعات"||Data==="All Payments") {
       return (
         <Container>
         {/* Page head */}
@@ -1373,7 +1373,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
         <h2 onClick={(e)=>{
           e.stopPropagation()
           console.log(ShowAlert)
-        }}>Merchant Page</h2>
+        }}>{Language==="ar"?"صفحه التاجر":"Merchant page"}</h2>
       </Row>
 {/* This will be page body */}
       <Row>
@@ -1388,7 +1388,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
           <Row>
             <Col xs={12} className=" d-flex flex-wrap">
               <div style={{ width: "fit-content" }}>
-                <span>Welcome, </span>
+                <span>{Language==="ar"?"مرحبا":"Hi"}, </span>
                 <span>{params.Name}</span>
                 <span
                   className="MenuArrow"
@@ -1450,7 +1450,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                     SetData(e.target.innerText);
                   }}
                 >
-                  Change Password
+                  {Language==="ar"?"تغيير كلمة المرور":"Change Password"}
                 </div>
                 <div
                   onClick={(e) => {
@@ -1470,14 +1470,14 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                     SetData(e.target.innerText);
                   }}
                 >
-                  Log Out
+                  {Language==="ar"?"تسجيل الخروج":"Log Out"}
                 </div>
               </div>
             </Col>
           </Row>
           <Row>
             <div>
-              <span>Orders</span>
+              <span>{Language==="ar"?"طلبات الشراء":"Orders"}</span>
               <span
                 className="MenuArrow"
                 id="OrdersArrow"
@@ -1579,7 +1579,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                    
                   }}
                 >
-                  New Orders
+                  {Language==="ar"?"الطلبات الجديده":"New Orders"}
                 </div>
                 <div
                   onClick={async(e) => {
@@ -1642,14 +1642,14 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                    
                   }}
                 >
-                  Orders History
+                  {Language==="ar"?"جميع الطلبات":"All Orders"}
                 </div>
               </div>
             </div>
           </Row>
           <Row>
             <div>
-              <span>Products</span>
+              <span>{Language==="ar"?"المنتجات":"Products"}</span>
               <span
                 className="MenuArrow"
                 id="ProductsArrow"
@@ -1747,7 +1747,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                     }
                   }}
                 >
-                  All Products
+                  {Language==="ar"?"جميع المنتجات":"All Products"}
                 </div>
                 <div
                   onClick={(e) => {
@@ -1767,7 +1767,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                     SetData(e.target.innerText);
                   }}
                 >
-                  Add Products
+                  {Language==="ar"?"اضافه منتج":"Add Products"}
                 </div>
                 <div
                   onClick={(e) => {
@@ -1787,14 +1787,14 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                     SetData(e.target.innerText);
                   }}
                 >
-                  Update Products
+                  {Language==="ar"?"تعديل منتج":"Update Product"}
                 </div>
               </div>
             </div>
           </Row>
           <Row>
             <div>
-              <span>Payments</span>
+              <span>{Language==="ar"?"الدفعات":"Payments"}</span>
               <span
                 className="MenuArrow"
                 id="PaymentsArrow"
@@ -1895,7 +1895,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                     }
                   }}
                 >
-                  Recieved Payments
+                  {Language==="ar"?"الدفعات المستلمه":"Recieved Payments"}
                 </div>
                 <div
                     onClick={async(e) => {
@@ -1957,7 +1957,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                       }
                     }}
                 >
-                  All Payments
+                  {Language==="ar"?"جميع الدفعات":"All Payments"}
                 </div>
               </div>
             </div>
