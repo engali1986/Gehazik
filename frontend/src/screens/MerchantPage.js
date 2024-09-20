@@ -427,7 +427,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                       <th>Product Title</th>
                       <th>Unit Price</th>
                       <th>Ordered Quantity</th>
-                      <th>Delivered</th>
+                      <th>Status</th>
                     </tr>
                   </thead>
                  <tbody>
@@ -438,7 +438,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                     <td>{item.OrderedItems.map((SubItem)=>(<div key={SubItem.ID}>{SubItem.ProductTitle}</div>))}</td>
                     <td>{item.OrderedItems.map(SubItem=>(<div key={SubItem.ProductUnitPrice}>{SubItem.ProductUnitPrice}</div>))}</td>
                     <td>{item.OrderedItems.map(SubItem=>(<div key={SubItem.ID}>{SubItem.Qty}</div>))}</td>
-                    <td>{item.OrderDelivered.toString()}</td>
+                    <td>{item.OrderStatus[item.OrderStatus.length-1].Status}</td>
                     </tr>)):(<tr><td>No Data</td></tr>)}
                  </tbody>
                 </table>
@@ -466,7 +466,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                       <th>Product Title</th>
                       <th>Unit Price</th>
                       <th>Ordered Quantity</th>
-                      <th>Delivered</th>
+                      <th>Status</th>
                       <th>Payment Released</th>
                       <th>Order Completed</th>
                     </tr>
@@ -479,7 +479,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                     <td>{item.OrderedItems.map((SubItem)=>(<div key={SubItem.ID}>{SubItem.ProductTitle}</div>))}</td>
                     <td>{item.OrderedItems.map(SubItem=>(<div key={SubItem.ProductUnitPrice}>{SubItem.ProductUnitPrice}</div>))}</td>
                     <td>{item.OrderedItems.map(SubItem=>(<div key={SubItem.ID}>{SubItem.Qty}</div>))}</td>
-                    <td>{item.OrderDelivered.toString()}</td>
+                    <td>{item.OrderStatus[item.OrderStatus.length-1].Status}</td>
                     <td>{item.MerchantPaymentSent.toString()}</td>
                     <td>{item.OrderCompleted.toString()}</td>
                     </tr>)):(<tr><td>No Data</td></tr>)}
@@ -1564,7 +1564,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                           toast.success("Done!")
                           SetOrders(GetMerchantOrders.resp)
                           SetNewOrders(GetMerchantOrders.resp.filter((item)=>{
-                            if (item.OrderDelivered===false) {
+                            if (item.OrderStatus[item.OrderStatus.length-1].Status==="Waiting Payment"||"On the way") {
                               return item
                             }
                           }))
@@ -1627,7 +1627,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                           toast.success("Done!")
                           SetOrders(GetMerchantOrders.resp)
                           SetNewOrders(GetMerchantOrders.resp.filter((item)=>{
-                            if (item.OrderDelivered===false) {
+                            if (item.OrderStatus[item.OrderStatus.length-1].Status==="Waiting Payment"||"On the way") {
                               return item
                             }
                           }))

@@ -10,7 +10,7 @@ const UserOrders=async(UserData)=>{
         const Orders=await client
         .db("Gehazik")
         .collection("Orders")
-        .find({OrderedEmail:UserData.Email, OrderCancelled:false},{projection:{OrderedBy:1,OrderedDate:1,OrderedPaymentMethod:1,OrderedItems:1,OrderedValue:1,OrderDelivered:1,OrderPayed:1,OrderPaymentDate:1, OrderCompleted:1}}).toArray()
+        .find({OrderedEmail:UserData.Email, OrderCancelled:false},{projection:{OrderedBy:1,OrderedDate:1,OrderedPaymentMethod:1,OrderedItems:1,OrderedValue:1,OrderDelivered:1,OrderPayed:1,OrderPaymentDate:1, OrderCompleted:1,OrderStatus:1}}).toArray()
         console.log("UserOrders file 1")
         console.log(Orders)
         console.log(Orders.length)

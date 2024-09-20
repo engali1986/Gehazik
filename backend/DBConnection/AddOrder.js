@@ -32,7 +32,8 @@ const AddOrder = async (OrderData) => {
         OrderCompleted:false,
         OrderCancelled:false,
         OrderCancelledDate:'',
-        CancelReason:""
+        CancelReason:"",
+        OrderStatus:[{Status:OrderData.Address.Payment==="Vodafone Cash"?"Waiting Payment":"On the way", Date:new Date()}]
     }).then(res => {
         console.log("AddOrder file 1 res result");
         console.log(res)

@@ -244,7 +244,7 @@ const DtataDisplay=({globalState,setGlobal,Data,Orders,NewOrders, SetOrders})=>{
                       <th>{Language==="ar"?"اسم المنتج":"Product Title"}</th>
                       <th>{Language==="ar"?"سعر الوحده":"Unit Price"}</th>
                       <th>{Language==="ar"?"الكميه المطلوبه":"Ordered Quantity"}</th>
-                      <th>{Language==="ar"?"تم التوصيل":"Delivered"}</th>
+                      <th>{Language==="ar"?"حالة الطلب":"Status"}</th>
                     </tr>
                   </thead>
                  <tbody>
@@ -256,7 +256,7 @@ const DtataDisplay=({globalState,setGlobal,Data,Orders,NewOrders, SetOrders})=>{
                     <td>{item.OrderedItems.map((SubItem)=>(<div key={SubItem.ID}>{SubItem.ProductTitle}</div>))}</td>
                     <td>{item.OrderedItems.map(SubItem=>(<div key={SubItem.ProductUnitPrice}>{SubItem.ProductUnitPrice}</div>))}</td>
                     <td>{item.OrderedItems.map(SubItem=>(<div key={SubItem.ID}>{SubItem.Qty}</div>))}</td>
-                    <td>{item.OrderedPaymentMethod==="Vodafone Cash"&& item.OrderPayed===false ?Language==="ar"?"بانتظار الدفع ":"Waiting payment":item.OrderDelivered===false?Language==="ar"?"جاري التوصيل ":"On the way":Language==="ar"?"تم التوصيل":"Delivered"}</td>
+                    <td>{item.OrderStatus[item.OrderStatus.length-1].Status==="Waiting Payment"?Language==="ar"?"بانتظار الدفع":"Waiting Payment":item.OrderStatus[item.OrderStatus.length-1].Status==="On the way"?Language==="ar"?"جاري التوصيل":"On the way":Language==="ar"?"تم التوصيل":"Delivered"}</td>
                     </tr>)):(<tr><td>No Data</td></tr>)}
                  </tbody>
                 </table>
@@ -522,7 +522,7 @@ const ClientPage = ({globalState,setGlobal}) => {
                 toast.success("Done!")
                 SetOrders(GetMerchantOrders.resp)
                 SetNewOrders(GetMerchantOrders.resp.filter((item)=>{
-                  if (item.OrderDelivered===false) {
+                  if (item.OrderStatus[item.OrderStatus.length-1]==="Waiting Payment"||"On the way") {
                     return item
                   }
                 }))
@@ -571,7 +571,7 @@ const ClientPage = ({globalState,setGlobal}) => {
                 toast.success("Done!")
                 SetOrders(GetMerchantOrders.resp)
                 SetNewOrders(GetMerchantOrders.resp.filter((item)=>{
-                  if (item.OrderDelivered===false) {
+                  if (item.OrderStatus[item.OrderStatus.length-1]==="Waiting Payment"||"On the way") {
                     return item
                   }
                 }))
