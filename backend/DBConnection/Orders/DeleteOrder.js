@@ -11,7 +11,7 @@ const DeleteOrders=async(CancelData)=>{
       await client.connect();
       console.log("Connection established ");
       console.log(CancelData)
-      const CancelOrder=await client.db("Gehazik").collection("Orders").updateOne({_id:new ObjectId(CancelData.OrderId)},{$set:{OrderCancelled:true, OrderCancelledDate:new Date(),CancelReason:CancelData.Reason}}).then((res)=>{
+      const CancelOrder=await client.db("Gehazik").collection("Orders").updateOne({_id:new ObjectId(CancelData.OrderId)},{$push:{OrderStatus:{Status:"Cancelled",Date:new Date(),Reason:CancelData.Reason}}}).then((res)=>{
         console.log("DeleteOrder file 1");
         console.log(res)
         return res

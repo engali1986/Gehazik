@@ -256,7 +256,7 @@ const DtataDisplay=({globalState,setGlobal,Data,Orders,NewOrders, SetOrders})=>{
                     <td>{item.OrderedItems.map((SubItem)=>(<div key={SubItem.ID}>{SubItem.ProductTitle}</div>))}</td>
                     <td>{item.OrderedItems.map(SubItem=>(<div key={SubItem.ProductUnitPrice}>{SubItem.ProductUnitPrice}</div>))}</td>
                     <td>{item.OrderedItems.map(SubItem=>(<div key={SubItem.ID}>{SubItem.Qty}</div>))}</td>
-                    <td>{item.OrderStatus[item.OrderStatus.length-1].Status==="Waiting Payment"?Language==="ar"?"بانتظار الدفع":"Waiting Payment":item.OrderStatus[item.OrderStatus.length-1].Status==="On the way"?Language==="ar"?"جاري التوصيل":"On the way":Language==="ar"?"تم التوصيل":"Delivered"}</td>
+                    <td>{item.OrderStatus[item.OrderStatus.length-1].Status==="Waiting Payment"?Language==="ar"?"بانتظار الدفع":"Waiting Payment":item.OrderStatus[item.OrderStatus.length-1].Status==="Cancelled"?Language==="ar"?"تم الغاؤه":"Cancelled":item.OrderStatus[item.OrderStatus.length-1].Status==="On the way"?Language==="ar"?"جاري التوصيل":"On the way":Language==="ar"?"تم التوصيل":"Delivered"}</td>
                     </tr>)):(<tr><td>No Data</td></tr>)}
                  </tbody>
                 </table>
@@ -298,7 +298,7 @@ const DtataDisplay=({globalState,setGlobal,Data,Orders,NewOrders, SetOrders})=>{
               console.log(Order)
             }}>
               {Orders.map(item=>(
-                new Date().getTime()-new Date(item.OrderedDate).getTime()<=86400000?<option key={item._id}>{item._id}</option>:""
+                new Date().getTime()-new Date(item.OrderedDate).getTime()<=86400000 && item.OrderStatus[item.OrderStatus.length-1].Status!=="Cancelled"?<option key={item._id}>{item._id}</option>:""
               ))}
             </select>
             </div>
@@ -396,13 +396,21 @@ const DtataDisplay=({globalState,setGlobal,Data,Orders,NewOrders, SetOrders})=>{
                 console.log(DeleteOrder)
 
                 if (DeleteOrder.resp==="Order Deleted Successfully") {
-                  let Arr=Orders.filter((item)=>{
+                  let Arr=Orders.forEach(item => {
                     if (item._id.toString()!==CancelOrder._id) {
-                      return item 
+                      item.OrderStatus.push({Status:"Cancelled",Date:new Date(),Reason:CancelData.Reason})
+                      
                     }
                     
+                  });
+
+                  // let Arr=Orders.filter((item)=>{
+                  //   if (item._id.toString()!==CancelOrder._id) {
+                  //     return item 
+                  //   }
                     
-                  })
+                    
+                  // })
                   SetOrders(Arr)
                   SetcancelOrder(null)
                   e.target.disabled=false
@@ -522,7 +530,7 @@ const ClientPage = ({globalState,setGlobal}) => {
                 toast.success("Done!")
                 SetOrders(GetMerchantOrders.resp)
                 SetNewOrders(GetMerchantOrders.resp.filter((item)=>{
-                  if (item.OrderStatus[item.OrderStatus.length-1]==="Waiting Payment"||"On the way") {
+                  if (item.OrderStatus[item.OrderStatus.length-1].Status==="Waiting Payment"||item.OrderStatus[item.OrderStatus.length-1].Status==="On the way") {
                     return item
                   }
                 }))
@@ -571,7 +579,7 @@ const ClientPage = ({globalState,setGlobal}) => {
                 toast.success("Done!")
                 SetOrders(GetMerchantOrders.resp)
                 SetNewOrders(GetMerchantOrders.resp.filter((item)=>{
-                  if (item.OrderStatus[item.OrderStatus.length-1]==="Waiting Payment"||"On the way") {
+                  if (item.OrderStatus[item.OrderStatus.length-1].Status==="Waiting Payment"||item.OrderStatus[item.OrderStatus.length-1].Status==="On the way") {
                     return item
                   }
                 }))
@@ -620,7 +628,7 @@ const ClientPage = ({globalState,setGlobal}) => {
                   toast.success("Done!")
                   SetOrders(GetMerchantOrders.resp)
                   SetNewOrders(GetMerchantOrders.resp.filter((item)=>{
-                    if (item.OrderDelivered===false) {
+                    if (item.OrderStatus[item.OrderStatus.length-1].Status==="Waiting Payment"||item.OrderStatus[item.OrderStatus.length-1].Status==="On the way") {
                       return item
                     }
                   }))
