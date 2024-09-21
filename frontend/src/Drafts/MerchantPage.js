@@ -517,13 +517,13 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                 <table border="1">
                   <thead>
                     <tr>
-                      <th>{Language==="ar"?"رقم المنتج":"Product ID"}</th>
-                      <th>{Language==="ar"?"اسم المنتج":"Product Title"}</th>
-                      <th>{Language==="ar"?"سعر القطعه":"Unit Price"}</th>
-                      <th>{Language==="ar"?"المخزون":"In Stock Quantity"}</th>
-                      <th>{Language==="ar"?"الكميه المطلوبه":"Ordered Quantity"}</th>
-                      <th>{Language==="ar"?"تعديل":"Edit"}</th>
-                      <th>{Language==="ar"?"تحديث":"Update"}</th>
+                      <th>ID</th>
+                      <th>Product Title</th>
+                      <th>Unit Price</th>
+                      <th>In Stock Quantity</th>
+                      <th>Ordered Quantity</th>
+                      <th>Edit</th>
+                      <th>Update</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -559,9 +559,8 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                             e.stopPropagation();
                             setEditProductId(product._id);
                           }}
-                          style={{cursor:"pointer"}}
                         >
-                          {Language==="ar"?"تعديل":"Edit"}
+                          Edit
                         </td>
                         <td>
                           <button
@@ -706,7 +705,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                                   : "#94f48c",
                             }}
                           >
-                            {Language==="ar"?"تحديث":"Update"}
+                            Update
                           </button>
                         </td>
                       </tr>
@@ -749,12 +748,11 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                       return res.json();
                     })
                     .catch((err) => {
-                      console.log(err)
-                      return { resp:Language==="ar"?"حدث خطا برجاء المحاوله لاحقا":"Internal Error" };
+                      return { resp: "Internal Error" };
                     });
                   console.log(UpdateProduct);
                   if (UpdateProduct.resp === "Products Updated Successfully") {
-                    e.target.innerText = Language==="ar"?"تاكيد":"Confirm";
+                    e.target.innerText = "Confirm Update";
                     e.target.disabled = false;
                     SetShowAlert({
                       ...ShowAlert,
@@ -765,7 +763,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                     SetUpdateProductsList([])
                   } else {
                     e.target.disabled = false;
-                    e.target.innerText = Language==="ar"?"تاكيد":"Confirm";
+                    e.target.innerText = "Confirm Update";
                     SetShowAlert({
                       ...ShowAlert,
                       Massage: UpdateProduct.resp,
@@ -788,7 +786,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                     UpdateProductsList.length === 0 ? "#cacbc9" : "#94f48c",
                 }}
               >
-                {Language==="ar"?"تاكيد":"Confirm"}
+                Confirm Update
               </button>
             </Col>
           </Row>
