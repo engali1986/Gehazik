@@ -4,6 +4,7 @@ import Feedback from "react-bootstrap/esm/Feedback";
 import { Link } from "react-router-dom";
 import StaticData, { Categories } from "../Data/StaticData.js";
 import {LanguageContext} from "../Context/LanguageContext.js"
+import Logo from "./Images/Logo.jpg"
 // here we use if else to check params.GlobalState.Admin if false display NavBar items means normal user else means admin donot display navbar items except home
 const Home = (params) => {
   const {Language,ToggleLanguage}=useContext(LanguageContext)
@@ -160,7 +161,7 @@ const Home = (params) => {
             }}
           >
             <a href="/">
-            <img src="./Images/Logo.jpg" style={{width:'100%' ,aspectRatio:"1/1"}} />
+            <img src={Logo} style={{width:'100%' ,aspectRatio:"1/1"}} />
             </a>
           </div>
           <div
@@ -189,7 +190,7 @@ const Home = (params) => {
             }}
           >
             <a href="/">
-            <img src="./Images/Logo.jpg" style={{width:'100%' ,aspectRatio:"1/1"}} />
+            <img src={Logo} style={{width:'100%' ,aspectRatio:"1/1"}} />
             </a>
           </div>
           <div
@@ -226,7 +227,7 @@ const Home = (params) => {
             }}
           >
             <a href="/">
-            <img src="./Images/Logo.jpg" style={{width:'100%' ,aspectRatio:"1/1"}} />
+            <img src={Logo} style={{width:'100%' ,aspectRatio:"1/1"}} />
             </a>
           </div>
           <div
@@ -314,7 +315,7 @@ const Home = (params) => {
             }}
           >
             <a href="/">
-            <img src="./Images/Logo.jpg" style={{width:'100%' ,aspectRatio:"1/1"}} />
+            <img src={Logo} style={{width:'100%' ,aspectRatio:"1/1"}} />
             </a>
           </div>
           <div
