@@ -4,7 +4,7 @@ import Feedback from "react-bootstrap/esm/Feedback";
 import { Link } from "react-router-dom";
 import StaticData, { Categories } from "../Data/StaticData.js";
 import {LanguageContext} from "../Context/LanguageContext.js"
-import Logo from "./Images/Logo.jpg"
+import Logo from "../Data/Images/Logo.jpg"
 // here we use if else to check params.GlobalState.Admin if false display NavBar items means normal user else means admin donot display navbar items except home
 const Home = (params) => {
   const {Language,ToggleLanguage}=useContext(LanguageContext)
