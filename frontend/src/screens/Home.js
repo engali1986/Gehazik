@@ -7,6 +7,7 @@ import {LanguageContext} from "../Context/LanguageContext.js"
 // here we use if else to check params.GlobalState.Admin if false display NavBar items means normal user else means admin donot display navbar items except home
 const Home = (params) => {
   const {Language,ToggleLanguage}=useContext(LanguageContext)
+  const [ClientLogged,SetClientLogged]=useState(false)
   console.log();
   const LogInItems = () => {
     if (params.GlobalState.UserLogged === true) {
@@ -121,10 +122,27 @@ const Home = (params) => {
       );
     }
   };
+  
+  useEffect(()=>{
+    if (
+      params.GlobalState.Admin === true ||
+      params.GlobalState.Merchant === true
+    ){
+      console.log("Admin/ merchant Logged")
+      SetClientLogged(false)
+    }else{
+      console.log("Client Logged")
+      SetClientLogged(true)
+    }
+
+   
+  
+
+  })
+
   //  here we check if normal user or admin
   if (
-    params.GlobalState.Admin === true ||
-    params.GlobalState.Merchant === true
+    ClientLogged===false
   ) {
     return (
       <Container
@@ -133,14 +151,17 @@ const Home = (params) => {
         }}
       >
         <Row className="NavBarBig d-none d-md-flex">
-          <div
+        <div
             style={{
               fontSize: "1.5rem",
               textAlign: "start",
-              width: "fit-content",
+              width: "5vw",
+              wordBreak:'break-word'
             }}
           >
-            home
+            <a href="/">
+            <img src="./Images/Logo.jpg" style={{width:'100%' ,aspectRatio:"1/1"}} />
+            </a>
           </div>
           <div
             style={{
@@ -159,14 +180,17 @@ const Home = (params) => {
         </Row>
         {/* Small screen navbar-------------------------------------------------------------------------------------------------- */}
         <Row className=" NavBarSmall d-flex d-md-none">
-          <div
+        <div
             style={{
               fontSize: "1.5rem",
               textAlign: "start",
-              width: "fit-content",
+              width: "10vw",
+              wordBreak:'break-word'
             }}
           >
-            home
+            <a href="/">
+            <img src="./Images/Logo.jpg" style={{width:'100%' ,aspectRatio:"1/1"}} />
+            </a>
           </div>
           <div
             style={{
@@ -281,14 +305,17 @@ const Home = (params) => {
         </Row>
         {/* Small screen navbar-------------------------------------------------------------------------------------------------- */}
         <Row className=" NavBarSmall d-flex d-md-none">
-          <div
+        <div
             style={{
               fontSize: "1.5rem",
               textAlign: "start",
-              width: "fit-content",
+              width: "10vw",
+              wordBreak:'break-word'
             }}
           >
-            home
+            <a href="/">
+            <img src="./Images/Logo.jpg" style={{width:'100%' ,aspectRatio:"1/1"}} />
+            </a>
           </div>
           <div
             style={{
@@ -403,5 +430,6 @@ const Home = (params) => {
       </Container>
     );
   }
+  
 };
 export default Home;

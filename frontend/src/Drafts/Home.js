@@ -133,14 +133,17 @@ const Home = (params) => {
         }}
       >
         <Row className="NavBarBig d-none d-md-flex">
-          <div
+        <div
             style={{
               fontSize: "1.5rem",
               textAlign: "start",
-              width: "fit-content",
+              width: "5vw",
+              wordBreak:'break-word'
             }}
           >
-            home
+            <a href="/">
+            <img src="./Images/Logo.jpg" style={{width:'100%' ,aspectRatio:"1/1"}} />
+            </a>
           </div>
           <div
             style={{
@@ -159,14 +162,17 @@ const Home = (params) => {
         </Row>
         {/* Small screen navbar-------------------------------------------------------------------------------------------------- */}
         <Row className=" NavBarSmall d-flex d-md-none">
-          <div
+        <div
             style={{
               fontSize: "1.5rem",
               textAlign: "start",
-              width: "fit-content",
+              width: "5vw",
+              wordBreak:'break-word'
             }}
           >
-            home
+            <a href="/">
+            <img src="./Images/Logo.jpg" style={{width:'100%' ,aspectRatio:"1/1"}} />
+            </a>
           </div>
           <div
             style={{
@@ -281,14 +287,17 @@ const Home = (params) => {
         </Row>
         {/* Small screen navbar-------------------------------------------------------------------------------------------------- */}
         <Row className=" NavBarSmall d-flex d-md-none">
-          <div
+        <div
             style={{
               fontSize: "1.5rem",
               textAlign: "start",
-              width: "fit-content",
+              width: "5vw",
+              wordBreak:'break-word'
             }}
           >
-            home
+            <a href="/">
+            <img src="./Images/Logo.jpg" style={{width:'100%' ,aspectRatio:"1/1"}} />
+            </a>
           </div>
           <div
             style={{
