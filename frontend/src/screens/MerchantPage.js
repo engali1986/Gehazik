@@ -67,9 +67,9 @@ const MerchantPage = ({ globalState, setGlobal }) => {
       Token: globalState.Token,
       Name: globalState.Name,
       Email: globalState.Email,
-      EgyptDelivery:false,
-      GovernorateDelivery:false,
-      CityDelivery:false
+      EgyptDelivery:true,
+      GovernorateDelivery:true,
+      CityDelivery:true
     });
     const [editProductId, setEditProductId] = useState(null);
     // const [UpdateProduct, SetUpdateProduct] = useState({
@@ -92,7 +92,6 @@ const MerchantPage = ({ globalState, setGlobal }) => {
       let Keyes = Object.keys(AddProductData);
       console.log(Keyes);
       let ProductDataChecked = false;
-     
       for (let index = 0; index < Keyes.length; index++) {
         if (
           AddProductData[Keyes[index]] === "" ||
@@ -118,7 +117,10 @@ const MerchantPage = ({ globalState, setGlobal }) => {
               formData.append("Files", file);
             });
             console.log(formData);
-  
+            if (AddProductData.ProductCategory==="Grocery") {
+              SetAddProductData({...AddProductData,EgyptDelivery:false})
+            }
+            console.log(AddProductData)
             console.log("Submitting data");
             const ProductAdded = await fetch(
               "http://localhost:5000/Merchants/AddProduct",
@@ -877,7 +879,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                   );
                   Alert.current.innerText = "";
                   Alert.current.style.maxHeight = "0px";
-                  if (e.target.value === "Please select Category") {
+                  if (e.target.value === "Please select Category" || e.target.value==="برجاء اختيار القسم الرئيسي") {
                     SetAddProductData({
                       ...AddProductData,
                       ProductCategory: "",
@@ -899,7 +901,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                   console.log(e.target.value);
                 }}
               >
-                <option>Please select Category</option>
+                <option>{Language==="ar"?"برجاء اختيار القسم الرئيسي":"Please select Category"}</option>
                 {StaticData.ProductCategories.map((Item, Index) => (
                   <option key={Object.keys(Item)[0].replace(/_/g, " ")}>
                     {Object.keys(Item)[0].replace(/_/g, " ")}
@@ -919,7 +921,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                   );
                   Alert.current.innerText = "";
                   Alert.current.style.maxHeight = "0px";
-                  if (e.target.value === "Please select Subcategory") {
+                  if (e.target.value === "Please select Subcategory"|| e.target.value==="برجاء اختيار القسم الفرعي") {
                     SetAddProductData({
                       ...AddProductData,
                       ProductSubCategory: "",
@@ -933,7 +935,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                   console.log(e.target.value);
                 }}
               >
-                <option>Please select Subcategory</option>
+                <option>{Language==="ar"?"برجاء اختيار القسم الفرعي":"Please select Subcategory"}</option>
                 {Subcategories()}
               </select>
             </Col>
@@ -949,7 +951,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                   );
                   Alert.current.innerText = "";
                   Alert.current.style.maxHeight = "0px";
-                  if (e.target.value === "Please select Features") {
+                  if (e.target.value === "Please select Main Feature"|| e.target.value==="برجاء اضافه الصفه الرئيسيه") {
                     SetAddProductData({
                       ...AddProductData,
                       ProductFeature: "",
@@ -963,14 +965,14 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                   console.log(e.target.value);
                 }}
               >
-                <option>Please select Features</option>
+                <option>{Language==="ar"?"برجاء اضافه الصفه الرئيسيه":"Please select Main Feature"}</option>
                 {Features()}
               </select>
             </Col>
           </Row>
           <Row className=" pb-2 align-items-center text-start">
             <Col xs={4} md={8}>
-              <div style={{ color: "white" }}>Please add quantity</div>
+              <div style={{ color: "white" }}>{Language==="ar"?"برجاء اضافه الكميه":"Please add quantity"}</div>
             </Col>
             <Col xs={4} md={2}>
               <input
@@ -981,10 +983,20 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                   );
                   Alert.current.innerText = "";
                   Alert.current.style.maxHeight = "0px";
-                  SetAddProductData({
-                    ...AddProductData,
-                    ProductQty: parseInt(e.target.value, 10),
-                  });
+                  if (parseInt(e.target.value,10)<=0) {
+                    toast.error(Language==="ar"?"كميه المنتج يجب ان تكون اكبر من صفر":"Quantity shall be >0")
+                    SetAddProductData({
+                      ...AddProductData,
+                      ProductQty: 0,
+                    });
+                  }else{
+                    SetAddProductData({
+                      ...AddProductData,
+                      ProductQty: parseInt(e.target.value, 10),
+                    });
+
+                  }
+                  
                 }}
                 style={{ width: "100%" }}
                 type="number"
@@ -999,14 +1011,30 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                   );
                   Alert.current.innerText = "";
                   Alert.current.style.maxHeight = "0px";
-                  SetAddProductData({
-                    ...AddProductData,
-                    ProductQtyUnit: e.target.value,
-                  });
+                  if (e.target.value==="Unit"||e.target.value==="الوحده") {
+                    SetAddProductData({
+                      ...AddProductData,
+                      ProductQtyUnit:"",
+                    });
+                    Alert.current.classList.replace(
+                      "alert-success",
+                      "alert-danger"
+                    );
+                    Alert.current.innerText = Language==="ar"?"برجاء اختيار وحده":"Please select unit";
+                    Alert.current.style.maxHeight = "500px";
+                    
+                  } else {
+                    SetAddProductData({
+                      ...AddProductData,
+                      ProductQtyUnit: e.target.value,
+                    });
+                    
+                  }
+                 
                 }}
                 style={{ width: "100%" }}
               >
-                <option>Unit</option>
+                <option>{Language==="ar"?"الوحده":"Unit"}</option>
                 {StaticData.Units.map((Unit) => (
                   <option key={Unit}>{Unit}</option>
                 ))}
@@ -1015,7 +1043,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
           </Row>
           <Row className=" pb-2 align-items-center text-start">
             <Col xs={4} md={8}>
-              <div style={{ color: "white" }}>Please add Unit Price</div>
+              <div style={{ color: "white" }}>{Language==="ar"?"برجاء اضافه سعر الوحده":"Please add Unit Price"}</div>
             </Col>
             <Col xs={4} md={2}>
               <input
@@ -1026,10 +1054,21 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                   );
                   Alert.current.innerText = "";
                   Alert.current.style.maxHeight = "0px";
-                  SetAddProductData({
-                    ...AddProductData,
-                    ProductUnitPrice: parseInt(e.target.value, 10),
-                  });
+                  if (parseInt(e.target.value,10)<=0) {
+                    toast.error(Language==="ar"?"سعر الوحده يجب ان يكون اكبر من صفر":"Unit price shall be > 0")
+                    SetAddProductData({
+                      ...AddProductData,
+                      ProductUnitPrice: 0,
+                    });
+                    
+                  } else {
+                    SetAddProductData({
+                      ...AddProductData,
+                      ProductUnitPrice: parseInt(e.target.value, 10),
+                    });
+                    
+                  }
+                  
                 }}
                 style={{ width: "100%" }}
                 type="number"
@@ -1089,7 +1128,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
               />
             </Col>
           </Row>
-          <Row
+          {/* <Row
             style={{ color: "white" }}
             className=" pb-2 align-items-center text-start"
           >
@@ -1165,7 +1204,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
               </option>
              </select>
             </Col>
-          </Row>
+          </Row> */}
           <Row
             style={{ color: "white" }}
             className=" pb-2 align-items-center text-start"

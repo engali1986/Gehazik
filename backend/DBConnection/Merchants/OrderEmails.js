@@ -49,7 +49,7 @@ const OrderEmails=async(OrderData, OrderID)=>{
                 from: 'Ali Mohammed <engaligulf1986@gmail.com>',
                 to: MerchantEmails[index],
                 subject: 'New Order Confirmation !',
-                html: `<h1> You have got new Order Please confirm</h1><h2>Order Number :${OrderID}</h2>`
+                html: `<h1> You have got new Order Please prepare for delivary</h1><h2>Order Number :${OrderID}</h2>`
               };
               const result=await Transporter.sendMail(mailOptions).then(res=>{
                 console.log(res)
