@@ -117,9 +117,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
               formData.append("Files", file);
             });
             console.log(formData);
-            if (AddProductData.ProductCategory==="Grocery") {
-              SetAddProductData({...AddProductData,EgyptDelivery:false})
-            }
+           
             console.log(AddProductData)
             console.log("Submitting data");
             const ProductAdded = await fetch(
@@ -887,16 +885,34 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                       ProductQty: 0,
                       ProductQtyUnit: "",
                       ProductSubCategory: "",
+                      EgyptDelivery:true
                     });
                   } else {
-                    SetAddProductData({
-                      ...AddProductData,
-                      ProductCategory: e.target.value,
-                      ProductFeature: "",
-                      ProductQty: 0,
-                      ProductQtyUnit: "",
-                      ProductSubCategory: "",
-                    });
+                    if (e.target.value==="Grocery") {
+                      SetAddProductData({
+                        ...AddProductData,
+                        ProductCategory: e.target.value,
+                        ProductFeature: "",
+                        ProductQty: 0,
+                        ProductQtyUnit: "",
+                        ProductSubCategory: "",
+                        EgyptDelivery:false
+                      });
+                     
+                      
+                    } else {
+                      SetAddProductData({
+                        ...AddProductData,
+                        ProductCategory: e.target.value,
+                        ProductFeature: "",
+                        ProductQty: 0,
+                        ProductQtyUnit: "",
+                        ProductSubCategory: "",
+                        EgyptDelivery:true
+                      });
+                      
+                    }
+                    
                   }
                   console.log(e.target.value);
                 }}
