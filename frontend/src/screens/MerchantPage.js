@@ -1080,8 +1080,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
           </Row>
           <Row className=" pb-2 align-items-center text-start">
             <Col style={{ color: "white" }} xs={6}>
-              {" "}
-              Add product title
+              {Language==="ar"?"برجاء اضافه اسم المنتج":"Add product title"}
             </Col>
             <Col xs={6}>
               <input
@@ -1106,7 +1105,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
             style={{ color: "white" }}
             className=" pb-2 align-items-center text-start"
           >
-            <Col xs={6}> Add product dditional features separated by comma</Col>
+            <Col xs={6}>{Language==="ar"?"برجاء اضافه وصف المنتج مفصولا بعلامه (,)":"Add product aditional features separated by comma"} </Col>
             <Col xs={6}>
               <input
                 onChange={(e) => {
@@ -1209,7 +1208,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
             style={{ color: "white" }}
             className=" pb-2 align-items-center text-start"
           >
-            <Col xs={6}> Pleas add product photos</Col>
+            <Col xs={6}>{Language==="ar"?"برجاء اضافه صور للمنتج":"Please add product photos"}</Col>
             <Col xs={6}>
               <input
                 onChange={(e) => {
@@ -1234,8 +1233,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                           "alert-success",
                           "alert-danger"
                         );
-                        Alert.current.innerText =
-                          "Please upload file less than 512 KB";
+                        Alert.current.innerText =Language==="ar"?" 512 KBبرجاء حجم الصوره الواحده لايزيد عن":"Please upload file less than 512 KB";
                         Alert.current.style.maxHeight = "500px";
                       } else if (
                         e.target.files[index] &&
@@ -1251,8 +1249,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                           "alert-success",
                           "alert-danger"
                         );
-                        Alert.current.innerText =
-                          "Please upload file less than 512 KB";
+                        Alert.current.innerText =Language==="ar"?" 512 KBبرجاء حجم الصوره الواحده لايزيد عن":"Please upload file less than 512 KB";
                         Alert.current.style.maxHeight = "500px";
                       }
                     }
@@ -1263,7 +1260,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                       "alert-success",
                       "alert-danger"
                     );
-                    Alert.current.innerText = "Please upload maximum 4 images";
+                    Alert.current.innerText =Language==="ar"?"برجاء اضافه بحد اقصى 4 صور":"Please upload maximum 4 images";
                     Alert.current.style.maxHeight = "500px";
                   }
                 }}
@@ -1300,7 +1297,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                 disabled={Disabled}
                 onClick={(e) => AddProduct(e)}
               >
-                Add Product
+                {Language==="ar"?"اضف منتج":"Add Product"}
               </button>
             </Col>
           </Row>
