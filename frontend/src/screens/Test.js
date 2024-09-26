@@ -3,9 +3,42 @@ import io from 'socket.io-client';
 import {LanguageContext} from "../Context/LanguageContext";
 import {Container,Row, Col} from "react-bootstrap"
 const socket = io('http://localhost:5000'); // Connect to the Node.js server
+const DisplayData=({Data, SetData})=>{
+  return(
+    <>
+    <button onClick={(e)=>{
+      e.stopPropagation()
+     
+      SetData(PervData=>{
+        let x=[]
+        for (let index = 0; index < PervData.length; index++) {
+          if(PervData[index]==="bb"){
+            x.push("aqw")
+          }else{
+            x.push(PervData[index])
+
+          }
+          
+        }
+        PervData=x
+        return PervData
+      })
+        console.log(Data)
+      
+    }}>
+      Click
+    </button>
+    {Data.map((item,index)=>(
+      <div key={index}>
+        {item}
+      </div>
+    ))}
+    </>
+  )
+}
 const Test = ({globalState}) => {
   const {Language,ToggleLanguage}=useContext(LanguageContext)
-  const [Text,SetText]=useState("")
+  const [Data,SetData]=useState(["aa","bb","CC"])
 
   
  
@@ -13,17 +46,7 @@ const Test = ({globalState}) => {
   return (
    
      <>
-    <button onClick={(e)=>{
-      e.stopPropagation()
-      let x=new Date("2024-09-07T04:57:29.732+00:00")
-      console.log(x)
-      console.log(x.getDay())
-      console.log(typeof x)
-    }}>
-      click
-
-    </button>
-     
+     <DisplayData Data={Data} SetData={SetData}/>
      </>
     
  
