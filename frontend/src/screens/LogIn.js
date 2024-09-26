@@ -59,7 +59,7 @@ const LogIn = ({ globalState, setGlobal }) => {
       UserVarified.resp.UserVarified === false
     ) {
       Alert.current.classList.replace("alert-danger", "alert-success");
-      Alert.current.innerText = Language==="ar"?"تم ارسال رمز التحقق عبر البريد الالكتروني ":"Varification code sent by email";
+      Alert.current.innerText = Language==="ar"?"تم ارسال رمز التحقق عبر البريد الالكتروني ":"Varification Code sent by Email";
       Alert.current.style.maxHeight = "500px";
       VarificationCodeRef.current.style.display = "flex";
       setDisabled(false);
@@ -122,7 +122,7 @@ const LogIn = ({ globalState, setGlobal }) => {
             UserLogIn.resp.UserVarified === false
           ) {
             Alert.current.classList.replace("alert-danger", "alert-success");
-            Alert.current.innerText = Language==="ar"?"تم ارسال رمز التحقق عبر البريد الالكتروني ":"Varification code sent by email";
+            Alert.current.innerText = Language==="ar"?"تم ارسال رمز التحقق عبر البريد الالكتروني ":"Varification Code sent by Email";
             Alert.current.style.maxHeight = "500px";
             VarificationCodeRef.current.style.display = "flex";
             setDisabled(false);
@@ -137,9 +137,9 @@ const LogIn = ({ globalState, setGlobal }) => {
           Alert.current.innerText = Language==="ar"?"خطا بالاتصال ":"Connection error";
           Alert.current.style.maxHeight = "500px";
           setDisabled(false);
-        } else if (UserLogIn.resp === "Varification code sent by email") {
+        } else if (UserLogIn.resp === "Varification Code sent by Email") {
           Alert.current.classList.replace("alert-success", "alert-danger");
-          Alert.current.innerText = Language==="ar"?"تم ارسال رمز التحقق عبر البريد الالكتروني ":"Varification code sent by email";
+          Alert.current.innerText = Language==="ar"?"تم ارسال رمز التحقق عبر البريد الالكتروني ":"Varification Code sent by Email";
           Alert.current.style.maxHeight = "500px";
           VarificationCodeRef.current.style.display = "flex";
         } else if (UserLogIn.resp === "User varified") {

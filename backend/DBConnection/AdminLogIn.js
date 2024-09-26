@@ -79,7 +79,7 @@ async function AdminLogIn(Credentials) {
               });
             if (UserVarification !== "Connection error" && typeof UserVarification === "object") {
               console.log("AdminLogIn file 12");
-              return "Varification Code sent by email";
+              return "Varification Code sent by Email";
             } else {
               console.log("AdminLogIn file 13");
               return "Connection error";
@@ -104,7 +104,7 @@ async function AdminLogIn(Credentials) {
           if (UserVarification !== "Connection error" && typeof UserVarification === "object") {
             console.log("AdminLogIn file 14-12");
             console.log(UserVarification)
-            return "Varification Code sent by email";
+            return "Varification Code sent by Email";
           } else {
             console.log("AdminLogIn file 14-13");
             return "Connection error";

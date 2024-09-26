@@ -56,7 +56,7 @@ const AdminLogIn = ({ globalState, setGlobal }) => {
       UserVarified.resp.uservarified === false
     ) {
       Alert.current.classList.replace("alert-danger", "alert-success");
-      Alert.current.innerText = "Varification code sent by email";
+      Alert.current.innerText = "Varification Code sent by Email";
       Alert.current.style.maxHeight = "500px";
       varificationCodeRef.current.style.display = "flex";
       setDisabled(false);
@@ -117,7 +117,7 @@ const AdminLogIn = ({ globalState, setGlobal }) => {
             UserLogIn.resp.uservarified === false
           ) {
             Alert.current.classList.replace("alert-danger", "alert-success");
-            Alert.current.innerText = "Varification code sent by email";
+            Alert.current.innerText = "Varification Code sent by Email";
             Alert.current.style.maxHeight = "500px";
             varificationCodeRef.current.style.display = "flex";
             setDisabled(false);
@@ -132,9 +132,9 @@ const AdminLogIn = ({ globalState, setGlobal }) => {
           Alert.current.innerText = "Connection error";
           Alert.current.style.maxHeight = "500px";
           setDisabled(false);
-        } else if (UserLogIn.resp === "Varification Code sent by email") {
+        } else if (UserLogIn.resp === "Varification Code sent by Email") {
           Alert.current.classList.replace("alert-success", "alert-danger");
-          Alert.current.innerText = "Varification Code sent by email";
+          Alert.current.innerText = "Varification Code sent by Email";
           Alert.current.style.maxHeight = "500px";
           varificationCodeRef.current.style.display = "flex";
         } else if (UserLogIn.resp === "User varified") {

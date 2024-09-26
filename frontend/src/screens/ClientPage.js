@@ -297,9 +297,9 @@ const DtataDisplay=({globalState,setGlobal,Data,Orders,NewOrders, SetOrders})=>{
               SetcancelOrder(Order)
               console.log(Order)
             }}>
-              {Orders.map(item=>(
-                new Date().getTime()-new Date(item.OrderedDate).getTime()<=86400000 && item.OrderStatus[item.OrderStatus.length-1].Status!=="Cancelled"?<option key={item._id}>{item._id}</option>:""
-              ))}
+              {Array.isArray(Orders)?Orders.map(item=>(
+                new Date().getTime()-new Date(item.OrderedDate).getTime()<=86400000?<option key={item._id}>{item._id}</option>:""
+              )):""}
             </select>
             </div>
             </div> 
@@ -413,6 +413,7 @@ const DtataDisplay=({globalState,setGlobal,Data,Orders,NewOrders, SetOrders})=>{
                   // })
                   SetOrders(Arr)
                   SetcancelOrder(null)
+                  console.log(Orders)
                   e.target.disabled=false
                   e.target.innerText=Language==="ar"?"الغاء":"Cancel"
                   toast.success(Language==="ar"?"تم الغاء الطلب بنجاح":"Order cancelled suucessfully")

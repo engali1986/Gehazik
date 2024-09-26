@@ -81,7 +81,7 @@ app.post("/LogInUser", async (req, res) => {
   } else if (result === "Connection error") {
     console.log("server /LogInUser 4");
     res.json({ resp: result });
-  } else if (result === "Varification Code sent by email") {
+  } else if (result === "Varification Code sent by Email") {
     console.log("server /LogInUser 6");
     res.json({ resp: result });
   } else {
@@ -127,7 +127,7 @@ app.post("/AdminLogIn", async (req, res) => {
   } else if (result === "Connection error") {
     console.log("server /AdminLogIn 4");
     res.json({ resp: result });
-  } else if (result === "Varification Code sent by email") {
+  } else if (result === "Varification Code sent by Email") {
     console.log("server /AdminLogIn 6");
     res.json({ resp: result });
   } else {
@@ -171,7 +171,7 @@ app.post("/LogInMerchant", async (req, res) => {
   } else if (result === "Connection error") {
     console.log("server /LogInMerchant 4");
     res.json({ resp: result });
-  } else if (result === "Varification Code sent by email") {
+  } else if (result === "Varification Code sent by Email") {
     console.log("server /LogInMerchant 6");
     res.json({ resp: result });
   } else {

@@ -375,13 +375,13 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
       UserVarified.resp.Merchantvarified === false
     ) {
       PassmatchAlert.current.classList.replace("alert-danger", "alert-success");
-      PassmatchAlert.current.innerText = "Varification code sent by email";
+      PassmatchAlert.current.innerText = "Varification Code sent by Email";
       PassmatchAlert.current.style.maxHeight = "500px";
       varificationCodeRef.current.style.display = "flex";
       setDisabled(false);
     } else {
       PassmatchAlert.current.classList.replace("alert-success", "alert-danger");
-      PassmatchAlert.current.innerText = "Varification code sent by email";
+      PassmatchAlert.current.innerText = "Varification Code sent by Email";
       PassmatchAlert.current.style.maxHeight = "500px";
       setDisabled(false);
     }

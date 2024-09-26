@@ -18,6 +18,8 @@ const OrderEmails=async(OrderData, OrderID)=>{
     // then we create new array of merchant ids and remove duplicates
     const MerchantIDsSorted=[...new Set(MerchantIDs)]
     // then swe create array of Mercant emails to send the order number
+    console.log("OrderEmails file 1");
+    console.log(MerchantIDsSorted);
     let MerchantEmails=[]
     for (let index = 0; index < MerchantIDsSorted.length; index++) {
         const MerchantEmail=await client
@@ -33,6 +35,10 @@ const OrderEmails=async(OrderData, OrderID)=>{
             MerchantEmails.push(MerchantEmail.Email)   
         } 
     }
+
+    console.log("OrderEmails file 2");
+    console.log(MerchantEmails);
+
     // then we send email of order number for each merchant
         if (MerchantEmails.length>0) {
           let Transporter=await mailer.createTransport({
