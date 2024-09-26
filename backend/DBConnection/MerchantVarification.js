@@ -29,7 +29,7 @@ const Merchantvarification=async(Email,Password)=>{
       
         let mailOptions = {
           from: 'Ali Mohammed <engaligulf1986@gmail.com>',
-          to: Merchant.email,
+          to: Merchant.Email,
           subject: 'New Merchant varification',
           html: `<h1> Please find below your varification code</h1><h2>Varification Code:${Merchant.VarificationCode}</h2>`
         };

@@ -282,7 +282,7 @@ app.post("/LogInMerchant", async (req, res) => {
   } else if (result === "Connection error") {
     console.log("server /LogInMerchant 4");
     res.json({ resp: result });
-  } else if (result === "Varification Code sent by email") {
+  } else if (result === "Varification Code sent by Email") {
     console.log("server /LogInMerchant 6");
     res.json({ resp: result });
   } else {

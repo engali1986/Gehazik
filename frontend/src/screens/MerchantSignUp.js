@@ -284,14 +284,14 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
               "alert-success"
             );
             PassmatchAlert.current.innerText =
-              AddMerchant.resp.name +
+              AddMerchant.resp.Name +
               " Added successfully an email has been sent to your email address with varification code Please enter varification code below";
             PassmatchAlert.current.style.maxHeight = "500px";
             varificationCodeRef.current.style.display = "flex";
             setButton(true);
             setConfirmPassword(true);
             setDisabled(true);
-            // setGlobal(AddMerchant.resp.name,true,AddMerchant.resp.email)
+            // setGlobal(AddMerchant.resp.Name,true,AddMerchant.resp.Email)
             // navigate("/")
           } else {
             PassmatchAlert.current.classList.replace(
@@ -355,13 +355,13 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
         return "user Not Added";
       });
     if (
-      UserVarified.resp.email &&
-      UserVarified.resp.Merchantvarified === true
+      UserVarified.resp.Email &&
+      UserVarified.resp.MerchantVarified === true
     ) {
       setGlobal(
-        UserVarified.resp.name,
+        UserVarified.resp.Name,
         true,
-        UserVarified.resp.email,
+        UserVarified.resp.Email,
         false,
         false,
         true,
@@ -371,7 +371,7 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
       PassmatchAlert.current.innerText = "User Logged in successfully";
       PassmatchAlert.current.style.maxHeight = "500px";
     } else if (
-      UserVarified.resp.email &&
+      UserVarified.resp.Email &&
       UserVarified.resp.Merchantvarified === false
     ) {
       PassmatchAlert.current.classList.replace("alert-danger", "alert-success");

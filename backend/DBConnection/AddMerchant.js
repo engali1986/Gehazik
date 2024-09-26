@@ -10,7 +10,7 @@ async function AddMerchant(Credentials) {
   try {
     await client.connect().then((res) => {
       console.log("Connection res ");
-      console.log(res);
+      // console.log(res);
     });
     console.log("AddMerchant file 0");
     console.log(Credentials);
@@ -18,7 +18,7 @@ async function AddMerchant(Credentials) {
     const IsMerchantRegistered = await client
       .db("Gehazik")
       .collection("Merchants")
-      .findOne({ email: Credentials.Email })
+      .findOne({ Email: Credentials.Email })
       .then((res) => {
         console.log("AddMerchant file 1");
         console.log(res);
@@ -46,18 +46,18 @@ async function AddMerchant(Credentials) {
         .db("Gehazik")
         .collection("Merchants")
         .insertOne({
-          name: Credentials.Name,
-          email: Credentials.Email,
-          pass: Credentials.Password,
-          Merchantvarified: false,
-          varificationcode: x,
+          Name: Credentials.Name,
+          Email: Credentials.Email,
+          Pass: Credentials.Password,
+          MerchantVarified: false,
+          VarificationCode: x,
           Date: new Date(),
           Token: NewToken,
           Governorate:Credentials.Governorate,
           City:Credentials.City
         })
         .then((res) => {
-          console.log("AddMerchant file 2");
+          console.log("AddMerchant file 2.5");
           console.log(res);
           return res;
         })
@@ -72,7 +72,7 @@ async function AddMerchant(Credentials) {
         const Merchant = await client
           .db("Gehazik")
           .collection("Merchants")
-          .findOne({ email: Credentials.Email })
+          .findOne({ Email: Credentials.Email })
           .then((res) => {
             if (res === null) {
               return "Merchant Not Found";
@@ -88,8 +88,8 @@ async function AddMerchant(Credentials) {
           Merchant !== "Connection error"
         ) {
           const varification = await Merchantvarification(
-            Merchant.email,
-            Merchant.pass
+            Merchant.Email,
+            Merchant.Pass
           )
             .then((res) => {
               console.log("AddMerchant file 4");
@@ -115,10 +115,10 @@ async function AddMerchant(Credentials) {
     // Send a ping to confirm a successful connection
   } finally {
     // Ensures that the client will close when you finish/error
-    await client.close(true).then((res) => {
-      console.log("AddMerchant file 5");
-      console.log(res);
-    });
+    // await client.close(true).then((res) => {
+    //   console.log("AddMerchant file 5");
+    //   console.log(res);
+    // });
     setTimeout(() => {
       console.log("done");
     }, 10000);

@@ -39,18 +39,18 @@ async function LogInMerchant(Credentials) {
       console.log("LogInMerchant file 5");
       console.log(GetMerchant);
       //  next we will check if Merchant varified through Email or not
-      if (GetMerchant.Merchantvarified === false) {
+      if (GetMerchant.MerchantVarified === false) {
         console.log("LogInMerchant file 6");
         if (Credentials.VarificationCode) {
           console.log("LogInMerchant file 7");
-          if (Credentials.VarificationCode === GetMerchant.varificationcode) {
+          if (Credentials.VarificationCode === GetMerchant.VarificationCode) {
             const VarifyMerchant = await client
               .db("Gehazik")
               .collection("Merchants")
               .updateOne(
                 { Email: Credentials.Email, Pass: Credentials.Password },
-                { $set: { Merchantvarified: true } },
-                { $set: { Token: NewToken } }
+                { $set: { MerchantVarified: true, Token: NewToken } }
+               
               )
               .then((res) => {
                 console.log("LogInMerchant file 7.5");
@@ -61,9 +61,9 @@ async function LogInMerchant(Credentials) {
                 console.log(err);
                 return "Connection error";
               });
-            if (typeof VarifyMerchant === "object") {
+            if (VarifyMerchant.modifiedCount>0) {
               console.log("LogInMerchant file 8");
-              GetMerchant.Merchantvarified = true;
+              GetMerchant.MerchantVarified = true;
               GetMerchant.Token = NewToken;
               return GetMerchant;
             } else {

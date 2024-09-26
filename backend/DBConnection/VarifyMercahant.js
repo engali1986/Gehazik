@@ -9,6 +9,7 @@ const VarifyMerchant = async (Credentials) => {
       console.log("Connection res ");
       //   console.log(res);
     });
+    console.log(Credentials)
     const MerchantVarification = await client
       .db("Gehazik")
       .collection("Merchants")

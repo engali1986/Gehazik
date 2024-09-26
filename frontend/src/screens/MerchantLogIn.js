@@ -18,7 +18,8 @@ const MerchantLogIn = ({ globalState, setGlobal }) => {
     Alert.current.style.maxHeight = "0px";
     setCredentials({ ...Credentials, Email: x.target.value });
   };
-  const VarifyEmail = async () => {
+  const VarifyEmail = async (e) => {
+    e.stopPropagation()
     console.log(Credentials);
     console.log(typeof Credentials.VarificationCode);
     const Merchantvarified = await fetch(
@@ -42,7 +43,7 @@ const MerchantLogIn = ({ globalState, setGlobal }) => {
     console.log(Merchantvarified);
     if (
       Merchantvarified.resp.Email &&
-      Merchantvarified.resp.Merchantvarified === true
+      Merchantvarified.resp.MerchantVarified === true
     ) {
       setGlobal(
         Merchantvarified.resp.Name,
@@ -57,10 +58,10 @@ const MerchantLogIn = ({ globalState, setGlobal }) => {
       Alert.current.style.maxHeight = "500px";
     } else if (
       Merchantvarified.resp.Email &&
-      Merchantvarified.resp.Merchantvarified === false
+      Merchantvarified.resp.MerchantVarified === false
     ) {
       Alert.current.classList.replace("alert-danger", "alert-success");
-      Alert.current.innerText = "Varification code sent by email";
+      Alert.current.innerText = "Varification Code sent by Email";
       Alert.current.style.maxHeight = "500px";
       varificationCodeRef.current.style.display = "flex";
       setDisabled(false);
@@ -75,7 +76,8 @@ const MerchantLogIn = ({ globalState, setGlobal }) => {
     Alert.current.style.maxHeight = "0px";
     setCredentials({ ...Credentials, Password: x.target.value });
   };
-  const LogInSubmit = async () => {
+  const LogInSubmit = async (e) => {
+    e.stopPropagation()
     console.log("Log in");
     console.log(Credentials);
     Alert.current.style.maxHeight = "0px";
@@ -109,7 +111,7 @@ const MerchantLogIn = ({ globalState, setGlobal }) => {
           console.log(UserLogIn.resp);
           if (
             UserLogIn.resp.Email &&
-            UserLogIn.resp.Merchantvarified === true
+            UserLogIn.resp.MerchantVarified === true
           ) {
             console.log(UserLogIn);
             setGlobal(
@@ -127,11 +129,11 @@ const MerchantLogIn = ({ globalState, setGlobal }) => {
             Alert.current.style.maxHeight = "500px";
           } else if (
             UserLogIn.resp.Email &&
-            UserLogIn.resp.Merchantvarified === false
+            UserLogIn.resp.MerchantVarified === false
           ) {
             console.log(UserLogIn);
             Alert.current.classList.replace("alert-danger", "alert-success");
-            Alert.current.innerText = "Varification code sent by email";
+            Alert.current.innerText = "Varification Code sent by Email";
             Alert.current.style.maxHeight = "500px";
             varificationCodeRef.current.style.display = "flex";
             setDisabled(false);
@@ -147,9 +149,9 @@ const MerchantLogIn = ({ globalState, setGlobal }) => {
           Alert.current.innerText = "Connection error";
           Alert.current.style.maxHeight = "500px";
           setDisabled(false);
-        } else if (UserLogIn.resp === "Varification Code sent by email") {
+        } else if (UserLogIn.resp === "Varification Code sent by Email") {
           Alert.current.classList.replace("alert-success", "alert-danger");
-          Alert.current.innerText = "Varification Code sent by email";
+          Alert.current.innerText = "Varification Code sent by Email";
           Alert.current.style.maxHeight = "500px";
           varificationCodeRef.current.style.display = "flex";
         } else if (UserLogIn.resp === "User varified") {
@@ -247,7 +249,7 @@ const MerchantLogIn = ({ globalState, setGlobal }) => {
         ref={LoginButtonRef}
         className="LogInButton"
         disabled={Disabled}
-        onClick={() => LogInSubmit()}
+        onClick={(e) => LogInSubmit(e)}
       >
         Login
       </button>
@@ -269,7 +271,7 @@ const MerchantLogIn = ({ globalState, setGlobal }) => {
           <button
             className="SignUpButton"
             style={{ height: "50px", margin: "0", width: "100%" }}
-            onClick={() => VarifyEmail()}
+            onClick={(e) => VarifyEmail(e)}
           >
             Varify
           </button>
