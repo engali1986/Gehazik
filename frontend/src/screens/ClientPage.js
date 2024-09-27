@@ -404,14 +404,7 @@ const DtataDisplay=({globalState,setGlobal,Data,Orders,NewOrders, SetOrders})=>{
                     
                   });
 
-                  SetOrders(PervOrders=>{
-                    let x=Orders.filter((item)=>{
-                        if (item._id.toString()!==CancelOrder._id) {
-                          return item 
-                        }})
-                        PervOrders=x
-                        return PervOrders
-                  })
+                  
 
                   // let Arr=Orders.filter((item)=>{
                   //   if (item._id.toString()!==CancelOrder._id) {
