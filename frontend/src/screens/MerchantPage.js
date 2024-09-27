@@ -7,6 +7,7 @@ import { LanguageContext } from "../Context/LanguageContext.js"
 
 // This will be merchant page for merchant controls
 const MerchantPage = ({ globalState, setGlobal }) => {
+  const Navigate=useNavigate()
   const {Language,SetLanguage}=useContext(LanguageContext)
   const [ShowAlert, SetShowAlert] = useState({
     Success: false,
@@ -1522,6 +1523,10 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                       }
                     }
                     SetData(e.target.innerText);
+                    setGlobal("",false,"",false,false,false,0,"","")
+                    localStorage.clear()
+                    sessionStorage.clear()
+                    Navigate("/")
                   }}
                 >
                   {Language==="ar"?"تسجيل الخروج":"Log Out"}
