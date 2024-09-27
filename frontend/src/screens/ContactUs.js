@@ -43,7 +43,7 @@ const ContactUs = () => {
               <i className="fa-solid fa-envelope"></i>
             </h1>
             <h2>Send E-mail</h2>
-            <a href="mailto:engaligulf@gmail.com">Email us</a>
+            <a href="#">Email us</a>
           </div>
         </Col>
         <Col
@@ -69,7 +69,7 @@ const ContactUs = () => {
               <i className="fa-solid fa-phone"></i>
             </h1>
             <h2>Call us</h2>
-            <a href="tel:+201101806523">+201101806523</a>
+            <a href="tel:+20000000">+2010000000</a>
           </div>
         </Col>
       </Row>

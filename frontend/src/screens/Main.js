@@ -18,7 +18,7 @@ const Main = ({ globalState, UpdateAddress }) => {
         >
           Main ad
         </div>
-        <div>hghjgjhg</div>
+        
       </Container>
     </>
   );

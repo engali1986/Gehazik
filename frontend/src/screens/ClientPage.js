@@ -117,7 +117,7 @@ const DtataDisplay=({globalState,setGlobal,Data,Orders,NewOrders, SetOrders})=>{
                     if (RegTextVarify===true) {
                       console.log("Pdate password")
                       const ChangePassword = await fetch(
-                        "http://localhost:5000/Users/ChangePassword",
+                        "https://gehazik-server.onrender.com/Users/ChangePassword",
                         {
                           method: "post",
                           body: JSON.stringify(ChangePasswordData),
@@ -377,7 +377,7 @@ const DtataDisplay=({globalState,setGlobal,Data,Orders,NewOrders, SetOrders})=>{
                 e.target.innerText=Language==="ar"?"برجاء الانتظار":"Please wait"
                 console.log(CancelData)
                 const DeleteOrder=await fetch(
-                  "http://localhost:5000/Orders/DeleteOrder",
+                  "https://gehazik-server.onrender.com/Orders/DeleteOrder",
                   {
                     method: "post",
                     body: JSON.stringify(CancelData),
@@ -512,7 +512,7 @@ const ClientPage = ({globalState,setGlobal}) => {
               }
               console.log(MerchantCredentials)
               const GetMerchantOrders=await fetch(
-                "http://localhost:5000/Users/OrdersList",
+                "https://gehazik-server.onrender.com/Users/OrdersList",
                 {
                   method: "post",
                   body: JSON.stringify(MerchantCredentials),
@@ -561,7 +561,7 @@ const ClientPage = ({globalState,setGlobal}) => {
               }
               console.log(MerchantCredentials)
               const GetMerchantOrders=await fetch(
-                "http://localhost:5000/Users/OrdersList",
+                "https://gehazik-server.onrender.com/Users/OrdersList",
                 {
                   method: "post",
                   body: JSON.stringify(MerchantCredentials),
@@ -610,7 +610,7 @@ const ClientPage = ({globalState,setGlobal}) => {
                 }
                 console.log(MerchantCredentials)
                 const GetMerchantOrders=await fetch(
-                  "http://localhost:5000/Users/OrdersList",
+                  "https://gehazik-server.onrender.com/Users/OrdersList",
                   {
                     method: "post",
                     body: JSON.stringify(MerchantCredentials),
