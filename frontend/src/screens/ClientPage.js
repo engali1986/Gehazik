@@ -2,7 +2,7 @@ import React,{useState,useEffect, useContext} from 'react'
 import {Container, Row, Col, Dropdown, ButtonGroup, DropdownButton, Button} from "react-bootstrap"
 import {LanguageContext} from "../Context/LanguageContext"
 import { toast } from 'react-toastify'
-const DtataDisplay=({globalState,setGlobal,Data,Orders,NewOrders, SetOrders})=>{
+const DtataDisplay=({globalState,setGlobal,Data,Orders,NewOrders, SetOrders, SetNewOrders})=>{
   const {Language,Togglelanguage}=useContext(LanguageContext)
   const [Disabled, SetDisabled] = useState(false);
   const [ChangePasswordData,SetChangePasswordData]=useState({
@@ -298,7 +298,7 @@ const DtataDisplay=({globalState,setGlobal,Data,Orders,NewOrders, SetOrders})=>{
               console.log(Order)
             }}>
               {Array.isArray(Orders)?Orders.map(item=>(
-                new Date().getTime()-new Date(item.OrderedDate).getTime()<=86400000?<option key={item._id}>{item._id}</option>:""
+                (new Date().getTime()-new Date(item.OrderedDate).getTime()<=86400000 && item.OrderStatus[item.OrderStatus.length-1].Status!=="Cancelled")?<option key={item._id}>{item._id}</option>:""
               )):""}
             </select>
             </div>
@@ -345,7 +345,7 @@ const DtataDisplay=({globalState,setGlobal,Data,Orders,NewOrders, SetOrders})=>{
                       <td>
                         {CancelOrder.OrderedValue}
                       </td>
-                      <td>{CancelOrder.OrderedPaymentMethod==="Vodafone Cash"&& CancelOrder.OrderPayed===false ?Language==="ar"?"بانتظار الدفع ":"Waiting payment":CancelOrder.OrderDelivered===false?Language==="ar"?"جاري التوصيل ":"On the way":Language==="ar"?"تم التوصيل":"Delivered"}</td>
+                      <td>{CancelOrder.OrderStatus[CancelOrder.OrderStatus.length-1].Status==="Waiting Payment"?Language==="ar"?"بانتظار الدفع":"Waiting Payment":CancelOrder.OrderStatus[CancelOrder.OrderStatus.length-1].Status==="Cancelled"?Language==="ar"?"تم الغاؤه":"Cancelled":CancelOrder.OrderStatus[CancelOrder.OrderStatus.length-1].Status==="On the way"?Language==="ar"?"جاري التوصيل":"On the way":Language==="ar"?"تم التوصيل":"Delivered"}</td>
                       </tr>):<tr><td></td></tr>}
                   
                   
@@ -419,6 +419,12 @@ const DtataDisplay=({globalState,setGlobal,Data,Orders,NewOrders, SetOrders})=>{
                     PervOrders=x
                     return PervOrders
                   })
+
+                  SetNewOrders(Orders.filter((item)=>{
+                    if (item.OrderStatus[item.OrderStatus.length-1].Status==="Waiting Payment"||item.OrderStatus[item.OrderStatus.length-1].Status==="On the way") {
+                      return item
+                    }
+                  }))
 
                   // let Arr=Orders.filter((item)=>{
                   //   if (item._id.toString()!==CancelOrder._id) {
@@ -664,7 +670,7 @@ const ClientPage = ({globalState,setGlobal}) => {
         </Col>
         {/* the following Col will display the data after merchant select option from side menu */}
         <Col xs={12} md={10}>
-        <DtataDisplay globalState={globalState} setGlobal={setGlobal} Data={Data} Orders={Orders} NewOrders={NewOrders} SetOrders={SetOrders}  />
+        <DtataDisplay globalState={globalState} setGlobal={setGlobal} Data={Data} Orders={Orders} NewOrders={NewOrders} SetOrders={SetOrders} SetNewOrders={SetNewOrders}  />
         </Col>
       </Row>
     </Container>
