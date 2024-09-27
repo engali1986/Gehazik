@@ -396,15 +396,29 @@ const DtataDisplay=({globalState,setGlobal,Data,Orders,NewOrders, SetOrders})=>{
                 console.log(DeleteOrder)
 
                 if (DeleteOrder.resp==="Order Deleted Successfully") {
-                  let Arr=Orders.forEach(item => {
-                    if (item._id.toString()!==CancelOrder._id) {
-                      item.OrderStatus.push({Status:"Cancelled",Date:new Date(),Reason:CancelData.Reason})
+                  // let Arr=Orders.forEach(item => {
+                  //   if (item._id.toString()!==CancelOrder._id) {
+                  //     item.OrderStatus.push({Status:"Cancelled",Date:new Date(),Reason:CancelData.Reason})
+                      
+                  //   }
+                    
+                  // });
+
+                  SetOrders(PervOrders=>{
+                    let x=[]
+                    for (let index = 0; index < PervOrders.length; index++) {
+                      if (PervOrders[index]._id.toString()===CancelOrder._id) {
+                        PervOrders[index].OrderStatus.push({Status:"Cancelled",Date:new Date(),Reason:CancelData.Reason})
+                        x.push(PervOrders[index])
+                        
+                      } else {
+                        x.push(PervOrders[index])
+                      }
                       
                     }
-                    
-                  });
-
-                  
+                    PervOrders=x
+                    return PervOrders
+                  })
 
                   // let Arr=Orders.filter((item)=>{
                   //   if (item._id.toString()!==CancelOrder._id) {
@@ -413,7 +427,7 @@ const DtataDisplay=({globalState,setGlobal,Data,Orders,NewOrders, SetOrders})=>{
                     
                     
                   // })
-                  SetOrders(Arr)
+                  // SetOrders(Arr)
                   SetcancelOrder(null)
                   console.log(Orders)
                   e.target.disabled=false
