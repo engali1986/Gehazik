@@ -181,7 +181,7 @@ const Home = (params) => {
           </div> 
           <div className={Language==="ar"?"me-auto":"ms-auto"} style={{width:'fit-content'}} onClick={(e)=>{
             e.stopPropagation()
-            Navigate(`/Merchants/${params.GlobalState}`)
+            Navigate(`/Merchants/${params.GlobalState.Name}`)
           }}>
             {Language==="ar"?`مرحبا ${params.GlobalState.Name}`:`Hi ${params.GlobalState.Name}`}
           </div>
@@ -217,7 +217,7 @@ const Home = (params) => {
           </div> 
           <div className={Language==="ar"?"me-auto":"ms-auto"} style={{width:'fit-content'}} onClick={(e)=>{
             e.stopPropagation()
-            Navigate(`/Merchants/${params.GlobalState}`)
+            Navigate(`/Merchants/${params.GlobalState.Name}`)
           }}>
             {Language==="ar"?`مرحبا ${params.GlobalState.Name}`:`Hi ${params.GlobalState.Name}`}
           </div>
