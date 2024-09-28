@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef,useContext } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import Feedback from "react-bootstrap/esm/Feedback";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import StaticData, { Categories } from "../Data/StaticData.js";
 import {LanguageContext} from "../Context/LanguageContext.js"
 import Logo from "../Data/Images/Logo.jpg"
@@ -9,6 +9,7 @@ import Logo from "../Data/Images/Logo.jpg"
 const Home = (params) => {
   const {Language,ToggleLanguage}=useContext(LanguageContext)
   const [ClientLogged,SetClientLogged]=useState(false)
+  const Navigate=useNavigate()
   console.log();
   const LogInItems = () => {
     if (params.GlobalState.UserLogged === true) {
@@ -152,6 +153,43 @@ const Home = (params) => {
         }}
       >
         <Row className="NavBarBig d-none d-md-flex">
+          
+          <div
+            style={{
+              fontSize: "1.5rem",
+              textAlign: "start",
+              width: "5vw",
+              wordBreak:'break-word'
+            }}
+          >
+            <a href="/">
+            <img src={Logo} alt="" style={{width:"5vw" ,aspectRatio:"1/1"}} />
+            </a>
+          </div>
+          <div
+            style={{
+              fontSize: "1rem",
+              textAlign: "start",
+              width: "fit-content",
+            }}
+            onClick={(e)=>{
+              e.stopPropagation()
+              ToggleLanguage()
+            }}
+          >
+            {Language==="en"?"العربيه":"English"}
+          </div> 
+          <div className={Language==="ar"?"me-auto":"ms-auto"} style={{width:'fit-content'}} onClick={(e)=>{
+            e.stopPropagation()
+            Navigate(`/Merchants/${params.GlobalState}`)
+          }}>
+            {Language==="ar"?`مرحبا ${params.GlobalState.Name}`:`Hi ${params.GlobalState.Name}`}
+          </div>
+        
+          <Col className=" Categories d-none"></Col>
+        </Row>
+        {/* Small screen navbar-------------------------------------------------------------------------------------------------- */}
+        <Row className=" NavBarSmall d-flex d-md-none justify-content-between">
         <div
             style={{
               fontSize: "1.5rem",
@@ -161,7 +199,7 @@ const Home = (params) => {
             }}
           >
             <a href="/">
-            <img src={Logo} style={{width:'100%' ,aspectRatio:"1/1"}} />
+            <img src={Logo} alt="" style={{width:"5vw" ,aspectRatio:"1/1"}} />
             </a>
           </div>
           <div
@@ -176,35 +214,12 @@ const Home = (params) => {
             }}
           >
             {Language==="en"?"العربيه":"English"}
-          </div>
-          <Col className="Categories d-none"></Col>
-        </Row>
-        {/* Small screen navbar-------------------------------------------------------------------------------------------------- */}
-        <Row className=" NavBarSmall d-flex d-md-none">
-        <div
-            style={{
-              fontSize: "1.5rem",
-              textAlign: "start",
-              width: "10vw",
-              wordBreak:'break-word'
-            }}
-          >
-            <a href="/">
-            <img src={Logo} style={{width:'100%' ,aspectRatio:"1/1"}} />
-            </a>
-          </div>
-          <div
-            style={{
-              fontSize: "1rem",
-              textAlign: "start",
-              width: "fit-content",
-            }}
-            onClick={(e)=>{
-              e.stopPropagation()
-              ToggleLanguage()
-            }}
-          >
-            {Language==="en"?"العربيه":"English"}
+          </div> 
+          <div className={Language==="ar"?"me-auto":"ms-auto"} style={{width:'fit-content'}} onClick={(e)=>{
+            e.stopPropagation()
+            Navigate(`/Merchants/${params.GlobalState}`)
+          }}>
+            {Language==="ar"?`مرحبا ${params.GlobalState.Name}`:`Hi ${params.GlobalState.Name}`}
           </div>
         </Row>
       </Container>
