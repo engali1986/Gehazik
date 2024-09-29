@@ -305,7 +305,7 @@ const MerchantLogIn = ({ globalState, setGlobal }) => {
               cursor: "pointer",
             }}
             onClick={() => {
-              navigate("/PasswordRecovery");
+              navigate("/MerchantPasswordRecovery");
             }}
           >
             Click here

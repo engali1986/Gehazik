@@ -33,6 +33,7 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import ClientPage from "./screens/ClientPage.js";
 import {LanguageProvider,LanguageContext} from "./Context/LanguageContext.js"
 import GoogleTranslate from "./Context/GoogleTranslate.js";
+import MerchantPasswordRecovery from "./screens/MerchantPasswordRecovery.js";
 function App() {
   const BackDrop = useRef();
   const ProfileItems = useRef();
@@ -661,6 +662,7 @@ hideProgressBar />
                   />
                 }
               />
+              <Route path="/MerchantPasswordRecovery" element={<MerchantPasswordRecovery />} />
               <Route
                 path="/MerchantSignUp"
                 element={

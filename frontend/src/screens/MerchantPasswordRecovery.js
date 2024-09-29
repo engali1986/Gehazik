@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-const PasswordRecovery = () => {
+const MerchantPasswordRecovery = () => {
   const navigate = useNavigate();
   const Alert = useRef();
   const [Email, setEmail] = useState("");
@@ -10,7 +10,7 @@ const PasswordRecovery = () => {
     console.log(Email);
     console.log(x.target.value);
   };
-  const PasswordRecoverySubmit = async () => {
+  const MerchantPasswordRecoverySubmit = async () => {
     console.log("submitted");
     if (Email.length === 0 || Email.match(/\s/)) {
       console.log("enter valid email");
@@ -26,7 +26,7 @@ const PasswordRecovery = () => {
         Email: Email,
       };
       const PassRecovery = await fetch(
-        "http://localhost:5000/PasswordRecovery",
+        "http://localhost:5000/MerchantPasswordRecovery",
         {
           method: "POST",
           body: JSON.stringify(Credintials),
@@ -90,10 +90,10 @@ const PasswordRecovery = () => {
         }}
         role="alert"
       ></div>
-      <button className="LogInButton" onClick={() => PasswordRecoverySubmit()}>
+      <button className="LogInButton" onClick={() => MerchantPasswordRecoverySubmit()}>
         Submit
       </button>
     </div>
   );
 };
-export default PasswordRecovery;
+export default MerchantPasswordRecovery;

@@ -35,6 +35,7 @@ import UserChangePassword from "./DBConnection/Users/UserChangePassword.js";
 import UserOrders from "./DBConnection/Users/UserOrders.js";
 import UserDBChanges from "./DBConnection/DBChanges/UsersDBChange.js";
 import DeleteOrders from "./DBConnection/Orders/DeleteOrder.js";
+import MerchantPasswordRecovery from "./DBConnection/Merchants/MerchantPasswordRecovery.js";
 const require = createRequire(import.meta.url);
 const socketIo = require('socket.io');
 // const ServiceAccountKey = require("./API keys/ServiceAccountKey.json");
@@ -436,6 +437,21 @@ app.post("/Merchants/ChangePassword",async(req,res)=>{
     res.json({resp:"Connection Error"})
   }
 })
+app.post("/MerchantPasswordRecovery", async (req, res) => {
+  const email = await req.body.Email;
+  const result = await MerchantPasswordRecovery(email);
+  console.log("server MerchantPasswordRecovery");
+  console.log(result);
+  if (result !== "User Not Found") {
+    if (result.accepted.length > 0) {
+      console.log("server file MerchantPasswordRecovery 0");
+      console.log(result.accepted.length);
+      res.json({ resp: result.accepted[0] });
+    }
+  } else {
+    res.json({ resp: "User Not Found" });
+  }
+});
 // Merchant Orders list
 app.post("/Merchants/OrdersList",async(req,res)=>{
   try {
