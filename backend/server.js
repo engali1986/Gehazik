@@ -367,16 +367,25 @@ app.post("/Merchants/AddProduct", upload.array("Files"), async (req, res) => {
             media,
             fields: "id, webViewLink",
           });
+          console.log("Image file upload resoponce")
+          console.log(response)
           return response.data;
         };
         console.log(files);
         if (files.length > 0) {
           const fileLinks = await Promise.all(
+            
             files.map(async (file) => {
+             try {
               const fileData = await uploadFileToDrive(file);
               console.log("Image file upload result")
               console.log(fileData)
               return fileData.id;
+             } catch (error) {
+              console.log("Promise all error")
+              console.log(error)
+             }
+              
             })
           );
           console.log(fileLinks); // returns an array of file data
