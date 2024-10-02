@@ -374,8 +374,6 @@ app.post("/Merchants/AddProduct", upload.array("Files"), async (req, res) => {
           const fileLinks = await Promise.all(
             files.map(async (file) => {
               const fileData = await uploadFileToDrive(file);
-              console.log("Image file upload result")
-              console.log(fileData)
               return fileData.id;
             })
           );
