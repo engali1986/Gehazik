@@ -383,7 +383,7 @@ app.post("/Merchants/AddProduct", upload.array("Files"), async (req, res) => {
           for (const file of files) {
             try {
               console.log(`Uploading - ${file.originalname}`)
-              const fileData = await uploadFileToDriveWithRetry(file);
+              const fileData = await uploadFileToDrive(file);
               fileLinks.push(fileData.id);
               console.log("file links is")
               console.log(fileLinks)
