@@ -538,7 +538,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                           border: "1px solid black",
                         }}
                       >
-                        <td>{product._id}</td>
+                        <td><a href={`/ProductDetails/${product._id}`}>{product._id}</a></td>
                         <td>{product.ProductTitle}</td>
                         <td>
                           <input
