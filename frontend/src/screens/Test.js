@@ -6,33 +6,22 @@ const socket = io('https://gehazik-server.onrender.com'); // Connect to the Node
 const DisplayData=({Data, SetData})=>{
   return(
     <>
-    <button onClick={(e)=>{
-      e.stopPropagation()
-     
-      SetData(PervData=>{
-        let x=[]
-        for (let index = 0; index < PervData.length; index++) {
-          if(PervData[index]==="bb"){
-            x.push("aqw")
-          }else{
-            x.push(PervData[index])
+   <button onClick={(e)=>{
+    e.stopPropagation()
+    let x=5
+    for (let index = 0; index < 5; index++) {
+      console.log(index)
+      if(index===1){
+        return x
+      }else{
 
-          }
-          
-        }
-        PervData=x
-        return PervData
-      })
-        console.log(Data)
+      }
       
-    }}>
-      Click
-    </button>
-    {Data.map((item,index)=>(
-      <div key={index}>
-        {item}
-      </div>
-    ))}
+    }
+   }}>
+    click
+
+   </button>
     </>
   )
 }
