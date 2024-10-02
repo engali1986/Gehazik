@@ -346,7 +346,8 @@ app.post("/Merchants/AddProduct", upload.array("Files"), async (req, res) => {
         console.log("server/AddProduct 6 Google drive folder created ID is");
         console.log(ImagesFolder.data.id);
         const uploadFileToDrive = async (fileObject) => {
-          const { originalname, buffer, mimetype } = fileObject;
+          try {
+            const { originalname, buffer, mimetype } = fileObject;
           console.log(" fileobj");
           console.log(fileObject);
           console.log(originalname);
@@ -357,8 +358,7 @@ app.post("/Merchants/AddProduct", upload.array("Files"), async (req, res) => {
             mimeType: mimetype,
             body: bufferStream,
           };
-          const maxRetries = 5; // tries count if googledrive busy
-          let retries = 0;
+          
           const response = await drive.files.create({
             requestBody: {
               name: originalname,
@@ -370,6 +370,12 @@ app.post("/Merchants/AddProduct", upload.array("Files"), async (req, res) => {
           console.log("Image file upload resoponce")
           console.log(response)
           return response.data;
+            
+          } catch (error) {
+            console.log("UploadFileToDrive error")
+            console.log(error)
+          }
+          
         };
         console.log(files);
         if (files.length > 0) {
