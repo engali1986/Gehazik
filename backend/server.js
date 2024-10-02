@@ -379,21 +379,31 @@ app.post("/Merchants/AddProduct", upload.array("Files"), async (req, res) => {
         };
         console.log(files);
         if (files.length > 0) {
-          const fileLinks = await Promise.all(
+          let fileLinks=[]
+          for (const file of files) {
+            try {
+              const fileData = await uploadFileToDriveWithRetry(file);
+              fileLinks.push(fileData.id);
+            } catch (error) {
+              console.error(`Failed to upload ${file.originalname}:`, error);
+              // Optionally handle the error, e.g., continue or abort
+            }
+          }
+          // const fileLinks = await Promise.all(
             
-            files.map(async (file) => {
-             try {
-              const fileData = await uploadFileToDrive(file);
-              console.log("Image file upload result")
-              console.log(fileData)
-              return fileData.id;
-             } catch (error) {
-              console.log("Promise all error")
-              console.log(error)
-             }
+          //   files.map(async (file) => {
+          //    try {
+          //     const fileData = await uploadFileToDrive(file);
+          //     console.log("Image file upload result")
+          //     console.log(fileData)
+          //     return fileData.id;
+          //    } catch (error) {
+          //     console.log("Promise all error")
+          //     console.log(error)
+          //    }
               
-            })
-          );
+          //   })
+          // );
           console.log(fileLinks); // returns an array of file data
           console.log(fileLinks.length);
           // Next we will add the filelinks to database at the same product
