@@ -379,12 +379,14 @@ app.post("/Merchants/AddProduct", upload.array("Files"), async (req, res) => {
         };
         console.log(files);
         if (files.length > 0) {
-          let fileLinks=[]
+          const fileLinks=[]
           for (const file of files) {
             try {
               console.log(`Uploading - ${file.originalname}`)
               const fileData = await uploadFileToDriveWithRetry(file);
               fileLinks.push(fileData.id);
+              console.log("file links is")
+              console.log(fileLinks)
             } catch (error) {
               console.error(`Failed to upload ${file.originalname}:`, error);
               // Optionally handle the error, e.g., continue or abort
