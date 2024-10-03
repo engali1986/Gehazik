@@ -296,7 +296,7 @@ app.post("/LogInMerchant", async (req, res) => {
 const upload = multer({ storage: multer.memoryStorage() });
 app.post("/Merchants/AddProduct", upload.array("Files"), async (req, res) => {
   try {
-    // first we will varify merchant by Tokebn number in req.body.Data
+    // first we will varify merchant by Token number in req.body.Data
     const AddProductData = await JSON.parse(req.body.Data);
     console.log("server/AddProduct 1 req.body is");
     console.log(AddProductData);
@@ -318,6 +318,7 @@ app.post("/Merchants/AddProduct", upload.array("Files"), async (req, res) => {
           "server/AddProduct 5 ProductAdded Added next we add images"
         );
         // next we will upload product images to google reive and send back Image ID
+        // we will use Retry Logic with Exponential Backoff to handle error 429 toomany request in gooogle drive
         const AddProductID = ProductAdded.insertedId;
         console.log(req.files);
         const files = req.files;
@@ -345,7 +346,10 @@ app.post("/Merchants/AddProduct", upload.array("Files"), async (req, res) => {
         });
         console.log("server/AddProduct 6 Google drive folder created ID is");
         console.log(ImagesFolder.data.id);
-        const uploadFileToDrive = async (fileObject) => {
+        // following function modefied by chat gpt to apply exponential backoff strategy for 429 error handing
+        const uploadFileToDrive = async (fileObject,retryCount = 0) => {
+          const maxRetries = 5; // Maximum number of retries
+          const baseDelay = 1000; // Start with a 1-second delay
           try {
             const { originalname, buffer, mimetype } = fileObject;
           console.log(" fileobj");
@@ -374,9 +378,59 @@ app.post("/Merchants/AddProduct", upload.array("Files"), async (req, res) => {
           } catch (error) {
             console.log("UploadFileToDrive error")
             console.log(error)
+            // Check if the error is a 429 Too Many Requests error
+            if (error.response && error.response.status === 429 && retryCount < maxRetries) {
+               const backoffTime = baseDelay * Math.pow(2, retryCount); // Exponential backoff
+              console.log(`Retrying after ${backoffTime}ms... (Attempt ${retryCount + 1} of ${maxRetries})`);
+              await new Promise((resolve) => setTimeout(resolve, backoffTime)); // Wait before retrying
+
+              return uploadFileToDrive(fileObject, retryCount + 1); // Retry the request
+            }
+            await client.db("Gehazik").collection("Products").deleteOne({_id:AddProductID}).then(res=>{
+              console.log("Failed to upload image delete product resulte")
+              console.log(res)
+            }).catch(err=>{
+              console.log("Failed to upload image delete product error")
+              console.log(err)
+            })
+            res.status(500).json({ resp: "Internal Server Error" });
           }
           
         };
+        //  following is the original UploadFileToDrive function 
+        // const uploadFileToDrive = async (fileObject) => {
+        //   try {
+        //     const { originalname, buffer, mimetype } = fileObject;
+        //   console.log(" fileobj");
+        //   console.log(fileObject);
+        //   console.log(originalname);
+        //   console.log(buffer);
+        //   const bufferStream = new Stream.PassThrough();
+        //   bufferStream.end(buffer);
+        //   const media = {
+        //     mimeType: mimetype,
+        //     body: bufferStream,
+        //   };
+          
+        //   const response = await drive.files.create({
+        //     requestBody: {
+        //       name: originalname,
+        //       parents: [ImagesFolder.data.id], // replace with your Google Drive folder ID
+        //     },
+        //     media,
+        //     fields: "id, webViewLink",
+        //   });
+        //   console.log("Image file upload resoponce")
+        //   console.log(response)
+        //   return response.data;
+            
+        //   } catch (error) {
+        //     console.log("UploadFileToDrive error")
+        //     console.log(error)
+        //   }
+          
+        // };
+        // ----------------------------
         console.log(files);
         if (files.length > 0) {
           const fileLinks=[]
@@ -409,6 +463,7 @@ app.post("/Merchants/AddProduct", upload.array("Files"), async (req, res) => {
           // );
           console.log(fileLinks); // returns an array of file data
           console.log(fileLinks.length);
+          
           // Next we will add the filelinks to database at the same product
           const UpdateProductData = {
             FieldToUpdate: "Product Images IDs",
