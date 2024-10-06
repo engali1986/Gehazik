@@ -509,10 +509,13 @@ const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstra
           .bottom + "px";
     } else {
       console.log("navBarsmall");
+      console.log(document
+        .getElementsByClassName("NavBarSmall")[0]
+        .getBoundingClientRect().bottom)
       document.getElementsByClassName("MainBage")[0].style.marginTop =
         document
           .getElementsByClassName("NavBarSmall")[0]
-          .getBoundingClientRect().bottom + "px";
+          .getBoundingClientRect().bottom+50+ "px";
     }
     
     // return () => {
@@ -591,9 +594,9 @@ hideProgressBar />
             <Home BackDropRef={BackDrop} GlobalState={GlobalState} />
           </Col>
         </Row>
-        <div className="row px-2 ps-2">
+        <div className="MainBage row px-2 ps-2">
           <div
-            className="MainBage col-12"
+            className=" col-12"
             style={{
               position: "relative",
               minHeight: "120vh",
