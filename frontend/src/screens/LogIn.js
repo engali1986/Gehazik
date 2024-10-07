@@ -257,6 +257,23 @@ const LogIn = ({ globalState, setGlobal }) => {
       </Row>
       <div style={{ textAlign: "start" }}>
         <span>
+          {Language==="ar"?"اذا كنت تاجر":"If you are Merchant "}
+          <span
+            style={{
+              color: "blue",
+              textDecoration: "underline",
+              cursor: "pointer",
+            }}
+            onClick={() => {
+              navigate("/MerchantLogin");
+            }}
+          >
+            {Language==="ar"?"تسجيل الدخول تاجر":"Merchant login"}
+          </span>
+        </span>
+      </div>
+      <div style={{ textAlign: "start" }}>
+        <span>
           {Language==="ar"?" لا يوجد حساب ":"Don't have account "}
           <span
             style={{
