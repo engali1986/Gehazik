@@ -413,7 +413,7 @@ const ProductsScreen = ({globalState}) => {
               
               
             }}>
-              {elem}
+              {elem.replace(/_+/g," ")}
             </div>
           ))}
         </Row>

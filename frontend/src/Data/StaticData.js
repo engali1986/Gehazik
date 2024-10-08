@@ -443,6 +443,11 @@ const StaticData = {
         { Accessories: ["Samart Watches", "Headphones", "other"] },
       ],
     },
+    {
+      Women_Clothing: [
+        { Home_Clothes: ["Winter Pijamas", "Summer Pijamas"] },
+      ],
+    },
   ],
   Units: ["Kilograms", "Piece"],
   AA:""

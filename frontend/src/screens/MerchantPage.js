@@ -867,7 +867,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
               {Data}
             </h3>
           </Row>
-          <Row className=" pb-2 align-items-center text-start">
+          <Row className={Language==="ar"?" pb-2 align-items-center text-end":" pb-2 align-items-center text-start"}>
             <Col xs={12}>
               <select
                 style={{ width: "100%" }}
@@ -927,7 +927,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
               </select>
             </Col>
           </Row>
-          <Row className=" pb-2 align-items-center text-start">
+          <Row className={Language==="ar"?" pb-2 align-items-center text-end":" pb-2 align-items-center text-start"}>
             <Col xs={12}>
               <select
                 style={{ width: "100%" }}
@@ -957,7 +957,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
               </select>
             </Col>
           </Row>
-          <Row className=" pb-2 align-items-center text-start">
+          <Row className={Language==="ar"?" pb-2 align-items-center text-end":" pb-2 align-items-center text-start"}>
             <Col xs={12}>
               <select
                 style={{ width: "100%" }}
@@ -987,7 +987,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
               </select>
             </Col>
           </Row>
-          <Row className=" pb-2 align-items-center text-start">
+          <Row className={Language==="ar"?" pb-2 align-items-center text-end":" pb-2 align-items-center text-start"}>
             <Col xs={4} md={8}>
               <div style={{ color: "white" }}>{Language==="ar"?"برجاء اضافه الكميه":"Please add quantity"}</div>
             </Col>
@@ -1058,7 +1058,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
               </select>
             </Col>
           </Row>
-          <Row className=" pb-2 align-items-center text-start">
+          <Row className={Language==="ar"?" pb-2 align-items-center text-end":" pb-2 align-items-center text-start"}>
             <Col xs={4} md={8}>
               <div style={{ color: "white" }}>{Language==="ar"?"برجاء اضافه سعر الوحده":"Please add Unit Price"}</div>
             </Col>
@@ -1095,7 +1095,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
               <div style={{ color: "white" }}>EGP</div>
             </Col>
           </Row>
-          <Row className=" pb-2 align-items-center text-start">
+          <Row className={Language==="ar"?" pb-2 align-items-center text-end":" pb-2 align-items-center text-start"}>
             <Col style={{ color: "white" }} xs={6}>
               {Language==="ar"?"برجاء اضافه اسم المنتج":"Add product title"}
             </Col>
@@ -1118,9 +1118,55 @@ const MerchantPage = ({ globalState, setGlobal }) => {
               />
             </Col>
           </Row>
+          <Row className={Language==="ar"?" pb-2 align-items-center text-end":" pb-2 align-items-center text-start"}>
+            <Col className=" d-flex gap-2 align-items-center " style={{ color: "white" }} xs={6}>
+            <div className=" d-inline-block">
+            {Language==="ar"?"برجاء اضافه الوان المنتج متبوع بعلامه (,)":"Please add product colors separated by comma"}
+            </div> 
+            <div className=" d-inline-block flex-fill">
+            <input
+                onChange={(e) => {
+                  Alert.current.classList.replace(
+                    "alert-success",
+                    "alert-danger"
+                  );
+                  Alert.current.innerText = "";
+                  Alert.current.style.maxHeight = "0px";
+                  console.log(e.target.value.split(","));
+                  let Arr = e.target.value.split(",");
+                  
+                }}
+                type="text"
+                style={{ width: "100%" }}
+              />
+            </div>
+            </Col>
+            <Col className=" d-flex gap-2 align-items-center " style={{ color: "white" }} xs={6}>
+            <div className=" d-inline-block">
+            {Language==="ar"?"برجاء اضافه مقاسات المنتج متبوع بعلامه (,)":"Please add product sizes separated by comma"}
+            </div> 
+            <div className=" d-inline-block flex-fill">
+            <input
+                onChange={(e) => {
+                  Alert.current.classList.replace(
+                    "alert-success",
+                    "alert-danger"
+                  );
+                  Alert.current.innerText = "";
+                  Alert.current.style.maxHeight = "0px";
+                  console.log(e.target.value.split(","));
+                  let Arr = e.target.value.split(",");
+                  
+                }}
+                type="text"
+                style={{ width: "100%" }}
+              />
+            </div>
+            </Col>
+          </Row>
           <Row
             style={{ color: "white" }}
-            className=" pb-2 align-items-center text-start"
+            className={Language==="ar"?" pb-2 align-items-center text-end":" pb-2 align-items-center text-start"}
           >
             <Col xs={6}>{Language==="ar"?"برجاء اضافه وصف المنتج مفصولا بعلامه (,)":"Add product aditional features separated by comma"} </Col>
             <Col xs={6}>
@@ -1146,7 +1192,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
           </Row>
           {/* <Row
             style={{ color: "white" }}
-            className=" pb-2 align-items-center text-start"
+            className={Language==="ar"?" pb-2 align-items-center text-end":" pb-2 align-items-center text-start"}
           >
             <Col xs={6}> Egypt Delivery</Col>
             <Col xs={6}>
@@ -1173,7 +1219,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
           </Row>
           <Row
             style={{ color: "white" }}
-            className=" pb-2 align-items-center text-start"
+            className={Language==="ar"?" pb-2 align-items-center text-end":" pb-2 align-items-center text-start"}
           >
             <Col xs={6}> Goverorate Delivery</Col>
             <Col xs={6}>
@@ -1198,7 +1244,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
           </Row>
           <Row
             style={{ color: "white" }}
-            className=" pb-2 align-items-center text-start"
+            className={Language==="ar"?" pb-2 align-items-center text-end":" pb-2 align-items-center text-start"}
           >
             <Col xs={6}> City Delivery</Col>
             <Col xs={6}>
@@ -1223,7 +1269,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
           </Row> */}
           <Row
             style={{ color: "white" }}
-            className=" pb-2 align-items-center text-start"
+            className={Language==="ar"?" pb-2 align-items-center text-end":" pb-2 align-items-center text-start"}
           >
             <Col xs={6}>{Language==="ar"?"برجاء اضافه صور للمنتج":"Please add product photos"}</Col>
             <Col xs={6}>
@@ -1287,7 +1333,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
               />
             </Col>
           </Row>
-          <Row className=" pb-2 align-items-center text-start">
+          <Row className={Language==="ar"?" pb-2 align-items-center text-end":" pb-2 align-items-center text-start"}>
             <Col xs={12}>
               <div
                 ref={Alert}
