@@ -5,19 +5,25 @@ import {Row, Col, Button, Form} from "react-bootstrap"
 const socket = io('https://gehazik-server.onrender.com'); // Connect to the Node.js server
 const ProductOptions=({Options,SetOptions})=>{
   const addOption = () => {
-    SetOptions([...Options, { Color: '', Size: '', Qty:0 }]);
+    let NewArr=[...Options.POptions]
+    console.log(Options)
+    console.log(Options.POptions)
+    console.log(NewArr)
+    NewArr.push({ Color: '', Size: '', Qty:0 })
+   
+    SetOptions({...Options,POptions:NewArr });
   };
 
   const removeOption = (index) => {
-    const NewOptions = [...Options];
+    const NewOptions = [...Options.POptions];
     NewOptions.splice(index, 1);
-    SetOptions(NewOptions);
+    SetOptions({...Options,POptions:NewOptions});
   };
 
   const handleOptionChange = (index, field, value) => {
-    const NewOptions = [...Options];
+    const NewOptions = [...Options.POptions];
     NewOptions[index][field] = value;
-    SetOptions(NewOptions);
+    SetOptions({...Options,POptions:NewOptions});
   };
 
   return (
@@ -29,14 +35,16 @@ const ProductOptions=({Options,SetOptions})=>{
         }}>
           <div>Product Options</div>
         </Col>
-        <Col xs={4} md={2}>
-          <div onClick={addOption} style={{ cursor: 'pointer', color: 'blue' }}>
-            Add Option
-          </div>
+        <Col xs={4} md={2} >
+        
+        <i onClick={addOption} 
+                  className="fa-solid fa-square-plus fa-xl"
+                  style={{ color: "#04aa6d", cursor:"pointer", width:'100%' }}
+                ></i>
         </Col>
       </Row>
 
-      {Options.map((option, index) => (
+      {Options.POptions.map((option, index) => (
         <Row key={index} className="mt-3 align-items-center">
           
           <Col>
@@ -77,7 +85,10 @@ const ProductOptions=({Options,SetOptions})=>{
 }
 
 const Test = ({globalState}) => {
-  const [Options, SetOptions] = useState([]);
+  const [Options, SetOptions] = useState({
+    Total:0,
+    POptions:[]
+  });
 
   return(
     <>
@@ -88,13 +99,7 @@ const Test = ({globalState}) => {
       Optioned
     </div>
     <ProductOptions Options={Options} SetOptions={SetOptions}/>
-    <select>
-      {Options.length>0?Options.map(item=>(
-        <option key={item.Color}>
-          {item.Color}
-        </option>
-      )):""}
-    </select>
+    
     </>
    
   )
