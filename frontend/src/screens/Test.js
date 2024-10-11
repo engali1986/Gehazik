@@ -3,10 +3,7 @@ import io from 'socket.io-client';
 import {LanguageContext} from "../Context/LanguageContext";
 import {Row, Col, Button, Form} from "react-bootstrap"
 const socket = io('https://gehazik-server.onrender.com'); // Connect to the Node.js server
-
-const Test = ({globalState}) => {
-  const [Options, SetOptions] = useState([]);
-
+const ProductOptions=({Options,SetOptions})=>{
   const addOption = () => {
     SetOptions([...Options, { Color: '', Size: '', Qty:0 }]);
   };
@@ -76,5 +73,32 @@ const Test = ({globalState}) => {
       
     </div>
   );
+
+}
+
+const Test = ({globalState}) => {
+  const [Options, SetOptions] = useState([]);
+
+  return(
+    <>
+    <div onClick={(e)=>{
+      e.stopPropagation()
+      console.log(Options)
+    }}>
+      Optioned
+    </div>
+    <ProductOptions Options={Options} SetOptions={SetOptions}/>
+    <select>
+      {Options.length>0?Options.map(item=>(
+        <option key={item.Color}>
+          {item.Color}
+        </option>
+      )):""}
+    </select>
+    </>
+   
+  )
+
+  
 };
 export default Test;
