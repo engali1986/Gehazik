@@ -19,6 +19,8 @@ const AddProduct = async (AddProductData) => {
         ProductCategory: AddProductData.ProductCategory,
         ProductSubCategory: AddProductData.ProductSubCategory,
         ProductFeature: AddProductData.ProductFeature,
+        ProductSizes:AddProductData.ProductSizes,
+        ProductColors:AddProductData.ProductColors,
         ProductAdditionalFeatures: AddProductData.ProductAdditionalFeatures,
         ProductQty: AddProductData.ProductQty,
         ProductQtyUnit: AddProductData.ProductQtyUnit,
@@ -32,8 +34,8 @@ const AddProduct = async (AddProductData) => {
         EgyptDelivery:AddProductData.EgyptDelivery,
         GovernorateDelivery:AddProductData.GovernorateDelivery,
         CityDelivery:AddProductData.CityDelivery,
-        Governorate:AddProductData.Governorate,
-        City:AddProductData.City
+        Governorate:AddProductData.Governorate,// merchant store governorate
+        City:AddProductData.City// merchant store city
       })
       .then((res) => {
         console.log("AddProduct file 1");

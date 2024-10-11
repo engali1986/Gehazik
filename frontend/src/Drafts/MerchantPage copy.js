@@ -1,3 +1,4 @@
+// this page before adding sizes and colors to AddProduct tab
 import React, { useEffect, useState, useRef,useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
@@ -65,8 +66,6 @@ const MerchantPage = ({ globalState, setGlobal }) => {
       ProductUnitPrice: 0,
       ProductTitle: "",
       ProductAdditionalFeatures: [],
-      ProductSizes:[],
-      ProductColors:[],
       Token: globalState.Token,
       Name: globalState.Name,
       Email: globalState.Email,
@@ -1136,7 +1135,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                   Alert.current.style.maxHeight = "0px";
                   console.log(e.target.value.split(","));
                   let Arr = e.target.value.split(",");
-                  SetAddProductData({...AddProductData,ProductColors:Arr})
+                  
                 }}
                 type="text"
                 style={{ width: "100%" }}
@@ -1158,7 +1157,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                   Alert.current.style.maxHeight = "0px";
                   console.log(e.target.value.split(","));
                   let Arr = e.target.value.split(",");
-                  SetAddProductData({...AddProductData,ProductSizes:Arr})
+                  
                 }}
                 type="text"
                 style={{ width: "100%" }}
