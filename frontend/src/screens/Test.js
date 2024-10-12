@@ -104,7 +104,18 @@ const Test = ({globalState}) => {
     <select onChange={(e)=>{
       console.log(e.target)
       console.log(e.target.value)
-    }} style={{minWidth:'100px'}} id="select1" aria-label="TestPageColors">
+      let Color
+      for (let index = 0; index < StaticData.Colors.length; index++) {
+        if (StaticData.Colors[index].Name===e.target.value) {
+          Color=StaticData.Colors[index].Hex
+          break;
+        } else {
+          
+        }
+        
+      }
+      e.target.style.backgroundColor=Color
+    }} style={{minWidth:'100px', backgroundColor:StaticData.Colors[0].Hex}} id="select1" aria-label="TestPageColors">
       {StaticData.Colors.map(item=>(
         <option style={{color:item.Hex, backgroundColor:item.Hex}} key={item.Name}>
          {item.Name}
