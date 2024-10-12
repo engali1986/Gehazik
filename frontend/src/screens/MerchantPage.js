@@ -47,7 +47,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
        console.log(AddProductData)
        console.log(AddProductData.ProductOptions)
        console.log(NewArr)
-       NewArr.push({ Color: StaticData.Colors[0].Name, Size: '', Qty:0 })
+       NewArr.push({ Color: StaticData.Colors[0].Name, Size: '', Qty:0, OrderedQty:0 })
        SetAddProductData({...AddProductData,ProductOptions:NewArr });
         
       } else {
@@ -58,7 +58,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
          console.log(AddProductData)
          console.log(AddProductData.ProductOptions)
          console.log(NewArr)
-         NewArr.push({ Color: StaticData.Colors[0].Name, Size: '', Qty:0 })
+         NewArr.push({ Color: StaticData.Colors[0].Name, Size: '', Qty:0, OrderedQty:0 })
          SetAddProductData({...AddProductData,ProductOptions:NewArr });
         }
         
