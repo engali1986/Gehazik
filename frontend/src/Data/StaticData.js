@@ -450,6 +450,847 @@ const StaticData = {
     },
   ],
   Units: ["Kilograms", "Piece"],
-  AA:""
+  Colors:[
+    {
+      Name: "INDIANRED",
+      Hex: "#CD5C5C",
+      "rgb": "RGB(205, 92, 92)",
+      "families": ["red", "brown"]
+    },
+    {
+      Name: "LIGHTCORAL",
+      Hex: "#F08080",
+      "rgb": "RGB(240, 128, 128)",
+      "families": ["red", "pink", "coral", "light"]
+    },
+    {
+      Name: "SALMON",
+      Hex: "#FA8072",
+      "rgb": "RGB(250, 128, 114)",
+      "families": ["red", "pink", "orange", "salmon"]
+    },
+    {
+      Name: "DARKSALMON",
+      Hex: "#E9967A",
+      "rgb": "RGB(233, 150, 122)",
+      "families": ["red", "pink", "orange", "salmon", "dark"]
+    },
+    {
+      Name: "LIGHTSALMON",
+      Hex: "#FFA07A",
+      "rgb": "RGB(255, 160, 122)",
+      "families": ["red", "pink", "orange", "salmon", "light"]
+    },
+    {
+      Name: "CRIMSON",
+      Hex: "#DC143C",
+      "rgb": "RGB(220, 20, 60)",
+      "families": ["red"]
+    },
+    {
+      Name: "RED",
+      Hex: "#FF0000",
+      "rgb": "RGB(255, 0, 0)",
+      "families": ["red"]
+    },
+    {
+      Name: "DARKRED",
+      Hex: "#8B0000",
+      "rgb": "RGB(139, 0, 0)",
+      "families": ["red", "dark"]
+    },
+    {
+      Name: "PINK",
+      Hex: "#FFC0CB",
+      "rgb": "RGB(255, 192, 203)",
+      "families": ["pink"]
+    },
+    {
+      Name: "LIGHTPINK",
+      Hex: "#FFB6C1",
+      "rgb": "RGB(255, 182, 193)",
+      "families": ["pink", "light"]
+    },
+    {
+      Name: "HOTPINK",
+      Hex: "#FF69B4",
+      "rgb": "RGB(255, 105, 180)",
+      "families": ["pink", "hot"]
+    },
+    {
+      Name: "DEEPPINK",
+      Hex: "#FF1493",
+      "rgb": "RGB(255, 20, 147)",
+      "families": ["pink", "deep"]
+    },
+    {
+      Name: "MEDIUMVIOLETRED",
+      Hex: "#C71585",
+      "rgb": "RGB(199, 21, 133)",
+      "families": ["pink", "purple", "violet", "medium"]
+    },
+    {
+      Name: "PALEVIOLETRED",
+      Hex: "#DB7093",
+      "rgb": "RGB(219, 112, 147)",
+      "families": ["pink", "pale", "violet"]
+    },
+    {
+      Name: "CORAL",
+      Hex: "#FF7F50",
+      "rgb": "RGB(255, 127, 80)",
+      "families": ["orange", "coral"]
+    },
+    {
+      Name: "TOMATO",
+      Hex: "#FF6347",
+      "rgb": "RGB(255, 99, 71",
+      "families": ["orange", "red"]
+    },
+    {
+      Name: "ORANGERED",
+      Hex: "#FF4500",
+      "rgb": "RGB(255, 69, 0)",
+      "families": ["orange", "red"]
+    },
+    {
+      Name: "DARKORANGE",
+      Hex: "#FF8C00",
+      "rgb": "RGB(255, 140, 0)",
+      "families": ["orange", "dark"]
+    },
+    {
+      Name: "ORANGE",
+      Hex: "#FFA500",
+      "rgb": "RGB(255, 165, 0)",
+      "families": ["orange"]
+    },
+    {
+      Name: "GOLD",
+      Hex: "#FFD700",
+      "rgb": "RGB(255, 215, 0)",
+      "families": ["yellow"]
+    },
+    {
+      Name: "YELLOW",
+      Hex: "#FFFF00",
+      "rgb": "RGB(255, 255, 0)",
+      "families": ["yellow"]
+    },
+    {
+      Name: "LIGHTYELLOW",
+      Hex: "#FFFFE0",
+      "rgb": "RGB(255, 255, 224)",
+      "families": ["yellow", "light"]
+    },
+    {
+      Name: "LEMONCHIFFON",
+      Hex: "#FFFACD",
+      "rgb": "RGB(255, 250, 205)",
+      "families": ["yellow", "lemon"]
+    },
+    {
+      Name: "LIGHTGOLDENRODYELLOW",
+      Hex: "#FAFAD2",
+      "rgb": "RGB(250, 250, 210)",
+      "families": ["yellow", "light", "goldenrod", "tan"]
+    },
+    {
+      Name: "PAPAYAWHIP",
+      Hex: "#FFEFD5",
+      "rgb": "RGB(255, 239, 213)",
+      "families": ["pink", "tan"]
+    },
+    {
+      Name: "MOCCASIN",
+      Hex: "#FFE4B5",
+      "rgb": "RGB(255, 228, 181)",
+      "families": ["pink", "tan"]
+    },
+    {
+      Name: "PEACHPUFF",
+      Hex: "#FFDAB9",
+      "rgb": "RGB(255, 218, 185)",
+      "families": ["pink", "orange", "peach"]
+    },
+    {
+      Name: "PALEGOLDENROD",
+      Hex: "#EEE8AA",
+      "rgb": "RGB(238, 232, 170)",
+      "families": ["yellow", "tan", "pale", "goldenrod"]
+    },
+    {
+      Name: "KHAKI",
+      Hex: "#F0E68C",
+      "rgb": "RGB(240, 230, 140)",
+      "families": ["yellow", "tan", "khaki"]
+    },
+    {
+      Name: "DARKKHAKI",
+      Hex: "#BDB76B",
+      "rgb": "RGB(189, 183, 107)",
+      "families": ["yellow", "tan", "khaki", "dark"]
+    },
+    {
+      Name: "LAVENDER",
+      Hex: "#E6E6FA",
+      "rgb": "RGB(230, 230, 250)",
+      "families": ["purple"]
+    },
+    {
+      Name: "THISTLE",
+      Hex: "#D8BFD8",
+      "rgb": "RGB(216, 191, 216)",
+      "families": ["purple"]
+    },
+    {
+      Name: "PLUM",
+      Hex: "#DDA0DD",
+      "rgb": "RGB(221, 160, 221)",
+      "families": ["purple"]
+    },
+    {
+      Name: "VIOLET",
+      Hex: "#EE82EE",
+      "rgb": "RGB(238, 130, 238)",
+      "families": ["purple", "violet", "pink"]
+    },
+    {
+      Name: "ORCHID",
+      Hex: "#DA70D6",
+      "rgb": "RGB(218, 112, 214)",
+      "families": ["purple", "orchid"]
+    },
+    {
+      Name: "FUCHSIA",
+      Hex: "#FF00FF",
+      "rgb": "RGB(255, 0, 255)",
+      "families": ["purple", "pink"]
+    },
+    {
+      Name: "MAGENTA",
+      Hex: "#FF00FF",
+      "rgb": "RGB(255, 0, 255)",
+      "families": ["purple", "pink", "magenta"]
+    },
+    {
+      Name: "MEDIUMORCHID",
+      Hex: "#BA55D3",
+      "rgb": "RGB(186, 85, 211)",
+      "families": ["purple", "orchid", "medium"]
+    },
+    {
+      Name: "MEDIUMPURPLE",
+      Hex: "#9370DB",
+      "rgb": "RGB(147, 112, 219)",
+      "families": ["purple", "medium"]
+    },
+    {
+      Name: "REBECCAPURPLE",
+      Hex: "#663399",
+      "rgb": "RGB(102, 51, 153)",
+      "families": ["purple", "blue"]
+    },
+    {
+      Name: "BLUEVIOLET",
+      Hex: "#8A2BE2",
+      "rgb": "RGB(138, 43, 226)",
+      "families": ["purple", "blue", "violet"]
+    },
+    {
+      Name: "DARKVIOLET",
+      Hex: "#9400D3",
+      "rgb": "RGB(148, 0, 211)",
+      "families": ["purple", "dark", "violet"]
+    },
+    {
+      Name: "DARKORCHID",
+      Hex: "#9932CC",
+      "rgb": "RGB(153, 50, 204)",
+      "families": ["purple", "dark", "orchid"]
+    },
+    {
+      Name: "DARKMAGENTA",
+      Hex: "#8B008B",
+      "rgb": "RGB(139, 0, 139)",
+      "families": ["purple", "dark", "magenta"]
+    },
+    {
+      Name: "PURPLE",
+      Hex: "#800080",
+      "rgb": "RGB(128, 0, 128)",
+      "families": ["purple"]
+    },
+    {
+      Name: "INDIGO",
+      Hex: "#4B0082",
+      "rgb": "RGB(75, 0, 130)",
+      "families": ["purple", "blue"]
+    },
+    {
+      Name: "SLATEBLUE",
+      Hex: "#6A5ACD",
+      "rgb": "RGB(106, 90, 205)",
+      "families": ["purple", "blue", "slate"]
+    },
+    {
+      Name: "DARKSLATEBLUE",
+      Hex: "#483D8B",
+      "rgb": "RGB(72, 61, 139)",
+      "families": ["purple", "blue", "slate", "dark"]
+    },
+    {
+      Name: "MEDIUMSLATEBLUE",
+      Hex: "#7B68EE",
+      "rgb": "RGB(123, 104, 238)",
+      "families": ["purple", "blue", "slate", "medium"]
+    },
+    {
+      Name: "GREENYELLOW",
+      Hex: "#ADFF2F",
+      "rgb": "RGB(173, 255, 47)",
+      "families": ["green", "yellow"]
+    },
+    {
+      Name: "CHARTREUSE",
+      Hex: "#7FFF00",
+      "rgb": "RGB(127, 255, 0)",
+      "families": ["green"]
+    },
+    {
+      Name: "LAWNGREEN",
+      Hex: "#7CFC00",
+      "rgb": "RGB(124, 252, 0)",
+      "families": ["green"]
+    },
+    {
+      Name: "LIME",
+      Hex: "#00FF00",
+      "rgb": "RGB(0, 255, 0)",
+      "families": ["green"]
+    },
+    {
+      Name: "LIMEGREEN",
+      Hex: "#32CD32",
+      "rgb": "RGB(50, 205, 50)",
+      "families": ["green"]
+    },
+    {
+      Name: "PALEGREEN",
+      Hex: "#98FB98",
+      "rgb": "RGB(152, 251, 152)",
+      "families": ["green", "pale"]
+    },
+    {
+      Name: "LIGHTGREEN",
+      Hex: "#90EE90",
+      "rgb": "RGB(144, 238, 144)",
+      "families": ["green", "light"]
+    },
+    {
+      Name: "MEDIUMSPRINGGREEN",
+      Hex: "#00FA9A",
+      "rgb": "RGB(0, 250, 154)",
+      "families": ["green", "medium", "spring"]
+    },
+    {
+      Name: "SPRINGGREEN",
+      Hex: "#00FF7F",
+      "rgb": "RGB(0, 255, 127)",
+      "families": ["green", "spring"]
+    },
+    {
+      Name: "MEDIUMSEAGREEN",
+      Hex: "#3CB371",
+      "rgb": "RGB(60, 179, 113)",
+      "families": ["green", "sea", "medium"]
+    },
+    {
+      Name: "SEAGREEN",
+      Hex: "#2E8B57",
+      "rgb": "RGB(46, 139, 87)",
+      "families": ["green", "sea"]
+    },
+    {
+      Name: "FORESTGREEN",
+      Hex: "#228B22",
+      "rgb": "RGB(34, 139, 34)",
+      "families": ["green", "forest"]
+    },
+    {
+      Name: "GREEN",
+      Hex: "#008000",
+      "rgb": "RGB(0, 128, 0)",
+      "families": ["green"]
+    },
+    {
+      Name: "DARKGREEN",
+      Hex: "#006400",
+      "rgb": "RGB(0, 100, 0)",
+      "families": ["green", "dark"]
+    },
+    {
+      Name: "YELLOWGREEN",
+      Hex: "#9ACD32",
+      "rgb": "RGB(154, 205, 50)",
+      "families": ["green", "yellow"]
+    },
+    {
+      Name: "OLIVEDRAB",
+      Hex: "#6B8E23",
+      "rgb": "RGB(107, 142, 35)",
+      "families": ["green", "olive"]
+    },
+    {
+      Name: "OLIVE",
+      Hex: "#6B8E23",
+      "rgb": "RGB(128, 128, 0)",
+      "families": ["green", "olive"]
+    },
+    {
+      Name: "DARKOLIVEGREEN",
+      Hex: "#556B2F",
+      "rgb": "RGB(85, 107, 47)",
+      "families": ["green", "olive", "dark"]
+    },
+    {
+      Name: "MEDIUMAQUAMARINE",
+      Hex: "#66CDAA",
+      "rgb": "RGB(102, 205, 170)",
+      "families": ["green", "blue", "aquamarine", "medium"]
+    },
+    {
+      Name: "DARKSEAGREEN",
+      Hex: "#8FBC8B",
+      "rgb": "RGB(143, 188, 139)",
+      "families": ["green", "sea", "dark"]
+    },
+    {
+      Name: "LIGHTSEAGREEN",
+      Hex: "#20B2AA",
+      "rgb": "RGB(32, 178, 170)",
+      "families": ["green", "blue", "sea", "light"]
+    },
+    {
+      Name: "DARKCYAN",
+      Hex: "#008B8B",
+      "rgb": "RGB(0, 139, 139)",
+      "families": ["green", "blue", "cyan", "dark"]
+    },
+    {
+      Name: "TEAL",
+      Hex: "#008080",
+      "rgb": "RGB(0, 128, 128)",
+      "families": ["green", "blue"]
+    },
+    {
+      Name: "AQUA",
+      Hex: "#00FFFF",
+      "rgb": "RGB(0, 255, 255)",
+      "families": ["blue", "aqua"]
+    },
+    {
+      Name: "CYAN",
+      Hex: "#00FFFF",
+      "rgb": "RGB(0, 255, 255)",
+      "families": ["blue", "cyan"]
+    },
+    {
+      Name: "LIGHTCYAN",
+      Hex: "#E0FFFF",
+      "rgb": "RGB(224, 255, 255)",
+      "families": ["blue", "cyan", "light"]
+    },
+    {
+      Name: "PALETURQUOISE",
+      Hex: "#AFEEEE",
+      "rgb": "RGB(175, 238, 238)",
+      "families": ["blue", "turquoise", "pale"]
+    },
+    {
+      Name: "AQUAMARINE",
+      Hex: "#7FFFD4",
+      "rgb": "RGB(127, 255, 212)",
+      "families": ["blue", "aquamarine"]
+    },
+    {
+      Name: "TURQUOISE",
+      Hex: "#40E0D0",
+      "rgb": "RGB(64, 224, 208)",
+      "families": ["blue", "turquoise"]
+    },
+    {
+      Name: "MEDIUMTURQUOISE",
+      Hex: "#48D1CC",
+      "rgb": "RGB(72, 209, 204)",
+      "families": ["blue", "turquoise", "medium"]
+    },
+    {
+      Name: "DARKTURQUOISE",
+      Hex: "#00CED1",
+      "rgb": "RGB(0, 206, 209)",
+      "families": ["blue", "turquoise", "dark"]
+    },
+    {
+      Name: "CADETBLUE",
+      Hex: "#5F9EA0",
+      "rgb": "RGB(95, 158, 160)",
+      "families": ["blue", "gray"]
+    },
+    {
+      Name: "STEELBLUE",
+      Hex: "#4682B4",
+      "rgb": "RGB(70, 130, 180)",
+      "families": ["blue", "steel"]
+    },
+    {
+      Name: "LIGHTSTEELBLUE",
+      Hex: "#B0C4DE",
+      "rgb": "RGB(176, 196, 222)",
+      "families": ["blue", "steel", "light"]
+    },
+    {
+      Name: "POWDERBLUE",
+      Hex: "#B0E0E6",
+      "rgb": "RGB(176, 224, 230)",
+      "families": ["blue"]
+    },
+    {
+      Name: "LIGHTBLUE",
+      Hex: "#ADD8E6",
+      "rgb": "RGB(173, 216, 230)",
+      "families": ["blue", "light"]
+    },
+    {
+      Name: "SKYBLUE",
+      Hex: "#87CEEB",
+      "rgb": "RGB(135, 206, 235)",
+      "families": ["blue", "sky"]
+    },
+    {
+      Name: "LIGHTSKYBLUE",
+      Hex: "#87CEFA",
+      "rgb": "RGB(135, 206, 250)",
+      "families": ["blue", "sky", "light"]
+    },
+    {
+      Name: "DEEPSKYBLUE",
+      Hex: "#00BFFF",
+      "rgb": "RGB(0, 191, 255)",
+      "families": ["blue", "sky", "deep"]
+    },
+    {
+      Name: "DODGERBLUE",
+      Hex: "#1E90FF",
+      "rgb": "RGB(30, 144, 255)",
+      "families": ["blue"]
+    },
+    {
+      Name: "CORNFLOWERBLUE",
+      Hex: "#6495ED",
+      "rgb": "RGB(100, 149, 237)",
+      "families": ["blue"]
+    },
+    {
+      Name: "ROYALBLUE",
+      Hex: "#4169E1",
+      "rgb": "RGB(65, 105, 225)",
+      "families": ["blue"]
+    },
+    {
+      Name: "BLUE",
+      Hex: "#0000FF",
+      "rgb": "RGB(0, 0, 255)",
+      "families": ["blue"]
+    },
+    {
+      Name: "MEDIUMBLUE",
+      Hex: "#0000CD",
+      "rgb": "RGB(0, 0, 205)",
+      "families": ["blue", "medium"]
+    },
+    {
+      Name: "DARKBLUE",
+      Hex: "#00008B",
+      "rgb": "RGB(0, 0, 139)",
+      "families": ["blue", "dark"]
+    },
+    {
+      Name: "NAVY",
+      Hex: "#00008B",
+      "rgb": "RGB(0, 0, 128)",
+      "families": ["blue", "dark"]
+    },
+    {
+      Name: "MIDNIGHTBLUE",
+      Hex: "#191970",
+      "rgb": "RGB(25, 25, 112))",
+      "families": ["blue", "dark"]
+    },
+    {
+      Name: "CORNSILK",
+      Hex: "#FFF8DC",
+      "rgb": "RGB(255, 248, 220)",
+      "families": ["brown", "tan"]
+    },
+    {
+      Name: "BLANCHEDALMOND",
+      Hex: "#FFEBCD",
+      "rgb": "RGB(255, 235, 205)",
+      "families": ["brown", "tan"]
+    },
+    {
+      Name: "BISQUE",
+      Hex: "#FFE4C4",
+      "rgb": "RGB(255, 228, 196)",
+      "families": ["brown", "tan"]
+    },
+    {
+      Name: "NAVAJOWHITE",
+      Hex: "#FFDEAD",
+      "rgb": "RGB(255, 222, 173)",
+      "families": ["brown", "tan"]
+    },
+    {
+      Name: "WHEAT",
+      Hex: "#F5DEB3",
+      "rgb": "RGB(245, 222, 179)",
+      "families": ["brown", "tan"]
+    },
+    {
+      Name: "BURLYWOOD",
+      Hex: "#DEB887",
+      "rgb": "RGB(222, 184, 135)",
+      "families": ["brown", "tan"]
+    },
+    {
+      Name: "TAN",
+      Hex: "#D2B48C",
+      "rgb": "RGB(210, 180, 140)",
+      "families": ["brown", "tan"]
+    },
+    {
+      Name: "ROSYBROWN",
+      Hex: "#BC8F8F",
+      "rgb": "RGB(188, 143, 143)",
+      "families": ["brown", "tan"]
+    },
+    {
+      Name: "SANDYBROWN",
+      Hex: "#F4A460",
+      "rgb": "RGB(244, 164, 96)",
+      "families": ["brown", "orange"]
+    },
+    {
+      Name: "GOLDENROD",
+      Hex: "#DAA520",
+      "rgb": "RGB(218, 165, 32)",
+      "families": ["brown", "goldenrod", "orange"]
+    },
+    {
+      Name: "DARKGOLDENROD",
+      Hex: "#B8860B",
+      "rgb": "RGB(184, 134, 11)",
+      "families": ["brown", "orange", "goldenrod", "dark"]
+    },
+    {
+      Name: "PERU",
+      Hex: "#CD853F",
+      "rgb": "RGB(205, 133, 63)",
+      "families": ["brown", "orange"]
+    },
+    {
+      Name: "CHOCOLATE",
+      Hex: "#D2691E",
+      "rgb": "RGB(210, 105, 30)",
+      "families": ["brown", "orange"]
+    },
+    {
+      Name: "SADDLEBROWN",
+      Hex: "#8B4513",
+      "rgb": "RGB(139, 69, 19)",
+      "families": ["brown"]
+    },
+    {
+      Name: "SIENNA",
+      Hex: "#A0522D",
+      "rgb": "RGB(160, 82, 45)",
+      "families": ["brown"]
+    },
+    {
+      Name: "BROWN",
+      Hex: "#A52A2A",
+      "rgb": "RGB(165, 42, 42)",
+      "families": ["brown", "red"]
+    },
+    {
+      Name: "MAROON",
+      Hex: "#800000",
+      "rgb": "RGB(128, 0, 0)",
+      "families": ["brown", "red"]
+    },
+    {
+      Name: "WHITE",
+      Hex: "#FFFFFF",
+      "rgb": "RGB(255, 255, 255)",
+      "families": ["white"]
+    },
+    {
+      Name: "SNOW",
+      Hex: "#FFFAFA",
+      "rgb": "RGB(255, 250, 250)",
+      "families": ["white"]
+    },
+    {
+      Name: "HONEYDEW",
+      Hex: "#F0FFF0",
+      "rgb": "RGB(240, 255, 240)",
+      "families": ["white"]
+    },
+    {
+      Name: "MINTCREAM",
+      Hex: "#F5FFFA",
+      "rgb": "RGB(245, 255, 250)",
+      "families": ["white"]
+    },
+    {
+      Name: "AZURE",
+      Hex: "#F0FFFF",
+      "rgb": "RGB(240, 255, 255)",
+      "families": ["white"]
+    },
+    {
+      Name: "ALICEBLUE",
+      Hex: "#F0F8FF",
+      "rgb": "RGB(240, 248, 255)",
+      "families": ["white"]
+    },
+    {
+      Name: "GHOSTWHITE",
+      Hex: "#F8F8FF",
+      "rgb": "RGB(248, 248, 255)",
+      "families": ["white"]
+    },
+    {
+      Name: "WHITESMOKE",
+      Hex: "#F5F5F5",
+      "rgb": "RGB(245, 245, 245)",
+      "families": ["white"]
+    },
+    {
+      Name: "SEASHELL",
+      Hex: "#FFF5EE",
+      "rgb": "RGB(255, 245, 238)",
+      "families": ["white", "pink"]
+    },
+    {
+      Name: "BEIGE",
+      Hex: "#F5F5DC",
+      "rgb": "RGB(245, 245, 220)",
+      "families": ["white", "tan"]
+    },
+    {
+      Name: "OLDLACE",
+      Hex: "#FDF5E6",
+      "rgb": "RGB(253, 245, 230)",
+      "families": ["white", "tan"]
+    },
+    {
+      Name: "FLORALWHITE",
+      Hex: "#FDF5E6",
+      "rgb": "RGB(253, 245, 230)",
+      "families": ["white", "tan"]
+    },
+    {
+      Name: "IVORY",
+      Hex: "#FFFFF0",
+      "rgb": "RGB(255, 255, 240)",
+      "families": ["white", "tan"]
+    },
+    {
+      Name: "ANTIQUEWHITE",
+      Hex: "#FAEBD7",
+      "rgb": "RGB(250, 235, 215)",
+      "families": ["white", "tan"]
+    },
+    {
+      Name: "LINEN",
+      Hex: "#FAF0E6",
+      "rgb": "RGB(250, 240, 230)",
+      "families": ["white", "tan"]
+    },
+    {
+      Name: "LAVENDERBLUSH",
+      Hex: "#FFF0F5",
+      "rgb": "RGB(255, 240, 245)",
+      "families": ["white", "lavender", "pink"]
+    },
+    {
+      Name: "MISTYROSE",
+      Hex: "#FFE4E1",
+      "rgb": "RGB(255, 228, 225)",
+      "families": ["white", "pink"]
+    },
+    {
+      Name: "GAINSBORO",
+      Hex: "#DCDCDC",
+      "rgb": "RGB(220, 220, 220)",
+      "families": ["gray"]
+    },
+    {
+      Name: "LIGHTGRAY",
+      Hex: "#D3D3D3",
+      "rgb": "RGB(211, 211, 211)",
+      "families": ["gray", "light"]
+    },
+    {
+      Name: "SILVER",
+      Hex: "#C0C0C0",
+      "rgb": "RGB(192, 192, 192)",
+      "families": ["gray"]
+    },
+    {
+      Name: "DARKGRAY",
+      Hex: "#A9A9A9",
+      "rgb": "RGB(169, 169, 169)",
+      "families": ["gray", "dark"]
+    },
+    {
+      Name: "GRAY",
+      Hex: "#808080",
+      "rgb": "RGB(128, 128, 128)",
+      "families": ["gray"]
+    },
+    {
+      Name: "DIMGRAY",
+      Hex: "#696969",
+      "rgb": "RGB(105, 105, 105)",
+      "families": ["gray"]
+    },
+    {
+      Name: "LIGHTSLATEGRAY",
+      Hex: "#778899",
+      "rgb": "RGB(119, 136, 153)",
+      "families": ["gray", "light", "slate"]
+    },
+    {
+      Name: "SLATEGRAY",
+      Hex: "#708090",
+      "rgb": "RGB(112, 128, 144)",
+      "families": ["gray",  "slate"]
+    },
+    {
+      Name: "DARKSLATEGRAY",
+      Hex: "#2F4F4F",
+      "rgb": "RGB(47, 79, 79)",
+      "families": ["gray",  "slate", "dark"]
+    },
+    {
+      Name: "BLACK",
+      Hex: "#000000",
+      "rgb": "RGB(0, 0, 0)",
+      "families": ["black"]
+    }
+  ]
 };
 export default StaticData;

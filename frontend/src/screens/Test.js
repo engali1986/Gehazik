@@ -1,5 +1,6 @@
 import React, { useState,useEffect, useRef,useContext} from "react";
 import io from 'socket.io-client';
+import StaticData from "../Data/StaticData.js";
 import {LanguageContext} from "../Context/LanguageContext";
 import {Row, Col, Button, Form} from "react-bootstrap"
 const socket = io('https://gehazik-server.onrender.com'); // Connect to the Node.js server
@@ -99,7 +100,17 @@ const Test = ({globalState}) => {
       Optioned
     </div>
     <ProductOptions Options={Options} SetOptions={SetOptions}/>
-    
+    <label for="select1" className="d-none">The label</label>
+    <select onChange={(e)=>{
+      console.log(e.target)
+      console.log(e.target.value)
+    }} style={{minWidth:'100px'}} id="select1" aria-label="TestPageColors">
+      {StaticData.Colors.map(item=>(
+        <option style={{color:item.Hex, backgroundColor:item.Hex}} key={item.Name}>
+         {item.Name}
+        </option>
+      ))}
+    </select>
     </>
    
   )
