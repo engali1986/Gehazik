@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef,useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Container, Row, Col,Button } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import StaticData from "../Data/StaticData.js";
 import {toast} from "react-toastify"
 import { LanguageContext } from "../Context/LanguageContext.js"
@@ -39,100 +39,6 @@ const MerchantPage = ({ globalState, setGlobal }) => {
     }
     return x.toString()
   }
-  // The following function will be used to mange Product Options
-  const ProductOptions=({AddProductData,SetAddProductData})=>{
-    const addOption = () => {
-      let NewArr=[...AddProductData.ProductOptions]
-      console.log(AddProductData)
-      console.log(AddProductData.ProductOptions)
-      console.log(NewArr)
-      NewArr.push({ Color: StaticData.Colors[0].Name, Size: '', Qty:0 })
-     
-      SetAddProductData({...AddProductData,ProductOptions:NewArr });
-    };
-    const handleOptionChange = (index, field, value) => {
-      const NewOptions = [...AddProductData.ProductOptions];
-      NewOptions[index][field] = value;
-      SetAddProductData({...AddProductData,ProductOptions:NewOptions});
-    };
-    const removeOption = (index) => {
-      const NewOptions = [...AddProductData.ProductOptions];
-      NewOptions.splice(index, 1);
-      SetAddProductData({...AddProductData,ProductOptions:NewOptions});
-    };
-  
-    return(
-      <Row className={Language==="ar"?" pb-2 align-items-center text-end":" pb-2 align-items-center text-start"}>
-        <Col xs={12}>
-        <Row>
-        <Col onClick={(e)=>{
-          e.stopPropagation()
-          console.log(AddProductData)
-        }} xs={8} md={10}style={{ color: "white" }} >
-              {Language==="ar"?"برجاء اضافه خيارات المنتج":"Please add product options"}
-              </Col>
-              <Col xs={4} md={2} style={{ color: "white" }} >
-              <Button variant="success" onClick={addOption} >
-              {Language==="ar"?"أضافه":"Add"}
-              </Button>
-              </Col>
-        </Row>
-        {AddProductData.ProductOptions.length>0?AddProductData.ProductOptions.map((option, index) => (
-        <Row key={index} className="mt-3 align-items-center">
-          
-          <Col>
-          <select onChange={(e)=>{
-            let Color
-            for (let index = 0; index < StaticData.Colors.length; index++) {
-              if (StaticData.Colors[index].Name===e.target.value) {
-                Color=StaticData.Colors[index].Hex
-                break;
-              } else {
-                
-              }
-              
-            }
-            e.target.style.backgroundColor=Color
-            handleOptionChange(index, 'Color', e.target.value)
-          }} key={index} style={{width:'100%', backgroundColor:StaticData.Colors[0].Hex}} >
-            {StaticData.Colors.map(item=>(
-              <option style={{color:item.Hex, backgroundColor:item.Hex}}  key={item.Name}>
-                {item.Name}
-              </option>
-            ))}
-          </select>
-            
-          </Col>
-          <Col>
-            <input style={{width:'100%'}}
-              type="text"
-              placeholder={Language==="ar"?"المقاس":"Size"}
-              value={option.Size}
-              onChange={(e) => handleOptionChange(index, 'Size', e.target.value)}
-            />
-          </Col>
-          <Col>
-            <input
-
-              type="number"
-              style={{width:'100%'}}
-              placeholder={Language==="ar"?"الكميه":"Qty"}
-              value={option.Qty}
-              onChange={(e) => handleOptionChange(index, 'Qty', e.target.value)}
-            />
-          </Col>
-          <Col>
-            <Button variant="danger" onClick={() => removeOption(index)}>
-              Remove
-            </Button>
-          </Col>
-        </Row>
-      )):""}
-        
-        </Col>
-      </Row>
-    )
-  }
   // The following function will be used to display Data inside page
   const DtataDisplay = () => {
     const [ChangePasswordData,SetChangePasswordData]=useState({
@@ -159,7 +65,8 @@ const MerchantPage = ({ globalState, setGlobal }) => {
       ProductUnitPrice: 0,
       ProductTitle: "",
       ProductAdditionalFeatures: [],
-      ProductOptions:[],
+      ProductSizes:[],
+      ProductColors:[],
       Token: globalState.Token,
       Name: globalState.Name,
       Email: globalState.Email,
@@ -1213,8 +1120,52 @@ const MerchantPage = ({ globalState, setGlobal }) => {
               />
             </Col>
           </Row>
-          {/* Product Options */}
-          <ProductOptions AddProductData={AddProductData} SetAddProductData={SetAddProductData}/>
+          <Row className={Language==="ar"?" pb-2 align-items-center text-end":" pb-2 align-items-center text-start"}>
+            <Col className=" d-flex gap-2 align-items-center " style={{ color: "white" }} xs={6}>
+            <div className=" d-inline-block">
+            {Language==="ar"?"برجاء اضافه الوان المنتج متبوع بعلامه (,)":"Please add product colors separated by comma"}
+            </div> 
+            <div className=" d-inline-block flex-fill">
+            <input
+                onChange={(e) => {
+                  Alert.current.classList.replace(
+                    "alert-success",
+                    "alert-danger"
+                  );
+                  Alert.current.innerText = "";
+                  Alert.current.style.maxHeight = "0px";
+                  console.log(e.target.value.split(","));
+                  let Arr = e.target.value.split(",");
+                  SetAddProductData({...AddProductData,ProductColors:Arr})
+                }}
+                type="text"
+                style={{ width: "100%" }}
+              />
+            </div>
+            </Col>
+            <Col className=" d-flex gap-2 align-items-center " style={{ color: "white" }} xs={6}>
+            <div className=" d-inline-block">
+            {Language==="ar"?"برجاء اضافه مقاسات المنتج متبوع بعلامه (,)":"Please add product sizes separated by comma"}
+            </div> 
+            <div className=" d-inline-block flex-fill">
+            <input
+                onChange={(e) => {
+                  Alert.current.classList.replace(
+                    "alert-success",
+                    "alert-danger"
+                  );
+                  Alert.current.innerText = "";
+                  Alert.current.style.maxHeight = "0px";
+                  console.log(e.target.value.split(","));
+                  let Arr = e.target.value.split(",");
+                  SetAddProductData({...AddProductData,ProductSizes:Arr})
+                }}
+                type="text"
+                style={{ width: "100%" }}
+              />
+            </div>
+            </Col>
+          </Row>
           <Row
             style={{ color: "white" }}
             className={Language==="ar"?" pb-2 align-items-center text-end":" pb-2 align-items-center text-start"}
