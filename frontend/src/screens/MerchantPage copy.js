@@ -133,7 +133,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
       if (ProductDataChecked === true) {
         console.log("Submitting data");
         const ProductAdded = await fetch(
-          "https://gehazik-server.onrender.com/Merchants/AddProduct",
+          "http://localhost:5000/Merchants/AddProduct",
           {
             method: "POST",
             body: JSON.stringify(AddProductData),

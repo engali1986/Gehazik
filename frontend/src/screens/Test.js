@@ -3,7 +3,7 @@ import io from 'socket.io-client';
 import StaticData from "../Data/StaticData.js";
 import {LanguageContext} from "../Context/LanguageContext";
 import {Row, Col, Button, Form} from "react-bootstrap"
-const socket = io('https://gehazik-server.onrender.com'); // Connect to the Node.js server
+const socket = io('http://localhost:5000'); // Connect to the Node.js server
 const ProductOptions=({Options,SetOptions})=>{
   const addOption = () => {
     let NewArr=[...Options.POptions]

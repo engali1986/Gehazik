@@ -123,7 +123,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
             console.log(AddProductData)
             console.log("Submitting data");
             const ProductAdded = await fetch(
-              "https://gehazik-server.onrender.com/Merchants/AddProduct",
+              "http://localhost:5000/Merchants/AddProduct",
               {
                 method: "POST",
                 body: formData,
@@ -353,7 +353,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                     if (RegTextVarify===true) {
                       console.log("Pdate password")
                       const ChangePassword = await fetch(
-                        "https://gehazik-server.onrender.com/Merchants/ChangePassword",
+                        "http://localhost:5000/Merchants/ChangePassword",
                         {
                           method: "post",
                           body: JSON.stringify(ChangePasswordData),
@@ -737,7 +737,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                   };
                   console.log(UploadProductListData);
                   const UpdateProduct = await fetch(
-                    "https://gehazik-server.onrender.com/Merchants/UpdateProduct",
+                    "http://localhost:5000/Merchants/UpdateProduct",
                     {
                       method: "post",
                       body: JSON.stringify(UploadProductListData),
@@ -1651,7 +1651,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                         }
                         console.log(MerchantCredentials)
                         const GetMerchantOrders=await fetch(
-                          "https://gehazik-server.onrender.com/Merchants/OrdersList",
+                          "http://localhost:5000/Merchants/OrdersList",
                           {
                             method: "post",
                             body: JSON.stringify(MerchantCredentials),
@@ -1714,7 +1714,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                         }
                         console.log(MerchantCredentials)
                         const GetMerchantOrders=await fetch(
-                          "https://gehazik-server.onrender.com/Merchants/OrdersList",
+                          "http://localhost:5000/Merchants/OrdersList",
                           {
                             method: "post",
                             body: JSON.stringify(MerchantCredentials),
@@ -1822,7 +1822,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                     console.log(ProductsListCredentials);
                     console.log("ProductsList submitted");
                     const GetProductsList = await fetch(
-                      "https://gehazik-server.onrender.com/Merchants/ProductsList",
+                      "http://localhost:5000/Merchants/ProductsList",
                       {
                         method: "post",
                         body: JSON.stringify(ProductsListCredentials),
@@ -1967,7 +1967,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                         }
                         console.log(MerchantCredentials)
                         const GetMerchantOrders=await fetch(
-                          "https://gehazik-server.onrender.com/Merchants/OrdersList",
+                          "http://localhost:5000/Merchants/OrdersList",
                           {
                             method: "post",
                             body: JSON.stringify(MerchantCredentials),
@@ -2029,7 +2029,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                           }
                           console.log(MerchantCredentials)
                           const GetMerchantOrders=await fetch(
-                            "https://gehazik-server.onrender.com/Merchants/OrdersList",
+                            "http://localhost:5000/Merchants/OrdersList",
                             {
                               method: "post",
                               body: JSON.stringify(MerchantCredentials),
