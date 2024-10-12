@@ -42,18 +42,47 @@ const MerchantPage = ({ globalState, setGlobal }) => {
   // The following function will be used to mange Product Options
   const ProductOptions=({AddProductData,SetAddProductData})=>{
     const addOption = () => {
-      let NewArr=[...AddProductData.ProductOptions]
-      console.log(AddProductData)
-      console.log(AddProductData.ProductOptions)
-      console.log(NewArr)
-      NewArr.push({ Color: StaticData.Colors[0].Name, Size: '', Qty:0 })
-     
-      SetAddProductData({...AddProductData,ProductOptions:NewArr });
+      if (AddProductData.ProductOptions.length===0) {
+        let NewArr=[...AddProductData.ProductOptions]
+       console.log(AddProductData)
+       console.log(AddProductData.ProductOptions)
+       console.log(NewArr)
+       NewArr.push({ Color: StaticData.Colors[0].Name, Size: '', Qty:0 })
+       SetAddProductData({...AddProductData,ProductOptions:NewArr });
+        
+      } else {
+        if (AddProductData.ProductOptions[AddProductData.ProductOptions.length-1].Color.length===0 || AddProductData.ProductOptions[AddProductData.ProductOptions.length-1].Size.length===0 || AddProductData.ProductOptions[AddProductData.ProductOptions.length-1].Qty===0) {
+          toast.error(Language==="ar"?"برجاء اضافه اللون والمقاس و العدد":"Please add color, size and qty")
+        } else {
+         let NewArr=[...AddProductData.ProductOptions]
+         console.log(AddProductData)
+         console.log(AddProductData.ProductOptions)
+         console.log(NewArr)
+         NewArr.push({ Color: StaticData.Colors[0].Name, Size: '', Qty:0 })
+         SetAddProductData({...AddProductData,ProductOptions:NewArr });
+        }
+        
+      }
+      
+      
     };
     const handleOptionChange = (index, field, value) => {
-      const NewOptions = [...AddProductData.ProductOptions];
-      NewOptions[index][field] = value;
-      SetAddProductData({...AddProductData,ProductOptions:NewOptions});
+      if (field==="Qty") {
+        if (Number.isInteger(parseInt(value,10)) && parseInt(value,10)>0) {
+          const NewOptions = [...AddProductData.ProductOptions];
+          NewOptions[index][field] = parseInt(value,10);
+          SetAddProductData({...AddProductData,ProductOptions:NewOptions});
+        } else {
+          toast.error(Language==="ar"?"يجب ان تكون العدد رقم صحيح اكبر من صفر":"Qty must be integer >0")
+        }
+        
+      } else {
+        const NewOptions = [...AddProductData.ProductOptions];
+        NewOptions[index][field] = value;
+        SetAddProductData({...AddProductData,ProductOptions:NewOptions});
+        
+      }
+      
     };
     const removeOption = (index) => {
       const NewOptions = [...AddProductData.ProductOptions];
@@ -81,6 +110,9 @@ const MerchantPage = ({ globalState, setGlobal }) => {
         <Row key={index} className="mt-3 align-items-center">
           
           <Col>
+          <div style={{color:'white'}}>
+            {Language==="ar"?"اختر اللون":"Color"}
+          </div>
           <select onChange={(e)=>{
             let Color
             for (let index = 0; index < StaticData.Colors.length; index++) {
@@ -107,7 +139,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
             <input style={{width:'100%'}}
               type="text"
               placeholder={Language==="ar"?"المقاس":"Size"}
-              value={option.Size}
+              
               onChange={(e) => handleOptionChange(index, 'Size', e.target.value)}
             />
           </Col>
@@ -117,7 +149,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
               type="number"
               style={{width:'100%'}}
               placeholder={Language==="ar"?"الكميه":"Qty"}
-              value={option.Qty}
+              
               onChange={(e) => handleOptionChange(index, 'Qty', e.target.value)}
             />
           </Col>
@@ -154,12 +186,11 @@ const MerchantPage = ({ globalState, setGlobal }) => {
       ProductCategory: "",
       ProductSubCategory: "",
       ProductFeature: "",
-      ProductQty: 0,
       ProductQtyUnit: "",
       ProductUnitPrice: 0,
       ProductTitle: "",
-      ProductAdditionalFeatures: [],
       ProductOptions:[],
+      ProductAdditionalFeatures: [],
       Token: globalState.Token,
       Name: globalState.Name,
       Email: globalState.Email,
@@ -204,66 +235,85 @@ const MerchantPage = ({ globalState, setGlobal }) => {
           ProductDataChecked = true;
         }
       }
-      if (ProductDataChecked === true) {
-        if (AddProductData.CityDelivery===true || AddProductData.GovernorateDelivery===true || AddProductData.EgyptDelivery===true) {
-          if (ProductImageFiles.length > 0) {
-            const formData = new FormData();
-            formData.append("Data", JSON.stringify(AddProductData));
-            ProductImageFiles.forEach((file) => {
-              formData.append("Files", file);
-            });
-            console.log(formData);
-           
-            console.log(AddProductData)
-            console.log("Submitting data");
-            const ProductAdded = await fetch(
-              "http://localhost:5000/Merchants/AddProduct",
-              {
-                method: "POST",
-                body: formData,
-  
-                mode: "cors",
-              }
-            )
-              .then((res) => {
-                console.log(res);
-                SetDisabled(false);
-                return res.json();
-              })
-              .catch((err) => {
-                console.log(err);
-                SetDisabled(false);
-              });
-  
-            console.log(ProductAdded);
-            Alert.current.classList.replace("alert-danger", "alert-success");
-            Alert.current.innerText = ProductAdded.resp;
-            Alert.current.style.maxHeight = "500px";
-            SetDisabled(false);
+      if (ProductDataChecked === true && AddProductData.ProductOptions.length>0) {
+        let ProductOptionsCheck=false
+        for (let index = 0; index < AddProductData.ProductOptions.length; index++) {
+          if (Number.isInteger(AddProductData.ProductOptions[index].Qty)  &&AddProductData.ProductOptions[index].Qty>0 && AddProductData.ProductOptions[index].Size.length>0 && AddProductData.ProductOptions[index].Color.length>0 ) {
+            ProductOptionsCheck=true
           } else {
-            Alert.current.classList.replace("alert-success", "alert-danger");
-            Alert.current.innerText =Language==="ar"?"برجاء اضافه صور للمنتج":"Please add product image";
-            Alert.current.style.maxHeight = "500px";
-            SetDisabled(false);
+            ProductOptionsCheck=false 
+            break;
           }
           
+        }
+        if (ProductOptionsCheck===true) {
+          if (AddProductData.CityDelivery===true || AddProductData.GovernorateDelivery===true || AddProductData.EgyptDelivery===true) {
+            if (ProductImageFiles.length > 0) {
+              const formData = new FormData();
+              formData.append("Data", JSON.stringify(AddProductData));
+              ProductImageFiles.forEach((file) => {
+                formData.append("Files", file);
+              });
+              console.log(formData);
+             
+              console.log(AddProductData)
+              console.log("Submitting data");
+              const ProductAdded = await fetch(
+                "http://localhost:5000/Merchants/AddProduct",
+                {
+                  method: "POST",
+                  body: formData,
+    
+                  mode: "cors",
+                }
+              )
+                .then((res) => {
+                  console.log(res);
+                  SetDisabled(false);
+                  return res.json();
+                })
+                .catch((err) => {
+                  console.log(err);
+                  SetDisabled(false);
+                });
+    
+              console.log(ProductAdded);
+              Alert.current.classList.replace("alert-danger", "alert-success");
+              Alert.current.innerText = ProductAdded.resp;
+              Alert.current.style.maxHeight = "500px";
+              SetDisabled(false);
+            } else {
+              Alert.current.classList.replace("alert-success", "alert-danger");
+              Alert.current.innerText =Language==="ar"?"برجاء اضافه صور للمنتج":"Please add product image";
+              Alert.current.style.maxHeight = "500px";
+              SetDisabled(false);
+            }
+            
+          } else {
+            console.log(AddProductData)
+            Alert.current.classList.replace("alert-success", "alert-danger");
+            Alert.current.innerText = Language==="ar"?"برجاء تحديد خيارات التوصيل":"Please select Delivery option ";
+            Alert.current.style.maxHeight = "500px";
+            SetDisabled(false);
+            ProductDataChecked = false;
+            
+          }
         } else {
-          console.log(AddProductData)
-          Alert.current.classList.replace("alert-success", "alert-danger");
-          Alert.current.innerText = Language==="ar"?"برجاء تحديد خيارات التوصيل":"Please select Delivery option ";
-          Alert.current.style.maxHeight = "500px";
+          console.log("Product not added ");
+          toast.error(Language==="ar"?"برجاء اضافه خيارات المنتج":"Please add product Options")
           SetDisabled(false);
           ProductDataChecked = false;
+          ProductOptionsCheck=false
           
         }
         
+        
       } else {
-        // console.log("Product not added ");
-        //   Alert.current.classList.replace("alert-success", "alert-danger");
-        //   Alert.current.innerText = "Please complete form ";
-        //   Alert.current.style.maxHeight = "500px";
-        //   SetDisabled(false);
-        //   ProductDataChecked = false;
+
+        console.log("Product not added ");
+          toast.error(Language==="ar"?"برجاء اضافه خيارات المنتج":"Please add product Options")
+          SetDisabled(false);
+          ProductDataChecked = false;
       }
     };
     // will be used to list sub Categories in addProduct section
@@ -977,8 +1027,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                     SetAddProductData({
                       ...AddProductData,
                       ProductCategory: "",
-                      ProductFeature: "",
-                      ProductQty: 0,
+                      ProductFeature: "",                   
                       ProductQtyUnit: "",
                       ProductSubCategory: "",
                       EgyptDelivery:true
@@ -988,8 +1037,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                       SetAddProductData({
                         ...AddProductData,
                         ProductCategory: e.target.value,
-                        ProductFeature: "",
-                        ProductQty: 0,
+                        ProductFeature: "",                       
                         ProductQtyUnit: "",
                         ProductSubCategory: "",
                         EgyptDelivery:false
@@ -1000,8 +1048,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                       SetAddProductData({
                         ...AddProductData,
                         ProductCategory: e.target.value,
-                        ProductFeature: "",
-                        ProductQty: 0,
+                        ProductFeature: "",                     
                         ProductQtyUnit: "",
                         ProductSubCategory: "",
                         EgyptDelivery:true
@@ -1083,37 +1130,10 @@ const MerchantPage = ({ globalState, setGlobal }) => {
             </Col>
           </Row>
           <Row className={Language==="ar"?" pb-2 align-items-center text-end":" pb-2 align-items-center text-start"}>
-            <Col xs={4} md={8}>
-              <div style={{ color: "white" }}>{Language==="ar"?"برجاء اضافه الكميه":"Please add quantity"}</div>
+            <Col xs={8} md={10}>
+              <div style={{ color: "white" }}>{Language==="ar"?"برجاء اضافه وحده الكميه":"Please add quantity unit"}</div>
             </Col>
-            <Col xs={4} md={2}>
-              <input
-                onChange={(e) => {
-                  Alert.current.classList.replace(
-                    "alert-success",
-                    "alert-danger"
-                  );
-                  Alert.current.innerText = "";
-                  Alert.current.style.maxHeight = "0px";
-                  if (parseInt(e.target.value,10)<=0) {
-                    toast.error(Language==="ar"?"كميه المنتج يجب ان تكون اكبر من صفر":"Quantity shall be >0")
-                    SetAddProductData({
-                      ...AddProductData,
-                      ProductQty: 0,
-                    });
-                  }else{
-                    SetAddProductData({
-                      ...AddProductData,
-                      ProductQty: parseInt(e.target.value, 10),
-                    });
-
-                  }
-                  
-                }}
-                style={{ width: "100%" }}
-                type="number"
-              />
-            </Col>
+         
             <Col xs={4} md={2}>
               <select
                 onChange={(e) => {
