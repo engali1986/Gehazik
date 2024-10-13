@@ -5,6 +5,16 @@ import { toast } from "react-toastify";
 import StaticData from "../Data/StaticData.js";
 const ProductDetails = ({ GlobalState,AddToCart }) => {
   const [Product, setProduct] = useState({ ProductImages: [] }); // this will store product details
+  const [ProductSelection,SetProductSelection]=useState({
+    Color:"",
+    Size:"",
+    Hex:"",
+    Qty:0
+  }) // this will be used to store selected color and size
+  const [Colors,SetColors]=useState([])
+  const [SelectedColor,SetSelectedColor]=useState({Color:"",Hex:""})// this will be used to store selected product color
+  const [SelectedSize,SetSelectedSize]=useState("")
+  const [Sizes,SetSizes]=useState([])// this will be used to store available sizes based on color selection
   const [Loader, SetLoader] = useState(false); // this will handle loader visbility during fetch product details
   const [Count, SetCount] = useState(1); // this will store ordered qty
   const params = useParams(); // this will provide productID to fetch from server in useeffect
@@ -57,6 +67,37 @@ const ProductDetails = ({ GlobalState,AddToCart }) => {
             MerchantID:prod.MerchantID,
             ID:prod._id
           }));
+          // next we will make color arrays to group duplicate colors
+          let InitialColors=[]
+          for (let index = 0; index < prod.ProductOptions.length; index++) {
+            let obj={
+              Color:prod.ProductOptions[index].Color,
+              Hex:prod.ProductOptions[index].Hex
+            }
+            InitialColors.push(obj) 
+          }
+          const uniqueColorsByColor = InitialColors.filter((item, index, self) =>
+            index === self.findIndex(t => t.Color === item.Color)
+          ); 
+          SetColors(uniqueColorsByColor)
+          // Colors Array finished
+          // next we will make sizes array
+          let InitialSizes=[]
+          for (let index = 0; index < prod.ProductOptions.length; index++) {
+            if (prod.ProductOptions[index].Color===prod.ProductOptions[0].Color) {
+              InitialSizes.push(prod.ProductOptions[index].Size)
+            }
+            
+          }
+          SetSizes(InitialSizes)
+          // sizes array finished
+
+          SetProductSelection({...ProductSelection,
+            Color:prod.ProductOptions[0].Color,
+            Size:prod.ProductOptions[0].Size,
+            Hex:prod.ProductOptions[0].Hex,
+            Qty:1
+          })
          
           console.log(Product);
         } else {
@@ -85,6 +126,9 @@ const ProductDetails = ({ GlobalState,AddToCart }) => {
     <Container onClick={(e)=>{
       e.stopPropagation()
       console.log(Product)
+      console.log(ProductSelection)
+      console.log(Sizes)
+      console.log(Colors)
     }}>
       <Row
         style={{
@@ -264,12 +308,10 @@ const ProductDetails = ({ GlobalState,AddToCart }) => {
               <div>
                 Color
                 <select onChange={(e)=>{
-                  e.target.style.backgroundColor=Product.ProductOptions[e.target.selectedIndex].Hex
-                  setProduct({...Product,InStockQty:Product.ProductOptions[e.target.selectedIndex].Qty})
-                  SetCount(1)
+                  e.target.style.backgroundColor=Colors[e.target.selectedIndex].Hex
                 }} style={{backgroundColor:Array.isArray(Product.ProductOptions)?Product.ProductOptions[0].Hex:"white"}}>
-                  {Array.isArray(Product.ProductOptions)?Product.ProductOptions.map((item,index)=>(
-                    <option data-index={index} style={{backgroundColor:item.Hex}} key={item.Color}>
+                  {Array.isArray(Colors)?Colors.map((item,index)=>(
+                    <option data-index={index} style={{backgroundColor:item.Hex}} key={index}>
                       {item.Color}
                     </option>
                   )):""}
@@ -278,9 +320,9 @@ const ProductDetails = ({ GlobalState,AddToCart }) => {
               <div>
                 Size
                 <select>
-                  {Array.isArray(Product.ProductOptions)?Product.ProductOptions.map(item=>(
-                    <option key={item.Size}>
-                      {item.Size}
+                  {Array.isArray(Sizes)?Sizes.map(item=>(
+                    <option key={item}>
+                      {item}
                     </option>
                   )):""}
                 </select>
