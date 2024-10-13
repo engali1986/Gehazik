@@ -58,7 +58,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
          console.log(AddProductData)
          console.log(AddProductData.ProductOptions)
          console.log(NewArr)
-         NewArr.push({ Color: StaticData.Colors[0].Name, Size: '', Qty:0, OrderedQty:0 })
+         NewArr.push({ Color: StaticData.Colors[0].Name, Hex:StaticData.Colors[0].Hex, Size: '', Qty:0, OrderedQty:0 })
          SetAddProductData({...AddProductData,ProductOptions:NewArr });
         }
         
@@ -77,9 +77,28 @@ const MerchantPage = ({ globalState, setGlobal }) => {
         }
         
       } else {
-        const NewOptions = [...AddProductData.ProductOptions];
-        NewOptions[index][field] = value;
-        SetAddProductData({...AddProductData,ProductOptions:NewOptions});
+        if (field==="Color") {
+          console.log("Changing Color")
+          let hex=""
+          for (let index = 0; index < StaticData.Colors.length; index++) {
+            if(StaticData.Colors[index].Name===value){
+              hex=StaticData.Colors[index].Hex
+              break;
+            }
+            
+          }
+          const NewOptions = [...AddProductData.ProductOptions];
+          NewOptions[index]["Color"] = value;
+          NewOptions[index]["Hex"] = hex;
+          SetAddProductData({...AddProductData,ProductOptions:NewOptions});
+          
+        } else {
+          const NewOptions = [...AddProductData.ProductOptions];
+          NewOptions[index][field] = value;
+          SetAddProductData({...AddProductData,ProductOptions:NewOptions});
+          
+        }
+        
         
       }
       

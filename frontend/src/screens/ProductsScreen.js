@@ -35,8 +35,8 @@ const ProductsScreen = ({globalState}) => {
         >
           <Row>
             <Col xs={12}>
-              <div>Loading</div>
-              <img
+            <a href={`/productdetails/${Product._id}`}>
+            <img
                 onLoadedData={(e) => {
                   console.log(e.target.src);
                 }}
@@ -61,6 +61,8 @@ const ProductsScreen = ({globalState}) => {
                 alt={Product.ProductImagesIDs[0]}
                 decoding="async"
               />
+                </a>
+              
             </Col>
           </Row>
           <Row className=" pb-1" key={Product.ProductTitle}>
@@ -78,9 +80,7 @@ const ProductsScreen = ({globalState}) => {
                 <span className=" d-inline-block">
                   {Product.ProductUnitPrice} EGP
                 </span>
-                <span className=" d-inline-block">
-                  <i className="fa-solid fa-cart-shopping"></i>
-                </span>
+                
               </div>
             </Col>
           </Row>
@@ -105,8 +105,9 @@ const ProductsScreen = ({globalState}) => {
         >
           <Row>
             <Col xs={12}>
-              <div>Loading</div>
-              <img
+              
+            <a href={`/productdetails/${Product._id}`}>
+            <img
                 onLoadedData={(e) => {
                   console.log(e.target.src);
                 }}
@@ -131,6 +132,7 @@ const ProductsScreen = ({globalState}) => {
                 alt={Product.ProductImagesIDs[0]}
                 decoding="async"
               />
+                </a>
             </Col>
           </Row>
           <Row className=" pb-1" key={Product.ProductTitle}>
@@ -148,9 +150,7 @@ const ProductsScreen = ({globalState}) => {
                 <span className=" d-inline-block">
                   {Product.ProductUnitPrice} EGP
                 </span>
-                <span className=" d-inline-block">
-                  <i className="fa-solid fa-cart-shopping"></i>
-                </span>
+                
               </div>
             </Col>
           </Row>
@@ -174,8 +174,9 @@ const ProductsScreen = ({globalState}) => {
         >
           <Row>
             <Col xs={12}>
-              <div>Loading</div>
-              <img
+              
+            <a href={`/productdetails/${Product._id}`}>
+            <img
                 onLoadedData={(e) => {
                   console.log(e.target.src);
                 }}
@@ -200,6 +201,7 @@ const ProductsScreen = ({globalState}) => {
                 alt={Product.ProductImagesIDs[0]}
                 decoding="async"
               />
+                </a>
             </Col>
           </Row>
           <Row className=" pb-1" key={Product.ProductTitle}>
@@ -216,9 +218,6 @@ const ProductsScreen = ({globalState}) => {
               <div className=" d-flex justify-content-between">
                 <span className=" d-inline-block">
                   {Product.ProductUnitPrice} EGP
-                </span>
-                <span className=" d-inline-block">
-                  <i className="fa-solid fa-cart-shopping"></i>
                 </span>
               </div>
             </Col>

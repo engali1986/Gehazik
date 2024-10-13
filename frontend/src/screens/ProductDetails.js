@@ -2,17 +2,16 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 import { toast } from "react-toastify";
+import StaticData from "../Data/StaticData.js";
 const ProductDetails = ({ GlobalState,AddToCart }) => {
-  const [Product, setProduct] = useState({ ProductImages: [] }); // this will sore product details
+  const [Product, setProduct] = useState({ ProductImages: [] }); // this will store product details
   const [Loader, SetLoader] = useState(false); // this will handle loader visbility during fetch product details
   const [Count, SetCount] = useState(1); // this will store ordered qty
-  const params = useParams(); // this will provide productID to fetch from server in useefffect
+  const params = useParams(); // this will provide productID to fetch from server in useeffect
   const Navigate = useNavigate();
   console.log(params.id);
   let prod;
-  useEffect(() => {
-    
-    
+  useEffect(() => { 
     SetLoader(true);
     const GetProductDetails = async (ProductID) => {
       try {
@@ -47,7 +46,8 @@ const ProductDetails = ({ GlobalState,AddToCart }) => {
             ProductImages: prod.ProductImagesIDs,
             ProductTitle: prod.ProductTitle,
             ProductUnitPrice: prod.ProductUnitPrice,
-            InStockQty: prod.InStockQty,
+            InStockQty: prod.ProductOptions[0].Qty,// this will display quantity of first Item in ProductOptions array
+            ProductOptions:prod.ProductOptions,
             ProductAdditionalFeatures: prod.ProductAdditionalFeatures,
             EgyptDelivery:prod.EgyptDelivery,
             GovernorateDelivery:prod.GovernorateDelivery,
@@ -65,13 +65,13 @@ const ProductDetails = ({ GlobalState,AddToCart }) => {
         
       } catch (error) {
         console.log(error)
-        toast.error("Please close google translate")
+        toast.error(error)
         
       }
       
     };
     GetProductDetails(params.id);
-    if (GlobalState.UserLogged===false && GlobalState.Name.length===0) {
+    if (GlobalState.UserLogged===false || GlobalState.Client===false|| GlobalState.Name.length===0) {
       toast.warn((<div>Please <a href="/LogIn">LogIn/Signup</a> to add product </div>), {
         autoClose:false
       })
@@ -245,7 +245,7 @@ const ProductDetails = ({ GlobalState,AddToCart }) => {
                 ? "Out of Stock!"
                 : Product.InStockQty > 0 && Product.InStockQty < 5
                   ? " Only " + Product.InStockQty + " available in stock"
-                  : Product.InStockQty + " In stock"}
+                  : " In stock"}
             </h5>
           </Row>
           <Row
@@ -259,8 +259,26 @@ const ProductDetails = ({ GlobalState,AddToCart }) => {
           <Row>
             <div
               className=" d-flex align-items-center"
-              style={{ width: "40%", height: "100%" }}
+              
             >
+              <div>
+                <select>
+                  {Array.isArray(Product.ProductOptions)?Product.ProductOptions.map(item=>(
+                    <option key={item.Color}>
+                      {item.Color}
+                    </option>
+                  )):""}
+                </select>
+              </div>
+              <div>
+                <select>
+                  {Array.isArray(Product.ProductOptions)?Product.ProductOptions.map(item=>(
+                    <option key={item.Size}>
+                      {item.Size}
+                    </option>
+                  )):""}
+                </select>
+              </div>
               <span
                 onClick={(e) => {
                   e.stopPropagation();
@@ -307,8 +325,8 @@ const ProductDetails = ({ GlobalState,AddToCart }) => {
                 ></i>
               </span>
             </div>
-            <div style={{ width: "60%", height: "100%" }}>
-              <button
+            <Col className=" pt-2" xs={12}>
+            <button
                 onClick={(e) => {
                   e.stopPropagation();
                   console.log(Product)
@@ -346,7 +364,8 @@ const ProductDetails = ({ GlobalState,AddToCart }) => {
               >
                 Add to cart
               </button>
-            </div>
+            </Col>
+            
           </Row>
         </Col>
       </Row>
