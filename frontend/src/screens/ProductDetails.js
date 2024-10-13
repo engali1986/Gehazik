@@ -262,24 +262,21 @@ const ProductDetails = ({ GlobalState,AddToCart }) => {
               
             >
               <div>
+                Color
                 <select onChange={(e)=>{
-               
-                  for (let index = 0; index < Product.ProductOptions.length; index++) {
-                    if (e.target.value===Product.ProductOptions[index].Color) {
-                      e.target.style.backgroundColor=Product.ProductOptions[index].Hex
-                      break;
-                    }
-                    
-                  }
+                  e.target.style.backgroundColor=Product.ProductOptions[e.target.selectedIndex].Hex
+                  setProduct({...Product,InStockQty:Product.ProductOptions[e.target.selectedIndex].Qty})
+                  SetCount(1)
                 }} style={{backgroundColor:Array.isArray(Product.ProductOptions)?Product.ProductOptions[0].Hex:"white"}}>
-                  {Array.isArray(Product.ProductOptions)?Product.ProductOptions.map(item=>(
-                    <option style={{backgroundColor:item.Hex}} key={item.Color}>
+                  {Array.isArray(Product.ProductOptions)?Product.ProductOptions.map((item,index)=>(
+                    <option data-index={index} style={{backgroundColor:item.Hex}} key={item.Color}>
                       {item.Color}
                     </option>
                   )):""}
                 </select>
               </div>
               <div>
+                Size
                 <select>
                   {Array.isArray(Product.ProductOptions)?Product.ProductOptions.map(item=>(
                     <option key={item.Size}>
