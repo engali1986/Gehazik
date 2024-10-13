@@ -22,6 +22,7 @@ const AddProduct = async (AddProductData) => {
         ProductAdditionalFeatures: AddProductData.ProductAdditionalFeatures,
         ProductOptions: AddProductData.ProductOptions,
         ProductQtyUnit: AddProductData.ProductQtyUnit,
+        ProductInStock:true,
         ProductUnitPrice: AddProductData.ProductUnitPrice,
         Date: new Date(),
         MerchantName: AddProductData.Name,
