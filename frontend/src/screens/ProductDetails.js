@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 import { toast } from "react-toastify";
-import StaticData from "../Data/StaticData.js";
+
 const ProductDetails = ({ GlobalState,AddToCart }) => {
   const [Product, setProduct] = useState({ ProductImages: [] }); // this will store product details
   const [ProductSelection,SetProductSelection]=useState({
