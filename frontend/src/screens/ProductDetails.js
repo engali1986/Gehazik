@@ -5,18 +5,18 @@ import { toast } from "react-toastify";
 
 const ProductDetails = ({ GlobalState,AddToCart }) => {
   const [Product, setProduct] = useState({ ProductImages: [] }); // this will store product details
-  const [ProductSelection,SetProductSelection]=useState({
-    Color:"",
-    Size:"",
-    Hex:"",
-    Qty:0
-  }) // this will be used to store selected color and size
   const [Colors,SetColors]=useState([])
   const [SelectedColor,SetSelectedColor]=useState({Color:"",Hex:""})// this will be used to store selected product color
   const [SelectedSize,SetSelectedSize]=useState("")
   const [Sizes,SetSizes]=useState([])// this will be used to store available sizes based on color selection
   const [Loader, SetLoader] = useState(false); // this will handle loader visbility during fetch product details
   const [Count, SetCount] = useState(1); // this will store ordered qty
+  const [ProductSelection,SetProductSelection]=useState({
+    Color:"",
+    Size:"",
+    Hex:"",
+    Qty:1
+  }) // this will be used to store selected color and size
   const params = useParams(); // this will provide productID to fetch from server in useeffect
   const Navigate = useNavigate();
   console.log(params.id);
@@ -126,6 +126,7 @@ const ProductDetails = ({ GlobalState,AddToCart }) => {
     <Container onClick={(e)=>{
       e.stopPropagation()
       console.log(Product)
+      console.log(Count)
       console.log(ProductSelection)
       console.log(Sizes)
       console.log(Colors)
@@ -309,6 +310,31 @@ const ProductDetails = ({ GlobalState,AddToCart }) => {
                 Color
                 <select onChange={(e)=>{
                   e.target.style.backgroundColor=Colors[e.target.selectedIndex].Hex
+                  let NewSizes=[]// will be used to set available sizes
+                  let NewCount=0// will be used to set available quantity (Qty)
+                  for (let index = 0; index < Product.ProductOptions.length; index++) {
+                    if (Product.ProductOptions[index].Color===e.target.value) {
+                      NewSizes.push(Product.ProductOptions[index].Size)
+                      NewCount=NewCount+Product.ProductOptions[index].Qty
+                      
+                    } 
+                  }
+                  SetSizes(NewSizes)// to update sizes list
+                  SetSelectedColor({...SelectedColor,Color:e.target.value,Hex:Colors[e.target.selectedIndex].Hex})
+                  setProduct({...Product,InStockQty:NewCount})
+                  SetCount(count=>{
+                    if (count>NewCount) {
+                      return NewCount
+                    } else {
+                      return count
+                    }
+                  })// to update Count
+                  let x=Count
+                  console.log(x)
+                  console.log(Product.InStockQty)
+                  SetProductSelection({...ProductSelection,Color:e.target.value, Hex:Colors[e.target.selectedIndex].Hex,Size:NewSizes[0],Qty:x<NewCount?x:NewCount})
+
+                  
                 }} style={{backgroundColor:Array.isArray(Product.ProductOptions)?Product.ProductOptions[0].Hex:"white"}}>
                   {Array.isArray(Colors)?Colors.map((item,index)=>(
                     <option data-index={index} style={{backgroundColor:item.Hex}} key={index}>
@@ -319,7 +345,11 @@ const ProductDetails = ({ GlobalState,AddToCart }) => {
               </div>
               <div>
                 Size
-                <select>
+                <select onChange={(e)=>{
+                  console.log(Sizes)
+                  console.log(SelectedSize)
+                  console.log(SelectedColor)
+                }}>
                   {Array.isArray(Sizes)?Sizes.map(item=>(
                     <option key={item}>
                       {item}
@@ -358,7 +388,9 @@ const ProductDetails = ({ GlobalState,AddToCart }) => {
                 onClick={(e) => {
                   e.stopPropagation();
                   if (Count >= 1 && Count<Product.InStockQty) {
+                    let x=Count+1
                     SetCount(Count + 1);
+                    SetProductSelection({...ProductSelection,Qty:x})
                   }
                 }}
                 style={{
