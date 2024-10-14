@@ -332,9 +332,7 @@ const ProductDetails = ({ GlobalState,AddToCart }) => {
                   let x=Count
                   console.log(x)
                   console.log(Product.InStockQty)
-                  SetProductSelection({...ProductSelection,Color:e.target.value, Hex:Colors[e.target.selectedIndex].Hex,Size:NewSizes[0],Qty:x<NewCount?x:NewCount})
-
-                  
+                  SetProductSelection({...ProductSelection,Color:e.target.value, Hex:Colors[e.target.selectedIndex].Hex,Size:NewSizes[0],Qty:x<NewCount?x:NewCount})  
                 }} style={{backgroundColor:Array.isArray(Product.ProductOptions)?Product.ProductOptions[0].Hex:"white"}}>
                   {Array.isArray(Colors)?Colors.map((item,index)=>(
                     <option data-index={index} style={{backgroundColor:item.Hex}} key={index}>
