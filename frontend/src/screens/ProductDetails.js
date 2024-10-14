@@ -344,9 +344,27 @@ const ProductDetails = ({ GlobalState,AddToCart }) => {
               <div>
                 Size
                 <select onChange={(e)=>{
-                  console.log(Sizes)
-                  console.log(SelectedSize)
-                  console.log(SelectedColor)
+                  console.log(e.target.value)
+                  let NewSelection={...ProductSelection}
+                  NewSelection.Size=e.target.value
+                  let NewCount=0
+                  for (let index = 0; index < Product.ProductOptions.length; index++) {
+                    if (Product.ProductOptions[index].Color===ProductSelection.Color && Product.ProductOptions[index].Size===e.target.value) {
+                      NewCount=NewCount+Product.ProductOptions[index].Qty
+                    }  
+                  }
+                  SetCount(count=>{
+                    if (count>NewCount) {
+                      return NewCount
+                    } else {
+                      return count
+                    }
+                  })// to update Count
+                  NewSelection.Qty=Count< NewCount?Count:NewCount
+                  SetProductSelection(NewSelection)
+                  setProduct({...Product,InStockQty:NewCount})
+
+                  console.log(ProductSelection)
                 }}>
                   {Array.isArray(Sizes)?Sizes.map(item=>(
                     <option key={item}>
@@ -360,6 +378,8 @@ const ProductDetails = ({ GlobalState,AddToCart }) => {
                   e.stopPropagation();
                   if (Count > 1) {
                     SetCount(Count - 1);
+                    let x=Count-1
+                    SetProductSelection({...ProductSelection,Qty:x})
                   }
                 }}
                 style={{
