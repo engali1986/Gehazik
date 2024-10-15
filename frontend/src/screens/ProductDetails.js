@@ -432,7 +432,7 @@ const ProductDetails = ({ GlobalState,AddToCart }) => {
                   if (GlobalState.UserLogged===true && GlobalState.Client===true && GlobalState.Name.length>0 && GlobalState.Merchant===false && GlobalState.Admin===false && GlobalState.Governorate.length>0 && GlobalState.City.length>0) {
                     if ((Product.EgyptDelivery===true)|| (Product.GovernorateDelivery===true && Product.Governorate===GlobalState.Governorate)||(Product.CityDelivery===true && Product.City===GlobalState.City)) {
                       console.log(AddToCart);
-                  let AddedProduct = { ...Product, Qty: Count };
+                  let AddedProduct = { ...Product, Color:ProductSelection.Color,Hex:ProductSelection.Hex,Size:ProductSelection.Size, Qty: Count };
                   console.log(AddedProduct);
                   AddToCart(AddedProduct);
                   e.target.innerText = "Added...";

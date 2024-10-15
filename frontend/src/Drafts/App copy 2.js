@@ -252,7 +252,7 @@ function App() {
       GlobalState.CartItems.length > 0
     ) {
       for (let index = 0; index < GlobalState.CartItems.length; index++) {
-        if (GlobalState.CartItems[index].ID === Order.ID && GlobalState.CartItems[index].Color===Order.Color && GlobalState.CartItems[index].Size===Order.Size) {
+        if (GlobalState.CartItems[index].ID === Order.ID ) {
           console.log("Existing order Update");
           let y = GlobalState.CartItems[index].Qty;
           let j = y + Order.Qty;
