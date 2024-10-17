@@ -332,7 +332,7 @@ function App() {
       if (Array.isArray(GlobalState.CartItems)) {
         let y;
         GlobalState.CartItems.forEach((item) => {
-          if (item.ID === UpdateData.ID && item.Qty<item.InStockQty) {
+          if (item.ID === UpdateData.ID && item.Color===UpdateData.Color && item.Size===UpdateData.Size && item.Qty<item.InStockQty) {
             console.log(item.Qty);
             console.log(typeof item.Qty);
             let j = item.Qty + 1;
@@ -367,7 +367,7 @@ function App() {
       if (Array.isArray(GlobalState.CartItems)) {
         let y = GlobalState.CartItems;
         GlobalState.CartItems.forEach((item) => {
-          if (item.ID === UpdateData.ID && item.Qty > 1) {
+          if (item.ID === UpdateData.ID && item.Color===UpdateData.Color && item.Size===UpdateData.Size && item.Qty > 1) {
             console.log(item.Qty);
             console.log(typeof item.Qty);
             let j = item.Qty - 1;
@@ -399,7 +399,9 @@ function App() {
       console.log("Delete cart Item");
       if (Array.isArray(GlobalState.CartItems)) {
         let y = GlobalState.CartItems.filter((item) => {
-          if (item.ID !== UpdateData.ID) {
+          if (item.ID === UpdateData.ID && item.Color=== UpdateData.Color && item.Size===UpdateData.Size ) {
+            
+          }else{
             return item;
           }
         });

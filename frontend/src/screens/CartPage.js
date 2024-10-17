@@ -111,8 +111,9 @@ const CartPage = ({ GlobalState, UpdateCart,AddOrder }) => {
                 style={{ width: "100%", aspectRatio: "1/1" }}
               />
             </Col>
-            <Col xs={10} className=" flex-column align-content-center">
-              <h4
+            <Col xs={10} className="align-content-center">
+            <Row>
+            <h4
                 style={{ textAlign: "start", borderBottom: "2px solid gray" }}
               >
                 {item.ProductTitle && item.ID ? (
@@ -129,12 +130,31 @@ const CartPage = ({ GlobalState, UpdateCart,AddOrder }) => {
                   ""
                 )}
               </h4>
-              <div className=" d-flex flex-wrap">
-                <div className=" flex-grow-1 text-start">
-                  <i
+
+            </Row>
+            <Row id="0">
+              <Col id="1" xs={10}>
+              <Row className={Language==="ar"?"text-end":"text-start"}>
+                  <Col id="2" xs={12} md="auto">
+                  <span>
+                    {Language==="ar"?"اللون":"Color"}
+                  </span>
+                  <span>
+                    : {item.Color}, 
+                  </span>
+                  <span>
+                     {Language==="ar"?"المقاس ":" Size"}
+                  </span>
+                  <span>
+                    : {item.Size} 
+                  </span>
+
+                  </Col>
+                 <Col id="3" xs={12} md={true}>
+                 <i
                     onClick={(e) => {
                       e.stopPropagation();
-                      const UpdatRequired = { Field: "Remove", ID: item.ID };
+                      const UpdatRequired = { Field: "Remove", ID: item.ID, Color:item.Color, Size:item.Size };
                       UpdateCart(UpdatRequired);
                     }}
                     className="fa-solid fa-square-minus fa-xl"
@@ -157,7 +177,7 @@ const CartPage = ({ GlobalState, UpdateCart,AddOrder }) => {
                   <i
                     onClick={(e) => {
                       e.stopPropagation();
-                      const UpdatRequired = { Field: "Add", ID: item.ID };
+                      const UpdatRequired = { Field: "Add", ID: item.ID, Color:item.Color, Size:item.Size };
                       UpdateCart(UpdatRequired);
                     }}
                     className="fa-solid fa-square-plus fa-xl"
@@ -170,7 +190,7 @@ const CartPage = ({ GlobalState, UpdateCart,AddOrder }) => {
                   <i
                     onClick={(e) => {
                       e.stopPropagation();
-                      const UpdatRequired = { Field: "Delete", ID: item.ID };
+                      const UpdatRequired = { Field: "Delete", ID: item.ID, Color:item.Color, Size:item.Size };
                       UpdateCart(UpdatRequired);
                     }}
                     style={{
@@ -180,11 +200,17 @@ const CartPage = ({ GlobalState, UpdateCart,AddOrder }) => {
                     }}
                     className=" ms-2 fa-solid fa-trash-can fa-xl"
                   ></i>
-                </div>
-                <div className="text-start" style={{ color: "red" }}>
-                  {<TotalPrice ID={item.ID} />}
-                </div>
-              </div>
+
+                 </Col>
+              </Row>
+
+              </Col>
+              <Col id="4" xs={2} className="text-start" style={{ color: "red" }}>
+              {<TotalPrice ID={item.ID} />}
+              </Col>
+            </Row>
+              
+             
             </Col>
           </Row>
         ))
