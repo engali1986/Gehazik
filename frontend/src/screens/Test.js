@@ -5,7 +5,7 @@ import {LanguageContext} from "../Context/LanguageContext";
 import {Row, Col, Button, Form} from "react-bootstrap"
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-const socket = io('http://localhost:5000'); // Connect to the Node.js server
+const socket = io('https://gehazik-server.onrender.com'); // Connect to the Node.js server
 
 
 const Test = ({GlobalState}) => {
@@ -20,7 +20,7 @@ const Test = ({GlobalState}) => {
     const GetProductDetails = async (ProductID) => {
       try {
         const Productdetails = await fetch(
-          "http://localhost:5000/Users/GetProductDetails",
+          "https://gehazik-server.onrender.com/Users/GetProductDetails",
           {
             method: "post",
             body: JSON.stringify({ Data: ProductID }),
