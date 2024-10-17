@@ -445,7 +445,14 @@ const StaticData = {
     },
     {
       Women_Clothing: [
-        { Home_Clothes: ["Winter Pijamas", "Summer Pijamas"] },
+        { Home_Clothes: ["Winter Pijamas", "Summer Pijamas", "Lingerie"] },
+      ],
+    },
+    {
+      Baby_And_Chield: [
+        { Outdoor_Clothes: ["Pants"] },
+        { Home_Clothes: ["Pants"] },
+        { Underwear: ["Panty"] }
       ],
     },
   ],
