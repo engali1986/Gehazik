@@ -312,13 +312,17 @@ const ProductDetails = ({ GlobalState,AddToCart }) => {
                   e.target.style.backgroundColor=Colors[e.target.selectedIndex].Hex
                   let NewSizes=[]// will be used to set available sizes
                   let NewCount=0// will be used to set available quantity (Qty)
+                  
                   for (let index = 0; index < Product.ProductOptions.length; index++) {
-                    if (Product.ProductOptions[index].Color===e.target.value && Product.ProductOptions.Size===ProductSelection.Size) {
+                    if (Product.ProductOptions[index].Color===e.target.value ) {
                       NewSizes.push(Product.ProductOptions[index].Size)
-                      NewCount=NewCount+Product.ProductOptions[index].Qty
                       
                     } 
+                    if (Product.ProductOptions[index].Color===e.target.value && Product.ProductOptions[index].Size===ProductSelection.Size) {
+                      NewCount=NewCount+Product.ProductOptions[index].Qty 
+                    }
                   }
+                  
                   SetSizes(NewSizes)// to update sizes list
                   SetSelectedColor({...SelectedColor,Color:e.target.value,Hex:Colors[e.target.selectedIndex].Hex})
                   setProduct({...Product,InStockQty:NewCount})
@@ -349,8 +353,11 @@ const ProductDetails = ({ GlobalState,AddToCart }) => {
                   NewSelection.Size=e.target.value
                   let NewCount=0
                   for (let index = 0; index < Product.ProductOptions.length; index++) {
+                    console.log(Product.ProductOptions[index].Size)
+                    console.log(e.target.value)
                     if (Product.ProductOptions[index].Color===ProductSelection.Color && Product.ProductOptions[index].Size===e.target.value) {
                       NewCount=NewCount+Product.ProductOptions[index].Qty
+                      console.log(NewCount)
                     }  
                   }
                   SetCount(count=>{
