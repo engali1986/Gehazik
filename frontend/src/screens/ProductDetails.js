@@ -309,6 +309,8 @@ const ProductDetails = ({ GlobalState,AddToCart }) => {
               <div>
                 Color
                 <select onChange={(e)=>{
+                  console.log(e.target.parentElement.parentElement.children[1].children[0].children[0])
+                  console.log(e.target.parentElement.parentElement.children[1].children[0].value)
                   e.target.style.backgroundColor=Colors[e.target.selectedIndex].Hex
                   let NewSizes=[]// will be used to set available sizes
                   let NewCount=0// will be used to set available quantity (Qty)
@@ -318,11 +320,14 @@ const ProductDetails = ({ GlobalState,AddToCart }) => {
                       NewSizes.push(Product.ProductOptions[index].Size)
                       
                     } 
-                    if (Product.ProductOptions[index].Color===e.target.value && Product.ProductOptions[index].Size===ProductSelection.Size) {
+                    
+                  }
+                  for (let index = 0; index < Product.ProductOptions.length; index++) {
+                    if (Product.ProductOptions[index].Color===e.target.value && Product.ProductOptions[index].Size===NewSizes[0]) {
                       NewCount=NewCount+Product.ProductOptions[index].Qty 
                     }
+                    
                   }
-                  
                   SetSizes(NewSizes)// to update sizes list
                   SetSelectedColor({...SelectedColor,Color:e.target.value,Hex:Colors[e.target.selectedIndex].Hex})
                   setProduct({...Product,InStockQty:NewCount})
@@ -372,7 +377,7 @@ const ProductDetails = ({ GlobalState,AddToCart }) => {
                   setProduct({...Product,InStockQty:NewCount})
 
                   console.log(ProductSelection)
-                }}>
+                }} value={ProductSelection.Size}>
                   {Array.isArray(Sizes)?Sizes.map(item=>(
                     <option key={item}>
                       {item}

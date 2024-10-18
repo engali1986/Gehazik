@@ -8,113 +8,30 @@ import { toast } from "react-toastify";
 const socket = io('https://gehazik-server.onrender.com'); // Connect to the Node.js server
 
 
-const Test = ({GlobalState}) => {
-  const [Product, setProduct] = useState({ ProductImages: [] }); // this will store product details
- 
-  const [Colors,SetColors]=useState([])
-  
-  const Navigate = useNavigate();
-  let prod;
-  useEffect(() => { 
-    
-    const GetProductDetails = async (ProductID) => {
-      try {
-        const Productdetails = await fetch(
-          "https://gehazik-server.onrender.com/Users/GetProductDetails",
-          {
-            method: "post",
-            body: JSON.stringify({ Data: ProductID }),
-            headers: {
-              "Content-Type": "application/json",
-            },
-            mode: "cors",
-          }
-        )
-          .then((res) => {
-            return res.json();
-          })
-          .catch((err) => {
-            console.log(err);
-            return { resp: "Connection error" };
-          });
-        console.log(Productdetails);
-        console.log(Productdetails.resp);
-        console.log(Productdetails.resp.resp);
-        if (typeof Productdetails.resp === "object") {
-          console.log(Productdetails.resp);
-         
-          prod = Productdetails.resp;
-          console.log(prod);
-          setProduct((Perv) => ({
-            ...Perv,
-            ProductOptions:prod.ProductOptions,
-          }));
-          // next we will make color arrays to group duplicate colors
-          let InitialColors=[]
-          for (let index = 0; index < prod.ProductOptions.length; index++) {
-            let obj={
-              Color:prod.ProductOptions[index].Color,
-              Hex:prod.ProductOptions[index].Hex
-            }
-            InitialColors.push(obj) 
-          }
-          const uniqueColorsByColor = InitialColors.filter((item, index, self) =>
-            index === self.findIndex(t => t.Color === item.Color)
-          ); 
-          SetColors(uniqueColorsByColor)
-          // Colors Array finished
-          // next we will make sizes array
-          let InitialSizes=[]
-          for (let index = 0; index < prod.ProductOptions.length; index++) {
-            if (prod.ProductOptions[index].Color===prod.ProductOptions[0].Color) {
-              InitialSizes.push(prod.ProductOptions[index].Size)
-            }
-            
-          }
-         
-          
+const Test = () => {
+  const [select1Value, setSelect1Value] = useState("");
+  const [select2Value, setSelect2Value] = useState("11"); // Initialize with the first option value
 
-         
-          console.log(Product);
-        } else {
-          Navigate("/ProductNotFound");
-        }
-        
-      } catch (error) {
-        console.log(error)
-        toast.error(error)
-        
-      }
-      
-    };
-    GetProductDetails("670bb289af6b3dd5149b4acc");
-    if (GlobalState.UserLogged===false || GlobalState.Client===false|| GlobalState.Name.length===0) {
-      toast.warn((<div>Please <a href="/LogIn">LogIn/Signup</a> to add product </div>), {
-        autoClose:false
-      })
-      
-    } else {
-      
-    }
-    console.log(Product);
-  }, []);
+  const handleSelect1Change = (event) => {
+    setSelect1Value(event.target.value);
+    setSelect2Value("11"); // Reset select 2 to the first option when select 1 changes
+  };
 
-  return(
+  return (
     <>
-    <select onChange={(e)=>{
-                  e.target.style.backgroundColor=Colors[e.target.selectedIndex].Hex
-                }} style={{backgroundColor:Array.isArray(Colors)?Colors[0].Hex:"white"}}>
-                  {Array.isArray(Colors)?Colors.map((item,index)=>(
-                    <option data-index={index} style={{backgroundColor:item.Hex}} key={index}>
-                      {item.Color}
-                    </option>
-                  )):""}
-                  </select>
-   
-    </>
-   
-  )
+      <select id="1" value={select1Value} onChange={handleSelect1Change}>
+        <option value="aa">aa</option>
+        <option value="bb">bb</option>
+        <option value="cc">cc</option>
+      </select>
 
-  
+      <select id="2" value={select2Value} onChange={(e) => setSelect2Value(e.target.value)}>
+        <option value="11">11</option>
+        <option value="22">22</option>
+        <option value="33">33</option>
+      </select>
+    </>
+  );
 };
+
 export default Test;
