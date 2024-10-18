@@ -313,7 +313,7 @@ const ProductDetails = ({ GlobalState,AddToCart }) => {
                   let NewSizes=[]// will be used to set available sizes
                   let NewCount=0// will be used to set available quantity (Qty)
                   for (let index = 0; index < Product.ProductOptions.length; index++) {
-                    if (Product.ProductOptions[index].Color===e.target.value) {
+                    if (Product.ProductOptions[index].Color===e.target.value && Product.ProductOptions.Size===ProductSelection.Size) {
                       NewSizes.push(Product.ProductOptions[index].Size)
                       NewCount=NewCount+Product.ProductOptions[index].Qty
                       
