@@ -597,6 +597,7 @@ hideProgressBar />
           </Col>
         </Row>
         <div className="MainBage row px-2 ps-2">
+          <a href="/Test">to test</a>
           <div
             className=" col-12"
             style={{
