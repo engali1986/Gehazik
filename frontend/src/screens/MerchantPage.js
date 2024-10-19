@@ -74,6 +74,9 @@ const MerchantPage = ({ globalState, setGlobal }) => {
           SetAddProductData({...AddProductData,ProductOptions:NewOptions});
         } else {
           toast.error(Language==="ar"?"يجب ان تكون العدد رقم صحيح اكبر من صفر":"Qty must be integer >0")
+          const NewOptions = [...AddProductData.ProductOptions];
+          NewOptions[index][field] = 0;
+          SetAddProductData({...AddProductData,ProductOptions:NewOptions});
         }
         
       } else {
@@ -1205,6 +1208,8 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                   );
                   Alert.current.innerText = "";
                   Alert.current.style.maxHeight = "0px";
+                  console.log(e.target.value)
+                  console.log(typeof e.target.value)
                   if (parseInt(e.target.value,10)<=0) {
                     toast.error(Language==="ar"?"سعر الوحده يجب ان يكون اكبر من صفر":"Unit price shall be > 0")
                     SetAddProductData({
@@ -1213,13 +1218,20 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                     });
                     
                   } else {
-                    SetAddProductData({
-                      ...AddProductData,
-                      ProductUnitPrice: parseInt(e.target.value, 10),
-                    });
-                    
-                  }
-                  
+                    if (e.target.value.length===0) {
+                      SetAddProductData({
+                        ...AddProductData,
+                        ProductUnitPrice: 0,
+                      });
+
+                    }
+                    if(parseInt(e.target.value,10)>0){
+                      SetAddProductData({
+                        ...AddProductData,
+                        ProductUnitPrice: parseInt(e.target.value,10),
+                      });
+                    } 
+                  }       
                 }}
                 style={{ width: "100%" }}
                 type="number"
