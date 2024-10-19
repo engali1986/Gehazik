@@ -87,24 +87,18 @@ const MerchantPage = ({ globalState, setGlobal }) => {
             if(StaticData.Colors[index].Name===value){
               hex=StaticData.Colors[index].Hex
               break;
-            }
-            
+            }  
           }
           const NewOptions = [...AddProductData.ProductOptions];
           NewOptions[index]["Color"] = value;
           NewOptions[index]["Hex"] = hex;
-          SetAddProductData({...AddProductData,ProductOptions:NewOptions});
-          
+          SetAddProductData({...AddProductData,ProductOptions:NewOptions});  
         } else {
           const NewOptions = [...AddProductData.ProductOptions];
           NewOptions[index][field] = value;
-          SetAddProductData({...AddProductData,ProductOptions:NewOptions});
-          
-        }
-        
-        
+          SetAddProductData({...AddProductData,ProductOptions:NewOptions}); 
+        } 
       }
-      
     };
     const removeOption = (index) => {
       const NewOptions = [...AddProductData.ProductOptions];
@@ -1590,13 +1584,8 @@ const MerchantPage = ({ globalState, setGlobal }) => {
         >
           <Row>
             <Col xs={12} className=" d-flex flex-wrap">
-              <div style={{ width: "fit-content" }}>
-                <span>{Language==="ar"?"مرحبا":"Hi"}, </span>
-                <span>{params.Name}</span>
-                <span
-                  className="MenuArrow"
-                  id="arrow"
-                  style={{ cursor: "pointer" }}
+              <div className="MenuArrow"
+                  id="arrow" style={{ width: "fit-content", cursor:"pointer" }}
                   onClick={(e) => {
                     e.stopPropagation();
                     let Menues = document.querySelectorAll(".MerchantMenu");
@@ -1609,26 +1598,27 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                       document
                         .getElementById("MerchantProfile")
                         .classList.remove("MerchantMenuActive");
-                      e.target.innerHTML = "&#11206;";
+                      
                     } else {
                       for (let index = 0; index < Menues.length; index++) {
                         if (
                           Menues[index].classList.contains("MerchantMenuActive")
                         ) {
                           Menues[index].classList.remove("MerchantMenuActive");
-                          MenuArrows[index].innerHTML = "&#11206;";
+                          
                         } else {
                         }
                       }
                       document
                         .getElementById("MerchantProfile")
                         .classList.add("MerchantMenuActive");
-                      e.target.innerHTML = "&#11205;";
+                      
                     }
-                  }}
-                >
-                  &#11206;
-                </span>
+                  }}>
+                <span>{Language==="ar"?"مرحبا":"Hi"}, </span>
+                <span>{params.Name}</span>
+                <i className="fa-solid fa-chevron-down"></i>
+                
               </div>
               <div
                 id="MerchantProfile"
@@ -1646,7 +1636,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                         Menues[index].classList.contains("MerchantMenuActive")
                       ) {
                         Menues[index].classList.remove("MerchantMenuActive");
-                        MenuArrows[index].innerHTML = "&#11206;";
+                        
                       } else {
                       }
                     }
@@ -1666,7 +1656,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                         Menues[index].classList.contains("MerchantMenuActive")
                       ) {
                         Menues[index].classList.remove("MerchantMenuActive");
-                        MenuArrows[index].innerHTML = "&#11206;";
+                        
                       } else {
                       }
                     }
@@ -1683,10 +1673,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
             </Col>
           </Row>
           <Row>
-            <div>
-              <span>{Language==="ar"?"طلبات الشراء":"Orders"}</span>
-              <span
-                className="MenuArrow"
+            <div className="MenuArrow"
                 id="OrdersArrow"
                 style={{ cursor: "pointer" }}
                 onClick={(e) => {
@@ -1701,26 +1688,26 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                     document
                       .getElementById("MerchantOrders")
                       .classList.remove("MerchantMenuActive");
-                    e.target.innerHTML = "&#11206;";
+                    
                   } else {
                     for (let index = 0; index < Menues.length; index++) {
                       if (
                         Menues[index].classList.contains("MerchantMenuActive")
                       ) {
                         Menues[index].classList.remove("MerchantMenuActive");
-                        MenuArrows[index].innerHTML = "&#11206;";
+                       
                       } else {
                       }
                     }
                     document
                       .getElementById("MerchantOrders")
                       .classList.add("MerchantMenuActive");
-                    e.target.innerHTML = "&#11205;";
+                    
                   }
-                }}
-              >
-                &#11206;
-              </span>
+                }}>
+              <span>{Language==="ar"?"طلبات الشراء":"Orders"}</span>
+              <i className="fa-solid fa-chevron-down"></i>
+              
               <div
                 id="MerchantOrders"
                 className="MerchantMenu d-flex flex-column"
@@ -1737,7 +1724,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                           Menues[index].classList.contains("MerchantMenuActive")
                         ) {
                           Menues[index].classList.remove("MerchantMenuActive");
-                          MenuArrows[index].innerHTML = "&#11206;";
+                         
                         } else {
                         }
                       }
@@ -1800,7 +1787,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                           Menues[index].classList.contains("MerchantMenuActive")
                         ) {
                           Menues[index].classList.remove("MerchantMenuActive");
-                          MenuArrows[index].innerHTML = "&#11206;";
+                         
                         } else {
                         }
                       }
@@ -1855,10 +1842,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
             </div>
           </Row>
           <Row>
-            <div>
-              <span>{Language==="ar"?"المنتجات":"Products"}</span>
-              <span
-                className="MenuArrow"
+            <div className="MenuArrow"
                 id="ProductsArrow"
                 style={{ cursor: "pointer" }}
                 onClick={(e) => {
@@ -1873,26 +1857,25 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                     document
                       .getElementById("MerchantProducts")
                       .classList.remove("MerchantMenuActive");
-                    e.target.innerHTML = "&#11206;";
+                    
                   } else {
                     for (let index = 0; index < Menues.length; index++) {
                       if (
                         Menues[index].classList.contains("MerchantMenuActive")
                       ) {
                         Menues[index].classList.remove("MerchantMenuActive");
-                        MenuArrows[index].innerHTML = "&#11206;";
+                       
                       } else {
                       }
                     }
                     document
                       .getElementById("MerchantProducts")
                       .classList.add("MerchantMenuActive");
-                    e.target.innerHTML = "&#11205;";
+                    
                   }
-                }}
-              >
-                &#11206;
-              </span>
+                }}>
+              <span>{Language==="ar"?"المنتجات":"Products"}</span>
+              <i className="fa-solid fa-chevron-down"></i>
               <div
                 id="MerchantProducts"
                 className="MerchantMenu d-flex flex-column"
@@ -1909,7 +1892,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                         Menues[index].classList.contains("MerchantMenuActive")
                       ) {
                         Menues[index].classList.remove("MerchantMenuActive");
-                        MenuArrows[index].innerHTML = "&#11206;";
+                       
                       } else {
                       }
                     }
@@ -1967,7 +1950,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                         Menues[index].classList.contains("MerchantMenuActive")
                       ) {
                         Menues[index].classList.remove("MerchantMenuActive");
-                        MenuArrows[index].innerHTML = "&#11206;";
+                       
                       } else {
                       }
                     }
@@ -1987,7 +1970,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                         Menues[index].classList.contains("MerchantMenuActive")
                       ) {
                         Menues[index].classList.remove("MerchantMenuActive");
-                        MenuArrows[index].innerHTML = "&#11206;";
+                       
                       } else {
                       }
                     }
@@ -2000,10 +1983,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
             </div>
           </Row>
           <Row>
-            <div>
-              <span>{Language==="ar"?"الدفعات":"Payments"}</span>
-              <span
-                className="MenuArrow"
+            <div className="MenuArrow"
                 id="PaymentsArrow"
                 style={{ cursor: "pointer" }}
                 onClick={(e) => {
@@ -2018,26 +1998,25 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                     document
                       .getElementById("MerchantPayments")
                       .classList.remove("MerchantMenuActive");
-                    e.target.innerHTML = "&#11206;";
+                    
                   } else {
                     for (let index = 0; index < Menues.length; index++) {
                       if (
                         Menues[index].classList.contains("MerchantMenuActive")
                       ) {
                         Menues[index].classList.remove("MerchantMenuActive");
-                        MenuArrows[index].innerHTML = "&#11206;";
+                       
                       } else {
                       }
                     }
                     document
                       .getElementById("MerchantPayments")
                       .classList.add("MerchantMenuActive");
-                    e.target.innerHTML = "&#11205;";
+                    
                   }
-                }}
-              >
-                &#11206;
-              </span>
+                }}>
+              <span>{Language==="ar"?"الدفعات":"Payments"}</span>
+              <i className="fa-solid fa-chevron-down"></i>
               <div
                 id="MerchantPayments"
                 className="MerchantMenu d-flex flex-column"
@@ -2054,7 +2033,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                           Menues[index].classList.contains("MerchantMenuActive")
                         ) {
                           Menues[index].classList.remove("MerchantMenuActive");
-                          MenuArrows[index].innerHTML = "&#11206;";
+                         
                         } else {
                         }
                       }
@@ -2116,7 +2095,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                             Menues[index].classList.contains("MerchantMenuActive")
                           ) {
                             Menues[index].classList.remove("MerchantMenuActive");
-                            MenuArrows[index].innerHTML = "&#11206;";
+                           
                           } else {
                           }
                         }
