@@ -257,7 +257,7 @@ const LogIn = ({ globalState, setGlobal }) => {
       </Row>
       <div style={{ textAlign: "start" }}>
         <span>
-          {Language==="ar"?"اذا كنت تاجر":"If you are Merchant "}
+          {Language==="ar"?"اذا كنت تاجر ":"If you are Merchant "}
           <span
             style={{
               color: "blue",
@@ -268,7 +268,7 @@ const LogIn = ({ globalState, setGlobal }) => {
               navigate("/MerchantLogin");
             }}
           >
-            {Language==="ar"?"تسجيل الدخول تاجر":"Merchant login"}
+            {Language==="ar"?"تسجيل الدخول تاجر ":"Merchant login "}
           </span>
         </span>
       </div>
