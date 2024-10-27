@@ -1,8 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { LanguageContext } from "../Context/LanguageContext.js"
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 const MerchantLogIn = ({ globalState, setGlobal }) => {
+  const {Language,SetLanguage}=useContext(LanguageContext)
   const navigate = useNavigate();
   const Email = useRef();
   const Password = useRef();
@@ -83,7 +85,7 @@ const MerchantLogIn = ({ globalState, setGlobal }) => {
     Alert.current.style.maxHeight = "0px";
     if (Credentials.Email.length > 0 && Credentials.Password.length > 0) {
       setDisabled(true);
-      LoginButtonRef.current.innerText = "Loggin please wait";
+      LoginButtonRef.current.innerText =Language==="ar"?"جاري تسجيل الدخول ": "Loggin please wait";
       console.log("Submitted");
       const UserLogIn = await fetch(
         "https://gehazik-server.onrender.com/LogInMerchant",
@@ -106,7 +108,7 @@ const MerchantLogIn = ({ globalState, setGlobal }) => {
       console.log(UserLogIn);
       if (UserLogIn.resp) {
         console.log(UserLogIn.resp);
-        LoginButtonRef.current.innerText = "Login";
+        LoginButtonRef.current.innerText = Language==="ar"?"تسجيل ":"Login";
         if (typeof UserLogIn.resp === "object") {
           console.log(UserLogIn.resp);
           if (
@@ -207,10 +209,10 @@ const MerchantLogIn = ({ globalState, setGlobal }) => {
       }}
     >
       <Row>
-        <h3>Merchant LogIn</h3>
+        <h3>{Language==="ar"?"تسجيل دخول التاجر":"Merchant LogIn"}</h3>
       </Row>
       <label htmlFor="Email">
-        <b>Email</b>
+        <b>{Language==="ar"?"البريد الالكتروني":"Email"}</b>
       </label>
       <input
         type="text"
@@ -221,7 +223,7 @@ const MerchantLogIn = ({ globalState, setGlobal }) => {
         disabled={Disabled}
       />
       <label htmlFor="psw">
-        <b>Password</b>
+        <b>{Language==="ar"?"كلمة المرور":"Password"}</b>
       </label>
       <input
         type="password"
@@ -251,7 +253,7 @@ const MerchantLogIn = ({ globalState, setGlobal }) => {
         disabled={Disabled}
         onClick={(e) => LogInSubmit(e)}
       >
-        Login
+        {Language==="ar"?"تسجيل":"Login"}
       </button>
       <Row ref={varificationCodeRef} style={{ display: "none" }}>
         <Col xs={12} md={8}>
@@ -279,7 +281,7 @@ const MerchantLogIn = ({ globalState, setGlobal }) => {
       </Row>
       <div style={{ textAlign: "start" }}>
         <span>
-          Don't have account{" "}
+          {Language==="ar"?"لا يوجد حساب ":"Don't have account"}{" "}
           <span
             style={{
               color: "blue",
@@ -290,7 +292,7 @@ const MerchantLogIn = ({ globalState, setGlobal }) => {
               navigate("/MerchantSignUp");
             }}
           >
-            SignUp
+            {Language==="ar"?"تسجيل جديد ":"SignUp"}
           </span>
         </span>
       </div>
