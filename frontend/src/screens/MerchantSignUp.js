@@ -1,10 +1,12 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState,useContext } from "react";
 import { json, useNavigate } from "react-router-dom";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import StaticData from "../Data/StaticData";
 import { toast } from "react-toastify";
+import { LanguageContext } from "../Context/LanguageContext.js"
 const MerchantSignUp = ({ globalState, setGlobal }) => {
+  const {Language,SetLanguage}=useContext(LanguageContext)
   const [Governorate,SetGovernorate]=useState("")
   const [City,SetCity]=useState("")
   const [Disabled, setDisabled] = useState(false); // this will be used to disable all fields edit after signup button pressed
@@ -49,6 +51,20 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
         navigate("/Merchants/" + globalState.Name);
       }
     } else {
+      toast.info(<div>
+        <div>
+          {Language==="ar"?"لتسجيل تاجر جديد اتبع الاتي":"Please follow the following instructions to register"}
+        </div>
+        <div>
+          {Language==="ar"?"برجاء ادخال الاسم والبريد الالكتروني بالانجليزيه":"Please add name and email in English"}
+        </div>
+        <div>
+          {Language==="ar"?"برجاء اختيار المحافظه والمدينه حيث يوجد مخزنك ":"Please select governorate and city where your store located"}
+        </div>
+        <div>
+          {Language==="ar"?"برجاء ادخال كلمة المرور بالانجليزيه ويجب ان تكون 8 احرف او اكثر مع حرف كبير وحرف صغير ورقم و رمز خاص مثل @":"Please add password in english must be 8 characters or more with 1 capital letter, 1 small letter, 1 number and 1 special character as @"}
+        </div>
+      </div>,{autoClose:false})
     }
     const el1 = document.getElementById("letter");
     const el2 = document.getElementById("capital");

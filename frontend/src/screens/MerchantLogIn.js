@@ -299,7 +299,7 @@ const MerchantLogIn = ({ globalState, setGlobal }) => {
       <div style={{ textAlign: "start" }}>
         <span>
           {" "}
-          Forgot password{" "}
+          {Language==="ar"?"نسيت كلمه المرور ":"Forgot password"}{" "}
           <span
             style={{
               color: "blue",
@@ -310,7 +310,7 @@ const MerchantLogIn = ({ globalState, setGlobal }) => {
               navigate("/MerchantPasswordRecovery");
             }}
           >
-            Click here
+            {Language==="ar"?"اضغط هنا ":"Click here"}
           </span>
         </span>
       </div>

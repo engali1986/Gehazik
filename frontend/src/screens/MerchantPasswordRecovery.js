@@ -53,7 +53,7 @@ const MerchantPasswordRecovery = () => {
           Alert.current.classList.replace("alert-danger", "alert-success");
           Alert.current.innerText = "";
           Alert.current.style.maxHeight = "0px";
-          navigate("/LogIn");
+          navigate("/MerchantLogIn");
         }, 3000);
       } else {
         Alert.current.classList.replace("alert-success", "alert-danger");
