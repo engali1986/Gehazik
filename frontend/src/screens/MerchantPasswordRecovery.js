@@ -26,7 +26,7 @@ const MerchantPasswordRecovery = () => {
         Email: Email,
       };
       const PassRecovery = await fetch(
-        "https://gehazik-server.onrender.com/MerchantPasswordRecovery",
+        "http://localhost:5000/MerchantPasswordRecovery",
         {
           method: "POST",
           body: JSON.stringify(Credintials),

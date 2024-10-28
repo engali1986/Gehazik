@@ -25,7 +25,7 @@ const MerchantLogIn = ({ globalState, setGlobal }) => {
     console.log(Credentials);
     console.log(typeof Credentials.VarificationCode);
     const Merchantvarified = await fetch(
-      "https://gehazik-server.onrender.com/LogInMerchant",
+      "http://localhost:5000/LogInMerchant",
       {
         method: "POST",
         body: JSON.stringify(Credentials),
@@ -56,20 +56,20 @@ const MerchantLogIn = ({ globalState, setGlobal }) => {
         true, Merchantvarified.resp.Token, Merchantvarified.resp.Governorate, Merchantvarified.resp.City
       );
       Alert.current.classList.replace("alert-danger", "alert-success");
-      Alert.current.innerText = "User Logged in successfully";
+      Alert.current.innerText = Language==="ar"?"تم تسجيل الدخول بنجاح ":"User Logged in successfully";
       Alert.current.style.maxHeight = "500px";
     } else if (
       Merchantvarified.resp.Email &&
       Merchantvarified.resp.MerchantVarified === false
     ) {
       Alert.current.classList.replace("alert-danger", "alert-success");
-      Alert.current.innerText = "Varification Code sent by Email";
+      Alert.current.innerText =Language==="ar"?"تم ارسال رمز التحقق عبر البريد الالكتروني ":"Varification Code sent by Email";
       Alert.current.style.maxHeight = "500px";
       varificationCodeRef.current.style.display = "flex";
       setDisabled(false);
     } else {
       Alert.current.classList.replace("alert-success", "alert-danger");
-      Alert.current.innerText = "User Not Found";
+      Alert.current.innerText =Language==="ar"?"لم يتم العثور على التاجر":"User not found";
       Alert.current.style.maxHeight = "500px";
       setDisabled(false);
     }
@@ -88,7 +88,7 @@ const MerchantLogIn = ({ globalState, setGlobal }) => {
       LoginButtonRef.current.innerText =Language==="ar"?"جاري تسجيل الدخول ": "Loggin please wait";
       console.log("Submitted");
       const UserLogIn = await fetch(
-        "https://gehazik-server.onrender.com/LogInMerchant",
+        "http://localhost:5000/LogInMerchant",
         {
           method: "POST",
           body: JSON.stringify(Credentials),
@@ -127,7 +127,7 @@ const MerchantLogIn = ({ globalState, setGlobal }) => {
               UserLogIn.resp.Governorate, UserLogIn.resp.City
             );
             Alert.current.classList.replace("alert-danger", "alert-success");
-            Alert.current.innerText = "User Logged in successfully";
+            Alert.current.innerText = Language==="ar"?"تم تسجيل الدخول بنجاح ":"User Logged in successfully";
             Alert.current.style.maxHeight = "500px";
           } else if (
             UserLogIn.resp.Email &&
@@ -135,25 +135,25 @@ const MerchantLogIn = ({ globalState, setGlobal }) => {
           ) {
             console.log(UserLogIn);
             Alert.current.classList.replace("alert-danger", "alert-success");
-            Alert.current.innerText = "Varification Code sent by Email";
+            Alert.current.innerText =Language==="ar"?"تم ارسال رمز التحقق عبر البريد الالكتروني ":"Varification Code sent by Email";
             Alert.current.style.maxHeight = "500px";
             varificationCodeRef.current.style.display = "flex";
             setDisabled(false);
           } else {
             console.log(UserLogIn);
             Alert.current.classList.replace("alert-success", "alert-danger");
-            Alert.current.innerText = "User Not Found";
+            Alert.current.innerText =Language==="ar"?"لم يتم العثور على التاجر":"User not found";
             Alert.current.style.maxHeight = "500px";
             setDisabled(false);
           }
         } else if (UserLogIn.resp === "Connection error") {
           Alert.current.classList.replace("alert-success", "alert-danger");
-          Alert.current.innerText = "Connection error";
+          Alert.current.innerText =Language==="ar"?"خطا بالاتصال ":"Connection error";
           Alert.current.style.maxHeight = "500px";
           setDisabled(false);
         } else if (UserLogIn.resp === "Varification Code sent by Email") {
           Alert.current.classList.replace("alert-success", "alert-danger");
-          Alert.current.innerText = "Varification Code sent by Email";
+          Alert.current.innerText =Language==="ar"?"تم ارسال رمز التحقق عبر البريد الالكتروني ":"Varification Code sent by Email";
           Alert.current.style.maxHeight = "500px";
           varificationCodeRef.current.style.display = "flex";
         } else if (UserLogIn.resp === "User varified") {
@@ -166,25 +166,25 @@ const MerchantLogIn = ({ globalState, setGlobal }) => {
             true, UserLogIn.resp.Token, UserLogIn.resp.Governorate, UserLogIn.resp.City
           );
           Alert.current.classList.replace("alert-danger", "alert-success");
-          Alert.current.innerText = "User Logged in successfully";
+          Alert.current.innerText = Language==="ar"?"تم تسجيل الدخول بنجاح ":"User Logged in successfully";
           Alert.current.style.maxHeight = "500px";
           setDisabled(false);
         } else {
           console.log(UserLogIn);
           Alert.current.classList.replace("alert-success", "alert-danger");
-          Alert.current.innerText = "User not found";
+          Alert.current.innerText =Language==="ar"?"لم يتم العثور على التاجر":"User not found";
           Alert.current.style.maxHeight = "500px";
           setDisabled(false);
         }
       } else {
         Alert.current.classList.replace("alert-success", "alert-danger");
-        Alert.current.innerText = "User Not Found";
+        Alert.current.innerText =Language==="ar"?"لم يتم العثور على التاجر":"User not found";
         Alert.current.style.maxHeight = "500px";
       }
     } else {
       setDisabled(false);
       Alert.current.classList.replace("alert-success", "alert-danger");
-      Alert.current.innerText = "Enter Email/Password";
+      Alert.current.innerText =Language==="ar"?"برجاء ادخال البريد الالكتروني وكلمه المرور":"Enter Email/Password";
       Alert.current.style.maxHeight = "500px";
     }
   };
