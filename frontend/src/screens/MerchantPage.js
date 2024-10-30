@@ -1955,6 +1955,26 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                       }
                     }
                     SetData(e.target.innerText);
+                    toast.info(<div>
+                      <div>
+                        {Language==="ar"?"لاضافه منتج جديد برجاء اتباع الاتي ":"To add new product please follow the following steps"}
+                      </div>
+                      <div>
+                        {Language==="ar"?"- برجاء اختيار القسم الرئيسي والقسم الفرعي ثم الصفه الرئيسيه من القوائم بالاسفل":"- Please slect category, subcategry and main feture from drop dowmn menus below"}
+                      </div>
+                      <div>
+                        {Language==="ar"?"- برجاء اختيار الوحده للكميه تم ادخال سعر الوحده بالجنيه المصري":"- Please select unit and add unit price in egyptian pound"}
+                      </div>
+                      <div>
+                        {Language==="ar"?"- برجاء اضافه اسم المنتج باي لغه ومن ثم اضافه خيارات المنتج (اللون والمقاس والكميه في المخزون ) عن طريق النقر على اضافه ":"- Please add product title in any language then add product options ( size, color and stock quantity ) by clicking on Add button"}
+                      </div>
+                      <div>
+                        {Language==="ar"?"- برجاء اضافه وصف المنتج متبوعا بعلامه , بعد كل وصف هذا الحقل اختياري":"Please add product features separated by comma, this field is optional"}
+                      </div>
+                      <div>
+                        {Language==="ar"?"- برجاء اضافه صور المنتج حيث لاتزيد عن 4 صور وحجم الصوره لايزيد عن 512Kb وابعاد الصور 1:1":"- Please add preoduct photos maximum 4 photos and each photo size maximum 512kb and aspect ration 1:1"}
+                      </div>
+                    </div>)
                   }}
                 >
                   {Language==="ar"?"اضافه منتج":"Add Products"}
