@@ -593,7 +593,7 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
         SignUp
       </button>
       <span className="psw">
-        have account{" "}
+        {Language==="ar"?"هل لديك حساب ":"have account"}{" "}
         <span
           style={{
             color: "blue",
@@ -604,7 +604,7 @@ const MerchantSignUp = ({ globalState, setGlobal }) => {
             navigate("/MerchantLogIn");
           }}
         >
-          LogIn
+          {Language==="ar"?"تسجيل دخول ":"LogIn"}
         </span>
       </span>
     </div>
