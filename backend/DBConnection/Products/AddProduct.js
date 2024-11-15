@@ -32,7 +32,8 @@ const AddProduct = async (AddProductData) => {
         GovernorateDelivery:AddProductData.GovernorateDelivery,
         CityDelivery:AddProductData.CityDelivery,
         Governorate:AddProductData.Governorate,// merchant store governorate
-        City:AddProductData.City// merchant store city
+        City:AddProductData.City,// merchant store city
+        ProductVisability:false
       })
       .then((res) => {
         console.log("AddProduct file 1");
