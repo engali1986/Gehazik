@@ -229,7 +229,7 @@ app.post("/AdminLogIn", async (req, res) => {
   const result = await AdminLogIn(credentials);
   console.log("server /AdminLogIn 1");
   console.log(result);
-  if (result.email) {
+  if (result.Email) {
     console.log("server /AdminLogIn 2");
     console.log(result);
     res.json({ resp: result });

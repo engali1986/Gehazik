@@ -10,7 +10,7 @@ async function AdminLogIn(Credentials) {
     const GetUser = await client
       .db("Gehazik")
       .collection("Admins")
-      .findOne({ email: Credentials.Email, pass: Credentials.Password })
+      .findOne({ Email: Credentials.Email, Pass: Credentials.Password })
       .then((res) => {
         console.log("AdminLogIn file 1");
         console.log(res);
@@ -29,7 +29,7 @@ async function AdminLogIn(Credentials) {
         console.log(err)
         return "Connection error";
       });
-    if (GetUser.email) {
+    if (GetUser.Email) {
       console.log("AdminLogIn file 5");
       console.log(GetUser);
       if (GetUser.uservarified === false) {
@@ -41,7 +41,7 @@ async function AdminLogIn(Credentials) {
               .db("Gehazik")
               .collection("Admins")
               .updateOne(
-                { email: Credentials.Email, pass: Credentials.Password },
+                { Email: Credentials.Email, Pass: Credentials.Password },
                 { $set: { uservarified: true } }
               )
               .then((res) => {
@@ -64,8 +64,8 @@ async function AdminLogIn(Credentials) {
             }
           } else {
             const UserVarification = await Uservarification(
-              GetUser.email,
-              GetUser.pass
+              GetUser.Email,
+              GetUser.Pass
             )
               .then((res) => {
                 console.log("AdminLogIn file 10");
@@ -88,8 +88,8 @@ async function AdminLogIn(Credentials) {
         } else {
           console.log("AdminLogIn file 14");
           const UserVarification = await Uservarification(
-            GetUser.email,
-            GetUser.pass
+            GetUser.Email,
+            GetUser.Pass
           )
             .then((res) => {
               console.log("AdminLogIn file 14-10");
@@ -118,7 +118,7 @@ async function AdminLogIn(Credentials) {
         .db("Gehazik")
         .collection("Admins")
         .updateOne(
-          { email: Credentials.Email, pass: Credentials.Password },
+          { Email: Credentials.Email, Pass: Credentials.Password },
           { $set: { token: NewToken } }
         ).then(res=>{
           console.log(console.log("AdminLogIn file 15 new token added"))

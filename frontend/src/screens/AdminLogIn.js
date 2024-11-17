@@ -38,11 +38,11 @@ const AdminLogIn = ({ globalState, setGlobal }) => {
       .catch((err) => {
         return "user Not Added";
       });
-    if (UserVarified.resp.email && UserVarified.resp.uservarified === true) {
+    if (UserVarified.resp.Email && UserVarified.resp.uservarified === true) {
       setGlobal(
         UserVarified.resp.name,
         true,
-        UserVarified.resp.email,
+        UserVarified.resp.Email,
         true,
         false,
         false,
@@ -52,7 +52,7 @@ const AdminLogIn = ({ globalState, setGlobal }) => {
       Alert.current.innerText = "User Logged in successfully";
       Alert.current.style.maxHeight = "500px";
     } else if (
-      UserVarified.resp.email &&
+      UserVarified.resp.Email &&
       UserVarified.resp.uservarified === false
     ) {
       Alert.current.classList.replace("alert-danger", "alert-success");
@@ -99,11 +99,11 @@ const AdminLogIn = ({ globalState, setGlobal }) => {
       if (UserLogIn.resp) {
         LoginButtonRef.current.innerText = "Login";
         if (typeof UserLogIn.resp === "object") {
-          if (UserLogIn.resp.email && UserLogIn.resp.uservarified === true) {
+          if (UserLogIn.resp.Email && UserLogIn.resp.uservarified === true) {
             setGlobal(
               UserLogIn.resp.name,
               true,
-              UserLogIn.resp.email,
+              UserLogIn.resp.Email,
               true,
               false,
               false,
@@ -113,7 +113,7 @@ const AdminLogIn = ({ globalState, setGlobal }) => {
             Alert.current.innerText = "User Logged in successfully";
             Alert.current.style.maxHeight = "500px";
           } else if (
-            UserLogIn.resp.email &&
+            UserLogIn.resp.Email &&
             UserLogIn.resp.uservarified === false
           ) {
             Alert.current.classList.replace("alert-danger", "alert-success");
@@ -141,7 +141,7 @@ const AdminLogIn = ({ globalState, setGlobal }) => {
           setGlobal(
             UserLogIn.resp.name,
             true,
-            UserLogIn.resp.email,
+            UserLogIn.resp.Email,
             true,
             false,
             false,
