@@ -40,13 +40,13 @@ const AdminLogIn = ({ globalState, setGlobal }) => {
       });
     if (UserVarified.resp.Email && UserVarified.resp.uservarified === true) {
       setGlobal(
-        UserVarified.resp.name,
+        UserVarified.resp.Name,
         true,
         UserVarified.resp.Email,
         true,
         false,
         false,
-        UserVarified.resp.token
+        UserVarified.resp.Token
       );
       Alert.current.classList.replace("alert-danger", "alert-success");
       Alert.current.innerText = "User Logged in successfully";
@@ -101,13 +101,13 @@ const AdminLogIn = ({ globalState, setGlobal }) => {
         if (typeof UserLogIn.resp === "object") {
           if (UserLogIn.resp.Email && UserLogIn.resp.uservarified === true) {
             setGlobal(
-              UserLogIn.resp.name,
+              UserLogIn.resp.Name,
               true,
               UserLogIn.resp.Email,
               true,
               false,
               false,
-              UserLogIn.resp.token
+              UserLogIn.resp.Token
             );
             Alert.current.classList.replace("alert-danger", "alert-success");
             Alert.current.innerText = "User Logged in successfully";
@@ -139,13 +139,13 @@ const AdminLogIn = ({ globalState, setGlobal }) => {
           varificationCodeRef.current.style.display = "flex";
         } else if (UserLogIn.resp === "User varified") {
           setGlobal(
-            UserLogIn.resp.name,
+            UserLogIn.resp.Name,
             true,
             UserLogIn.resp.Email,
             true,
             false,
             false,
-            UserLogIn.resp.token
+            UserLogIn.resp.Token
           );
           Alert.current.classList.replace("alert-danger", "alert-success");
           Alert.current.innerText = "User Logged in successfully";
