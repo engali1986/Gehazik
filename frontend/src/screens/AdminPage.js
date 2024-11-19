@@ -90,13 +90,30 @@ const AdminPage = ({ globalState, setGlobal }) => {
     SetAllOrders(Orders);
     console.log(AllOrders);
   };
-  const SetData = (e) => {
+
+  const SetData = async (e) => {
     e.stopPropagation();
     console.log(e.target.innerText);
     SelectData(e.target.innerText);
     if (e.target.innerText === "Orders") {
       Orders();
-    } else {
+    } else if (e.target.innerText==="Approve Products") {
+      const BendingProducts = await fetch(
+        "http://localhost:5000/Admins/ApproveProducts",
+        {
+          method: "Get",
+          body: JSON.stringify(globalState),
+          headers: {
+            "Content-Type": "application/json",
+          },
+          mode: "cors",
+        }
+      ).then(res=>{
+        console.log(res.json())
+      }).catch(err=>{
+        console.log(err)
+      })
+
     }
   };
   // SetData function end

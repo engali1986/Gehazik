@@ -247,6 +247,9 @@ app.post("/AdminLogIn", async (req, res) => {
     res.json({ resp: "Internal error" });
   }
 });
+app.get("/Admins/ApproveProducts",async(req,res)=>{
+  console.log("Server/ApproveProducts")
+})
 // Admin routes end
 // Merchant routes start
 app.post("/AddMerchant", async (req, res) => {
