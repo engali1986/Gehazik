@@ -113,23 +113,23 @@ async function AdminLogIn(Credentials) {
       } else {
         console.log("AdminLogIn file 15");
         let NewToken=Math.floor(Math.random()*10000)+1
-        console.log("AdminLogIn file 15 new token"+NewToken)
+        console.log("AdminLogIn file 15 new Token"+NewToken)
         const updateToken=await client
         .db("Gehazik")
         .collection("Admins")
         .updateOne(
           { Email: Credentials.Email, Pass: Credentials.Password },
-          { $set: { token: NewToken } }
+          { $set: { Token: NewToken } }
         ).then(res=>{
-          console.log(console.log("AdminLogIn file 15 new token added"))
+          console.log(console.log("AdminLogIn file 15 new Token added"))
           console.log(res)
           return res
         })
         if (updateToken.modifiedCount===1) {
           
-          GetUser.token=NewToken
+          GetUser.Token=NewToken
           console.log("AdminLogIn file 15 new AdminData")
-          console.log(GetUser.token)
+          console.log(GetUser.Token)
           return GetUser;
           
         } else {

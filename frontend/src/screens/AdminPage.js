@@ -98,11 +98,13 @@ const AdminPage = ({ globalState, setGlobal }) => {
     if (e.target.innerText === "Orders") {
       Orders();
     } else if (e.target.innerText==="Approve Products") {
+      const Credentials={Email:globalState.Email, Token:globalState.Token}
+      console.log(Credentials)
       const BendingProducts = await fetch(
         "http://localhost:5000/Admins/ApproveProducts",
         {
-          method: "Get",
-          body: JSON.stringify(globalState),
+          method: "Post",
+          body: JSON.stringify(Credentials),
           headers: {
             "Content-Type": "application/json",
           },

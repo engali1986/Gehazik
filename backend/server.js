@@ -36,6 +36,8 @@ import UserOrders from "./DBConnection/Users/UserOrders.js";
 import UserDBChanges from "./DBConnection/DBChanges/UsersDBChange.js";
 import DeleteOrders from "./DBConnection/Orders/DeleteOrder.js";
 import MerchantPasswordRecovery from "./DBConnection/Merchants/MerchantPasswordRecovery.js";
+import CheckAdmin from "./DBConnection/Admins/CheckAdmins.js";
+import AdminsBendingProductsList from "./DBConnection/Admins/AdminsBendingProductsList.js";
 const require = createRequire(import.meta.url);
 const socketIo = require('socket.io');
 // const ServiceAccountKey = require("./API keys/ServiceAccountKey.json");
@@ -247,8 +249,23 @@ app.post("/AdminLogIn", async (req, res) => {
     res.json({ resp: "Internal error" });
   }
 });
-app.get("/Admins/ApproveProducts",async(req,res)=>{
+app.post("/Admins/ApproveProducts",async(req,res)=>{
   console.log("Server/ApproveProducts")
+  console.log(req.body)
+  const  VarifyAdmin= await CheckAdmin(req.body)
+  console.log(VarifyAdmin)
+  if(VarifyAdmin.Email){
+    console.log("Server/ApproveProducts Admin Varified")
+    const BendingProducts=await AdminsBendingProductsList()
+    console.log(BendingProducts.length)
+    if(Array.isArray(BendingProducts)){
+      console.log("Server/ApproveProducts Bending Products Count")
+      console.log(BendingProducts.length)
+      res.json({resp:BendingProducts})
+    }else{
+      res.json({resp:"Connection Error"})
+    }
+  }
 })
 // Admin routes end
 // Merchant routes start
