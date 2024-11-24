@@ -252,7 +252,8 @@ app.post("/AdminLogIn", async (req, res) => {
 app.post("/Admins/ApproveProducts",async(req,res)=>{
   console.log("Server/ApproveProducts")
   console.log(req.body)
-  const  VarifyAdmin= await CheckAdmin(req.body)
+  const AdminData=await req.body
+  const  VarifyAdmin= await CheckAdmin(AdminData)
   console.log(VarifyAdmin)
   if(VarifyAdmin.Email){
     console.log("Server/ApproveProducts Admin Varified")

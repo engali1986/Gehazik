@@ -111,11 +111,12 @@ const AdminPage = ({ globalState, setGlobal }) => {
           mode: "cors",
         }
       ).then(res=>{
-        console.log(res.json())
+        return res.json()
       }).catch(err=>{
         console.log(err)
       })
-
+      console.log(BendingProducts)
+     
     }
   };
   // SetData function end
