@@ -24,7 +24,8 @@ const AdminsBendingProductsList = async () => {
         MerchantName: 1,
         ProductCategory:1,
         ProductSubCategory:1,
-        ProductFeature:1
+        ProductFeature:1,
+        ProductVisibility:1
       })
       .toArray();
     console.log("AdminsBendingProductsList file 1");

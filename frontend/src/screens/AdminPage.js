@@ -7,15 +7,60 @@ import { Container, Row, Col } from "react-bootstrap";
 //  useeffect will be used to redirect unauthorized users away from the page
 
 //  ControlPanel Component Start
-const ControlPanel = ({ Data }) => {
+const ControlPanel = ({ Data, ProductsList, SetProductsList }) => {
   useEffect(() => {
     console.log(Data);
   }, []);
+  // Handle checkbox toggle
+  const handleCheckboxChange = (productId) => {
+    SetProductsList((prevProducts) =>
+      prevProducts.map((product) =>
+        product._id === productId
+          ? { ...product, ProductVisibility: !product.ProductVisibility }
+          : product
+      )
+    );
+    console.log(ProductsList)
+  };
   if (Data === "Approve Products") {
     return (
-      <Row>
-        <Col xs={12}>{Data}</Col>
-      </Row>
+      <Container>
+        <Row>
+         <Col xs={12}>{Data}</Col>
+        </Row>
+        <Row>
+          <Col xs={12}>
+          {Array.isArray(ProductsList)&& ProductsList.length>0 ?
+           <div style={{ overflowX: "auto" }}>
+           <table style={{ borderCollapse: "collapse", width: "100%", textAlign: "left" }}>
+             <thead>
+               <tr>
+                 <th style={{ border: "1px solid #ddd", padding: "8px" }}>ID</th>
+                 <th style={{ border: "1px solid #ddd", padding: "8px" }}>Description</th>
+                 <th style={{ border: "1px solid #ddd", padding: "8px" }}>Approve</th>
+               </tr>
+             </thead>
+             <tbody>
+               {ProductsList.map((product) => (
+                 <tr key={product._id}>
+                   <td style={{ border: "1px solid #ddd", padding: "8px" }}>{product._id}</td>
+                   <td style={{ border: "1px solid #ddd", padding: "8px" }}>{product.ProductTitle}</td>
+                   <td style={{ border: "1px solid #ddd", padding: "8px", textAlign: "center" }}>
+                     <input type="checkbox" onChange={() => handleCheckboxChange(product._id)} />
+                   </td>
+                 </tr>
+               ))}
+             </tbody>
+           </table>
+         </div>:<div>
+          No Products Bending
+         </div>}
+
+          
+          </Col>
+        </Row>
+      </Container>
+      
     );
   } else if (Data === "Merchants") {
     return (
@@ -56,6 +101,7 @@ const AdminPage = ({ globalState, setGlobal }) => {
   const Category = useRef();
   const SubCategory = useRef();
   const [AllOrders, SetAllOrders] = useState([]);
+  const [ProductsList,SetProductsList]=useState([])
   const [SelectedOrder, SetSelectedOrder] = useState([]);
   const [AllOrdersKeys, SetAllOrdersKeys] = useState([]);
   const { Name } = useParams();
@@ -116,6 +162,12 @@ const AdminPage = ({ globalState, setGlobal }) => {
         console.log(err)
       })
       console.log(BendingProducts)
+      if (Array.isArray(BendingProducts.resp)) {
+        console.log("Array of products found")
+        SetProductsList(BendingProducts.resp)
+      } else {
+        console.log("Connection error to get products")
+      }
      
     }
   };
@@ -146,7 +198,7 @@ const AdminPage = ({ globalState, setGlobal }) => {
           <div onClick={(e) => SetData(e)}>Add Category</div>
         </Col>
         <Col xs={12} md={10}>
-          <ControlPanel Data={Data} />
+          <ControlPanel Data={Data} ProductsList={ProductsList} SetProductsList={SetProductsList} />
         </Col>
       </Row>
     </>
