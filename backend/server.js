@@ -105,10 +105,9 @@ app.use(cors());
 app.use(express.json());
 // following function will watch any changes in Uses collection and send engali1986ac@mail.com an email
 // UserDBChanges()
+
 app.get("/", (req, res) => {
   console.log("server running");
-  res.send("Server is running");
-  console.log("server.js ");
 });
 // UserRoutes start
 app.post("/AddUser", async (req, res) => {
