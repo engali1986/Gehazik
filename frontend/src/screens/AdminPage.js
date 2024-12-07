@@ -37,6 +37,7 @@ const ControlPanel = ({ Data, ProductsList, SetProductsList }) => {
                <tr>
                  <th style={{ border: "1px solid #ddd", padding: "8px" }}>ID</th>
                  <th style={{ border: "1px solid #ddd", padding: "8px" }}>Description</th>
+                 <th style={{ border: "1px solid #ddd", padding: "8px" }}>Images</th>
                  <th style={{ border: "1px solid #ddd", padding: "8px" }}>Approve</th>
                </tr>
              </thead>
@@ -44,6 +45,12 @@ const ControlPanel = ({ Data, ProductsList, SetProductsList }) => {
                {ProductsList.map((product) => (
                  <tr key={product._id}>
                    <td style={{ border: "1px solid #ddd", padding: "8px" }}>{product._id}</td>
+                   <td style={{ border: "1px solid #ddd", padding: "8px" }}><div style={{maxWidth:"200px", maxHeight:"100px", overflowY:"auto"}}>
+                    {Array.isArray(product.ProductImagesIDs)?product.ProductImagesIDs.map((image)=>(
+                      <img key={image} style={{maxWidth:"200px", aspectRatio:"1/1"}} src ={`https://drive.google.com/thumbnail?id=${image}`}/>
+                    )):""}
+                    </div>
+                    </td>
                    <td style={{ border: "1px solid #ddd", padding: "8px" }}>{product.ProductTitle}</td>
                    <td style={{ border: "1px solid #ddd", padding: "8px", textAlign: "center" }}>
                      <input type="checkbox" onChange={() => handleCheckboxChange(product._id)} />
