@@ -120,7 +120,7 @@ const AdminPage = ({ globalState, setGlobal }) => {
     console.log("Orders Selected");
     console.log(globalState);
     const Orders = await fetch(
-      "http://localhost:5000/GetOrders",
+      "https://gehazik-server.onrender.com/GetOrders",
       {
         method: "POST",
         body: JSON.stringify(globalState),
@@ -154,7 +154,7 @@ const AdminPage = ({ globalState, setGlobal }) => {
       const Credentials={Email:globalState.Email, Token:globalState.Token}
       console.log(Credentials)
       const BendingProducts = await fetch(
-        "http://localhost:5000/Admins/ApproveProducts",
+        "https://gehazik-server.onrender.com/Admins/ApproveProducts",
         {
           method: "Post",
           body: JSON.stringify(Credentials),
