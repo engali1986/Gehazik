@@ -108,6 +108,7 @@ app.use(express.json());
 
 app.get("*", (req, res) => {
   console.log("server running");
+  res.send("Server is running")
 });
 // UserRoutes start
 app.post("/AddUser", async (req, res) => {
