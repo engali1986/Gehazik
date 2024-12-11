@@ -59,6 +59,9 @@ const ControlPanel = ({ Data, ProductsList, SetProductsList }) => {
                ))}
              </tbody>
            </table>
+           <button className="SignUpButton">
+            Confirm
+           </button>
          </div>:<div>
           No Products Bending
          </div>}
