@@ -45,7 +45,7 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIo(server, {
   cors: {
-    origin: "https://gehazik-l9ggfsnq5-engali1986s-projects.vercel.app", // React App's URL
+    origin: "https://gehazik.vercel.app", // React App's URL
     methods: ["GET", "POST"]
   }
 });
