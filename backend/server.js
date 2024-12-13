@@ -38,6 +38,7 @@ import DeleteOrders from "./DBConnection/Orders/DeleteOrder.js";
 import MerchantPasswordRecovery from "./DBConnection/Merchants/MerchantPasswordRecovery.js";
 import CheckAdmin from "./DBConnection/Admins/CheckAdmins.js";
 import AdminsBendingProductsList from "./DBConnection/Admins/AdminsBendingProductsList.js";
+import ApproveProducts from "./DBConnection/Admins/ApproveProducts.js";
 const require = createRequire(import.meta.url);
 const socketIo = require('socket.io');
 // const ServiceAccountKey = require("./API keys/ServiceAccountKey.json");
@@ -278,7 +279,9 @@ app.post("/Admins/ApproveProducts",async(req,res)=>{
     const  VarifyAdmin= await CheckAdmin(AdminData)
     console.log(VarifyAdmin)
     if (VarifyAdmin.Email) {
-      res.json({resp:"Done"})
+      const ProductsApproval= await ApproveProducts(BendingProductsList)
+      console.log(ProductsApproval)
+      res.json({resp:ProductsApproval})
     }else{
       res.json({resp:"Products Not Approved"})
     }
