@@ -249,18 +249,18 @@ app.post("/AdminLogIn", async (req, res) => {
     res.json({ resp: "Internal error" });
   }
 });
-app.post("/Admins/ApproveProducts",async(req,res)=>{
-  console.log("Server/ApproveProducts")
+app.post("/Admins/BendingProducts",async(req,res)=>{
+  console.log("Server/BendingProducts")
   console.log(req.body)
   const AdminData=await req.body
   const  VarifyAdmin= await CheckAdmin(AdminData)
   console.log(VarifyAdmin)
   if(VarifyAdmin.Email){
-    console.log("Server/ApproveProducts Admin Varified")
+    console.log("Server/BendingProducts Admin Varified")
     const BendingProducts=await AdminsBendingProductsList()
     console.log(BendingProducts.length)
     if(Array.isArray(BendingProducts)){
-      console.log("Server/ApproveProducts Bending Products Count")
+      console.log("Server/BendingProducts Bending Products Count")
       console.log(BendingProducts.length)
       res.json({resp:BendingProducts})
     }else{

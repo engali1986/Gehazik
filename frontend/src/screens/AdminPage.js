@@ -8,6 +8,32 @@ import { Container, Row, Col } from "react-bootstrap";
 
 //  ControlPanel Component Start
 const ControlPanel = ({ Data, ProductsList, SetProductsList }) => {
+  const ApproveProducts= async(e)=>{
+    e.stopPropagation()
+    e.target.disabled=true
+    try {
+      console.log("Approving Products")
+      console.log(e.target)
+      let Arr=[]
+      for (let index = 0; index < ProductsList.length; index++) {
+        if (ProductsList[index].ProductVisibility===true) {
+          let obj={
+            ID:ProductsList[index]._id,
+            ProductVisibility:ProductsList[index].ProductVisibility
+          }
+          Arr.push(obj)
+        }
+        
+      }
+      console.log(Arr)
+      if (Arr.length>0) {
+        
+      }
+    } catch (error) {
+      console.log("Error",error)
+      e.target.disabled=false
+    }
+  }
   useEffect(() => {
     console.log(Data);
   }, []);
@@ -59,7 +85,7 @@ const ControlPanel = ({ Data, ProductsList, SetProductsList }) => {
                ))}
              </tbody>
            </table>
-           <button className="SignUpButton">
+           <button className="SignUpButton" onClick={(e)=>ApproveProducts(e)}>
             Confirm
            </button>
          </div>:<div>
@@ -157,7 +183,7 @@ const AdminPage = ({ globalState, setGlobal }) => {
       const Credentials={Email:globalState.Email, Token:globalState.Token}
       console.log(Credentials)
       const BendingProducts = await fetch(
-        "http://localhost:5000/Admins/ApproveProducts",
+        "http://localhost:5000/Admins/BendingProducts",
         {
           method: "Post",
           body: JSON.stringify(Credentials),
