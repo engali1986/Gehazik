@@ -7,7 +7,7 @@ import { Container, Row, Col } from "react-bootstrap";
 //  useeffect will be used to redirect unauthorized users away from the page
 
 //  ControlPanel Component Start
-const ControlPanel = ({ Data, ProductsList, SetProductsList }) => {
+const ControlPanel = ({ Data, ProductsList, SetProductsList, GlobalState }) => {
   const ApproveProducts= async(e)=>{
     e.stopPropagation()
     e.target.disabled=true
@@ -27,7 +27,31 @@ const ControlPanel = ({ Data, ProductsList, SetProductsList }) => {
       }
       console.log(Arr)
       if (Arr.length>0) {
-        
+        const ListData={
+          Admin:{
+            Email:GlobalState.Email,
+            Token:GlobalState.Token
+          },
+          BendingProductsList:Arr
+        }
+        const ProductsListApproval = await fetch(
+          "http://localhost:5000/Admins/ApproveProducts",
+          {
+            method: "POST",
+            body: JSON.stringify(ListData),
+            headers: {
+              "Content-Type": "application/json",
+            },
+            mode: "cors",
+          }
+        )
+          .then((res) => {
+            return res.json();
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+          console.log(ProductsListApproval)
       }
     } catch (error) {
       console.log("Error",error)
@@ -234,7 +258,7 @@ const AdminPage = ({ globalState, setGlobal }) => {
           <div onClick={(e) => SetData(e)}>Add Category</div>
         </Col>
         <Col xs={12} md={10}>
-          <ControlPanel Data={Data} ProductsList={ProductsList} SetProductsList={SetProductsList} />
+          <ControlPanel Data={Data} ProductsList={ProductsList} SetProductsList={SetProductsList} GlobalState={globalState} />
         </Col>
       </Row>
     </>

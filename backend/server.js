@@ -268,6 +268,27 @@ app.post("/Admins/BendingProducts",async(req,res)=>{
     }
   }
 })
+app.post("/Admins/ApproveProducts",async(req,res)=>{
+  try {
+    const BendingProductsList=await req.body.BendingProductsList
+    const AdminData=await req.body.Admin
+    console.log("Server/ApproveProducts 0")
+    console.log(BendingProductsList)
+    console.log(AdminData)
+    const  VarifyAdmin= await CheckAdmin(AdminData)
+    console.log(VarifyAdmin)
+    if (VarifyAdmin.Email) {
+      res.json({resp:"Done"})
+    }else{
+      res.json({resp:"Products Not Approved"})
+    }
+    
+    
+  } catch (error) {
+    console.log("ApproveProducts error",error)
+    res.json({resp:"Internal error"})
+  }
+})
 // Admin routes end
 // Merchant routes start
 app.post("/AddMerchant", async (req, res) => {
