@@ -11,6 +11,16 @@ const AddProduct = async (AddProductData) => {
     });
     console.log("AddProduct file 0");
     console.log(AddProductData);
+    // following loop will be used to group similir items qty
+    for (let index = 0; index < AddProductData.ProductOptions.length; index++) {
+      for (let J = 0; J < AddProductData.ProductOptions.length; J++) {
+        if (J>index && AddProductData.ProductOptions[J].Color===AddProductData.ProductOptions[index].Color && AddProductData.ProductOptions[J].Size===AddProductData.ProductOptions[index].Size) {
+          AddProductData.ProductOptions[index].Qty=AddProductData.ProductOptions[index].Qty+AddProductData.ProductOptions[J].Qty
+          AddProductData.ProductOptions.splice(J,1)
+        } 
+      }
+      
+    }
     const NewProduct = await client
       .db("Gehazik")
       .collection("Products")

@@ -9,30 +9,34 @@ const socket = io('http://localhost:5000'); // Connect to the Node.js server
 
 
 const Test = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const { navigator } = useContext(NavigationContext);
-
-  useEffect(() => {
-    // Only run if we are on the /test page
-    if (location.pathname === "/test") {
-      const unblock = navigator.block((tx) => {
-        // Custom confirmation dialog
-        const userConfirmed = window.confirm("Do you really want to leave this page?");
-        if (userConfirmed) {
-          unblock();
-          tx.retry(); // Proceed with navigation
-        }
-      });
-
-      return () => unblock(); // Cleanup block when the component unmounts
+  const Arr=[
+    {Color:"White",
+      Size:"Large",
+      Qty:10
     }
-  }, [location.pathname, navigator]);
+    
+  ]
 
   return (
     <div>
-      <h1>Test Page</h1>
-      <p>This is the test page. Click the back button to trigger the alert.</p>
+      <button onClick={()=>{
+        console.log("Clicked")
+        console.log(Arr)
+        for (let index = 0; index < Arr.length; index++) {
+          for (let J = 0; J < Arr.length; J++) {
+            if (J>index && Arr[J].Color===Arr[index].Color && Arr[J].Size===Arr[index].Size) {
+              Arr[index].Qty=Arr[index].Qty+Arr[J].Qty
+              Arr.splice(J,1)
+            }
+            
+          }
+          
+        }
+        console.log(Arr)
+      }}>
+        Test Me
+
+      </button>
     </div>
   );
 };
