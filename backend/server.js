@@ -6,7 +6,7 @@ import Test from "./DBConnection/Test.js";
 import LogInUser from "./DBConnection/LogInUser.js";
 import PasswordRecovery from "./DBConnection/PasswordRecovery.js";
 import AdminLogIn from "./DBConnection/AdminLogIn.js";
-import AddOrder from "./DBConnection/AddOrder.js";
+import AddOrder from "./DBConnection/Users/AddOrder.js";
 import GetOrders from "./DBConnection/GetOrders.js";
 import AddMerchant from "./DBConnection/AddMerchant.js";
 import LogInMerchant from "./DBConnection/LogInMerchant.js";
