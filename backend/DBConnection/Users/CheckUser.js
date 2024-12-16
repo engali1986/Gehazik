@@ -38,7 +38,7 @@ const CheckUser=async(UserData)=>{
         
     } catch (error) {
         console.log("CheckUserFile 6 Error")
-        console.Console.og(error)
+        console.log(error)
        return "Connection error"
         
     }
