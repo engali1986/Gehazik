@@ -16,16 +16,16 @@ const AddOrder = async (OrderData) => {
     for (let index = 0; index < OrderData.OrderDetails.length; index++) {
         console.log("AddOrder file 1 Order.OrderDetails", [index]);
         console.log(OrderData.OrderDetails[index])
-        const res=await client.db("Gehazik").collection("Products").findOne({_id:new ObjectId(OrderData.OrderDetails[index].ID)},{projection:{ProductOptions:1}}).then(res=>{
+        const res=await client.db("Gehazik").collection("Products").findOne({_id:new ObjectId(OrderData.OrderDetails[index].ID), "ProductOptions.Color":OrderData.OrderDetails[index].Color, "ProductOptions.Size":OrderData.OrderDetails[index].Size},{"ProductOptions.$.Color":1}).then(res=>{
             console.log("AddOrder file 2 Order.OrderDetails", [index]);
             console.log(res)
-            for (let J = 0; J < res.ProductOptions.length; J++) {
-                if (res.ProductOptions[J].Color===OrderData.OrderDetails[index].Color && res.ProductOptions[J].Size===OrderData.OrderDetails[index].Size && res.ProductOptions[J].Qty>OrderData.OrderDetails[index].Qty ) {
-                    results=results+1
-                } else {
+            // for (let J = 0; J < res.ProductOptions.length; J++) {
+            //     if (res.ProductOptions[J].Color===OrderData.OrderDetails[index].Color && res.ProductOptions[J].Size===OrderData.OrderDetails[index].Size && res.ProductOptions[J].Qty>OrderData.OrderDetails[index].Qty ) {
+            //         results=results+1
+            //     } else {
                     
-                }    
-            }
+            //     }    
+            // }
             return res
         }).catch(err=>{
             console.log(err)
@@ -33,40 +33,35 @@ const AddOrder = async (OrderData) => {
         })
         
     }
-    if (OrderData.OrderDetails.length===results) {
-        console.log("AddOrder file 3 Order availability results", results, OrderData.OrderDetails.length );
-        // Next we will adjust available Qty of each item in DB
-        for (let index = 0; index < OrderData.OrderDetails.length; index++) {
-            console.log("AddOrder file 4 Order.OrderDetails", [index]);
-            console.log(OrderData.OrderDetails[index])
-            const res=await client.db("Gehazik").collection("Products").findOne({_id:new ObjectId(OrderData.OrderDetails[index].ID)},{projection:{ProductOptions:1}}).then(res=>{
-                console.log("AddOrder file 5 Order.OrderDetails", [index]);
-                console.log(res)
+    // if (OrderData.OrderDetails.length===results) {
+    //     console.log("AddOrder file 3 Order availability results", results, OrderData.OrderDetails.length );
+    //     // Next we will adjust available Qty of each item in DB
+    //     for (let index = 0; index < OrderData.OrderDetails.length; index++) {
+    //         console.log("AddOrder file 4 Order.OrderDetails", [index]);
+    //         console.log(OrderData.OrderDetails[index])
+    //         const res=await client.db("Gehazik").collection("Products").findOne({_id:new ObjectId(OrderData.OrderDetails[index].ID), "ProductOptions.Color":OrderData.OrderDetails[index].Color, "ProductOptions.Size":OrderData.OrderDetails[index].Size},{projection:{ProductOptions:1}}).then(res=>{
+    //             console.log("AddOrder file 5 Order.OrderDetails", [index]);
+    //             console.log(res)
                
-                return res
-            }).catch(err=>{
-                console.log(err)
-                return "Product not found"
-            })
-            let K=0 // this to find which product option index to Update
-            for (let J = 0; J < res.ProductOptions.length; J++) {
-                if (res.ProductOptions[J].Color===OrderData.OrderDetails[index].Color && res.ProductOptions[J].Size===OrderData.OrderDetails[index].Size ) {
-                    let NewQty=OrderData.OrderDetails[index].Qty
-                    const UpdateQty= await client.db("Gehazik").collection("Products").updateOne({_id:new ObjectId(OrderData.OrderDetails[index].ID), "ProductOptions.Color":OrderData.OrderDetails[index].Color, "ProductOptions.Size":OrderData.OrderDetails[index].Size },{$inc:{ "ProductOptions.$.Qty":-NewQty}})
-                } else {
-                    
-                }    
-                
-            }
+    //             return res
+    //         }).catch(err=>{
+    //             console.log(err)
+    //             return "Product not found"
+    //         })
+    //         // let K=0 // this to find which product option index to Update
+    //         // for (let J = 0; J < res.ProductOptions.length; J++) {
+    //         //     let NewQty=OrderData.OrderDetails[index].Qty
+    //         //     const UpdateQty= await client.db("Gehazik").collection("Products").updateOne({_id:new ObjectId(OrderData.OrderDetails[index].ID), "ProductOptions.Color":OrderData.OrderDetails[index].Color, "ProductOptions.Size":OrderData.OrderDetails[index].Size },{$inc:{ "ProductOptions.$.Qty":-NewQty}})    
+    //         // }
 
             
             
-        }
+    //     }
         
-    } else {
-        console.log("AddOrder file 4 Some Items not available", results, OrderData.OrderDetails.length );
-        return "Order Not Added"
-    }
+    // } else {
+    //     console.log("AddOrder file 4 Some Items not available", results, OrderData.OrderDetails.length );
+    //     return "Order Not Added"
+    // }
         
     } catch (error) {
         console.log("AddOrder file 10 error");
