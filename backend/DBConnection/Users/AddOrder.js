@@ -40,7 +40,7 @@ const AddOrder = async (OrderData) => {
                 "ProductOptions.Color": item.Color,
                 "ProductOptions.Size": item.Size
             }, {
-                $inc: { "ProductOptions.$.Qty": -item.Qty }
+                $inc: { "ProductOptions.$.Qty": -item.Qty, "ProductOptions.$.OrderedQty":item.Qty }
             });
 
             if (updateResult.modifiedCount !== 1) {
