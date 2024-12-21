@@ -29,6 +29,7 @@ const AddOrder = async (OrderData) => {
                         },
                         { projection: { "ProductOptions.$": 1 } }
                     );
+                    console.log("AddOrder file 1")
                     console.log(product)
 
                     return product ? { valid: true, item } : { valid: false, item };
