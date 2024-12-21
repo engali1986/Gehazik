@@ -48,7 +48,10 @@ const AddOrder = async (OrderData) => {
             );
 
             // Check for any invalid products
-            const invalidProducts = productChecks.filter((check) => !check.valid);
+            const invalidProducts = productChecks.filter((check) => {
+                if (check.valid===false) {
+                    return check
+                }});
             if (invalidProducts.length > 0) {
                 console.log("Invalid products found:", invalidProducts);
                 throw new Error("One or more products are unavailable or have insufficient stock.");

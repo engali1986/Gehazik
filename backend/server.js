@@ -842,6 +842,13 @@ const gracefulShutdown = () => {
     }
   });
 };
+process.on("uncaughtException", (err) => {
+  console.error("Unhandled exception:", err);
+});
+
+process.on("unhandledRejection", (reason) => {
+  console.error("Unhandled rejection:", reason);
+});
 // Listen for termination signals (e.g., Ctrl+C, kill)
 process.on("SIGINT", gracefulShutdown);
 process.on("SIGTERM", gracefulShutdown);
