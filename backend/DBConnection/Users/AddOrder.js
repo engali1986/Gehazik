@@ -28,8 +28,15 @@ const AddOrder = async (OrderData) => {
                             "ProductOptions.$.Qty": { $gte: item.Qty }, // Ensure sufficient stock
                         },
                         { projection: { "ProductOptions.$": 1 } }
-                    );
-                    console.log("AddOrder file 1")
+                    ).then(res=>{
+                        console.log("AddOrder file 1")
+                        console.log(res)
+                        return res
+                    }).catch(err=>{
+                        console.log("AddOrder file 2")
+                        console.log(err)
+                    });
+                    
                     console.log(product)
 
                     return product ? { valid: true, item } : { valid: false, item };
