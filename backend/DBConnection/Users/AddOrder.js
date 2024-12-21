@@ -23,9 +23,13 @@ const AddOrder = async (OrderData) => {
                     const product = await productsCollection.findOne(
                         {
                             _id: new ObjectId(item.ID),
-                            "ProductOptions.$.Color": item.Color,
-                            "ProductOptions.$.Size": item.Size,
-                            "ProductOptions.$.Qty": { $gte: item.Qty }, // Ensure sufficient stock
+                            ProductOptions:{
+                                $elemMatch: {
+                                    Color: item.Color,
+                                    Size: item.Size,
+                                    Qty: { $gte: item.Qty } // Ensure sufficient stock
+                                }
+                            } // Ensure sufficient stock
                         },
                         { projection: { "ProductOptions.$": 1 } }
                     ).then(res=>{
