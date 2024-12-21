@@ -7,10 +7,10 @@ const client = new MongoClient(uri);
 async function LogInUser(Credentials) {
   try {
     console.log("LogInUser file 0");
-    // await client.connect().then((res) => {
-    //   console.log("Connection res ");
-    //   console.log(res);
-    // });
+    await client.connect().then((res) => {
+      console.log("Connection res ");
+     
+    });
     console.log(Credentials);
     let NewToken = Math.floor(Math.random() * 10000) + 1;
     const GetUser = await client
