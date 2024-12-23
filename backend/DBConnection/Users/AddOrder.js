@@ -120,7 +120,7 @@ const AddOrder = async (OrderData) => {
         return response;
     } catch (error) {
         console.error("Error in AddOrder:", error.message);
-        return "Order Not Added"
+        return error.message
     } 
 };
 

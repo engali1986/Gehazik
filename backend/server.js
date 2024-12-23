@@ -99,7 +99,7 @@ console.log(process.env.ALI);
 const uri =
   "mongodb+srv://engaligulf:Cossacks%401@cluster0.fj9bpe7.mongodb.net/?maxIdleTimeMS=5000";
 const client = new MongoClient(uri);
-client.connect();
+await client.connect();
     console.log("Connection established ");
     
 app.use(cors());
@@ -745,7 +745,7 @@ app.post("/Orders/AddOrder", async (req, res) => {
     
   }else{
     console.log("Server/AddOrder 6 Order Not Added")
-    res.json({resp:"Order Not Added"})
+    res.json({resp:OrderAdd})
   }
   
       
