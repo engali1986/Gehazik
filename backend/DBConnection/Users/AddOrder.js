@@ -48,6 +48,7 @@ const AddOrder = async (OrderData) => {
             );
 
             // Check for any invalid products
+            console.log("AddOrder file 2", productChecks)
             const invalidProducts = productChecks.filter((check) => {
                 if (check.valid===false) {
                     return check
@@ -62,8 +63,12 @@ const AddOrder = async (OrderData) => {
                 updateOne: {
                     filter: {
                         _id: new ObjectId(item.ID),
-                        "ProductOptions.Color": item.Color,
-                        "ProductOptions.Size": item.Size,
+                        ProductOptions:{
+                            $elemMatch: {
+                                Color: item.Color,
+                                Size: item.Size,   
+                            }
+                        }
                     },
                     update: {
                         $inc: {
@@ -75,6 +80,7 @@ const AddOrder = async (OrderData) => {
             }));
 
             const bulkResult = await productsCollection.bulkWrite(bulkOperations, { session });
+            console.log("AddOrder file 3", bulkResult)
             if (!bulkResult.modifiedCount) {
                 throw new Error("Failed to update stock for one or more products.");
             }

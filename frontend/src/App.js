@@ -332,7 +332,7 @@ function App() {
       if (Array.isArray(GlobalState.CartItems)) {
         let y;
         GlobalState.CartItems.forEach((item) => {
-          if (item.ID === UpdateData.ID && item.Color===UpdateData.Color && item.Size===UpdateData.Size && item.Qty<item.InStockQty) {
+          if (item.ID === UpdateData.ID && item.Color===UpdateData.Color && item.Size===UpdateData.Size && UpdateData.Qty<item.InStockQty) {
             console.log(item.Qty);
             console.log(typeof item.Qty);
             let j = item.Qty + 1;

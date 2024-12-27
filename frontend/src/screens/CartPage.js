@@ -11,13 +11,13 @@ const CartPage = ({ GlobalState, UpdateCart,AddOrder }) => {
   const Navigate=useNavigate()
   
   // the following function will be used to update total price for each item
-  const TotalPrice = ({ ID }) => {
+  const TotalPrice = ({ Item }) => {
     let totalprice = 0;
-    console.log(ID);
+    console.log(Item);
     if (Array.isArray(GlobalState.CartItems)) {
       GlobalState.CartItems.forEach((element) => {
         console.log(element);
-        if (element.ID === ID) {
+        if (element.ID === Item.ID && element.Size===Item.Size && element.Color===Item.Color) {
           console.log(typeof element.ProductUnitPrice);
           console.log(typeof element.Qty);
           let price = element.ProductUnitPrice;
@@ -97,7 +97,7 @@ const CartPage = ({ GlobalState, UpdateCart,AddOrder }) => {
       GlobalState.CartItems.length > 0 ? (
         GlobalState.CartItems.map((item) => (
           <Row
-            key={item.ID}
+            key={item.ID +item.Color+item.Size}
             className=" my-1"
             style={{ border: "2px solid gray", borderRadius:'10px' }}
           >
@@ -177,7 +177,7 @@ const CartPage = ({ GlobalState, UpdateCart,AddOrder }) => {
                   <i
                     onClick={(e) => {
                       e.stopPropagation();
-                      const UpdatRequired = { Field: "Add", ID: item.ID, Color:item.Color, Size:item.Size };
+                      const UpdatRequired = { Field: "Add", ID: item.ID, Color:item.Color, Size:item.Size, Qty:item.Qty };
                       UpdateCart(UpdatRequired);
                     }}
                     className="fa-solid fa-square-plus fa-xl"
@@ -206,7 +206,7 @@ const CartPage = ({ GlobalState, UpdateCart,AddOrder }) => {
 
               </Col>
               <Col id="4" xs={2} className="text-start" style={{ color: "red" }}>
-              {<TotalPrice ID={item.ID} />}
+              {<TotalPrice Item={item} />}
               </Col>
             </Row>
               
