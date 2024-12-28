@@ -194,8 +194,8 @@ const DtataDisplay=({globalState,setGlobal,Data,Orders,NewOrders, SetOrders, Set
           <Row>
             <Col xs={12}>
               <div style={{ maxWidth:'100%', overflow:"auto", border: "1px solid black" }}>
-              <table border="1">
-                  <thead>
+              <table border="1" style={{ borderCollapse: "collapse", width: "100%" }}>
+                  <thead style={{ backgroundColor: "#f0f0f0", fontSize: "1.2rem", fontWeight: "bold" }}>
                     <tr>
                       <th>{Language==="ar"?"رقم الطلب":"Order ID"}</th>
                       <th>{Language==="ar"?"تاريخ الطلب":"Order Date"}</th>
@@ -210,16 +210,19 @@ const DtataDisplay=({globalState,setGlobal,Data,Orders,NewOrders, SetOrders, Set
                   </thead>
                  <tbody>
                   {Array.isArray(NewOrders) && NewOrders.length>0? 
-                  NewOrders.map((item,index)=>(<tr key={item._id}>
-                    <td>{item._id}</td>
-                    <td>{item.OrderedDate.split("-")[2].split("T")[0]}/{item.OrderedDate.split("-")[1]}/{item.OrderedDate.split("-")[0]}</td>
-                    <td>{item.OrderedItems.map((SubItem)=>(<div key={SubItem.ID}><a href={`/ProductDetails/${SubItem.ID.toString()}`}>{SubItem.ID}</a></div>))}</td>
-                    <td>{item.OrderedItems.map((SubItem)=>(<div key={SubItem.ID}>{SubItem.ProductTitle}</div>))}</td>
-                    <td>{item.OrderedItems.map(SubItem=>(<div key={SubItem.ProductUnitPrice}>{SubItem.ProductUnitPrice}</div>))}</td>
-                    <td>{item.OrderedItems.map(SubItem=>(<div key={SubItem.Size}>{SubItem.Size}</div>))}</td>
-                    <td>{item.OrderedItems.map(SubItem=>(<div key={SubItem.Color}>{SubItem.Color}</div>))}</td>
-                    <td>{item.OrderedItems.map(SubItem=>(<div key={SubItem.ID}>{SubItem.Qty}</div>))}</td>
-                    <td>{item.OrderedPaymentMethod==="Vodafone Cash"&& item.OrderPayed===false ?Language==="ar"?"بانتظار الدفع ":"Waiting payment":item.OrderDelivered===false?Language==="ar"?"جاري التوصيل ":"On the way":Language==="ar"?"تم التوصيل":"Delivered"}</td>
+                  NewOrders.map((item,index)=>(<tr key={item._id} 
+                    style={{
+                      backgroundColor: index % 2 === 0 ? "#e8f5e9" : "#f1f8e9", // Shades of green
+                  }}>
+                    <td style={{ border: "1px solid black", padding: "8px" }}>{item._id}</td>
+                    <td style={{ border: "1px solid black", padding: "8px" }}>{item.OrderedDate.split("-")[2].split("T")[0]}/{item.OrderedDate.split("-")[1]}/{item.OrderedDate.split("-")[0]}</td>
+                    <td style={{ border: "1px solid black", padding: "8px" }}>{item.OrderedItems.map((SubItem)=>(<div key={SubItem.ID}><a href={`/ProductDetails/${SubItem.ID.toString()}`}>{SubItem.ID}</a></div>))}</td>
+                    <td style={{ border: "1px solid black", padding: "8px" }}>{item.OrderedItems.map((SubItem)=>(<div key={SubItem.ID}>{SubItem.ProductTitle}</div>))}</td>
+                    <td style={{ border: "1px solid black", padding: "8px" }}>{item.OrderedItems.map(SubItem=>(<div key={SubItem.ProductUnitPrice}>{SubItem.ProductUnitPrice}</div>))}</td>
+                    <td style={{ border: "1px solid black", padding: "8px" }}>{item.OrderedItems.map(SubItem=>(<div key={SubItem.Size}>{SubItem.Size}</div>))}</td>
+                    <td style={{ border: "1px solid black", padding: "8px" }}>{item.OrderedItems.map(SubItem=>(<div key={SubItem.Color}>{SubItem.Color}</div>))}</td>
+                    <td style={{ border: "1px solid black", padding: "8px" }}>{item.OrderedItems.map(SubItem=>(<div key={SubItem.ID}>{SubItem.Qty}</div>))}</td>
+                    <td style={{ border: "1px solid black", padding: "8px" }}>{item.OrderedPaymentMethod==="Vodafone Cash"&& item.OrderPayed===false ?Language==="ar"?"بانتظار الدفع ":"Waiting payment":item.OrderDelivered===false?Language==="ar"?"جاري التوصيل ":"On the way":Language==="ar"?"تم التوصيل":"Delivered"}</td>
                     </tr>)):(<tr><td>No Data</td></tr>)}
                  </tbody>
                 </table>
