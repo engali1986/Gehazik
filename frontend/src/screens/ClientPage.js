@@ -201,6 +201,8 @@ const DtataDisplay=({globalState,setGlobal,Data,Orders,NewOrders, SetOrders, Set
                       <th>{Language==="ar"?"تاريخ الطلب":"Order Date"}</th>
                       <th>{Language==="ar"?"رقم المنتج":"Product ID"}</th>
                       <th>{Language==="ar"?"اسم المنتج":"Product Title"}</th>
+                      <th>{Language==="ar"?"المقاس":"Size"}</th>
+                      <th>{Language==="ar"?"اللون":"Color"}</th>
                       <th>{Language==="ar"?"سعر الوحده":"Unit Price"}</th>
                       <th>{Language==="ar"?"الكميه المطلوبه":"Ordered Quantity"}</th>
                       <th>{Language==="ar"?"تم التوصيل":"Delivered"}</th>
@@ -214,6 +216,8 @@ const DtataDisplay=({globalState,setGlobal,Data,Orders,NewOrders, SetOrders, Set
                     <td>{item.OrderedItems.map((SubItem)=>(<div key={SubItem.ID}><a href={`/ProductDetails/${SubItem.ID.toString()}`}>{SubItem.ID}</a></div>))}</td>
                     <td>{item.OrderedItems.map((SubItem)=>(<div key={SubItem.ID}>{SubItem.ProductTitle}</div>))}</td>
                     <td>{item.OrderedItems.map(SubItem=>(<div key={SubItem.ProductUnitPrice}>{SubItem.ProductUnitPrice}</div>))}</td>
+                    <td>{item.OrderedItems.map(SubItem=>(<div key={SubItem.Size}>{SubItem.Size}</div>))}</td>
+                    <td>{item.OrderedItems.map(SubItem=>(<div key={SubItem.Color}>{SubItem.Color}</div>))}</td>
                     <td>{item.OrderedItems.map(SubItem=>(<div key={SubItem.ID}>{SubItem.Qty}</div>))}</td>
                     <td>{item.OrderedPaymentMethod==="Vodafone Cash"&& item.OrderPayed===false ?Language==="ar"?"بانتظار الدفع ":"Waiting payment":item.OrderDelivered===false?Language==="ar"?"جاري التوصيل ":"On the way":Language==="ar"?"تم التوصيل":"Delivered"}</td>
                     </tr>)):(<tr><td>No Data</td></tr>)}
