@@ -95,6 +95,7 @@ io.on("connection",(socket)=>{
 })
 
 env.config();
+// this is updated on codespace
 console.log(process.env.ALI);
 const uri =
   "mongodb+srv://engaligulf:Cossacks%401@cluster0.fj9bpe7.mongodb.net/?maxIdleTimeMS=5000";
