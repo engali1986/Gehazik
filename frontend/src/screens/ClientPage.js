@@ -195,7 +195,7 @@ const DtataDisplay=({globalState,setGlobal,Data,Orders,NewOrders, SetOrders, Set
             <Col xs={12}>
               <div style={{ maxWidth:'100%', overflow:"auto", border: "1px solid black" }}>
               <table border="1" style={{ borderCollapse: "collapse", width: "100%" }}>
-                  <thead style={{ backgroundColor: "#f0f0f0", fontSize: "1.2rem", fontWeight: "bold" }}>
+                  <thead className="sticky-header" style={{ backgroundColor: "#f0f0f0", fontSize: "1.2rem", fontWeight: "bold" }}>
                     <tr>
                       <th>{Language==="ar"?"رقم الطلب":"Order ID"}</th>
                       <th>{Language==="ar"?"تاريخ الطلب":"Order Date"}</th>
@@ -208,12 +208,10 @@ const DtataDisplay=({globalState,setGlobal,Data,Orders,NewOrders, SetOrders, Set
                       <th>{Language==="ar"?"تم التوصيل":"Delivered"}</th>
                     </tr>
                   </thead>
-                 <tbody>
+                 <tbody className="hover-highlight">
                   {Array.isArray(NewOrders) && NewOrders.length>0? 
                   NewOrders.map((item,index)=>(<tr key={item._id} 
-                    style={{
-                      backgroundColor: index % 2 === 0 ? "#e8f5e9" : "#f1f8e9", // Shades of green
-                  }}>
+                    >
                     <td style={{ border: "1px solid black", padding: "8px" }}>{item._id}</td>
                     <td style={{ border: "1px solid black", padding: "8px" }}>{item.OrderedDate.split("-")[2].split("T")[0]}/{item.OrderedDate.split("-")[1]}/{item.OrderedDate.split("-")[0]}</td>
                     <td style={{ border: "1px solid black", padding: "8px" }}>{item.OrderedItems.map((SubItem)=>(<div key={SubItem.ID}><a href={`/ProductDetails/${SubItem.ID.toString()}`}>{SubItem.ID}</a></div>))}</td>

@@ -8621,3 +8621,24 @@ readers do not read off random characters that represent icons */
     display: none;
   }
 }
+
+/* UserPage new orders table styles start */
+.sticky-header thead th {
+  position: sticky;
+  top: 0;
+  background-color: #f0f0f0;
+  z-index: 1;
+}
+.hover-highlight tr:nth-child(even) {
+  background-color: #c8e6c9; /* Light green */
+  transition: background-color 0.3s ease; /* Smooth transition */
+}
+.hover-highlight tr:nth-child(odd) {
+  background-color: #e0f2f1; /* Very light green */
+  transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+.hover-highlight tr:hover {
+  background-color: #f4c273; /* Light green hover effect */
+}
+/* UserPage new orders table styles end */
