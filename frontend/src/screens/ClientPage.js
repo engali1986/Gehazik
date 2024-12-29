@@ -240,28 +240,32 @@ const DtataDisplay=({globalState,setGlobal,Data,Orders,NewOrders, SetOrders, Set
           <Row>
             <Col xs={12}>
               <div style={{ maxWidth:'100%', overflow:"auto", border: "1px solid black" }}>
-              <table border="1">
-                  <thead>
+              <table border="1" style={{ borderCollapse: "collapse", width: "100%" }}>
+                  <thead className="sticky-header" style={{ backgroundColor: "#f0f0f0", fontSize: "1.2rem", fontWeight: "bold" }}>
                     <tr>
                       <th>{Language==="ar"?"رقم الطلب":"Order ID"}</th>
                       <th>{Language==="ar"?"تاريخ الطلب":"Order Date"}</th>
                       <th>{Language==="ar"?"رقم المنتج":"Product ID"}</th>
                       <th>{Language==="ar"?"اسم المنتج":"Product Title"}</th>
+                      <th>{Language==="ar"?"المقاس":"Size"}</th>
+                      <th>{Language==="ar"?"اللون":"Color"}</th>
                       <th>{Language==="ar"?"سعر الوحده":"Unit Price"}</th>
                       <th>{Language==="ar"?"الكميه المطلوبه":"Ordered Quantity"}</th>
                       <th>{Language==="ar"?"حالة الطلب":"Status"}</th>
                     </tr>
                   </thead>
-                 <tbody>
+                 <tbody className="hover-highlight">
                   {Array.isArray(Orders) && Orders.length>0? 
                   Orders.map((item,index)=>(<tr key={item._id}>
-                    <td>{item._id}</td>
-                    <td>{item.OrderedDate.split("-")[2].split("T")[0]}/{item.OrderedDate.split("-")[1]}/{item.OrderedDate.split("-")[0]}</td>
-                    <td>{item.OrderedItems.map((SubItem)=>(<div key={SubItem.ID}><a href={`/ProductDetails/${SubItem.ID.toString()}`}>{SubItem.ID}</a></div>))}</td>
-                    <td>{item.OrderedItems.map((SubItem)=>(<div key={SubItem.ID}>{SubItem.ProductTitle}</div>))}</td>
-                    <td>{item.OrderedItems.map(SubItem=>(<div key={SubItem.ProductUnitPrice}>{SubItem.ProductUnitPrice}</div>))}</td>
-                    <td>{item.OrderedItems.map(SubItem=>(<div key={SubItem.ID}>{SubItem.Qty}</div>))}</td>
-                    <td>{item.OrderStatus[item.OrderStatus.length-1].Status==="Waiting Payment"?Language==="ar"?"بانتظار الدفع":"Waiting Payment":item.OrderStatus[item.OrderStatus.length-1].Status==="Cancelled"?Language==="ar"?"تم الغاؤه":"Cancelled":item.OrderStatus[item.OrderStatus.length-1].Status==="On the way"?Language==="ar"?"جاري التوصيل":"On the way":Language==="ar"?"تم التوصيل":"Delivered"}</td>
+                    <td style={{ border: "1px solid black", padding: "8px" }}>{item._id}</td>
+                    <td style={{ border: "1px solid black", padding: "8px" }}>{item.OrderedDate.split("-")[2].split("T")[0]}/{item.OrderedDate.split("-")[1]}/{item.OrderedDate.split("-")[0]}</td>
+                    <td style={{ border: "1px solid black", padding: "8px" }}>{item.OrderedItems.map((SubItem)=>(<div key={SubItem.ID}><a href={`/ProductDetails/${SubItem.ID.toString()}`}>{SubItem.ID}</a></div>))}</td>
+                    <td style={{ border: "1px solid black", padding: "8px" }}>{item.OrderedItems.map((SubItem)=>(<div key={SubItem.ID}>{SubItem.ProductTitle}</div>))}</td>
+                    <td style={{ border: "1px solid black", padding: "8px" }}>{item.OrderedItems.map(SubItem=>(<div key={SubItem.Size}>{SubItem.Size}</div>))}</td>
+                    <td style={{ border: "1px solid black", padding: "8px" }}>{item.OrderedItems.map(SubItem=>(<div key={SubItem.Color}>{SubItem.Color}</div>))}</td>
+                    <td style={{ border: "1px solid black", padding: "8px" }}>{item.OrderedItems.map(SubItem=>(<div key={SubItem.ProductUnitPrice}>{SubItem.ProductUnitPrice}</div>))}</td>
+                    <td style={{ border: "1px solid black", padding: "8px" }}>{item.OrderedItems.map(SubItem=>(<div key={SubItem.ID}>{SubItem.Qty}</div>))}</td>
+                    <td style={{ border: "1px solid black", padding: "8px" }}>{item.OrderStatus[item.OrderStatus.length-1].Status==="Waiting Payment"?Language==="ar"?"بانتظار الدفع":"Waiting Payment":item.OrderStatus[item.OrderStatus.length-1].Status==="Cancelled"?Language==="ar"?"تم الغاؤه":"Cancelled":item.OrderStatus[item.OrderStatus.length-1].Status==="On the way"?Language==="ar"?"جاري التوصيل":"On the way":Language==="ar"?"تم التوصيل":"Delivered"}</td>
                     </tr>)):(<tr><td>No Data</td></tr>)}
                  </tbody>
                 </table>
