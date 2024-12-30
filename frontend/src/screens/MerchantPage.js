@@ -220,6 +220,25 @@ const MerchantPage = ({ globalState, setGlobal }) => {
     //   UpdateProductUnitPrice: 0,
     //   UpdateProductInStockQty: 0,
     // });
+
+    const handleAddOption = (productId, newOption) => {
+      if (!newOption.Color || !newOption.Size || newOption.Qty <= 0) {
+        toast.error(Language === "ar" ? "يرجى إدخال تفاصيل صالحة" : "Please enter valid details")
+        return;
+      }
+    
+      SetProductsList((prevList) =>
+        prevList.map((product) => {
+          if (product._id === productId) {
+            return {
+              ...product,
+              ProductOptions: [...product.ProductOptions, newOption],
+            };
+          }
+          return product;
+        })
+      );
+    };
     const [Disabled, SetDisabled] = useState(false);
     const ProductTitle = useRef();
     const Alert = useRef();
@@ -275,7 +294,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
               console.log(AddProductData)
               console.log("Submitting data");
               const ProductAdded = await fetch(
-                "https://gehazik-server.onrender.com/Merchants/AddProduct",
+                "http://localhost:5000/Merchants/AddProduct",
                 {
                   method: "POST",
                   body: formData,
@@ -513,7 +532,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                     if (RegTextVarify===true) {
                       console.log("Pdate password")
                       const ChangePassword = await fetch(
-                        "https://gehazik-server.onrender.com/Merchants/ChangePassword",
+                        "http://localhost:5000/Merchants/ChangePassword",
                         {
                           method: "post",
                           body: JSON.stringify(ChangePasswordData),
@@ -681,8 +700,10 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                     <tr>
                       <th>{Language==="ar"?"رقم المنتج":"Product ID"}</th>
                       <th>{Language==="ar"?"اسم المنتج":"Product Title"}</th>
-                      <th>{Language==="ar"?"سعر القطعه":"Unit Price"}</th>
+                      <th>{Language === "ar" ? "اللون" : "Color"}</th>
+                      <th>{Language === "ar" ? "الحجم" : "Size"}</th>
                       <th>{Language==="ar"?"المخزون":"In Stock Quantity"}</th>
+                      <th>{Language==="ar"?"سعر القطعه":"Unit Price"}</th>
                       <th>{Language==="ar"?"الكميه المطلوبه":"Ordered Quantity"}</th>
                       <th>{Language==="ar"?"تعديل":"Edit"}</th>
                       <th>{Language==="ar"?"تحديث":"Update"}</th>
@@ -704,14 +725,28 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                         <td>
                           <input
                             type="number"
-                            defaultValue={product.ProductUnitPrice}
+                            defaultValue={product.InStockQty}
                             disabled={editProductId !== product._id}
                           />
                         </td>
                         <td>
+                          {product.ProductOptions.map(item=>(
+                            <div key={product._id+"-"+item}>
+                              {item.Color}
+                            </div>
+                          ))}
+                        </td>
+                        <td>
+                          {product.ProductOptions.map(item=>(
+                            <div key={product._id+"-"+item}>
+                              {item.Size}
+                            </div>
+                          ))}
+                        </td>
+                        <td>
                           <input
                             type="number"
-                            defaultValue={product.InStockQty}
+                            defaultValue={product.ProductUnitPrice}
                             disabled={editProductId !== product._id}
                           />
                         </td>
@@ -897,7 +932,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                   };
                   console.log(UploadProductListData);
                   const UpdateProduct = await fetch(
-                    "https://gehazik-server.onrender.com/Merchants/UpdateProduct",
+                    "http://localhost:5000/Merchants/UpdateProduct",
                     {
                       method: "post",
                       body: JSON.stringify(UploadProductListData),
@@ -1739,7 +1774,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                         }
                         console.log(MerchantCredentials)
                         const GetMerchantOrders=await fetch(
-                          "https://gehazik-server.onrender.com/Merchants/OrdersList",
+                          "http://localhost:5000/Merchants/OrdersList",
                           {
                             method: "post",
                             body: JSON.stringify(MerchantCredentials),
@@ -1802,7 +1837,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                         }
                         console.log(MerchantCredentials)
                         const GetMerchantOrders=await fetch(
-                          "https://gehazik-server.onrender.com/Merchants/OrdersList",
+                          "http://localhost:5000/Merchants/OrdersList",
                           {
                             method: "post",
                             body: JSON.stringify(MerchantCredentials),
@@ -1906,7 +1941,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                     console.log(ProductsListCredentials);
                     console.log("ProductsList submitted");
                     const GetProductsList = await fetch(
-                      "https://gehazik-server.onrender.com/Merchants/ProductsList",
+                      "http://localhost:5000/Merchants/ProductsList",
                       {
                         method: "post",
                         body: JSON.stringify(ProductsListCredentials),
@@ -2067,7 +2102,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                         }
                         console.log(MerchantCredentials)
                         const GetMerchantOrders=await fetch(
-                          "https://gehazik-server.onrender.com/Merchants/OrdersList",
+                          "http://localhost:5000/Merchants/OrdersList",
                           {
                             method: "post",
                             body: JSON.stringify(MerchantCredentials),
@@ -2129,7 +2164,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                           }
                           console.log(MerchantCredentials)
                           const GetMerchantOrders=await fetch(
-                            "https://gehazik-server.onrender.com/Merchants/OrdersList",
+                            "http://localhost:5000/Merchants/OrdersList",
                             {
                               method: "post",
                               body: JSON.stringify(MerchantCredentials),

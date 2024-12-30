@@ -251,7 +251,7 @@ const SignUp = ({ globalState, setGlobal }) => {
           PassmatchAlert.current.innerText =Language==="ar"?"جاري انشاء الحساب برجاء الانتظار ":"Sign Up please wait";
           PassmatchAlert.current.style.maxHeight = "500px";
           const AddUser = await fetch(
-            "https://gehazik-server.onrender.com/AddUser",
+            "http://localhost:5000/AddUser",
             {
               method: "POST",
               body: JSON.stringify(Credentials),
@@ -331,7 +331,7 @@ const SignUp = ({ globalState, setGlobal }) => {
     console.log(Credentials);
     console.log(typeof Credentials.VarificationCode);
     const UserVarified = await fetch(
-      "https://gehazik-server.onrender.com/LogInUser",
+      "http://localhost:5000/LogInUser",
       {
         method: "POST",
         body: JSON.stringify(Credentials),

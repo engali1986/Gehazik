@@ -20,6 +20,7 @@ const MerchantProductsList = async (MerchantID) => {
         InStockQty: 1,
         OrderedQty: 1,
         ProductUnitPrice: 1,
+        ProductOptions:1
       })
       .toArray();
     console.log("MerchantProductsList file 1");

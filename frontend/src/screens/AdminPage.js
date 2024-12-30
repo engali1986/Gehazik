@@ -35,7 +35,7 @@ const ControlPanel = ({ Data, ProductsList, SetProductsList, GlobalState }) => {
           BendingProductsList:Arr
         }
         const ProductsListApproval = await fetch(
-          "https://gehazik-server.onrender.com/Admins/ApproveProducts",
+          "http://localhost:5000/Admins/ApproveProducts",
           {
             method: "POST",
             body: JSON.stringify(ListData),
@@ -173,7 +173,7 @@ const AdminPage = ({ globalState, setGlobal }) => {
     console.log("Orders Selected");
     console.log(globalState);
     const Orders = await fetch(
-      "https://gehazik-server.onrender.com/GetOrders",
+      "http://localhost:5000/GetOrders",
       {
         method: "POST",
         body: JSON.stringify(globalState),
@@ -207,7 +207,7 @@ const AdminPage = ({ globalState, setGlobal }) => {
       const Credentials={Email:globalState.Email, Token:globalState.Token}
       console.log(Credentials)
       const BendingProducts = await fetch(
-        "https://gehazik-server.onrender.com/Admins/BendingProducts",
+        "http://localhost:5000/Admins/BendingProducts",
         {
           method: "Post",
           body: JSON.stringify(Credentials),

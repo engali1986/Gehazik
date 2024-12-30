@@ -5,7 +5,7 @@ import {LanguageContext} from "../Context/LanguageContext";
 import {Row, Col, Button, Form} from "react-bootstrap"
 import { useParams, useNavigate, useLocation, UNSAFE_NavigationContext as NavigationContext } from "react-router-dom";
 import { toast } from "react-toastify";
-const socket = io('https://gehazik-server.onrender.com'); // Connect to the Node.js server
+const socket = io('http://localhost:5000'); // Connect to the Node.js server
 
 
 const Test = () => {
