@@ -215,8 +215,6 @@ const MerchantPage = ({ globalState, setGlobal }) => {
       CityDelivery:true
     });
     const [editProductId, setEditProductId] = useState(null);
-    // State to hold new option inputs for each product
-    const [newOptions, setNewOptions] = useState({});
     // const [UpdateProduct, SetUpdateProduct] = useState({
     //   UpdateProductID: "",
     //   UpdateProductUnitPrice: 0,
@@ -698,136 +696,220 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                 }}
               >
                 <table border="1">
-      <thead>
-        <tr>
-          <th>{Language === "ar" ? "رقم المنتج" : "Product ID"}</th>
-          <th>{Language === "ar" ? "اسم المنتج" : "Product Title"}</th>
-          <th>{Language === "ar" ? "سعر القطعه" : "Unit Price"}</th>
-          <th>{Language === "ar" ? "المخزون" : "In Stock Quantity"}</th>
-          <th>{Language === "ar" ? "الكميه المطلوبه" : "Ordered Quantity"}</th>
-          <th>{Language === "ar" ? "اللون" : "Color"}</th>
-          <th>{Language === "ar" ? "الحجم" : "Size"}</th>
-          <th>{Language === "ar" ? "الكميه" : "Qty"}</th>
-          <th>{Language === "ar" ? "إضافة خيار" : "Add Option"}</th>
-        </tr>
-      </thead>
-      <tbody>
-        {/* Iterate over ProductsList to display each product and its options */}
-        {ProductsList.map((product, index) => (
-          <React.Fragment key={product._id}>
-            {/* Product Details Row */}
-            <tr
-              style={{
-                backgroundColor: index % 2 === 0 ? "#f2f2f2" : "#ffffff",
-                border: "1px solid black",
-              }}
-            >
-              <td>
-                <a href={`/ProductDetails/${product._id}`}>{product._id}</a>
-              </td>
-              <td>{product.ProductTitle}</td>
-              <td>{product.ProductUnitPrice}</td>
-              <td>{product.InStockQty}</td>
-              <td>{product.OrderedQty}</td>
-              <td colSpan="4"></td>
-            </tr>
-
-            {/* Rows for Each Option of the Product */}
-            {product.ProductOptions.map((option, optIndex) => (
-              <tr key={`${product._id}-${optIndex}`}>
-                <td colSpan="5"></td>
-                {/* Display Color with its background */}
-                <td
-                  style={{
-                    backgroundColor: option.Hex,
-                    color: option.Hex === "#000000" ? "#ffffff" : "#000000",
-                  }}
-                >
-                  {option.Color}
-                </td>
-                <td>{option.Size}</td>
-                <td>{option.Qty}</td>
-                <td></td>
-              </tr>
-            ))}
-
-            {/* Input Fields for Adding New Option */}
-            <tr>
-              <td colSpan="5"></td>
-              {/* Input for Color */}
-              <td>
-                <input
-                  type="text"
-                  placeholder={Language === "ar" ? "لون" : "Color"}
-                  value={newOptions[product._id]?.Color || ""}
-                  onChange={(e) =>
-                    setNewOptions((prev) => ({
-                      ...prev,
-                      [product._id]: {
-                        ...prev[product._id],
-                        Color: e.target.value,
-                      },
-                    }))
-                  }
-                />
-              </td>
-              {/* Input for Size */}
-              <td>
-                <input
-                  type="text"
-                  placeholder={Language === "ar" ? "حجم" : "Size"}
-                  value={newOptions[product._id]?.Size || ""}
-                  onChange={(e) =>
-                    setNewOptions((prev) => ({
-                      ...prev,
-                      [product._id]: {
-                        ...prev[product._id],
-                        Size: e.target.value,
-                      },
-                    }))
-                  }
-                />
-              </td>
-              {/* Input for Quantity */}
-              <td>
-                <input
-                  type="number"
-                  placeholder={Language === "ar" ? "الكميه" : "Qty"}
-                  value={newOptions[product._id]?.Qty || ""}
-                  onChange={(e) =>
-                    setNewOptions((prev) => ({
-                      ...prev,
-                      [product._id]: {
-                        ...prev[product._id],
-                        Qty: parseInt(e.target.value, 10) || "",
-                      },
-                    }))
-                  }
-                  style={{ width: "80px" }}
-                />
-              </td>
-              {/* Button to Add the New Option */}
-              <td>
-                <button
-                  onClick={() =>
-                    handleAddOption(product._id, newOptions[product._id])
-                  }
-                  style={{
-                    backgroundColor: "#4CAF50",
-                    color: "white",
-                    padding: "5px 10px",
-                    border: "none",
-                    cursor: "pointer",
-                  }}
-                >
-                  {Language === "ar" ? "إضافة" : "Add"}
-                </button>
-              </td>
-            </tr>
-          </React.Fragment>
-        ))}
-      </tbody>
-    </table>
+                  <thead>
+                    <tr>
+                      <th>{Language==="ar"?"رقم المنتج":"Product ID"}</th>
+                      <th>{Language==="ar"?"اسم المنتج":"Product Title"}</th>
+                      <th>{Language === "ar" ? "اللون" : "Color"}</th>
+                      <th>{Language === "ar" ? "الحجم" : "Size"}</th>
+                      <th>{Language==="ar"?"المخزون":"In Stock Quantity"}</th>
+                      <th>{Language==="ar"?"سعر القطعه":"Unit Price"}</th>
+                      <th>{Language==="ar"?"الكميه المطلوبه":"Ordered Quantity"}</th>
+                      <th>{Language==="ar"?"تعديل":"Edit"}</th>
+                      <th>{Language==="ar"?"تحديث":"Update"}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {ProductsList.map((product, index) => (
+                      <tr
+                        key={product._id}
+                        data-id={product._id}
+                        style={{
+                          backgroundColor:
+                            index % 2 === 0 ? "#f2f2f2" : "#ffffff",
+                          border: "1px solid black",
+                        }}
+                      >
+                        <td><a href={`/ProductDetails/${product._id}`}>{product._id}</a></td>
+                        <td>{product.ProductTitle}</td>
+                        <td>
+                          <input
+                            type="number"
+                            defaultValue={product.InStockQty}
+                            disabled={editProductId !== product._id}
+                          />
+                        </td>
+                        <td>
+                          {product.ProductOptions.map(item=>(
+                            <div key={product._id+"-"+item}>
+                              {item.Color}
+                            </div>
+                          ))}
+                        </td>
+                        <td>
+                          {product.ProductOptions.map(item=>(
+                            <div key={product._id+"-"+item}>
+                              {item.Size}
+                            </div>
+                          ))}
+                        </td>
+                        <td>
+                          <input
+                            type="number"
+                            defaultValue={product.ProductUnitPrice}
+                            disabled={editProductId !== product._id}
+                          />
+                        </td>
+                        <td>{product.OrderedQty}</td>
+                        <td
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setEditProductId(product._id);
+                          }}
+                          style={{cursor:"pointer"}}
+                        >
+                          {Language==="ar"?"تعديل":"Edit"}
+                        </td>
+                        <td>
+                          <button
+                            disabled={editProductId !== product._id}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              console.log("Updated");
+                              SetShowAlert({
+                                ...ShowAlert,
+                                Show: false,
+                                Success: false,
+                              });
+                              setEditProductId(null);
+                              console.log(
+                                e.target.parentElement.parentElement.children[0]
+                                  .innerText
+                              );
+                              console.log(
+                                e.target.parentElement.parentElement.children[3]
+                                  .children[0].value
+                              );
+                              console.log(
+                                parseInt(
+                                  e.target.parentElement.parentElement
+                                    .children[2].children[0].value,
+                                  10
+                                ) >= 0
+                              );
+                              if (
+                                parseInt(
+                                  e.target.parentElement.parentElement
+                                    .children[2].children[0].value,
+                                  10
+                                ) >= 0 &&
+                                parseInt(
+                                  e.target.parentElement.parentElement
+                                    .children[3].children[0].value,
+                                  10
+                                ) >= 0
+                              ) {
+                                console.log("Values updated");
+                                console.log(UpdateProductsList)
+                                if (UpdateProductsList.length === 0) {
+                                  console.log(UpdateProductsList)
+                                  const UpdatedProductObj = {
+                                    UpdateProductID:
+                                      e.target.parentElement.parentElement
+                                        .children[0].innerText,
+                                    UpdateProductInStockQty: parseInt(
+                                      e.target.parentElement.parentElement
+                                        .children[3].children[0].value,
+                                      10
+                                    ),
+                                    UpdateProductUnitPrice: parseInt(
+                                      e.target.parentElement.parentElement
+                                        .children[2].children[0].value,
+                                      10
+                                    ),
+                                  };
+                                  SetUpdateProduct(UpdatedProductObj);
+                                  SetUpdateProductsList((Perv) => [
+                                    ...Perv,
+                                    UpdatedProductObj,
+                                  ]);
+                                } else {
+                                  console.log(UpdateProductsList)
+                                  let Duplicate = false;
+                                  for (
+                                    let index = 0;
+                                    index < UpdateProductsList.length;
+                                    index++
+                                  ) {
+                                    if (
+                                      UpdateProductsList[index]
+                                        .UpdateProductID ===
+                                      e.target.parentElement.parentElement
+                                        .children[0].innerText
+                                    ) {
+                                      console.log("Duplicate found");
+                                      console.log(UpdateProductsList);
+                                      UpdateProductsList[
+                                        index
+                                      ].UpdateProductID =
+                                        e.target.parentElement.parentElement.children[0].innerText;
+                                      UpdateProductsList[
+                                        index
+                                      ].UpdateProductInStockQty = parseInt(
+                                        e.target.parentElement.parentElement
+                                          .children[3].children[0].value,
+                                        10
+                                      );
+                                      UpdateProductsList[
+                                        index
+                                      ].UpdateProductUnitPrice = parseInt(
+                                        e.target.parentElement.parentElement
+                                          .children[2].children[0].value,
+                                        10
+                                      );
+                                      Duplicate = true;
+                                      break;
+                                    } else {
+                                    }
+                                  }
+                                  if (Duplicate === false) {
+                                    const UpdatedProductObj = {
+                                      UpdateProductID:
+                                        e.target.parentElement.parentElement
+                                          .children[0].innerText,
+                                      UpdateProductInStockQty: parseInt(
+                                        e.target.parentElement.parentElement
+                                          .children[3].children[0].value,
+                                        10
+                                      ),
+                                      UpdateProductUnitPrice: parseInt(
+                                        e.target.parentElement.parentElement
+                                          .children[2].children[0].value,
+                                        10
+                                      ),
+                                    };
+                                    SetUpdateProduct(UpdatedProductObj);
+                                    SetUpdateProductsList((Perv) => [
+                                      ...Perv,
+                                      UpdatedProductObj,
+                                    ]);
+                                  }
+                                }
+                              } else {
+                                console.log("Values Not updated");
+                                SetShowAlert({
+                                  ...ShowAlert,
+                                  Show: true,
+                                  Massage:
+                                    "Please add integer positive numbers",
+                                  Success: false,
+                                });
+                              }
+                            }}
+                            style={{
+                              backgroundColor:
+                                editProductId !== product._id
+                                  ? "#cacbc9"
+                                  : "#94f48c",
+                            }}
+                          >
+                            {Language==="ar"?"تحديث":"Update"}
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
             </Col>
           </Row>
