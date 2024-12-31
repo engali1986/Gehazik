@@ -216,12 +216,13 @@ const MerchantPage = ({ globalState, setGlobal }) => {
     });
     const [editProductId, setEditProductId] = useState(null);
     // State to hold new option inputs for each product
-    const [newOptions, setNewOptions] = useState({});
+    const [newOptions, SetNewOptions] = useState({});
     // const [UpdateProduct, SetUpdateProduct] = useState({
     //   UpdateProductID: "",
     //   UpdateProductUnitPrice: 0,
     //   UpdateProductInStockQty: 0,
     // });
+    // All products functions start
 
     const handleAddOption = (productId, newOption) => {
       if (!newOption.Color || !newOption.Size || newOption.Qty <= 0) {
@@ -241,6 +242,70 @@ const MerchantPage = ({ globalState, setGlobal }) => {
         })
       );
     };
+
+    const handleUpdateOptionQty = (productId, optionIndex, newQty) => {
+      if (newQty < 0) {
+        toast.error("Please enter a valid quantity");
+        return;
+      }
+  
+      // Update the ProductsList state with the new quantity
+      SetProductsList((prevList) =>
+        prevList.map((product) => {
+          if (product._id === productId) {
+            return {
+              ...product,
+              ProductOptions: product.ProductOptions.map((option, index) =>
+                index === optionIndex ? { ...option, Qty: newQty } : option
+              ),
+            };
+          }
+          return product;
+        })
+      );
+  
+      toast.success("Quantity updated successfully");
+    };
+
+    const handleDeleteOption = (productId, optionIndex) => {
+      const confirmDelete = window.confirm("Are you sure you want to delete this option?");
+      if (!confirmDelete) return;
+  
+      // Update the ProductsList state by filtering out the deleted option
+      SetProductsList((prevList) =>
+        prevList.map((product) => {
+          if (product._id === productId) {
+            return {
+              ...product,
+              ProductOptions: product.ProductOptions.filter(
+                (_, index) => index !== optionIndex
+              ),
+            };
+          }
+          return product;
+        })
+      );
+  
+      toast.info("Option deleted successfully");
+    };
+    const handleUpdateUnitPrice = (productId, newPrice) => {
+      if (newPrice < 0) {
+        toast.error("Please enter a valid price");
+        return;
+      }
+  
+      // Update the ProductsList state with the new price
+      SetProductsList((prevList) =>
+        prevList.map((product) =>
+          product._id === productId
+            ? { ...product, ProductUnitPrice: newPrice }
+            : product
+        )
+      );
+  
+      toast.success("Unit price updated successfully");
+    };
+    // All products functions end
     const [Disabled, SetDisabled] = useState(false);
     const ProductTitle = useRef();
     const Alert = useRef();
@@ -690,145 +755,139 @@ const MerchantPage = ({ globalState, setGlobal }) => {
           </Row>
           <Row>
             <Col xs={12}>
-              <div
-                style={{
-                  maxWidth: "100%",
-                  overflow: "auto",
-                  border: "1px solid black",
-                }}
-              >
-                <table border="1">
-      <thead>
-        <tr>
-          <th>{Language === "ar" ? "رقم المنتج" : "Product ID"}</th>
-          <th>{Language === "ar" ? "اسم المنتج" : "Product Title"}</th>
-          <th>{Language === "ar" ? "سعر القطعه" : "Unit Price"}</th>
-          <th>{Language === "ar" ? "المخزون" : "In Stock Quantity"}</th>
-          <th>{Language === "ar" ? "الكميه المطلوبه" : "Ordered Quantity"}</th>
-          <th>{Language === "ar" ? "اللون" : "Color"}</th>
-          <th>{Language === "ar" ? "الحجم" : "Size"}</th>
-          <th>{Language === "ar" ? "الكميه" : "Qty"}</th>
-          <th>{Language === "ar" ? "إضافة خيار" : "Add Option"}</th>
-        </tr>
-      </thead>
-      <tbody>
-        {/* Iterate over ProductsList to display each product and its options */}
-        {ProductsList.map((product, index) => (
-          <React.Fragment key={product._id}>
-            {/* Product Details Row */}
-            <tr
-              style={{
-                backgroundColor: index % 2 === 0 ? "#f2f2f2" : "#ffffff",
-                border: "1px solid black",
-              }}
-            >
-              <td>
-                <a href={`/ProductDetails/${product._id}`}>{product._id}</a>
-              </td>
-              <td>{product.ProductTitle}</td>
-              <td>{product.ProductUnitPrice}</td>
-              <td>{product.InStockQty}</td>
-              <td>{product.OrderedQty}</td>
-              <td colSpan="4"></td>
-            </tr>
-
-            {/* Rows for Each Option of the Product */}
-            {product.ProductOptions.map((option, optIndex) => (
-              <tr key={`${product._id}-${optIndex}`}>
-                <td colSpan="5"></td>
-                {/* Display Color with its background */}
-                <td
-                  style={{
-                    backgroundColor: option.Hex,
-                    color: option.Hex === "#000000" ? "#ffffff" : "#000000",
-                  }}
-                >
-                  {option.Color}
+            <div className="responsive-container">
+     
+      <table className="responsive-table">
+        <thead>
+          <tr>
+            <th>Product ID</th>
+            <th>Product Title</th>
+            <th>Unit Price</th>
+            <th>In Stock Qty</th>
+            <th>Ordered Qty</th>
+            <th>Color</th>
+            <th>Size</th>
+            <th>Qty</th>
+            <th>Add Option</th>
+            <th>Delete Option</th>
+          </tr>
+        </thead>
+        <tbody>
+          {ProductsList.map((product, index) => (
+            <React.Fragment key={product._id}>
+              <tr className={index % 2 === 0 ? "even-row" : "odd-row"}>
+                <td>
+                  <a href={`/ProductDetails/${product._id}`}>{product._id}</a>
                 </td>
-                <td>{option.Size}</td>
-                <td>{option.Qty}</td>
+                <td>{product.ProductTitle}</td>
+                <td>
+                  <input
+                    type="number"
+                    value={product.ProductUnitPrice}
+                    onChange={(e) =>
+                      handleUpdateUnitPrice(product._id, parseFloat(e.target.value))
+                    }
+                    style={{ width: "80px" }}
+                  />
+                </td>
+                <td>{product.InStockQty}</td>
+                <td>{product.OrderedQty}</td>
+                <td colSpan="5"></td>
+              </tr>
+              {product.ProductOptions.map((option, optIndex) => (
+                <tr key={`${product._id}-${optIndex}`}>
+                  <td colSpan="5"></td>
+                  <td style={{ backgroundColor: option.Hex, color: option.Hex === "#000000" ? "#fff" : "#000" }}>
+                    {option.Color}
+                  </td>
+                  <td>{option.Size}</td>
+                  <td>
+                    <input
+                      type="number"
+                      value={option.Qty}
+                      onChange={(e) =>
+                        handleUpdateOptionQty(product._id, optIndex, parseInt(e.target.value, 10))
+                      }
+                      style={{ width: "80px" }}
+                    />
+                  </td>
+                  <td></td>
+                  <td>
+                    <button
+                      onClick={() => handleDeleteOption(product._id, optIndex)}
+                      className="delete-btn"
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+              <tr>
+                <td colSpan="5"></td>
+                <td>
+                  <input
+                    type="text"
+                    placeholder="Color"
+                    value={newOptions[product._id]?.Color || ""}
+                    onChange={(e) =>
+                      SetNewOptions((prev) => ({
+                        ...prev,
+                        [product._id]: {
+                          ...prev[product._id],
+                          Color: e.target.value,
+                        },
+                      }))
+                    }
+                  />
+                </td>
+                <td>
+                  <input
+                    type="text"
+                    placeholder="Size"
+                    value={newOptions[product._id]?.Size || ""}
+                    onChange={(e) =>
+                      SetNewOptions((prev) => ({
+                        ...prev,
+                        [product._id]: {
+                          ...prev[product._id],
+                          Size: e.target.value,
+                        },
+                      }))
+                    }
+                  />
+                </td>
+                <td>
+                  <input
+                    type="number"
+                    placeholder="Qty"
+                    value={newOptions[product._id]?.Qty || ""}
+                    onChange={(e) =>
+                      SetNewOptions((prev) => ({
+                        ...prev,
+                        [product._id]: {
+                          ...prev[product._id],
+                          Qty: parseInt(e.target.value, 10) || "",
+                        },
+                      }))
+                    }
+                    style={{ width: "80px" }}
+                  />
+                </td>
+                <td>
+                  <button
+                    onClick={() => handleAddOption(product._id, newOptions[product._id])}
+                    className="add-btn"
+                  >
+                    Add
+                  </button>
+                </td>
                 <td></td>
               </tr>
-            ))}
-
-            {/* Input Fields for Adding New Option */}
-            <tr>
-              <td colSpan="5"></td>
-              {/* Input for Color */}
-              <td>
-                <input
-                  type="text"
-                  placeholder={Language === "ar" ? "لون" : "Color"}
-                  value={newOptions[product._id]?.Color || ""}
-                  onChange={(e) =>
-                    setNewOptions((prev) => ({
-                      ...prev,
-                      [product._id]: {
-                        ...prev[product._id],
-                        Color: e.target.value,
-                      },
-                    }))
-                  }
-                />
-              </td>
-              {/* Input for Size */}
-              <td>
-                <input
-                  type="text"
-                  placeholder={Language === "ar" ? "حجم" : "Size"}
-                  value={newOptions[product._id]?.Size || ""}
-                  onChange={(e) =>
-                    setNewOptions((prev) => ({
-                      ...prev,
-                      [product._id]: {
-                        ...prev[product._id],
-                        Size: e.target.value,
-                      },
-                    }))
-                  }
-                />
-              </td>
-              {/* Input for Quantity */}
-              <td>
-                <input
-                  type="number"
-                  placeholder={Language === "ar" ? "الكميه" : "Qty"}
-                  value={newOptions[product._id]?.Qty || ""}
-                  onChange={(e) =>
-                    setNewOptions((prev) => ({
-                      ...prev,
-                      [product._id]: {
-                        ...prev[product._id],
-                        Qty: parseInt(e.target.value, 10) || "",
-                      },
-                    }))
-                  }
-                  style={{ width: "80px" }}
-                />
-              </td>
-              {/* Button to Add the New Option */}
-              <td>
-                <button
-                  onClick={() =>
-                    handleAddOption(product._id, newOptions[product._id])
-                  }
-                  style={{
-                    backgroundColor: "#4CAF50",
-                    color: "white",
-                    padding: "5px 10px",
-                    border: "none",
-                    cursor: "pointer",
-                  }}
-                >
-                  {Language === "ar" ? "إضافة" : "Add"}
-                </button>
-              </td>
-            </tr>
-          </React.Fragment>
-        ))}
-      </tbody>
-    </table>
-              </div>
+            </React.Fragment>
+          ))}
+        </tbody>
+      </table>
+    </div>
             </Col>
           </Row>
           <Row>

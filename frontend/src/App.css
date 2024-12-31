@@ -8642,3 +8642,61 @@ readers do not read off random characters that represent icons */
   background-color: #f4c273; /* Light green hover effect */
 }
 /* UserPage new orders table styles end */
+ 
+/* Merchant Page All Products styles start */
+.responsive-container {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.responsive-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.responsive-table th, .responsive-table td {
+  text-align: left;
+  padding: 8px;
+}
+
+.responsive-table th {
+  background-color: #f4f4f4;
+}
+
+.even-row {
+  background-color: #f9f9f9;
+}
+
+.odd-row {
+  background-color: #ffffff;
+}
+
+.add-btn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.delete-btn {
+  background-color: #f44336;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  .responsive-table th, .responsive-table td {
+    font-size: 12px;
+    padding: 4px;
+  }
+
+  .add-btn, .delete-btn {
+    padding: 3px 8px;
+    font-size: 12px;
+  }
+}
+
+/* Merchant Page All Products styles end */
