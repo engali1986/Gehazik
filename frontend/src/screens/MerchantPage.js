@@ -303,7 +303,7 @@ const MerchantPage = ({ globalState, setGlobal }) => {
         )
       );
   
-      toast.success("Unit price updated successfully");
+      
     };
     // All products functions end
     const [Disabled, SetDisabled] = useState(false);
@@ -779,13 +779,36 @@ const MerchantPage = ({ globalState, setGlobal }) => {
                 <td>
                   <a href={`/ProductDetails/${product._id}`}>{product._id}</a>
                 </td>
-                <td>{product.ProductTitle}</td>
+                <td onClick={(e)=>{
+                  e.stopPropagation()
+                  console.log(ProductsList)
+                }}>{product.ProductTitle}</td>
                 <td>
                   <input
                     type="number"
-                    value={product.ProductUnitPrice}
-                    onChange={(e) =>
-                      handleUpdateUnitPrice(product._id, parseFloat(e.target.value))
+                    defaultValue={product.ProductUnitPrice}
+                    
+                    onChange={(e) =>{
+                      let NewPrice=parseInt(e.target.value,10)
+                      let Arr=ProductsList
+                      if (parseFloat(e.target.value)>0) {
+                        Arr.map(item=>{
+                          if (item._id===product._id) {
+                            item.ProductUnitPrice=NewPrice
+                            return item
+                          } else {
+                            return item
+                          }
+                        })
+                        console.log(Arr)
+                        SetProductsList(Arr)
+                        
+                      } else {
+                        toast.error(Language==="ar"?" برجاء ادخال سعر اكبر من صفر":"Please insert price >0")
+                      }
+                      
+                    }
+                      // handleUpdateUnitPrice(product._id, parseFloat(e.target.value))
                     }
                     style={{ width: "80px" }}
                   />

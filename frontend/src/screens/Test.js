@@ -9,34 +9,15 @@ const socket = io('http://localhost:5000'); // Connect to the Node.js server
 
 
 const Test = () => {
-  const Arr=[
-    {Color:"White",
-      Size:"Large",
-      Qty:10
-    }
-    
-  ]
+  const [Quantity,SetQuantity]=useState(0)
+ 
 
   return (
     <div>
-      <button onClick={()=>{
-        console.log("Clicked")
-        console.log(Arr)
-        for (let index = 0; index < Arr.length; index++) {
-          for (let J = 0; J < Arr.length; J++) {
-            if (J>index && Arr[J].Color===Arr[index].Color && Arr[J].Size===Arr[index].Size) {
-              Arr[index].Qty=Arr[index].Qty+Arr[J].Qty
-              Arr.splice(J,1)
-            }
-            
-          }
-          
-        }
-        console.log(Arr)
-      }}>
-        Test Me
-
-      </button>
+     <input onChange={(e)=>{
+      SetQuantity(parseInt(e.target.value,10))
+      console.log(Quantity)
+     }} type="number"/>
     </div>
   );
 };
