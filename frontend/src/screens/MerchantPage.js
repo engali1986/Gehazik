@@ -367,8 +367,6 @@ const MerchantPage = ({ globalState, SetGlobal }) => {
 
     toast.success("Quantity updated successfully");
   };
-
-
   // Add or update a product in UpdateProductsList
   const updateProductInList = (productId, newPrice, updatedOptions) => {
     SetUpdateProductsList((prevList) => {
@@ -398,25 +396,6 @@ const MerchantPage = ({ globalState, SetGlobal }) => {
       }
     });
   };
-
-
-    const handleUpdateUnitPrice = (productId, newPrice) => {
-      if (newPrice < 0) {
-        toast.error("Please enter a valid price");
-        return;
-      }
-  
-      // Update the ProductsList state with the new price
-      SetProductsList((prevList) =>
-        prevList.map((product) =>
-          product._id === productId
-            ? { ...product, ProductUnitPrice: newPrice }
-            : product
-        )
-      );
-  
-      
-    };
     // All products functions end
     const [Disabled, SetDisabled] = useState(false);
     const ProductTitle = useRef();
