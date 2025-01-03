@@ -6,7 +6,7 @@ import {toast} from "react-toastify"
 import { LanguageContext } from "../Context/LanguageContext.js"
 
 // This will be merchant page for merchant controls
-const MerchantPage = ({ globalState, SetGlobal }) => {
+const MerchantPage = ({ globalState, setGlobal }) => {
   const Navigate=useNavigate()
   const {Language,SetLanguage}=useContext(LanguageContext)
   const [ShowAlert, SetShowAlert] = useState({
@@ -192,9 +192,6 @@ const MerchantPage = ({ globalState, SetGlobal }) => {
       ConfirmNewPassword:"",
       User:globalState.Merchant===true?"Merchant":""
     })
-    // All Products states
-    const [editingPrices, SetEditingPrices] = useState({});
-    
     // const [ShowAlert, SetShowAlert] = useState({
     //   Success: false,
     //   Show: false,
@@ -217,7 +214,7 @@ const MerchantPage = ({ globalState, SetGlobal }) => {
       GovernorateDelivery:true,
       CityDelivery:true
     });
-    const [editProductId, SetEditProductId] = useState(null);
+    const [editProductId, setEditProductId] = useState(null);
     // State to hold new option inputs for each product
     const [newOptions, SetNewOptions] = useState({});
     // const [UpdateProduct, SetUpdateProduct] = useState({
@@ -291,66 +288,6 @@ const MerchantPage = ({ globalState, SetGlobal }) => {
   
       toast.info("Option deleted successfully");
     };
-    /**
-   * Handles changes to the price input field in AllProducts
-   * @param {string} productId - Product's unique ID
-   * @param {number} value - The current value of the input field
-   */
-    const handlePriceChange = (productId, value) => {
-      SetEditingPrices((prev) => ({ ...prev, [productId]: value }));
-    };
-    /**
-   * Updates the unit price of a product after editing is complete
-   * @param {string} productId - Product's unique ID
-   */
-    const handlePriceUpdate = (productId) => {
-      const newPrice = editingPrices[productId];
-      if (newPrice < 0 || isNaN(newPrice)) {
-        toast.error("Please enter a valid positive price");
-        return;
-      }
-  
-      SetProductsList((prevList) =>
-        prevList.map((product) =>
-          product._id === productId
-            ? { ...product, ProductUnitPrice: newPrice }
-            : product
-        )
-      );
-  
-      SetUpdateProductsList((prevList) => {
-        const NewProduct=ProductsList.find((p)=>{
-          if (p._id===productId) {
-            return p
-          }
-          
-        })
-        if (prevList.length>0) {
-          const existingProduct = prevList.find((p) => p._id === productId);
-        if (existingProduct) {
-          return prevList.map((p) =>
-            p._id === productId ? { ...p, ProductUnitPrice: newPrice } : p
-          );
-        } else {
-          console.log("UpdatedProductsList>0", NewProduct)
-          return [
-            ...prevList,NewProduct
-          ];   
-        }
-        } else {
-          console.log("UpdatedProductsList=0", NewProduct)
-          return [
-            ...prevList,NewProduct
-          ];  
-        }  
-      });
-      SetEditingPrices((prev) => {
-        const { [productId]: _, ...remaining } = prev;
-        return remaining;
-      });
-  
-      toast.success("Unit price updated successfully");
-    }  
     const handleUpdateUnitPrice = (productId, newPrice) => {
       if (newPrice < 0) {
         toast.error("Please enter a valid price");
@@ -843,22 +780,34 @@ const MerchantPage = ({ globalState, SetGlobal }) => {
                 <td onClick={(e)=>{
                   e.stopPropagation()
                   console.log(ProductsList)
-                  console.log("UpdatedProductsList", UpdateProductsList)
                 }}>{product.ProductTitle}</td>
                 <td>
                   <input
                     type="number"
-                    defaultValue={editingPrices[product._id] ?? product.ProductUnitPrice}
-                    onChange={(e) =>
-                      handlePriceChange(product._id, parseFloat(e.target.value))
-                    }
-                    onBlur={() => handlePriceUpdate(product._id)}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") {
-                        handlePriceUpdate(product._id);
-                        e.target.blur();
+                    defaultValue={product.ProductUnitPrice}
+                    
+                    onChange={(e) =>{
+                      let NewPrice=parseInt(e.target.value,10)
+                      let Arr=ProductsList
+                      if (parseFloat(e.target.value)>0) {
+                        Arr.map(item=>{
+                          if (item._id===product._id) {
+                            item.ProductUnitPrice=NewPrice
+                            return item
+                          } else {
+                            return item
+                          }
+                        })
+                        console.log(Arr)
+                        SetProductsList(Arr)
+                        
+                      } else {
+                        toast.error(Language==="ar"?" برجاء ادخال سعر اكبر من صفر":"Please insert price >0")
                       }
-                    }}
+                      
+                    }
+                      // handleUpdateUnitPrice(product._id, parseFloat(e.target.value))
+                    }
                     style={{ width: "80px" }}
                   />
                 </td>
@@ -1743,7 +1692,7 @@ const MerchantPage = ({ globalState, SetGlobal }) => {
                       }
                     }
                     SetData(e.target.innerText);
-                    SetGlobal("",false,"",false,false,false,0,"","")
+                    setGlobal("",false,"",false,false,false,0,"","")
                     localStorage.clear()
                     sessionStorage.clear()
                     Navigate("/")
