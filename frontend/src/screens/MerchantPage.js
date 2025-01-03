@@ -194,6 +194,7 @@ const MerchantPage = ({ globalState, SetGlobal }) => {
     })
     // All Products states
     const [editingPrices, SetEditingPrices] = useState({});
+    const [editingOptionsQty, SetEditingOptionsQty] = useState({});
     
     // const [ShowAlert, SetShowAlert] = useState({
     //   Success: false,
@@ -226,71 +227,67 @@ const MerchantPage = ({ globalState, SetGlobal }) => {
     //   UpdateProductInStockQty: 0,
     // });
     // All products functions start
-
-    const handleAddOption = (productId, newOption) => {
-      if (!newOption.Color || !newOption.Size || newOption.Qty <= 0) {
-        toast.error(Language === "ar" ? "يرجى إدخال تفاصيل صالحة" : "Please enter valid details")
-        return;
-      }
     
-      SetProductsList((prevList) =>
-        prevList.map((product) => {
-          if (product._id === productId) {
-            return {
-              ...product,
-              ProductOptions: [...product.ProductOptions, newOption],
-            };
-          }
-          return product;
-        })
-      );
-    };
+    // Handle adding a new option
+  const handleNewOptionChange = (productId, field, value) => {
+    SetNewOptions((prev) => ({
+      ...prev,
+      [productId]: {
+        ...prev[productId],
+        [field]: value,
+      },
+    }));
+  };
+  const handleAddOption = (productId) => {
+    const option = newOptions[productId];
+    console.log(option)
+    if (!option || !option.Color || !option.Size || option.Qty < 0 || !option.Qty) {
+      toast.error("Please fill in valid option details");
+      return;
+    }
 
-    const handleUpdateOptionQty = (productId, optionIndex, newQty) => {
-      if (newQty < 0) {
-        toast.error("Please enter a valid quantity");
-        return;
-      }
-  
-      // Update the ProductsList state with the new quantity
-      SetProductsList((prevList) =>
-        prevList.map((product) => {
-          if (product._id === productId) {
-            return {
+    SetProductsList((prevList) =>
+      prevList.map((product) =>
+        product._id === productId
+          ? {
               ...product,
-              ProductOptions: product.ProductOptions.map((option, index) =>
-                index === optionIndex ? { ...option, Qty: newQty } : option
-              ),
-            };
-          }
-          return product;
-        })
-      );
-  
-      toast.success("Quantity updated successfully");
-    };
+              ProductOptions: [...product.ProductOptions, { ...option }],
+            }
+          : product
+      )
+    );
 
-    const handleDeleteOption = (productId, optionIndex) => {
-      const confirmDelete = window.confirm("Are you sure you want to delete this option?");
-      if (!confirmDelete) return;
-  
-      // Update the ProductsList state by filtering out the deleted option
-      SetProductsList((prevList) =>
-        prevList.map((product) => {
-          if (product._id === productId) {
-            return {
+    const updatedOptions = [
+      ...ProductsList.find((p) => p._id === productId).ProductOptions,
+      { ...option },
+    ];
+
+    updateProductInList(productId, null, updatedOptions);
+    SetNewOptions((prev) => ({ ...prev, [productId]: { Color: "", Size: "", Qty: 0 } }));
+    toast.success("Option added successfully");
+  };
+
+   // Handle deleting an option
+  const handleDeleteOption = (productId, optionIndex) => {
+    SetProductsList((prevList) =>
+      prevList.map((product) =>
+        product._id === productId
+          ? {
               ...product,
               ProductOptions: product.ProductOptions.filter(
                 (_, index) => index !== optionIndex
               ),
-            };
-          }
-          return product;
-        })
-      );
-  
-      toast.info("Option deleted successfully");
-    };
+            }
+          : product
+      )
+    );
+
+    const updatedOptions = ProductsList.find((p) => p._id === productId)
+      .ProductOptions.filter((_, index) => index !== optionIndex);
+
+    updateProductInList(productId, null, updatedOptions);
+    toast.success("Option deleted successfully");
+  };
     /**
    * Handles changes to the price input field in AllProducts
    * @param {string} productId - Product's unique ID
@@ -318,39 +315,91 @@ const MerchantPage = ({ globalState, SetGlobal }) => {
         )
       );
   
-      SetUpdateProductsList((prevList) => {
-        const NewProduct=ProductsList.find((p)=>{
-          if (p._id===productId) {
-            return p
-          }
-          
-        })
-        if (prevList.length>0) {
-          const existingProduct = prevList.find((p) => p._id === productId);
-        if (existingProduct) {
-          return prevList.map((p) =>
-            p._id === productId ? { ...p, ProductUnitPrice: newPrice } : p
-          );
-        } else {
-          console.log("UpdatedProductsList>0", NewProduct)
-          return [
-            ...prevList,NewProduct
-          ];   
-        }
-        } else {
-          console.log("UpdatedProductsList=0", NewProduct)
-          return [
-            ...prevList,NewProduct
-          ];  
-        }  
-      });
+      updateProductInList(productId, newPrice, null);
       SetEditingPrices((prev) => {
         const { [productId]: _, ...remaining } = prev;
         return remaining;
       });
   
       toast.success("Unit price updated successfully");
-    }  
+    };
+
+    // Handle changes to ProductOptions Qty
+  const handleQtyChange = (productId, optionIndex, value, Size, Color) => {
+    console.log("Size", Size, "Color", Color, "_id", productId)
+    SetEditingOptionsQty((prev) => ({
+      ...prev,
+      [`${productId}-${optionIndex}`]: value,
+    }));
+  };
+
+  const handleQtyUpdate = (productId, optionIndex) => {
+    const key = `${productId}-${optionIndex}`;
+    const newQty = editingOptionsQty[key];
+    if (newQty < 0 || isNaN(newQty)) {
+      toast.error("Please enter a valid positive quantity");
+      return;
+    }
+
+    SetProductsList((prevList) =>
+      prevList.map((product) =>
+        product._id === productId
+          ? {
+              ...product,
+              ProductOptions: product.ProductOptions.map((option, index) =>
+                index === optionIndex ? { ...option, Qty: newQty } : option
+              ),
+            }
+          : product
+      )
+    );
+
+    const updatedOptions = ProductsList.find((p) => p._id === productId)
+      .ProductOptions.map((option, index) =>
+        index === optionIndex ? { ...option, Qty: newQty } : option
+      );
+
+    updateProductInList(productId, null, updatedOptions);
+    SetEditingOptionsQty((prev) => {
+      const { [key]: _, ...remaining } = prev;
+      return remaining;
+    });
+
+    toast.success("Quantity updated successfully");
+  };
+
+
+  // Add or update a product in UpdateProductsList
+  const updateProductInList = (productId, newPrice, updatedOptions) => {
+    SetUpdateProductsList((prevList) => {
+      const existingProduct = prevList.find((p) => p._id === productId);
+
+      if (existingProduct) {
+        // Update existing product in the list
+        return prevList.map((p) =>
+          p._id === productId
+            ? {
+                ...p,
+                ProductUnitPrice: newPrice ?? p.ProductUnitPrice,
+                ProductOptions: updatedOptions ?? p.ProductOptions,
+              }
+            : p
+        );
+      } else {
+        // Add new product to the list
+        return [
+          ...prevList,
+          {
+            _id: productId,
+            ProductUnitPrice: newPrice ?? ProductsList.find((p) => p._id === productId).ProductUnitPrice,
+            ProductOptions: updatedOptions ?? ProductsList.find((p) => p._id === productId).ProductOptions,
+          },
+        ];
+      }
+    });
+  };
+
+
     const handleUpdateUnitPrice = (productId, newPrice) => {
       if (newPrice < 0) {
         toast.error("Please enter a valid price");
@@ -844,6 +893,7 @@ const MerchantPage = ({ globalState, SetGlobal }) => {
                   e.stopPropagation()
                   console.log(ProductsList)
                   console.log("UpdatedProductsList", UpdateProductsList)
+                  console.log("NewOptions", newOptions)
                 }}>{product.ProductTitle}</td>
                 <td>
                   <input
@@ -874,10 +924,23 @@ const MerchantPage = ({ globalState, SetGlobal }) => {
                   <td>
                     <input
                       type="number"
-                      value={option.Qty}
+                      defaultValue={option.Qty}
                       onChange={(e) =>
-                        handleUpdateOptionQty(product._id, optIndex, parseInt(e.target.value, 10))
+                        handleQtyChange(
+                          product._id,
+                          index,
+                          parseInt(e.target.value,10),
+                          option.Size,
+                          option.Color
+                        )
                       }
+                      onBlur={() => handleQtyUpdate(product._id, index)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          handleQtyUpdate(product._id, index);
+                          e.target.blur();
+                        }
+                      }}
                       style={{ width: "80px" }}
                     />
                   </td>
@@ -898,15 +961,9 @@ const MerchantPage = ({ globalState, SetGlobal }) => {
                   <input
                     type="text"
                     placeholder="Color"
-                    value={newOptions[product._id]?.Color || ""}
+                    defaultValue={newOptions[product._id]?.Color || ""}
                     onChange={(e) =>
-                      SetNewOptions((prev) => ({
-                        ...prev,
-                        [product._id]: {
-                          ...prev[product._id],
-                          Color: e.target.value,
-                        },
-                      }))
+                      handleNewOptionChange(product._id, "Color", e.target.value)
                     }
                   />
                 </td>
@@ -914,15 +971,9 @@ const MerchantPage = ({ globalState, SetGlobal }) => {
                   <input
                     type="text"
                     placeholder="Size"
-                    value={newOptions[product._id]?.Size || ""}
+                    defaultValue={newOptions[product._id]?.Size || ""}
                     onChange={(e) =>
-                      SetNewOptions((prev) => ({
-                        ...prev,
-                        [product._id]: {
-                          ...prev[product._id],
-                          Size: e.target.value,
-                        },
-                      }))
+                      handleNewOptionChange(product._id, "Size", e.target.value)
                     }
                   />
                 </td>
@@ -930,15 +981,13 @@ const MerchantPage = ({ globalState, SetGlobal }) => {
                   <input
                     type="number"
                     placeholder="Qty"
-                    value={newOptions[product._id]?.Qty || ""}
+                    defaultValue={newOptions[product._id]?.Qty || ""}
                     onChange={(e) =>
-                      SetNewOptions((prev) => ({
-                        ...prev,
-                        [product._id]: {
-                          ...prev[product._id],
-                          Qty: parseInt(e.target.value, 10) || "",
-                        },
-                      }))
+                      handleNewOptionChange(
+                        product._id,
+                        "Qty",
+                        parseInt(e.target.value,10)
+                      )
                     }
                     style={{ width: "80px" }}
                   />
