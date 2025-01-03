@@ -240,8 +240,10 @@ const MerchantPage = ({ globalState, SetGlobal }) => {
   };
   const handleAddOption = (productId) => {
     const option = newOptions[productId];
-    console.log(option)
-    if (!option || !option.Color || !option.Size || option.Qty < 0 || !option.Qty) {
+    let x=option.Qty
+    console.log(option.Qty)
+    console.log(Number.isInteger(option.Qty))
+    if (!option || !option.Color || !option.Size || option.Qty < 0 || !option.Qty ) {
       toast.error("Please fill in valid option details");
       return;
     }
