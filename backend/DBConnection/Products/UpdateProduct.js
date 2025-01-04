@@ -43,80 +43,57 @@ const UpdateProduct = async (UpdateProductData) => {
       }
     } else if (UpdateProductData.FieldToUpdate === "Products List Update") {
       console.log("UpdateProduct file 6 Update list of products");
-      let ModefiedCounts = 0;
+      
       let ObjectID = new ObjectId();
       console.log(UpdateProductData.UpdateData);
       console.log(UpdateProductData.UpdateData.length);
       console.log(UpdateProductData.UpdateData[0]);
-      for (
-        let index = 0;
-        index < UpdateProductData.UpdateData.length;
-        index++
-      ) {
-        console.log(
-          "UpdateProduct file 6.5 Update list of products Product to update"
-        );
-        console.log(UpdateProductData.UpdateData[index]);
-        const UpdateElement = await client
-          .db("Gehazik")
-          .collection("Products")
-          .updateOne(
-            {
-              _id: new ObjectId(
-                UpdateProductData.UpdateData[index].UpdateProductID
-              ),
-            },
-            {
-              $set: {
-                InStockQty:
-                  UpdateProductData.UpdateData[index].UpdateProductInStockQty,
-                ProductUnitPrice:
-                  UpdateProductData.UpdateData[index].UpdateProductUnitPrice,
-                LatestUpdate: new Date(),
-              },
-            }
-          )
-          .then((res) => {
-            console.log("UpdateProduct file 7 Update products result");
-            console.log(res);
-            console.log(typeof res.modifiedCount);
-            return res.modifiedCount;
-          })
-          .catch((err) => {
-            console.log("UpdateProduct file 8 Update products error");
-            console.log(err);
-            return "Products Not Modefied";
-          });
-        console.log("UpdateProduct file 9 Update products Add modefiedcounts");
-        console.log(UpdateElement);
-        if (typeof UpdateElement === "number") {
-          if (UpdateElement > 0) {
-            ModefiedCounts = ModefiedCounts + UpdateElement;
-          } else {
-            console.log(
-              "UpdateProduct file 9.5 Update products ModefiedCounts not added"
-            );
-            return "Products Not updated";
-          }
-        } else {
-          console.log(
-            "UpdateProduct file 9.55 Update products ModefiedCounts not added"
-          );
-          return "Products Not updated";
-        }
-      }
-      console.log(
-        "UpdateProduct file 10 Update products compare ModefiedCounts with UpdateProductData.UpdateData.length "
+      // Create an array of bulk operations
+    const bulkOperations = UpdateProductData.UpdateData.map((product) => {
+      // Calculate the total quantity by summing all Qty values in ProductOptions
+      const totalQty = product.ProductOptions.reduce(
+        (sum, option) => sum + (option.Qty || 0),
+        0
       );
-      console.log(UpdateProductData.UpdateData.length);
-      console.log(ModefiedCounts);
-      if (ModefiedCounts === UpdateProductData.UpdateData.length) {
-        console.log("UpdateProduct file 11 Update products Update Success ");
-        return "Products Updated Successfully";
-      } else {
-        console.log("UpdateProduct file 12 Update products Update Success ");
-        return "Products Not updated";
-      }
+
+      // Construct the update object
+      const updateObject = {
+        $set: {
+          ProductOptions: product.ProductOptions,
+          ProductUnitPrice: product.ProductUnitPrice, // Ensure price updates too
+          ProductInStock: totalQty > 0 ? true: false, // Set InStockQty based on total quantity
+          LatestUpdate: new Date(),
+        },
+        $push: {
+          UpdateLog: { UpdateDate: new Date() }, // Add a new update entry to UpdateLog
+        },
+      };
+
+      return {
+        updateOne: {
+          filter: { _id: new ObjectId(product._id) },
+          update: updateObject,
+        },
+      };
+    });
+
+    // Execute bulk operations
+    const result = await client
+      .db("Gehazik")
+      .collection("Products")
+      .bulkWrite(bulkOperations);
+
+    console.log("Bulk write result:", result);
+     // Check if all products were successfully updated
+    if (result.modifiedCount === UpdateProductData.UpdateData.length) {
+      console.log("All products updated successfully");
+      return "Products Updated Successfully";
+    } else {
+      console.log(
+        `Partial update: ${result.modifiedCount} out of ${UpdateProductData.UpdateData.length} products updated`
+      );
+      return "Partial update: Some products were not updated";
+    }
     } else {
     }
   } catch (error) {

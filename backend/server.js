@@ -667,7 +667,7 @@ app.post("/Merchants/UpdateProduct", async (req, res) => {
       if (UpdatedProductList === "Products Updated Successfully") {
         res.json({ resp: UpdatedProductList });
       } else {
-        res.json({ resp: "Products Not updated" });
+        res.json({ resp: UpdatedProductList });
       }
     } else {
       res.json({ resp: "Merchant not found" });
