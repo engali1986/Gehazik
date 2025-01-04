@@ -230,6 +230,7 @@ const MerchantPage = ({ globalState, SetGlobal }) => {
     
     // Handle adding a new option
   const handleNewOptionChange = (productId, field, value) => {
+    console.log(newOptions)
     if (field==="Color") {
       SetNewOptions((prev) => ({
         ...prev,
