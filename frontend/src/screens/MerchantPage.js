@@ -230,13 +230,28 @@ const MerchantPage = ({ globalState, SetGlobal }) => {
     
     // Handle adding a new option
   const handleNewOptionChange = (productId, field, value) => {
-    SetNewOptions((prev) => ({
-      ...prev,
-      [productId]: {
-        ...prev[productId],
-        [field]: value,
-      },
-    }));
+    if (field==="Color") {
+      SetNewOptions((prev) => ({
+        ...prev,
+        [productId]: {
+          ...prev[productId],
+          [field]: value,
+          Hex:StaticData.Colors.find((item)=>item.Name===value).Hex,
+          OrderedQty:0
+        },
+      }));
+
+    } else {
+      SetNewOptions((prev) => ({
+        ...prev,
+        [productId]: {
+          ...prev[productId],
+          [field]: value,
+          OrderedQty:0
+        },
+      }));
+    }
+  
   };
   const handleAddOption = (productId) => {
     const option = newOptions[productId];
@@ -271,24 +286,32 @@ const MerchantPage = ({ globalState, SetGlobal }) => {
 
    // Handle deleting an option
   const handleDeleteOption = (productId, optionIndex) => {
-    SetProductsList((prevList) =>
-      prevList.map((product) =>
-        product._id === productId
-          ? {
-              ...product,
-              ProductOptions: product.ProductOptions.filter(
-                (_, index) => index !== optionIndex
-              ),
-            }
-          : product
-      )
-    );
-
-    const updatedOptions = ProductsList.find((p) => p._id === productId)
-      .ProductOptions.filter((_, index) => index !== optionIndex);
-
-    updateProductInList(productId, null, updatedOptions);
-    toast.success("Option deleted successfully");
+    const OptionsLength=ProductsList.find((p)=>p._id===productId).ProductOptions.length
+    console.log(OptionsLength)
+    if (ProductsList.find((p)=>p._id===productId).ProductOptions.length>1) {
+      SetProductsList((prevList) =>
+        prevList.map((product) =>
+          product._id === productId
+            ? {
+                ...product,
+                ProductOptions: product.ProductOptions.filter(
+                  (_, index) => index !== optionIndex
+                ),
+              }
+            : product
+        )
+      );
+  
+      const updatedOptions = ProductsList.find((p) => p._id === productId)
+        .ProductOptions.filter((_, index) => index !== optionIndex);
+  
+      updateProductInList(productId, null, updatedOptions);
+      toast.success("Option deleted successfully");
+      
+    } else {
+      toast.error(Language==="ar"?" يجب توافر خيار واحد للمنتج":"At least one option shall be available")
+    }
+   
   };
     /**
    * Handles changes to the price input field in AllProducts
@@ -939,14 +962,20 @@ const MerchantPage = ({ globalState, SetGlobal }) => {
               <tr>
                 <td colSpan="3"></td>
                 <td>
-                  <input
-                    type="text"
-                    placeholder="Color"
-                    defaultValue={newOptions[product._id]?.Color || ""}
-                    onChange={(e) =>
-                      handleNewOptionChange(product._id, "Color", e.target.value)
-                    }
-                  />
+                   <select
+                   onChange={(e) =>{
+                    e.target.style.backgroundColor=StaticData.Colors.find((item)=>item.Name===e.target.value).Hex
+                    handleNewOptionChange(product._id, "Color", e.target.value)
+                   }
+                  }
+                  defaultValue={StaticData.Colors[0].Name}
+                    style={{width:'100%', backgroundColor:StaticData.Colors[0].Hex}} >
+            {StaticData.Colors.map(item=>(
+              <option style={{color: item.Hex === "#000000" ? "#fff" : "#000", backgroundColor:item.Hex}}  key={item.Name}>
+                {item.Name}
+              </option>
+            ))}
+          </select>
                 </td>
                 <td>
                   <input
