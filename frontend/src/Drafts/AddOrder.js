@@ -1,7 +1,4 @@
 import { MongoClient, ObjectId } from "mongodb";
-import mailer from "nodemailer";
-import PDFDocument from "pdfkit";
-import fs from 'fs';
 
 const uri = "mongodb+srv://engaligulf:Cossacks%401@cluster0.fj9bpe7.mongodb.net/?maxIdleTimeMS=5000";
 const client = new MongoClient(uri);
@@ -119,64 +116,16 @@ const AddOrder = async (OrderData) => {
             const insertResult = await ordersCollection.insertOne(order, { session });
             if (!insertResult.insertedId) {
                 throw new Error("Failed to add order to Orders collection.");
-            }else{
-
-                response = insertResult
-                // Step 4: Generate PDF Invoice
-                    const doc = new PDFDocument();
-                    const pdfPath = `./invoice-${insertResult.insertedId}.pdf`;
-                    doc.pipe(fs.createWriteStream(pdfPath));
-
-                    doc
-                        .fontSize(20)
-                        .text("Invoice", { align: "center" })
-                        .moveDown()
-                        .fontSize(12)
-                        .text(`Order ID: ${insertResult.insertedId}`)
-                        .text(`Client Name: ${OrderData.ClientName}`)
-                        .text(`Client Email: ${OrderData.ClientEmail}`)
-                        .text(`Order Date: ${new Date().toLocaleString()}`)
-                        .moveDown()
-                        .text("Ordered Items:")
-                        .moveDown();
-
-                    OrderData.OrderDetails.forEach((item, index) => {
-                        doc.text(`${index + 1}. Product: ${item.ProductName}, Color: ${item.Color}, Size: ${item.Size}, Qty: ${item.Qty}`);
-                    });
-
-                    doc.end();
-                 // Step 5: Send Email with PDF Attachment
-                    const transporter = mailer.createTransport({
-                                service:"gmail",
-                                port: 587, 
-                                secure:true,
-                                auth: {
-                                  user: "engaligulf1986@gmail.com",
-                                  pass: "swqtgeywhhucrcwh",
-                                },
-                                })
-                                await transporter.sendMail({
-                                    from: "Gehazik" ,
-                                    to: OrderData.ClientEmail,
-                                    subject: "Your Order Invoice",
-                                    text: "Thank you for your order. Please find your invoice attached.",
-                                    attachments: [
-                                        {
-                                            filename: `invoice-${insertResult.insertedId}.pdf`,
-                                            path: pdfPath
-                                        }
-                                    ]
-                                });
             }
 
-            
+            response = insertResult
         });
 
         // Return success response
         console.log(response)
         return response;
     } catch (error) {
-        console.error("Error in AddOrder:", error);
+        console.error("Error in AddOrder:", error.message);
         return error.message
     } 
 };
