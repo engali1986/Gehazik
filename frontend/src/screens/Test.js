@@ -10,14 +10,18 @@ const socket = io('http://localhost:5000'); // Connect to the Node.js server
 
 const Test = () => {
   const [Quantity,SetQuantity]=useState(0)
+  let rating =5
  
 
   return (
     <div>
-     <input onChange={(e)=>{
-      SetQuantity(parseInt(e.target.value,10))
-      console.log(Quantity)
-     }} type="number"/>
+     <button onClick={(e)=>{
+      e.stopPropagation()
+      console.log(Array(rating).fill("0"))
+      console.log(typeof Array(rating).fill("0")[0])
+     }}>
+      click me
+     </button>
     </div>
   );
 };
