@@ -159,7 +159,7 @@ app.post("/UpdateUser", async (req, res) => {
   const result = await Test();
   res.json(result);
 });
-app.post("/PasswordRecovery", async (req, res) => {
+app.post("/PasswordRecovery", async (req, res) => { 
   const email = await req.body.Email;
   const result = await PasswordRecovery(email);
   console.log("server PasswordRecovery");
