@@ -106,7 +106,7 @@ const UserCheckOutPage = ({GlobalState, UpdateCart}) => {
     
   }else {
   }
- },[])
+ })
   return (
     <Container>
       {/* Loader */}
